@@ -48,9 +48,13 @@ class Button:
 
 # Define button actions
 def start_new_game():
+    global game_state
+    game_state="new_game"
     print("Starting new game")
 
 def load_game():
+    global load_game
+    game_state="show_credits"
     print("Loading game")
 
 def show_credits():
@@ -74,7 +78,7 @@ quit_button = Button(button_x, credits_button.rect.bottom + button_spacing, butt
 
 def draw_start_menu():
     # Draw screen
-    print(game_state)
+    #print(game_state)
     screen.fill(WHITE)
     title = font.render("Bandymanager", True, BLACK)
     title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, 100))
@@ -86,11 +90,14 @@ def draw_start_menu():
     pygame.display.flip()
 
 def draw_credits():
-    print(game_state)
+    #print(game_state)
     screen.fill(WHITE)
     title = font.render("Bandymanager - Credits", True, BLACK)
     title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, 100))
     screen.blit(title, title_rect)
+    credits1 = font.render("Programmer: Torbjorn Lindquist", True, BLACK)
+    credits1_rect = credits1.get_rect(center=(SCREEN_WIDTH // 2, 100))
+    screen.blit(credits1, credits1_rect)
     pygame.display.flip()
 
 # Define game loop
@@ -103,7 +110,7 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if game_state == "show_credits":
             	game_state = "start_menu"
-            if event.button == 1:
+            if event.button == 1 and game_state == "start_menu":
                 for button in [new_game_button, load_game_button, credits_button, quit_button]:
                     if button.rect.collidepoint(event.pos):
                         button.do_action()
