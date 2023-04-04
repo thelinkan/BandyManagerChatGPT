@@ -1,0 +1,34 @@
+{
+  "teams": [
+    {
+      "name": "Sweden Men",
+      "country": "Sweden",
+      "is_male": true
+    },
+    {
+      "name": "Sweden Women",
+      "country": "Sweden",
+      "is_male": false
+    },
+    {
+      "name": "Finland Men",
+      "country": "Finland",
+      "is_male": true
+    },
+    {
+      "name": "Finland Women",
+      "country": "Finland",
+      "is_male": false
+    },
+    {
+      "name": "Norway Men",
+      "country": "Norway",
+      "is_male": true
+    },
+    {
+      "name": "Norway Women",
+      "country": "Norway",
+      "is_male": false
+    }
+  ]
+}
