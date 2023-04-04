@@ -1,4 +1,8 @@
 import pygame
+import json
+import pickle
+from game import Game
+from inputbox import InputBox
 
 pygame.init()
 
@@ -47,21 +51,6 @@ class Button:
             self.action()
 
 # Define button actions
-def start_new_game():
-    global game_state
-    game_state="new_game"
-    print("Starting new game")
-
-def load_game():
-    global load_game
-    game_state="show_credits"
-    print("Loading game")
-
-def show_credits():
-    global game_state
-    game_state="show_credits"
-    print("Credits")
-
 def quit_game():
     pygame.quit()
     quit()
@@ -71,10 +60,13 @@ button_width = 230
 button_height = 50
 button_x = (SCREEN_WIDTH - button_width) // 2
 button_spacing = 20
-new_game_button = Button(button_x, 200, button_width, button_height, "New game", font, BLACK, WHITE, GRAY, start_new_game)
-load_game_button = Button(button_x, new_game_button.rect.bottom + button_spacing, button_width, button_height, "Load game", font, BLACK, WHITE, GRAY, load_game)
-credits_button = Button(button_x, load_game_button.rect.bottom + button_spacing, button_width, button_height, "Credits", font, BLACK, WHITE, GRAY, show_credits)
+new_game_button = Button(button_x, 200, button_width, button_height, "New game", font, BLACK, WHITE, GRAY)
+load_game_button = Button(button_x, new_game_button.rect.bottom + button_spacing, button_width, button_height, "Load game", font, BLACK, WHITE, GRAY)
+credits_button = Button(button_x, load_game_button.rect.bottom + button_spacing, button_width, button_height, "Credits", font, BLACK, WHITE, GRAY)
 quit_button = Button(button_x, credits_button.rect.bottom + button_spacing, button_width, button_height, "Quit game", font, BLACK, WHITE, GRAY, quit_game)
+
+#Define Input
+input_name = InputBox(100, 200, 140, 32)
 
 def draw_start_menu():
     # Draw screen
@@ -95,14 +87,28 @@ def draw_credits():
     title = font.render("Bandymanager - Credits", True, BLACK)
     title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, 100))
     screen.blit(title, title_rect)
-    credits1 = font.render("Programmer: Torbjorn Lindquist", True, BLACK)
-    credits1_rect = credits1.get_rect(center=(SCREEN_WIDTH // 2, 100))
-    screen.blit(credits1, credits1_rect)
+    credits1 = small_font.render("Programmer: Torbjorn Lindquist", False, BLACK)
+    
+    screen.blit(credits1, (40, 250))
+    pygame.display.flip()
+
+def draw_newgame_menu():
+    # Draw screen
+    screen.fill(WHITE)
+    title = font.render("Bandymanager - New game", True, BLACK)
+    title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, 100))
+    screen.blit(title, title_rect)
+
+    input_name.draw(screen)
+    #text_surface = small_font.render("Hello World!",False, BLACK)
+    #screen.blit(text_surface, (40, 250))
+    
     pygame.display.flip()
 
 # Define game loop
 running = True
 while running:
+    clock = pygame.time.Clock()
     # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -110,15 +116,35 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if game_state == "show_credits":
             	game_state = "start_menu"
-            if event.button == 1 and game_state == "start_menu":
-                for button in [new_game_button, load_game_button, credits_button, quit_button]:
-                    if button.rect.collidepoint(event.pos):
-                        button.do_action()
+            elif event.button == 1 and game_state == "start_menu":
+                if new_game_button.rect.collidepoint(event.pos):
+                    game_state="new_game"
+                    print("New game click");
+                    game = Game(2023,8,1)
+                    with open('save_game.pickle', 'wb') as f:
+                        pickle.dump(game, f)
+                    f.close()
+                    game.save_game('c:\temp')
+                if load_game_button.rect.collidepoint(event.pos):
+                    game_state="load_game"
+                    game = Game(0,0,0)
+                    game.load_game('')
+                    print("Load game click");
+                if credits_button.rect.collidepoint(event.pos):
+                    game_state="show_credits"
+                    print("Credits click");
+                if quit_button.rect.collidepoint(event.pos):
+                    quit_button.do_action()
+        if game_state =="new_game":
+            input_name.handle_event(event)
+
     if game_state == "start_menu":
         draw_start_menu()
     if game_state == "show_credits":
         draw_credits()
-
+    if game_state == "new_game":
+        draw_newgame_menu()
+    clock.tick(30)
 
 pygame.quit()
 quit()
