@@ -1,7 +1,7 @@
 import pygame
 from button import Button
 from inputbox import InputBox
-from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY
+from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY,FONTSIZE_LARGE,FONTSIZE_MEDIUM,FONTSIZE_SMALL
 
 
 
@@ -11,8 +11,9 @@ def quit_game():
     quit()
 
 # Create font objects
-font = pygame.font.Font(None, 60)
-small_font = pygame.font.Font(None, 30)
+font = pygame.font.Font(None, FONTSIZE_LARGE)
+medium_font = pygame.font.Font(None, FONTSIZE_MEDIUM)
+small_font = pygame.font.Font(None, FONTSIZE_SMALL)
 
 # Define buttons
 button_width = 230

@@ -45,7 +45,7 @@
         "population": 42000000,
         "male_proficiency": 60,
         "female_proficiency": 65,
-    		"flag_path": "flags/ukaraine.png"
+    		"flag_path": "flags/ukraine.png"
     },
     {
         "name": "Kazakhstan",
@@ -96,12 +96,12 @@
     		"flag_path": "flags/latvia.png"
     },
     {
-        "name": "England",
+        "name": "Great Britain",
         "bandy_knowledge": 20,
         "population": 56000000,
         "male_proficiency": 20,
         "female_proficiency": 25,
-    		"flag_path": "flags/england.png"
+    		"flag_path": "flags/great_britain.png"
     },
     {
         "name": "USA",

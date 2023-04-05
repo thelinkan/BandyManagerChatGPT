@@ -3,7 +3,7 @@
     "month": 8,
     "day": 1,
     "manager_name": "Linkan",
-    "manager_age": 33,
+    "manager_age": 23,
     "countries": [
         {
             "name": "Sweden",
@@ -47,7 +47,7 @@
         },
         {
             "name": "Ukraine",
-            "flag_path": "flags/ukaraine.png",
+            "flag_path": "flags/ukraine.png",
             "population": 42000000,
             "bandy_knowledge": 70,
             "male_proficiency": 60,
@@ -102,8 +102,8 @@
             "female_proficiency": 50
         },
         {
-            "name": "England",
-            "flag_path": "flags/england.png",
+            "name": "Great Britain",
+            "flag_path": "flags/great_britain.png",
             "population": 56000000,
             "bandy_knowledge": 20,
             "male_proficiency": 20,

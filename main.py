@@ -1,15 +1,16 @@
 import pygame
 import json
 import pickle
-from game import Game
 #import classes for GUI
 from inputbox import InputBox
 from button import Button
 pygame.init()
+from game import Game
 
 from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY
-from screens import screen,draw_start_menu, draw_credits, draw_newgame_menu
-from guielements import font, small_font, button_width, button_height, button_x, button_spacing, new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game
+from screens import screen,draw_start_menu, draw_credits, draw_newgame_menu, draw_newgame2_menu
+from guielements import font,medium_font, small_font, button_width, button_height, button_x, button_spacing
+from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game
 
 game_state = "start_menu"
 
@@ -19,6 +20,8 @@ pygame.display.set_caption("Bandymanager")
 #Define swedish flag
 swedish_flag = pygame.image.load("flags/sweden.png").convert_alpha()
 swedish_flag_small = pygame.transform.scale(swedish_flag, (40, 40))
+
+selected_country_index=-1
 
 # Define game loop
 running = True
@@ -52,6 +55,13 @@ while running:
                     manager_age=int(input_age.return_text())
                     game.new_game(manager_name, manager_age)
                     game.save_game('c:\temp')
+                    game_state="new_game_2"
+            elif event.button == 1 and game_state == "new_game_2":
+                for i, rect in enumerate(country_rects):
+                    if rect.collidepoint(event.pos):
+                        selected_country_index = i
+                        break
+                
         if game_state =="new_game":
             input_name.handle_event(event)
             input_age.handle_event(event)
@@ -62,6 +72,8 @@ while running:
         draw_credits(swedish_flag_small)
     if game_state == "new_game":
         draw_newgame_menu()
+    if game_state == "new_game_2":
+        country_rects=draw_newgame2_menu(game,selected_country_index)
     clock.tick(30)
 
 pygame.quit()

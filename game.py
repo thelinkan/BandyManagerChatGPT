@@ -74,8 +74,20 @@ class Game:
             json.dump(game_data, file, indent=4)
         print("Game Data Saved")
         # save game to file
-        pass
-    
+
+    def return_managername(self):
+        return self.manager.return_name()
+        
+    def return_countrylist(self):
+        countries_list = list(self.countries.values())
+        countries_list.sort(key=lambda country: country.name)
+        return countries_list
+        
+    def return_countryflag(self,country_name):
+         for country in self.countries.values():
+            if country.name == country_name:
+                return country.return_flag()
+                
     def quit_game(self):
         # quit game
         pass
