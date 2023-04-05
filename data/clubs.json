@@ -1,0 +1,68 @@
+{
+  "clubs": [
+    {
+      "name": "Sandvikens AIK",
+      "country": "Sweden",
+      "home_arena": "Göransson Arena",
+      "club_rating": 85,
+      "teams": [
+        {
+          "name": "Sandvikens AIK",
+          "team_type": "Men",
+          "team_rating": 80
+        },
+        {
+          "name": "Sandvikens AIK U19",
+          "team_type": "Men U19",
+          "team_rating": 70
+        },
+        {
+          "name": "Sandvikens AIK",
+          "team_type": "Women",
+          "team_rating": 75
+        },
+        {
+          "name": "Sandvikens AIK U19",
+          "team_type": "Women U19",
+          "team_rating": 65
+        }
+      ]
+    },
+    {
+      "name": "AIK",
+      "country": "Sweden",
+      "home_arena": "Hovet",
+      "club_rating": 80,
+      "teams": [
+        {
+          "name": "AIK",
+          "team_type": "Women",
+          "team_rating": 75
+        },
+        {
+          "name": "AIK U19",
+          "team_type": "Women U19",
+          "team_rating": 65
+        }
+      ]
+    },
+    {
+      "name": "Ljusdals BK",
+      "country": "Sweden",
+      "home_arena": "Helsingehus Arena",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Ljusdals BK",
+          "team_type": "Men",
+          "team_rating": 70
+        },
+        {
+          "name": "Ljusdals BK U19",
+          "team_type": "Men U19",
+          "team_rating": 60
+        }
+      ]
+    }
+  ]
+}

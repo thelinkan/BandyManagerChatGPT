@@ -60,7 +60,7 @@ def draw_newgame2_menu(game,selected_country_index):
     screen.blit(title, title_rect)
     text_name = medium_font.render("Welcome "+game.return_managername(),False, BLACK)
     screen.blit(text_name, (40, 120))
-    text_choose = medium_font.render("choose country",False, BLACK)
+    text_choose = medium_font.render("Choose country",False, BLACK)
     screen.blit(text_choose, (40, 155))
     countries = game.return_countrylist()
     y = 190
@@ -86,5 +86,8 @@ def draw_newgame2_menu(game,selected_country_index):
         country_rects.append(rect)
         y += max(flag.get_height(), text.get_height()) + 10
         country_num+=1
+    if(selected_country_index>=0):
+        text_choose2 = medium_font.render("Choose league",False, BLACK)
+        screen.blit(text_choose2, (340, 155))
     pygame.display.flip()
     return country_rects
