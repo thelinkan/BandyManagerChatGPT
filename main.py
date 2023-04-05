@@ -64,9 +64,15 @@ new_game_button = Button(button_x, 200, button_width, button_height, "New game",
 load_game_button = Button(button_x, new_game_button.rect.bottom + button_spacing, button_width, button_height, "Load game", font, BLACK, WHITE, GRAY)
 credits_button = Button(button_x, load_game_button.rect.bottom + button_spacing, button_width, button_height, "Credits", font, BLACK, WHITE, GRAY)
 quit_button = Button(button_x, credits_button.rect.bottom + button_spacing, button_width, button_height, "Quit game", font, BLACK, WHITE, GRAY, quit_game)
+new_game_ok_button =Button(button_x,450, button_width, button_height, "OK", font, BLACK, WHITE, GRAY)
 
 #Define Input
-input_name = InputBox(100, 200, 140, 32)
+input_name = InputBox(300, 200, 140, 32)
+input_age = InputBox(300, 300, 140, 32)
+
+#Define swedish flag
+swedish_flag = pygame.image.load("flags/sweden.png").convert_alpha()
+swedish_flag_small = pygame.transform.scale(swedish_flag, (40, 40))
 
 def draw_start_menu():
     # Draw screen
@@ -87,9 +93,11 @@ def draw_credits():
     title = font.render("Bandymanager - Credits", True, BLACK)
     title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, 100))
     screen.blit(title, title_rect)
-    credits1 = small_font.render("Programmer: Torbjorn Lindquist", False, BLACK)
-    
+    credits1 = small_font.render("Programmer: Torbjorn Lindquist", False, BLACK)    
     screen.blit(credits1, (40, 250))
+    credits2 = small_font.render("AI help: Chat-GPT", False, BLACK)    
+    screen.blit(credits2, (40, 285))
+    screen.blit(swedish_flag_small, (375, 242))
     pygame.display.flip()
 
 def draw_newgame_menu():
@@ -98,11 +106,13 @@ def draw_newgame_menu():
     title = font.render("Bandymanager - New game", True, BLACK)
     title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, 100))
     screen.blit(title, title_rect)
-
+    text_name = small_font.render("Name",False, BLACK)
+    screen.blit(text_name, (40, 200))
     input_name.draw(screen)
-    #text_surface = small_font.render("Hello World!",False, BLACK)
-    #screen.blit(text_surface, (40, 250))
-    
+    text_age = small_font.render("Age",False, BLACK)
+    screen.blit(text_age, (40, 300))
+    input_age.draw(screen)
+    new_game_ok_button.draw(screen)    
     pygame.display.flip()
 
 # Define game loop
@@ -121,10 +131,6 @@ while running:
                     game_state="new_game"
                     print("New game click");
                     game = Game(2023,8,1)
-                    with open('save_game.pickle', 'wb') as f:
-                        pickle.dump(game, f)
-                    f.close()
-                    game.save_game('c:\temp')
                 if load_game_button.rect.collidepoint(event.pos):
                     game_state="load_game"
                     game = Game(0,0,0)
@@ -135,8 +141,15 @@ while running:
                     print("Credits click");
                 if quit_button.rect.collidepoint(event.pos):
                     quit_button.do_action()
+            elif event.button == 1 and game_state == "new_game":
+                if new_game_ok_button.rect.collidepoint(event.pos):
+                    manager_name=input_name.return_text()
+                    manager_age=int(input_age.return_text())
+                    game.new_game(manager_name, manager_age)
+                    game.save_game('c:\temp')
         if game_state =="new_game":
             input_name.handle_event(event)
+            input_age.handle_event(event)
 
     if game_state == "start_menu":
         draw_start_menu()

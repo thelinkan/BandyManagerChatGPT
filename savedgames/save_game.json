@@ -1,0 +1,129 @@
+{
+    "year": 2023,
+    "month": 8,
+    "day": 1,
+    "manager_name": "Linkan",
+    "manager_age": 33,
+    "countries": [
+        {
+            "name": "Sweden",
+            "flag_path": "flags/sweden.png",
+            "population": 10000000,
+            "bandy_knowledge": 90,
+            "male_proficiency": 90,
+            "female_proficiency": 90
+        },
+        {
+            "name": "Finland",
+            "flag_path": "flags/finland.png",
+            "population": 5500000,
+            "bandy_knowledge": 85,
+            "male_proficiency": 80,
+            "female_proficiency": 90
+        },
+        {
+            "name": "Norway",
+            "flag_path": "flags/norway.png",
+            "population": 5300000,
+            "bandy_knowledge": 80,
+            "male_proficiency": 70,
+            "female_proficiency": 75
+        },
+        {
+            "name": "Russia",
+            "flag_path": "flags/russia.png",
+            "population": 144000000,
+            "bandy_knowledge": 90,
+            "male_proficiency": 85,
+            "female_proficiency": 95
+        },
+        {
+            "name": "Belarus",
+            "flag_path": "flags/belarus.png",
+            "population": 9400000,
+            "bandy_knowledge": 70,
+            "male_proficiency": 65,
+            "female_proficiency": 70
+        },
+        {
+            "name": "Ukraine",
+            "flag_path": "flags/ukaraine.png",
+            "population": 42000000,
+            "bandy_knowledge": 70,
+            "male_proficiency": 60,
+            "female_proficiency": 65
+        },
+        {
+            "name": "Kazakhstan",
+            "flag_path": "flags/kazakhstan.png",
+            "population": 18000000,
+            "bandy_knowledge": 60,
+            "male_proficiency": 55,
+            "female_proficiency": 60
+        },
+        {
+            "name": "Netherlands",
+            "flag_path": "flags/netherlands.png",
+            "population": 17000000,
+            "bandy_knowledge": 40,
+            "male_proficiency": 40,
+            "female_proficiency": 45
+        },
+        {
+            "name": "Hungary",
+            "flag_path": "flags/hungary.png",
+            "population": 9700000,
+            "bandy_knowledge": 35,
+            "male_proficiency": 35,
+            "female_proficiency": 40
+        },
+        {
+            "name": "Switzerland",
+            "flag_path": "flags/switzerland.png",
+            "population": 8600000,
+            "bandy_knowledge": 30,
+            "male_proficiency": 30,
+            "female_proficiency": 35
+        },
+        {
+            "name": "Estonia",
+            "flag_path": "flags/estonia.png",
+            "population": 1300000,
+            "bandy_knowledge": 50,
+            "male_proficiency": 45,
+            "female_proficiency": 50
+        },
+        {
+            "name": "Latvia",
+            "flag_path": "flags/latvia.png",
+            "population": 1900000,
+            "bandy_knowledge": 50,
+            "male_proficiency": 45,
+            "female_proficiency": 50
+        },
+        {
+            "name": "England",
+            "flag_path": "flags/england.png",
+            "population": 56000000,
+            "bandy_knowledge": 20,
+            "male_proficiency": 20,
+            "female_proficiency": 25
+        },
+        {
+            "name": "USA",
+            "flag_path": "flags/usa.png",
+            "population": 330000000,
+            "bandy_knowledge": 70,
+            "male_proficiency": 60,
+            "female_proficiency": 75
+        },
+        {
+            "name": "Canada",
+            "flag_path": "flags/canada.png",
+            "population": 38000000,
+            "bandy_knowledge": 75,
+            "male_proficiency": 70,
+            "female_proficiency": 80
+        }
+    ]
+}
