@@ -7,7 +7,7 @@ from guielements import font, medium_font, small_font, button_width, button_heig
 pygame.init()
 
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
-    
+
 def draw_start_menu():
     # Draw screen
     #print(game_state)
@@ -27,11 +27,11 @@ def draw_credits(flag):
     title = font.render("Bandymanager - Credits", True, BLACK)
     title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, 100))
     screen.blit(title, title_rect)
-    credits1 = medium_font.render("Programmer: Torbjorn Lindquist", False, BLACK)    
+    credits1 = medium_font.render("Programmer: Torbjorn Lindquist", False, BLACK)
     screen.blit(credits1, (40, 250))
-    credits2 = medium_font.render("AI help: Chat-GPT", False, BLACK)    
+    credits2 = medium_font.render("AI help: Chat-GPT", False, BLACK)
     screen.blit(credits2, (40, 285))
-    credits3 = medium_font.render("Flags: https://icons8.com/icon/set/flags/stickers", False, BLACK)    
+    credits3 = medium_font.render("Flags: https://icons8.com/icon/set/flags/stickers", False, BLACK)
     screen.blit(credits3, (40, 320))
     screen.blit(flag, (375, 242))
     pygame.display.flip()
@@ -48,9 +48,9 @@ def draw_newgame_menu():
     text_age = medium_font.render("Age",False, BLACK)
     screen.blit(text_age, (40, 300))
     input_age.draw(screen)
-    new_game_ok_button.draw(screen)    
+    new_game_ok_button.draw(screen)
     pygame.display.flip()
-    
+
 def draw_newgame2_menu(game,selected_country_index):
     mouse_pos = pygame.mouse.get_pos()
     # Draw screen
@@ -87,7 +87,32 @@ def draw_newgame2_menu(game,selected_country_index):
         y += max(flag.get_height(), text.get_height()) + 10
         country_num+=1
     if(selected_country_index>=0):
+        selected_country = countries[selected_country_index].return_name()
         text_choose2 = medium_font.render("Choose league",False, BLACK)
         screen.blit(text_choose2, (340, 155))
+        #text_test = medium_font.render(str(selected_country_index)+" "+countries[selected_country_index].return_name(),False, BLACK)
+        #screen.blit(text_test, (340, 185))
+
+    if(selected_country_index>=0):
+        text_choose2 = medium_font.render("Choose team",False, BLACK)
+        screen.blit(text_choose2, (640, 155))
+        teams = game.return_teamlist(selected_country, 'Men')
+        y = 190
+        team_rects = []
+        team_num=0
+        for team in teams:
+            text = small_font.render(team.return_name(),False, BLACK)
+            combined_surf = pygame.Surface((130,text.get_height()))
+            combined_surf.fill(WHITE)
+            combined_surf.blit(text, (0, 0))
+            rect = combined_surf.get_rect()
+            rect.topleft = (640, y)
+            screen.blit(combined_surf, rect)
+            team_rects.append(rect)
+            y += text.get_height() + 10
+            team_num += 1
+            #print("Test")
+            #print(team.return_name())
+            pass
     pygame.display.flip()
     return country_rects

@@ -1,12 +1,9 @@
+import json
+
 class Team:
-    def __init__(self, name, country, is_male):
+    def __init__(self, name, team_type):
         self.name = name
-        self.country = country
-        self.is_male = is_male
-        self.players = []
+        self.team_type = team_type
 
-    def add_player(self, player):
-        self.players.append(player)
-
-    def remove_player(self, player):
-        self.players.remove(player)
+    def return_name(self):
+        return self.name
