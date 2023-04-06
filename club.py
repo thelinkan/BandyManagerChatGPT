@@ -19,5 +19,5 @@ class Club:
             'name': self.name,
             'country': self.country,
             'rating': self.rating,
-            'home_arena': home_arena
+            'home_arena': self.home_arena
         }

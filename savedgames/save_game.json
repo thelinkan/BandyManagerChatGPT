@@ -2,8 +2,8 @@
     "year": 2023,
     "month": 8,
     "day": 1,
-    "manager_name": "Linkan",
-    "manager_age": 33,
+    "manager_name": "sdf",
+    "manager_age": 3,
     "countries": [
         {
             "name": "Sweden",
@@ -124,6 +124,38 @@
             "bandy_knowledge": 75,
             "male_proficiency": 70,
             "female_proficiency": 80
+        }
+    ],
+    "teams": [
+        {
+            "name": "Sandvikens AIK",
+            "country": "Sweden",
+            "rating": 85,
+            "home_arena": "G\u00c3\u00b6ransson Arena"
+        },
+        {
+            "name": "AIK",
+            "country": "Sweden",
+            "rating": 80,
+            "home_arena": "Hovet"
+        },
+        {
+            "name": "Ljusdals BK",
+            "country": "Sweden",
+            "rating": 75,
+            "home_arena": "Ljusdals IP"
+        },
+        {
+            "name": "Brobergs IF",
+            "country": "Sweden",
+            "rating": 75,
+            "home_arena": "Helsingehus Arena"
+        },
+        {
+            "name": "Mjondalens IF",
+            "country": "Norway",
+            "rating": 75,
+            "home_arena": "Vassenga"
         }
     ]
 }

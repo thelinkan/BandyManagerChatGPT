@@ -67,9 +67,11 @@ class Game:
 
     def save_game(self, file_path):
         countries_data = []
-        teams_data =[]
+        clubs_data =[]
         for key, value in self.countries.items():
             countries_data.append(value.to_dict())
+        for club in self.clubs:
+            clubs_data.append(club.to_dict())
 
         game_data = {
                 'year': self.year,
@@ -77,7 +79,8 @@ class Game:
                 'day': self.day,
                 'manager_name': self.manager.return_name(),
                 'manager_age': self.manager.return_age(),
-                'countries': countries_data
+                'countries': countries_data,
+                'teams': clubs_data
             }
         with open('savedgames/save_game.json','w') as file:
             json.dump(game_data, file, indent=4)

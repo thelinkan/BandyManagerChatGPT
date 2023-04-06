@@ -107,6 +107,9 @@ def draw_newgame2_menu(game,selected_country_index):
             combined_surf.blit(text, (0, 0))
             rect = combined_surf.get_rect()
             rect.topleft = (640, y)
+            if rect.collidepoint(mouse_pos):
+                combined_surf.fill(GRAY)
+                combined_surf.blit(text, (0, 0))
             screen.blit(combined_surf, rect)
             team_rects.append(rect)
             y += text.get_height() + 10
