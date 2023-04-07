@@ -5,7 +5,14 @@
         "population": 10000000,
         "male_proficiency": 90,
         "female_proficiency": 90,
-    		"flag_path": "flags/sweden.png"
+    		"flag_path": "flags/sweden.png",
+        "player_origins": [
+            {"country": "Finland", "percentage": 40},
+            {"country": "Russia", "percentage": 30},
+            {"country": "Norway", "percentage": 20},
+            {"country": "USA", "percentage": 5},
+            {"country": "Canada", "percentage": 5}
+        ]
     },
     {
         "name": "Finland",
@@ -13,7 +20,14 @@
         "population": 5500000,
         "male_proficiency": 80,
         "female_proficiency": 90,
-    		"flag_path": "flags/finland.png"
+    		"flag_path": "flags/finland.png",
+        "player_origins": [
+            {"country": "Sweden", "percentage": 40},
+            {"country": "Russia", "percentage": 30},
+            {"country": "Norway", "percentage": 20},
+            {"country": "USA", "percentage": 5},
+            {"country": "Canada", "percentage": 5}
+        ]
     },
     {
         "name": "Norway",
@@ -21,7 +35,12 @@
         "population": 5300000,
         "male_proficiency": 70,
         "female_proficiency": 75,
-    		"flag_path": "flags/norway.png"
+    		"flag_path": "flags/norway.png",
+        "player_origins": [
+            {"country": "Sweden", "percentage": 80},
+            {"country": "Finland", "percentage": 15},
+            {"country": "Canada", "percentage": 5}
+        ]
     },
     {
         "name": "Russia",

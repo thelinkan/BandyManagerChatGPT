@@ -51,7 +51,7 @@ def draw_newgame_menu():
     new_game_ok_button.draw(screen)
     pygame.display.flip()
 
-def draw_newgame2_menu(game,selected_country_index):
+def draw_newgame2_menu(game,selected_country_index,selected_team_index):
     mouse_pos = pygame.mouse.get_pos()
     # Draw screen
     screen.fill(WHITE)
@@ -66,6 +66,7 @@ def draw_newgame2_menu(game,selected_country_index):
     y = 190
     country_rects = []
     country_num=0
+    team_rects = []
     for country in countries:
         flag = game.return_countryflag(country.return_name())
         text = small_font.render(country.return_name(), True, BLACK)
@@ -98,12 +99,14 @@ def draw_newgame2_menu(game,selected_country_index):
         screen.blit(text_choose2, (640, 155))
         teams = game.return_teamlist(selected_country, 'Men')
         y = 190
-        team_rects = []
         team_num=0
         for team in teams:
             text = small_font.render(team.return_name(),False, BLACK)
             combined_surf = pygame.Surface((130,text.get_height()))
-            combined_surf.fill(WHITE)
+            if team_num == selected_team_index:
+                combined_surf.fill((200,200,200))
+            else:
+                combined_surf.fill(WHITE)
             combined_surf.blit(text, (0, 0))
             rect = combined_surf.get_rect()
             rect.topleft = (640, y)
@@ -117,5 +120,12 @@ def draw_newgame2_menu(game,selected_country_index):
             #print("Test")
             #print(team.return_name())
             pass
+            
+    if(selected_team_index>=0):
+        selected_team = teams[selected_team_index].return_name()
+        text_team_name = medium_font.render(selected_team,False, BLACK)
+        screen.blit(text_team_name, (940, 155))
+        #print(selected_team)
+        pass
     pygame.display.flip()
-    return country_rects
+    return country_rects, team_rects

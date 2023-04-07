@@ -1,3 +1,5 @@
+import os
+import json
 import pygame
 
 class Country:
@@ -10,7 +12,17 @@ class Country:
         self.female_proficiency = female_proficiency
         self.flag = pygame.image.load(self.flag_path).convert_alpha()
         self.flag_small = pygame.transform.scale(self.flag, (20, 20))
+        self.load_names()
 
+    def load_names(self):
+        filename = "data/" + self.name.lower() + '_names.json'
+        if os.path.isfile(filename):
+            with open(filename, 'r') as file:
+                data = json.load(file)
+                self.male_first_names = data['male_first_names']
+                self.female_first_names = data['female_first_names']
+                self.family_names = data['family_names']
+                
     def to_dict(self):
         return {
             'name': self.name,

@@ -1,0 +1,5 @@
+{
+    "male_first_names": ["Erik", "Johan", "Karl", "Nils", "Anders"],
+    "female_first_names": ["Maria", "Anna", "Karin", "Eva", "Lena"],
+    "family_names": ["Andersson", "Johansson", "Lindberg", "Berg", "Carlsson"]
+}

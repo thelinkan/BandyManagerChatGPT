@@ -22,6 +22,7 @@ swedish_flag = pygame.image.load("flags/sweden.png").convert_alpha()
 swedish_flag_small = pygame.transform.scale(swedish_flag, (40, 40))
 
 selected_country_index=-1
+selected_team_index=-1
 
 # Define game loop
 running = True
@@ -54,12 +55,20 @@ while running:
                     manager_name=input_name.return_text()
                     manager_age=int(input_age.return_text())
                     game.new_game(manager_name, manager_age)
+                    #print(Sweden.male_first_names)
+                    #print(Sweden.female_first_names)
+                    #print(sweden.family_names)
                     game.save_game('c:\temp')
                     game_state="new_game_2"
             elif event.button == 1 and game_state == "new_game_2":
                 for i, rect in enumerate(country_rects):
                     if rect.collidepoint(event.pos):
                         selected_country_index = i
+                        selected_team_index = -1
+                        break
+                for i, rect in enumerate(team_rects):
+                    if rect.collidepoint(event.pos):
+                        selected_team_index = i
                         break
                 
         if game_state =="new_game":
@@ -73,7 +82,7 @@ while running:
     if game_state == "new_game":
         draw_newgame_menu()
     if game_state == "new_game_2":
-        country_rects=draw_newgame2_menu(game,selected_country_index)
+        country_rects,team_rects=draw_newgame2_menu(game,selected_country_index,selected_team_index)
     clock.tick(30)
 
 pygame.quit()

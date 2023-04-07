@@ -59,7 +59,7 @@ class Game:
             print(club.name)
             for team in club.teams:
                 print(f"- {team.name} ({team.team_type})")
-
+        print(self.countries['Sweden'].male_first_names)
         #keys = self.countries.keys()
         #print(keys)
         #values = self.countries.values()
