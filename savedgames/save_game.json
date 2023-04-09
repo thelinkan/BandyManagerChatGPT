@@ -2,8 +2,11 @@
     "year": 2023,
     "month": 8,
     "day": 1,
-    "manager_name": "sdf",
-    "manager_age": 3,
+    "manager": {
+        "name": "sdf",
+        "age": 33,
+        "team": "Ljusdals BK"
+    },
     "countries": [
         {
             "name": "Sweden",
@@ -126,36 +129,132 @@
             "female_proficiency": 80
         }
     ],
-    "teams": [
-        {
-            "name": "Sandvikens AIK",
-            "country": "Sweden",
-            "rating": 85,
-            "home_arena": "G\u00c3\u00b6ransson Arena"
-        },
-        {
-            "name": "AIK",
-            "country": "Sweden",
-            "rating": 80,
-            "home_arena": "Hovet"
-        },
-        {
-            "name": "Ljusdals BK",
-            "country": "Sweden",
-            "rating": 75,
-            "home_arena": "Ljusdals IP"
-        },
-        {
-            "name": "Brobergs IF",
-            "country": "Sweden",
-            "rating": 75,
-            "home_arena": "Helsingehus Arena"
-        },
-        {
-            "name": "Mjondalens IF",
-            "country": "Norway",
-            "rating": 75,
-            "home_arena": "Vassenga"
-        }
-    ]
+    "club_data": {
+        "clubs": [
+            {
+                "name": "Sandvikens AIK",
+                "country": "Sweden",
+                "club_rating": 85,
+                "home_arena": "G\u00c3\u00b6ransson Arena",
+                "teams": [
+                    {
+                        "name": "Sandvikens AIK",
+                        "team_type": "Men",
+                        "team_rating": 80,
+                        "num_players": 0,
+                        "num_int_players": 0
+                    },
+                    {
+                        "name": "Sandvikens AIK U19",
+                        "team_type": "Men U19",
+                        "team_rating": 70,
+                        "num_players": 0,
+                        "num_int_players": 0
+                    },
+                    {
+                        "name": "Sandvikens AIK",
+                        "team_type": "Women",
+                        "team_rating": 75,
+                        "num_players": 0,
+                        "num_int_players": 0
+                    },
+                    {
+                        "name": "Sandvikens AIK U19",
+                        "team_type": "Women U19",
+                        "team_rating": 65,
+                        "num_players": 0,
+                        "num_int_players": 0
+                    }
+                ]
+            },
+            {
+                "name": "AIK",
+                "country": "Sweden",
+                "club_rating": 80,
+                "home_arena": "Hovet",
+                "teams": [
+                    {
+                        "name": "AIK",
+                        "team_type": "Women",
+                        "team_rating": 75,
+                        "num_players": 0,
+                        "num_int_players": 0
+                    },
+                    {
+                        "name": "AIK U19",
+                        "team_type": "Women U19",
+                        "team_rating": 65,
+                        "num_players": 0,
+                        "num_int_players": 0
+                    }
+                ]
+            },
+            {
+                "name": "Ljusdals BK",
+                "country": "Sweden",
+                "club_rating": 75,
+                "home_arena": "Ljusdals IP",
+                "teams": [
+                    {
+                        "name": "Ljusdals BK",
+                        "team_type": "Men",
+                        "team_rating": 70,
+                        "num_players": 0,
+                        "num_int_players": 0
+                    },
+                    {
+                        "name": "Ljusdals BK U19",
+                        "team_type": "Men U19",
+                        "team_rating": 60,
+                        "num_players": 0,
+                        "num_int_players": 0
+                    }
+                ]
+            },
+            {
+                "name": "Brobergs IF",
+                "country": "Sweden",
+                "club_rating": 75,
+                "home_arena": "Helsingehus Arena",
+                "teams": [
+                    {
+                        "name": "Brobergs IF",
+                        "team_type": "Men",
+                        "team_rating": 70,
+                        "num_players": 0,
+                        "num_int_players": 0
+                    },
+                    {
+                        "name": "Brobergs IF U19",
+                        "team_type": "Men U19",
+                        "team_rating": 60,
+                        "num_players": 0,
+                        "num_int_players": 0
+                    }
+                ]
+            },
+            {
+                "name": "Mjondalens IF",
+                "country": "Norway",
+                "club_rating": 75,
+                "home_arena": "Vassenga",
+                "teams": [
+                    {
+                        "name": "Mjondalens IF",
+                        "team_type": "Men",
+                        "team_rating": 70,
+                        "num_players": 0,
+                        "num_int_players": 0
+                    },
+                    {
+                        "name": "Mjondalens IF U19",
+                        "team_type": "Men U19",
+                        "team_rating": 60,
+                        "num_players": 0,
+                        "num_int_players": 0
+                    }
+                ]
+            }
+        ]
+    }
 }

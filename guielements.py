@@ -24,7 +24,8 @@ new_game_button = Button(button_x, 200, button_width, button_height, "New game",
 load_game_button = Button(button_x, new_game_button.rect.bottom + button_spacing, button_width, button_height, "Load game", font, BLACK, WHITE, GRAY)
 credits_button = Button(button_x, load_game_button.rect.bottom + button_spacing, button_width, button_height, "Credits", font, BLACK, WHITE, GRAY)
 quit_button = Button(button_x, credits_button.rect.bottom + button_spacing, button_width, button_height, "Quit game", font, BLACK, WHITE, GRAY, quit_game)
-new_game_ok_button =Button(button_x,450, button_width, button_height, "OK", font, BLACK, WHITE, GRAY)
+new_game_ok_button = Button(button_x,450, button_width, button_height, "OK", font, BLACK, WHITE, GRAY)
+choose_team_button = Button(button_x,690, button_width, button_height, "OK", font, BLACK, WHITE, GRAY)
 
 #Define Input
 input_name = InputBox(300, 200, 140, 32)

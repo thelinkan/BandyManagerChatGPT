@@ -8,9 +8,9 @@ pygame.init()
 from game import Game
 
 from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY
-from screens import screen,draw_start_menu, draw_credits, draw_newgame_menu, draw_newgame2_menu
+from screens import screen,draw_start_menu, draw_credits, draw_newgame_menu, draw_newgame2_menu, draw_game_mainscreen
 from guielements import font,medium_font, small_font, button_width, button_height, button_x, button_spacing
-from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game
+from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
 
 game_state = "start_menu"
 
@@ -44,7 +44,8 @@ while running:
                     game_state="load_game"
                     game = Game(0,0,0)
                     game.load_game('')
-                    print("Load game click");
+                    #print("Load game click");
+                    game_state = "game_mainscreen"
                 if credits_button.rect.collidepoint(event.pos):
                     game_state="show_credits"
                     print("Credits click");
@@ -58,7 +59,7 @@ while running:
                     #print(Sweden.male_first_names)
                     #print(Sweden.female_first_names)
                     #print(sweden.family_names)
-                    game.save_game('c:\temp')
+                    #game.save_game('c:\temp')
                     game_state="new_game_2"
             elif event.button == 1 and game_state == "new_game_2":
                 for i, rect in enumerate(country_rects):
@@ -70,7 +71,13 @@ while running:
                     if rect.collidepoint(event.pos):
                         selected_team_index = i
                         break
-                
+                if selected_team_index>=0:
+                    if choose_team_button.rect.collidepoint(event.pos):
+                        game.set_manager_team(selected_team)
+                        game_state = "game_mainscreen"
+                        print("klick "+ selected_team)
+                        game.save_game('c:\temp')
+                        break
         if game_state =="new_game":
             input_name.handle_event(event)
             input_age.handle_event(event)
@@ -82,7 +89,9 @@ while running:
     if game_state == "new_game":
         draw_newgame_menu()
     if game_state == "new_game_2":
-        country_rects,team_rects=draw_newgame2_menu(game,selected_country_index,selected_team_index)
+        country_rects,team_rects,selected_team=draw_newgame2_menu(game,selected_country_index,selected_team_index)
+    if game_state == "game_mainscreen":
+        draw_game_mainscreen()
     clock.tick(30)
 
 pygame.quit()

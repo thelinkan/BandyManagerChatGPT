@@ -15,9 +15,13 @@ class Club:
         return [team for team in self.teams if team.team_type == team_type]
 
     def to_dict(self):
+        teams_data =[]
+        for team in self.teams:
+            teams_data.append(team.to_dict())        
         return {
             'name': self.name,
             'country': self.country,
-            'rating': self.rating,
-            'home_arena': self.home_arena
+            'club_rating': self.rating,
+            'home_arena': self.home_arena,
+            'teams': teams_data
         }

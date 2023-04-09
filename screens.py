@@ -2,7 +2,8 @@ import pygame
 from button import Button
 from inputbox import InputBox
 from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY,FONTSIZE_LARGE,FONTSIZE_MEDIUM,FONTSIZE_SMALL
-from guielements import font, medium_font, small_font, button_width, button_height, button_x, button_spacing, new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game
+from guielements import font, medium_font, small_font, button_width, button_height, button_x, button_spacing
+from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
 
 pygame.init()
 
@@ -67,6 +68,7 @@ def draw_newgame2_menu(game,selected_country_index,selected_team_index):
     country_rects = []
     country_num=0
     team_rects = []
+    selected_team = ""
     for country in countries:
         flag = game.return_countryflag(country.return_name())
         text = small_font.render(country.return_name(), True, BLACK)
@@ -118,14 +120,25 @@ def draw_newgame2_menu(game,selected_country_index,selected_team_index):
             y += text.get_height() + 10
             team_num += 1
             #print("Test")
-            #print(team.return_name())
+            #team_name = print(team.return_name())
             pass
             
     if(selected_team_index>=0):
         selected_team = teams[selected_team_index].return_name()
         text_team_name = medium_font.render(selected_team,False, BLACK)
         screen.blit(text_team_name, (940, 155))
+        choose_team_button.draw(screen)
         #print(selected_team)
         pass
     pygame.display.flip()
-    return country_rects, team_rects
+    return country_rects, team_rects, selected_team
+    
+def draw_game_mainscreen():
+    # Draw screen
+    screen.fill(WHITE)
+    title = font.render("Bandymanager - Main screen", True, BLACK)
+    title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, 40))
+    screen.blit(title, title_rect)
+    pygame.display.flip()
+        
+        

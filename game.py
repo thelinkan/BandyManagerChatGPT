@@ -14,30 +14,6 @@ class Game:
         #self.leagues = []
         self.clubs = []
 
-    def load_game(self, file_path):
-        # load game from file
-        with open('savedgames/save_game.json', 'r') as file:
-            game_data = json.load(file)
-        self.year = game_data['year']
-        self.month = game_data['month']
-        self.day = game_data['day']
-        self.manager.set_name(game_data['manager_name'])
-        self.manager.set_age(game_data['manager_age'])
-        self.countries = {}
-        for country_data in game_data['countries']:
-            name = country_data['name']
-            bandy_knowledge = country_data['bandy_knowledge']
-            population = country_data['population']
-            flag_path = country_data['flag_path']
-            male_proficiency = country_data['male_proficiency']
-            female_proficiency = country_data['female_proficiency']
-            self.countries[name] = Country(name, flag_path, bandy_knowledge, population, male_proficiency, female_proficiency)
-        #for key, value in self.countries.items():
-        #    print(value.to_dict())
-        print("Data loaded")
-        #print(self.year)
-        #print(self.manager.return_age())
-
     def new_game(self,manager_name,manager_age):
         # create new game
         # Set name and age
@@ -54,7 +30,10 @@ class Game:
             male_proficiency = country_data['male_proficiency']
             female_proficiency = country_data['female_proficiency']
             self.countries[name] = Country(name, flag_path, bandy_knowledge, population, male_proficiency, female_proficiency)
-        self.clubs = self.read_clubs_from_json('data/clubs.json')
+        with open('data/clubs.json') as f:
+            data = json.load(f)
+        print(data)
+        self.clubs = self.read_clubs_from_json(data)
         for club in self.clubs:
             print(club.name)
             for team in club.teams:
@@ -64,6 +43,39 @@ class Game:
         #print(keys)
         #values = self.countries.values()
         #print(values)
+
+    def load_game(self, file_path):
+        # load game from file
+        with open('savedgames/save_game.json', 'r') as file:
+            game_data = json.load(file)
+        self.year = game_data['year']
+        self.month = game_data['month']
+        self.day = game_data['day']
+        manager_data = game_data['manager']
+        self.manager.set_name(manager_data['name'])
+        self.manager.set_age(manager_data['age'])
+        self.manager.set_team(manager_data['team'])
+        self.countries = {}
+        for country_data in game_data['countries']:
+            name = country_data['name']
+            bandy_knowledge = country_data['bandy_knowledge']
+            population = country_data['population']
+            flag_path = country_data['flag_path']
+            male_proficiency = country_data['male_proficiency']
+            female_proficiency = country_data['female_proficiency']
+            self.countries[name] = Country(name, flag_path, bandy_knowledge, population, male_proficiency, female_proficiency)
+        print(game_data['club_data'])
+        self.clubs = self.read_clubs_from_json(game_data['club_data'])
+        for club in self.clubs:
+            print(club.name)
+            for team in club.teams:
+                print(f"- {team.name} ({team.team_type})")
+      
+        #for key, value in self.countries.items():
+        #    print(value.to_dict())
+        print("Data loaded")
+        #print(self.year)
+        #print(self.manager.return_team())
 
     def save_game(self, file_path):
         countries_data = []
@@ -77,15 +89,26 @@ class Game:
                 'year': self.year,
                 'month': self.month,
                 'day': self.day,
-                'manager_name': self.manager.return_name(),
-                'manager_age': self.manager.return_age(),
+                'manager': {
+                    'name': self.manager.return_name(),
+                    'age': self.manager.return_age(),
+                    'team': self.manager.return_team()
+                },
                 'countries': countries_data,
-                'teams': clubs_data
+                'club_data':{
+                    'clubs': clubs_data
+                }
             }
         with open('savedgames/save_game.json','w') as file:
             json.dump(game_data, file, indent=4)
         print("Game Data Saved")
         # save game to file
+
+    def set_manager_team(self,team):
+        self.manager.set_team(team)
+
+    def return_manager_team(self):
+        self.manager.return_team
 
     def return_managername(self):
         return self.manager.return_name()
@@ -100,9 +123,30 @@ class Game:
             if country.name == country_name:
                 return country.return_flag()
 
-    def read_clubs_from_json(self,json_file):
-        with open(json_file) as f:
-            data = json.load(f)
+    #def read_clubs_from_json(self,json_file):
+    #    with open(json_file) as f:
+    #        data = json.load(f)
+
+    #    clubs = []
+
+    #    for club_data in data['clubs']:
+    #        name = club_data['name']
+    #        country = club_data['country']
+    #        rating = club_data['club_rating']
+    #        home_arena = club_data['home_arena']
+    #        club = Club(name, country, rating, home_arena)
+
+    #        for team_data in club_data['teams']:
+    #            name = team_data['name']
+    #            team_type = team_data['team_type']
+    #            team = Team(name, team_type)
+    #            club.add_team(team)
+
+    #        clubs.append(club)
+
+    #    return clubs
+
+    def read_clubs_from_json(self,data):
 
         clubs = []
 
@@ -116,7 +160,8 @@ class Game:
             for team_data in club_data['teams']:
                 name = team_data['name']
                 team_type = team_data['team_type']
-                team = Team(name, team_type)
+                team_rating = team_data['team_rating']
+                team = Team(name, team_type, team_rating)
                 club.add_team(team)
 
             clubs.append(club)
