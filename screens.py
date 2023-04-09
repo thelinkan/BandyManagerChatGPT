@@ -11,8 +11,12 @@ screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
 def draw_start_menu():
     # Draw screen
-    #print(game_state)
+    bg = pygame.image.load("images/background1.png")
+    bg_rect = bg.get_rect()
+    bg_rect.left=0
+    bg_rect.top=0
     screen.fill(WHITE)
+    screen.blit(bg,bg_rect)
     title = font.render("Bandymanager", True, BLACK)
     title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, 100))
     screen.blit(title, title_rect)
