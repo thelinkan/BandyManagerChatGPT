@@ -1,8 +1,11 @@
 import json
+import random
 from manager import Manager
 from country import Country
 from club import Club
 from team import Team
+from person import Player
+from person import PlayerManager
 
 class Game:
     def __init__(self,year,month,day):
@@ -13,6 +16,7 @@ class Game:
         self.countries = {}
         #self.leagues = []
         self.clubs = []
+        self.player_manager = PlayerManager()
 
     def new_game(self,manager_name,manager_age):
         # create new game
@@ -37,8 +41,30 @@ class Game:
         for club in self.clubs:
             print(club.name)
             for team in club.teams:
+                if (team.team_type == "Men" or team.team_type == "Men U19"):
+                    gender="male"
+                else:
+                    gender="female"
+                player_first_name = ""
+                player_familyname = ""
+                antspelare = team.num_players
                 print(f"- {team.name} ({team.team_type})")
-        print(self.countries['Sweden'].male_first_names)
+                for i in range(antspelare):
+                    for key, value in self.countries.items():
+                        if(key == club.country):
+                            if(gender == "male"):
+                                player_first_name = value.random_name("male")
+                            else:
+                                player_first_name = value.random_name("female")
+                            player_familyname = value.random_name("family")
+                        #print(f"== {key} == {value} ==")
+                    age = random.randint(20,36)
+                    #team.create_player(player_first_name,player_familyname,age,gender,"forward",team)
+                    player = self.player_manager.create_player(player_first_name, player_familyname, age, gender, "forward", team)
+                    team.add_player(player)
+                    print(f"- - {player.__str__()}")
+                team.print_players()
+        #print(self.countries['Sweden'].male_first_names)
         #keys = self.countries.keys()
         #print(keys)
         #values = self.countries.values()
@@ -78,12 +104,17 @@ class Game:
         #print(self.manager.return_team())
 
     def save_game(self, file_path):
+        # save game to file
         countries_data = []
         clubs_data =[]
+        players = []
+        
         for key, value in self.countries.items():
             countries_data.append(value.to_dict())
         for club in self.clubs:
             clubs_data.append(club.to_dict())
+            for team in club.teams:
+                print(f"save: {team.name}");
 
         game_data = {
                 'year': self.year,
@@ -102,7 +133,6 @@ class Game:
         with open('savedgames/save_game.json','w') as file:
             json.dump(game_data, file, indent=4)
         print("Game Data Saved")
-        # save game to file
 
     def set_manager_team(self,team):
         self.manager.set_team(team)
@@ -123,29 +153,6 @@ class Game:
             if country.name == country_name:
                 return country.return_flag()
 
-    #def read_clubs_from_json(self,json_file):
-    #    with open(json_file) as f:
-    #        data = json.load(f)
-
-    #    clubs = []
-
-    #    for club_data in data['clubs']:
-    #        name = club_data['name']
-    #        country = club_data['country']
-    #        rating = club_data['club_rating']
-    #        home_arena = club_data['home_arena']
-    #        club = Club(name, country, rating, home_arena)
-
-    #        for team_data in club_data['teams']:
-    #            name = team_data['name']
-    #            team_type = team_data['team_type']
-    #            team = Team(name, team_type)
-    #            club.add_team(team)
-
-    #        clubs.append(club)
-
-    #    return clubs
-
     def read_clubs_from_json(self,data):
 
         clubs = []
@@ -161,7 +168,9 @@ class Game:
                 name = team_data['name']
                 team_type = team_data['team_type']
                 team_rating = team_data['team_rating']
-                team = Team(name, team_type, team_rating)
+                num_players = team_data['num_players']
+                num_int_players = team_data['num_int_players']
+                team = Team(name, team_type, team_rating, num_players, num_int_players)
                 club.add_team(team)
 
             clubs.append(club)

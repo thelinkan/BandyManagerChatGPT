@@ -103,20 +103,42 @@
       ]
     },
     {
-      "name": "Mjondalens IF",
+      "name": "IFK Vänersborg",
+      "country": "Sweden",
+      "home_arena": "Vänersborgs Arena",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "IFK Vänersborg",
+          "team_type": "Men",
+          "team_rating": 70,
+          "num_players": 15,
+          "num_int_players": 3
+        },
+        {
+          "name": "IFK Vänersborg U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 15,
+          "num_int_players": 0
+        }
+      ]
+    },
+    {
+      "name": "Mjöndalens IF",
       "country": "Norway",
       "home_arena": "Vassenga",
       "club_rating": 75,
       "teams": [
         {
-          "name": "Mjondalens IF",
+          "name": "Mjöndalens IF",
           "team_type": "Men",
           "team_rating": 70,
           "num_players": 15,
           "num_int_players": 1
         },
         {
-          "name": "Mjondalens IF U19",
+          "name": "Mjöndalens IF U19",
           "team_type": "Men U19",
           "team_rating": 60,
           "num_players": 15,

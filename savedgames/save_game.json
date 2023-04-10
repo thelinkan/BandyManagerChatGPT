@@ -3,9 +3,9 @@
     "month": 8,
     "day": 1,
     "manager": {
-        "name": "Linkan",
+        "name": "sdf",
         "age": 33,
-        "team": "Ljusdals BK"
+        "team": "IFK V\u00c3\u00a4nersborg"
     },
     "countries": [
         {
@@ -234,20 +234,42 @@
                 ]
             },
             {
-                "name": "Mjondalens IF",
-                "country": "Norway",
+                "name": "IFK V\u00c3\u00a4nersborg",
+                "country": "Sweden",
                 "club_rating": 75,
-                "home_arena": "Vassenga",
+                "home_arena": "V\u00c3\u00a4nersborgs Arena",
                 "teams": [
                     {
-                        "name": "Mjondalens IF",
+                        "name": "IFK V\u00c3\u00a4nersborg",
                         "team_type": "Men",
                         "team_rating": 70,
                         "num_players": 0,
                         "num_int_players": 0
                     },
                     {
-                        "name": "Mjondalens IF U19",
+                        "name": "IFK V\u00c3\u00a4nersborg U19",
+                        "team_type": "Men U19",
+                        "team_rating": 60,
+                        "num_players": 0,
+                        "num_int_players": 0
+                    }
+                ]
+            },
+            {
+                "name": "Mj\u00c3\u00b6ndalens IF",
+                "country": "Norway",
+                "club_rating": 75,
+                "home_arena": "Vassenga",
+                "teams": [
+                    {
+                        "name": "Mj\u00c3\u00b6ndalens IF",
+                        "team_type": "Men",
+                        "team_rating": 70,
+                        "num_players": 0,
+                        "num_int_players": 0
+                    },
+                    {
+                        "name": "Mj\u00c3\u00b6ndalens IF U19",
                         "team_type": "Men U19",
                         "team_rating": 60,
                         "num_players": 0,
