@@ -1,0 +1,37 @@
+{
+    "male_first_names": [
+            "Aldis",
+            "Artur",
+            "Janis",
+            "Julij",
+            "Karlis",
+            "Lauris",
+            "Maksim",
+            "Martins",
+            "Niks",
+            "Valters"
+
+	],
+    "female_first_names": [
+            "Alvine",
+            "Judite",
+            "Justine",
+            "Regina",
+            "Otilija"
+
+	],
+    "family_names": [
+            "Apsitis",
+            "Befus",
+            "Blem",
+            "Golubovics",
+            "Kadnajs",
+            "Matveev",
+            "Ozolins",
+            "Popens",
+            "Skuska",
+            "Zakrevskis",
+            "Ziemins"
+
+	]
+}

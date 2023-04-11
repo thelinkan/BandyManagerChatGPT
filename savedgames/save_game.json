@@ -3,9 +3,9 @@
     "month": 8,
     "day": 1,
     "manager": {
-        "name": "sdf",
+        "name": "xdfg",
         "age": 33,
-        "team": "IFK V\u00c3\u00a4nersborg"
+        "team": "Ljusdals BK"
     },
     "countries": [
         {
@@ -142,28 +142,96 @@
                         "team_type": "Men",
                         "team_rating": 80,
                         "num_players": 0,
-                        "num_int_players": 0
+                        "num_int_players": 0,
+                        "players": [
+                            "27779824-b3ae-4895-ac74-53eb441e7aaf",
+                            "c4419d0d-ea76-4a82-a619-bec6832d5f6f",
+                            "47d8f85a-264a-42ac-8e6c-c7f79d1abc19",
+                            "986f74f7-b516-4fec-ace8-6986a2ddaa2f",
+                            "6b86e821-693a-4817-880c-9984aa669371",
+                            "30b1aafa-d98d-4ede-91d2-64663ad96f2a",
+                            "387d7ca8-55d3-4332-8f55-f4647795ab70",
+                            "7d4a2249-87ef-4deb-b36f-1ca3247789fc",
+                            "2ae95e97-6a88-4d23-942c-5256a67c5488",
+                            "1b9fd70f-4920-47d7-b59c-0e4484f6806d",
+                            "d8bff57c-148e-453b-b551-ffe31966a2d9",
+                            "6337fc3a-54d2-4ef5-b2f4-b53ce0331e1a",
+                            "7f02973f-96d8-490b-9908-ca323f387b80",
+                            "850ce9a5-0c5c-414d-8d24-ae1d66926794",
+                            "a18dfa84-b400-41d8-9b0f-0508fc09e78f"
+                        ]
                     },
                     {
                         "name": "Sandvikens AIK U19",
                         "team_type": "Men U19",
                         "team_rating": 70,
                         "num_players": 0,
-                        "num_int_players": 0
+                        "num_int_players": 0,
+                        "players": [
+                            "6f3ef3e4-d84f-4d3a-943e-63f06516ae70",
+                            "408f538f-de63-4db9-a0b8-cc784b0ce811",
+                            "59de3f48-19d1-41f9-9ac4-f58fad8cdfc0",
+                            "c0c3d247-df6f-4305-8204-66b10169cadb",
+                            "a62edf9f-d32e-46b6-807c-0f4eb0e9c1e9",
+                            "14ab7fdf-72d0-4df1-8dbc-c8a75e46ce2c",
+                            "eef283b0-b358-4b50-a3ef-edecf4a4a4b7",
+                            "38ebf0ea-6c59-4c68-bcfb-d5b138e0ac01",
+                            "cd2c919e-fba1-46ee-868e-8978825fec72",
+                            "47e5b052-b10b-4a41-bc74-ba5d0d348815",
+                            "ddb07b59-54f2-40c7-b5d4-eccd1ce2da27",
+                            "6003eb1b-3687-4f62-b92a-879da2024311",
+                            "5c4db7fd-95c0-45b7-b780-42617e14490c",
+                            "dca4ce97-11fc-49ad-8348-73e7648b5cde",
+                            "3b8408d5-4ae3-42f8-84db-a54c50c5e88d"
+                        ]
                     },
                     {
                         "name": "Sandvikens AIK",
                         "team_type": "Women",
                         "team_rating": 75,
                         "num_players": 0,
-                        "num_int_players": 0
+                        "num_int_players": 0,
+                        "players": [
+                            "5814c5ba-2bfc-4608-87f3-cbfe4428ffe3",
+                            "26a9c326-a502-4d6e-a685-02168f2fad9b",
+                            "f58e7c47-b5d9-4cfb-b75a-a818abcaed91",
+                            "b89db9e7-076f-4a29-a68a-2e685cf56f4e",
+                            "79830aab-cb66-4522-b140-f162a0f0f62e",
+                            "3f83a850-4760-47d0-b866-982f63fdff6b",
+                            "7a33e890-182b-4500-8c26-2c921ca34be0",
+                            "731992fa-74da-47e9-95da-d0de9a9ca4a2",
+                            "e1f46cd5-63ef-4b30-8262-0447b7cd3abd",
+                            "9c720ce2-a65a-4671-b22d-443c2ecfb6c0",
+                            "c7b92ce9-4e21-462c-99b8-72810cc3962c",
+                            "1e64a6d5-bb3a-4a70-ba2b-7e3740cae437",
+                            "db21cb50-26cf-4dba-95fe-51e8bedeebfc",
+                            "4bfe8f25-32e6-45ff-af41-0609f53a5a6b",
+                            "02e120d9-f524-4793-b45c-8425fd34ca6d"
+                        ]
                     },
                     {
                         "name": "Sandvikens AIK U19",
                         "team_type": "Women U19",
                         "team_rating": 65,
                         "num_players": 0,
-                        "num_int_players": 0
+                        "num_int_players": 0,
+                        "players": [
+                            "3e6f7c68-10df-4d12-9803-454a681f07fa",
+                            "ead1c888-b361-4f5d-827a-39b89ab2cb22",
+                            "2ceb577f-6484-429b-94df-39014e1b5f94",
+                            "d2bec98e-3284-4d0b-af7e-01047646f982",
+                            "fb79a68e-daa8-4821-8fae-a3a966cec4dd",
+                            "cd3e79bf-5ae5-4f33-929b-8e09966d6f51",
+                            "c400d6b7-eb1c-4123-9af9-ae7e3ea2f79f",
+                            "b7529fa1-6103-4586-9c11-86916c533e75",
+                            "78366d2c-c6a4-4062-bd2f-9b4a25787bc3",
+                            "1b9ba3d9-56d1-4dc4-b0cf-6fe2f1ef9161",
+                            "39c84f76-d71d-4a9f-be9e-68488d63f16f",
+                            "0ca31434-f072-4d90-ac28-820b5f09a7e3",
+                            "db89197c-751c-41c2-a50a-44ad85bb7c1e",
+                            "c3765473-1027-46da-bc8a-6efb71443774",
+                            "cee1d65a-5844-4cef-94b8-c0d29f4ee431"
+                        ]
                     }
                 ]
             },
@@ -178,14 +246,48 @@
                         "team_type": "Women",
                         "team_rating": 75,
                         "num_players": 0,
-                        "num_int_players": 0
+                        "num_int_players": 0,
+                        "players": [
+                            "4e14fab1-4d46-4a20-bfad-91075147ac8a",
+                            "e17dd5d2-ec0a-4043-9414-54bc5d97bcdf",
+                            "87c81fd1-527e-44c9-8033-4d68017ca4c0",
+                            "81bb5234-86b3-42a7-b4dd-0c2adfbc4ac9",
+                            "98b821ea-37b1-4237-a311-0e9c3f305421",
+                            "55c36173-0547-4bd0-8348-e474bd9366bc",
+                            "3583fb44-8f12-4e11-8c0f-c365aa318b56",
+                            "0cf747dd-e665-4995-84fa-43b5f9f2f692",
+                            "6faa6104-ff3c-45f6-91d0-e6816d1b7cdf",
+                            "b8472bff-e91e-4d6b-a9cf-3228cdd65c25",
+                            "90abae01-752b-40fa-8a90-639caac20497",
+                            "be644b8d-3a54-4937-a202-c1228fe808f2",
+                            "013976fb-42fe-4ea8-8ed6-60620d5cffbc",
+                            "81504ddd-4fad-49c6-933a-888838e8f7b9",
+                            "9721ca7c-ff34-4e21-b1d5-424e8cb8606b"
+                        ]
                     },
                     {
                         "name": "AIK U19",
                         "team_type": "Women U19",
                         "team_rating": 65,
                         "num_players": 0,
-                        "num_int_players": 0
+                        "num_int_players": 0,
+                        "players": [
+                            "4d38ab6e-a3fa-4443-8c77-dab5ed2075ce",
+                            "0fc77fa0-cde6-44a7-94ef-d35fae70de20",
+                            "50b77774-89d5-4fc1-8203-a26438d03137",
+                            "e2670063-9896-44b0-a010-f18f6457e9b2",
+                            "95948586-95e8-46cc-af34-8ff46e5661f6",
+                            "6ae84e0f-57eb-4be2-ae18-f4b4c8df1541",
+                            "40263721-81b2-46a4-9380-48fcfccc9de4",
+                            "fa1cc07c-0721-4e64-b1e0-ab456c93c84e",
+                            "f580e38a-bf8e-484f-80d0-73a3e20cba20",
+                            "8a137eca-ae80-44d9-bed5-3c57ee59df0b",
+                            "9051a5fa-2c7b-4014-af85-239eb37811a8",
+                            "44afef9e-eabc-4bcc-8dbf-210ee72bfb14",
+                            "319ecad5-94e4-4822-8b16-ece50cc2a70b",
+                            "99982b36-e70a-4ea7-8d29-bc73de1890ee",
+                            "20ad64af-13b0-456f-ae01-5b69fffc34f7"
+                        ]
                     }
                 ]
             },
@@ -200,14 +302,51 @@
                         "team_type": "Men",
                         "team_rating": 70,
                         "num_players": 0,
-                        "num_int_players": 0
+                        "num_int_players": 0,
+                        "players": [
+                            "04d366a7-5453-4964-b08a-3475232f19e5",
+                            "f5ec1669-483b-4500-afd4-dc906eb12bbf",
+                            "fcf11f8d-9974-4d61-8294-bab3a681605a",
+                            "5b5aac75-08c7-4751-9ef6-9bd4d446a176",
+                            "71d5ab0c-61c9-4896-a318-78b03d26125d",
+                            "bbfc2584-1456-49f4-a2f8-2ba4a6363829",
+                            "01843e7d-a362-4a67-846e-4f70ec5e9f8f",
+                            "5e8ce6ec-f037-4c9a-9cf5-0b17d36ecaa4",
+                            "b614973a-4b54-4381-ba0c-da6a8ec74196",
+                            "f95db8cf-7db6-4e8f-b7e1-2241ec13afa8",
+                            "e2b61977-a77b-46e5-920c-d0aff55fc10a",
+                            "80e6e46b-ceeb-4287-abe0-b272ab5ce44f",
+                            "5aa9b3eb-1730-43a0-ad51-15b1f05ed205",
+                            "2ac188f4-fa53-49fb-8a18-0fa587d3796e",
+                            "16c1de66-1f5f-4eb1-9af1-d32d11420295",
+                            "6f2ead83-36cd-4235-8a49-bf47557d1c24",
+                            "6b376333-06aa-47b0-aa37-24df33b793b5",
+                            "bd4eb3e1-4650-40ef-8ed2-1a2fd13a41c3"
+                        ]
                     },
                     {
                         "name": "Ljusdals BK U19",
                         "team_type": "Men U19",
                         "team_rating": 60,
                         "num_players": 0,
-                        "num_int_players": 0
+                        "num_int_players": 0,
+                        "players": [
+                            "0ac0967b-83a0-4601-8465-e52f4b1c09e2",
+                            "b56e6a4b-e674-48ee-a1c2-6d0e68c03f66",
+                            "e46aa283-3ade-4ff8-940f-e0c591320643",
+                            "cc3e53fa-19a2-4a37-90b1-7b256f9e3dd1",
+                            "d7b5fe74-de4b-43bc-96ac-1815131a45b2",
+                            "e6931b72-1553-4b7f-8505-a8e8a576ec19",
+                            "b811f5a3-20cb-4335-918c-081847189fa7",
+                            "f77521fe-dffc-4b8b-a199-b48bd572bcd9",
+                            "fd73a5ef-9169-4d54-8a59-094f98732a85",
+                            "a53343c1-045d-4126-af22-056abb292886",
+                            "55fd1809-933a-483a-b327-a96c5e6ab619",
+                            "ad39e73e-60bd-4f18-a1f8-67c29748b6f7",
+                            "92c81079-0540-4be8-9dd2-fbe02e6b2ef1",
+                            "6200ad77-166a-4b63-b6f5-9753c29b9c68",
+                            "2702b341-e3fd-49d3-ad05-9dd960f9f591"
+                        ]
                     }
                 ]
             },
@@ -222,14 +361,49 @@
                         "team_type": "Men",
                         "team_rating": 70,
                         "num_players": 0,
-                        "num_int_players": 0
+                        "num_int_players": 0,
+                        "players": [
+                            "3deeb90b-f5ec-4e90-ae2f-08fb1fb6e308",
+                            "a91a4c35-25f9-4d3a-8b13-f68ee4c0400b",
+                            "f8aba929-8216-40f0-b658-6ea8a4e5b7aa",
+                            "981e20f4-fcfa-4c51-b816-0ec83fae78cd",
+                            "5100586c-eb44-40b8-b631-1017ea772ac6",
+                            "9bd6ff0b-40e8-4603-b3df-093cb15f43a9",
+                            "761d7aa6-e6cb-4b84-8bee-19a139810639",
+                            "dc0e4504-ba98-4999-847d-f21db5b94d04",
+                            "c7f510e6-c3c1-4dd4-a849-d6fe4e5f883d",
+                            "5c6228b9-6deb-46d4-91a2-1822d943ed45",
+                            "47151522-9737-417c-8f4a-7d3f55bd86a4",
+                            "c2816a66-0de5-474c-9304-2dfcecc0a5ab",
+                            "287e05d3-cfa1-4331-b69a-593631af6262",
+                            "eb709af5-fa92-4650-8154-5d52fd1b0a7f",
+                            "637391f8-997f-4282-b314-f31facad94ff",
+                            "d157362f-de32-409a-ade4-62fe984fb8d3"
+                        ]
                     },
                     {
                         "name": "Brobergs IF U19",
                         "team_type": "Men U19",
                         "team_rating": 60,
                         "num_players": 0,
-                        "num_int_players": 0
+                        "num_int_players": 0,
+                        "players": [
+                            "031793bc-f870-4598-9165-19a949637394",
+                            "7b052ee8-1109-4706-85cb-b82575432757",
+                            "3c8f0ac5-8be8-47c6-8f87-08eda1dd1f05",
+                            "778ebf01-aa78-4e85-9fdf-6f6577559b95",
+                            "a14d4ba6-0427-4c3f-947d-0a0fba3b2e83",
+                            "f5f823f2-78ed-4c36-bac2-650961e12a82",
+                            "7a72ac63-6a36-4fe0-9890-4536a41c28b7",
+                            "356f8d27-6cf1-4fbd-b149-1c4a7d1c580a",
+                            "fdb4caf4-8b98-4025-8f46-a8c6dc1898c0",
+                            "5c068aab-b361-4d88-8230-f1ae4e8afabe",
+                            "0098ec39-17f3-4d13-b6d9-59c2b715ba3e",
+                            "8b47e0fe-bcc8-4672-956b-8ff1de0ae1cd",
+                            "bdd81065-7999-49ee-86f2-7ab74930a311",
+                            "a5b6db45-e76e-4b78-bb55-25f65e0d1de8",
+                            "c629cacc-0a5b-46d6-8787-6588b0fb5992"
+                        ]
                     }
                 ]
             },
@@ -244,14 +418,50 @@
                         "team_type": "Men",
                         "team_rating": 70,
                         "num_players": 0,
-                        "num_int_players": 0
+                        "num_int_players": 0,
+                        "players": [
+                            "2deb77ca-0203-4226-b6cf-b6c79cf1d417",
+                            "8b2c0d8f-519f-4dc0-828c-90122deefb39",
+                            "5cd701fc-ee27-4e4c-bcf2-54b908e3cd6e",
+                            "98853f32-34ba-4174-af3d-49674e354fd6",
+                            "f428a725-8246-4de7-a82a-41c4a22489a5",
+                            "ed33a9ae-5c18-4cf5-b85f-edf9bfd18f9c",
+                            "e67ab804-e2b5-4935-8c91-e8ede5893173",
+                            "714b1a46-ae41-40df-a1f5-f436ee9a2bcd",
+                            "c89b43f8-19a0-4e73-8ff3-3152551fc254",
+                            "b58e5853-3d1d-4de6-b915-07c0332529c3",
+                            "5af5a4d6-67a8-4a8a-9467-af60a237a36a",
+                            "bb3322ae-9e52-449a-9562-f87048037609",
+                            "b82bf66a-5f35-4f8c-987c-db7ae130f994",
+                            "020495ca-6ddb-4161-8399-fca9ff294435",
+                            "e9c39b88-74ae-40b3-a416-053e4c74dae4",
+                            "62572b99-8bf8-436e-b2af-9e6b1ec27143",
+                            "fdedef14-c651-49c8-a814-39a4e8e105b6"
+                        ]
                     },
                     {
                         "name": "IFK V\u00c3\u00a4nersborg U19",
                         "team_type": "Men U19",
                         "team_rating": 60,
                         "num_players": 0,
-                        "num_int_players": 0
+                        "num_int_players": 0,
+                        "players": [
+                            "dd733fe7-5fc5-484b-9adf-a3288961db84",
+                            "172c2468-8463-40ad-a20e-52a1a0a57739",
+                            "efa36fd3-22de-4a81-ae7b-de8586d7b819",
+                            "34a5c624-a007-4ab3-b578-48d053ce7366",
+                            "9fe6ee89-2d3d-42c9-89c6-9005b66a12b0",
+                            "617e65e7-1780-4894-85d1-42b979b77d16",
+                            "ec8860cf-1ab9-45ea-ba03-4a091eff2b92",
+                            "58ac8c15-cb70-4fe1-ac00-5505c14cc770",
+                            "063dd388-a7ca-4851-b631-1b0ac6c8aa5c",
+                            "67bfec58-88ce-4efb-ad9d-fd9adcc549b8",
+                            "66f3cd61-1282-4fad-9696-aa64d29df9d3",
+                            "d1a1b66d-68fe-415d-9799-1a0da11abee8",
+                            "504b2ad3-818b-4e5e-ba08-6feb6d13507b",
+                            "357e14f5-5e0c-486c-bf52-4bc433ac68d7",
+                            "eece4c2a-f1fb-4256-8a6b-7d54a973c9c5"
+                        ]
                     }
                 ]
             },
@@ -266,17 +476,1781 @@
                         "team_type": "Men",
                         "team_rating": 70,
                         "num_players": 0,
-                        "num_int_players": 0
+                        "num_int_players": 0,
+                        "players": [
+                            "92ebcf54-ef00-45d6-aee7-ea9160233ba5",
+                            "07f9d7c1-b2d2-497a-bc70-2bbd71509f16",
+                            "c3a77ff1-f1d8-45fc-a03e-16fc934cf50c",
+                            "8610db89-4160-4e05-912e-1fdeccd6bfda",
+                            "64074ecc-9cdf-4cd3-a0a7-e075a39b2fed",
+                            "d5d5764d-8184-4085-b9f6-985154baa5f4",
+                            "87172d53-4f78-4bd0-895f-79e710b4c4ed",
+                            "90dc136d-8581-473c-b82f-7e93fcf9d9c2",
+                            "c4f38b06-b317-4f44-84ec-24d16259a379",
+                            "1c8d41ac-8422-4150-a7ec-d8788dbf14dc",
+                            "b16a3812-9cfe-4395-8fe8-cfdac11265c9",
+                            "8f6f89f6-fc77-4938-b2e1-163279cccd49",
+                            "ca4aa15e-c192-4e5a-bfef-9a29e45021b0",
+                            "55373c09-a932-4c14-aff3-5ab1e1adc6f2",
+                            "1c8e5eab-3cbe-47f7-82f3-885325735af3"
+                        ]
                     },
                     {
                         "name": "Mj\u00c3\u00b6ndalens IF U19",
                         "team_type": "Men U19",
                         "team_rating": 60,
                         "num_players": 0,
-                        "num_int_players": 0
+                        "num_int_players": 0,
+                        "players": [
+                            "d4a3a15e-9f7e-4cb7-b987-f015632c779d",
+                            "d2c7fbb6-390f-4ea9-b771-d291577691df",
+                            "88d3bb7f-09f8-4994-b51b-574dba56490b",
+                            "140d5eed-ee00-4a90-b4f9-bc93659ce444",
+                            "1d8eb387-341e-446c-9ddd-af570501799b",
+                            "5e16cc1a-3e74-4786-ac3c-1c444e31e1ea",
+                            "cfccc5e5-4bbc-4e88-9242-e4beee41c696",
+                            "e1ade5b7-a13b-47ae-b4f4-3e9b5a7cbea5",
+                            "0e60615e-4476-470b-86c2-ba90e00dbabb",
+                            "0c1cf06c-5910-465c-9a45-68cda027be10",
+                            "a7f376df-4072-4249-8a1a-7b69e72157d3",
+                            "67ca13a7-c78b-41cd-a727-5dba9f4269d7",
+                            "a773e2f7-a943-4a6c-96bc-49cec7da5111",
+                            "61a9043a-9e6e-4cac-aee7-6acd0b35a167",
+                            "6c18faf2-8325-4c30-9137-2bcdcd53f3d7"
+                        ]
                     }
                 ]
             }
         ]
-    }
+    },
+    "players": [
+        {
+            "uuid": "27779824-b3ae-4895-ac74-53eb441e7aaf",
+            "first_name": "Dick",
+            "last_name": "H\u00c3\u00a5kansson",
+            "age": 26,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "c4419d0d-ea76-4a82-a619-bec6832d5f6f",
+            "first_name": "Stellan",
+            "last_name": "S\u00c3\u00a4fstr\u00c3\u00b6m",
+            "age": 36,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "47d8f85a-264a-42ac-8e6c-c7f79d1abc19",
+            "first_name": "Artur",
+            "last_name": "Lundstr\u00c3\u00b6m",
+            "age": 32,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "986f74f7-b516-4fec-ace8-6986a2ddaa2f",
+            "first_name": "Bernt",
+            "last_name": "Hedlund",
+            "age": 23,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "6b86e821-693a-4817-880c-9984aa669371",
+            "first_name": "Tony",
+            "last_name": "\u00c3\u2026berg",
+            "age": 22,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "30b1aafa-d98d-4ede-91d2-64663ad96f2a",
+            "first_name": "Anders",
+            "last_name": "Lind",
+            "age": 23,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "387d7ca8-55d3-4332-8f55-f4647795ab70",
+            "first_name": "Artur",
+            "last_name": "Edlund",
+            "age": 21,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "7d4a2249-87ef-4deb-b36f-1ca3247789fc",
+            "first_name": "Micke",
+            "last_name": "Hansen",
+            "age": 33,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "2ae95e97-6a88-4d23-942c-5256a67c5488",
+            "first_name": "Per",
+            "last_name": "Berlin",
+            "age": 23,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "1b9fd70f-4920-47d7-b59c-0e4484f6806d",
+            "first_name": "Nicklas",
+            "last_name": "Lundgren",
+            "age": 33,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "d8bff57c-148e-453b-b551-ffe31966a2d9",
+            "first_name": "Elis",
+            "last_name": "Wikstr\u00c3\u00b6m",
+            "age": 27,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "6337fc3a-54d2-4ef5-b2f4-b53ce0331e1a",
+            "first_name": "Mikael",
+            "last_name": "Nordstr\u00c3\u00b6m",
+            "age": 29,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "7f02973f-96d8-490b-9908-ca323f387b80",
+            "first_name": "Tor",
+            "last_name": "Lindholm",
+            "age": 20,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "850ce9a5-0c5c-414d-8d24-ae1d66926794",
+            "first_name": "Erland",
+            "last_name": "Jakobsson",
+            "age": 36,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "a18dfa84-b400-41d8-9b0f-0508fc09e78f",
+            "first_name": "Nicklas",
+            "last_name": "Blom",
+            "age": 35,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "6f3ef3e4-d84f-4d3a-943e-63f06516ae70",
+            "first_name": "Ola",
+            "last_name": "Nordstr\u00c3\u00b6m",
+            "age": 28,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "408f538f-de63-4db9-a0b8-cc784b0ce811",
+            "first_name": "Sigfrid",
+            "last_name": "Holm",
+            "age": 35,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "59de3f48-19d1-41f9-9ac4-f58fad8cdfc0",
+            "first_name": "Magnus",
+            "last_name": "Carlsson",
+            "age": 23,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "c0c3d247-df6f-4305-8204-66b10169cadb",
+            "first_name": "Tage",
+            "last_name": "Lundin",
+            "age": 30,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "a62edf9f-d32e-46b6-807c-0f4eb0e9c1e9",
+            "first_name": "Hans-Ove",
+            "last_name": "Lind",
+            "age": 28,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "14ab7fdf-72d0-4df1-8dbc-c8a75e46ce2c",
+            "first_name": "Hans-G\u00c3\u00b6ran",
+            "last_name": "Abrahamsson",
+            "age": 35,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "eef283b0-b358-4b50-a3ef-edecf4a4a4b7",
+            "first_name": "Claes",
+            "last_name": "Lund",
+            "age": 36,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "38ebf0ea-6c59-4c68-bcfb-d5b138e0ac01",
+            "first_name": "Bo",
+            "last_name": "Andreasson",
+            "age": 31,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "cd2c919e-fba1-46ee-868e-8978825fec72",
+            "first_name": "Fredrik",
+            "last_name": "Str\u00c3\u00b6mberg",
+            "age": 31,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "47e5b052-b10b-4a41-bc74-ba5d0d348815",
+            "first_name": "Wilhelm",
+            "last_name": "Berggren",
+            "age": 22,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "ddb07b59-54f2-40c7-b5d4-eccd1ce2da27",
+            "first_name": "Pontus",
+            "last_name": "Eliasson",
+            "age": 35,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "6003eb1b-3687-4f62-b92a-879da2024311",
+            "first_name": "Joacim",
+            "last_name": "Lundqvist",
+            "age": 21,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "5c4db7fd-95c0-45b7-b780-42617e14490c",
+            "first_name": "Lars-Erik",
+            "last_name": "\u00c3\u2026berg",
+            "age": 20,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "dca4ce97-11fc-49ad-8348-73e7648b5cde",
+            "first_name": "Nils",
+            "last_name": "Hansson",
+            "age": 24,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "3b8408d5-4ae3-42f8-84db-a54c50c5e88d",
+            "first_name": "Tommy",
+            "last_name": "Blom",
+            "age": 25,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "5814c5ba-2bfc-4608-87f3-cbfe4428ffe3",
+            "first_name": "Anna",
+            "last_name": "Bj\u00c3\u00b6rklund",
+            "age": 33,
+            "gender": "female",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "26a9c326-a502-4d6e-a685-02168f2fad9b",
+            "first_name": "Anna",
+            "last_name": "Sandberg",
+            "age": 32,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "f58e7c47-b5d9-4cfb-b75a-a818abcaed91",
+            "first_name": "Lena",
+            "last_name": "S\u00c3\u00b6derberg",
+            "age": 35,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "b89db9e7-076f-4a29-a68a-2e685cf56f4e",
+            "first_name": "Anna",
+            "last_name": "Lindquist",
+            "age": 23,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "79830aab-cb66-4522-b140-f162a0f0f62e",
+            "first_name": "Eva",
+            "last_name": "Olofsson",
+            "age": 30,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "3f83a850-4760-47d0-b866-982f63fdff6b",
+            "first_name": "Lena",
+            "last_name": "Svensson",
+            "age": 20,
+            "gender": "female",
+            "position": "half back"
+        },
+        {
+            "uuid": "7a33e890-182b-4500-8c26-2c921ca34be0",
+            "first_name": "Lena",
+            "last_name": "Mohamed",
+            "age": 30,
+            "gender": "female",
+            "position": "half back"
+        },
+        {
+            "uuid": "731992fa-74da-47e9-95da-d0de9a9ca4a2",
+            "first_name": "Lena",
+            "last_name": "Bj\u00c3\u00b6rklund",
+            "age": 20,
+            "gender": "female",
+            "position": "half back"
+        },
+        {
+            "uuid": "e1f46cd5-63ef-4b30-8262-0447b7cd3abd",
+            "first_name": "Anna",
+            "last_name": "Fredriksson",
+            "age": 30,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "9c720ce2-a65a-4671-b22d-443c2ecfb6c0",
+            "first_name": "Anna",
+            "last_name": "Sundberg",
+            "age": 27,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "c7b92ce9-4e21-462c-99b8-72810cc3962c",
+            "first_name": "Anna",
+            "last_name": "Bergstr\u00c3\u00b6m",
+            "age": 23,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "1e64a6d5-bb3a-4a70-ba2b-7e3740cae437",
+            "first_name": "Karin",
+            "last_name": "Edlund",
+            "age": 34,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "db21cb50-26cf-4dba-95fe-51e8bedeebfc",
+            "first_name": "Maria",
+            "last_name": "Bengtsson",
+            "age": 24,
+            "gender": "female",
+            "position": "forward"
+        },
+        {
+            "uuid": "4bfe8f25-32e6-45ff-af41-0609f53a5a6b",
+            "first_name": "Lena",
+            "last_name": "H\u00c3\u00a5kansson",
+            "age": 32,
+            "gender": "female",
+            "position": "forward"
+        },
+        {
+            "uuid": "02e120d9-f524-4793-b45c-8425fd34ca6d",
+            "first_name": "Lena",
+            "last_name": "Lindstr\u00c3\u00b6m",
+            "age": 28,
+            "gender": "female",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "3e6f7c68-10df-4d12-9803-454a681f07fa",
+            "first_name": "Anna",
+            "last_name": "Pettersson",
+            "age": 28,
+            "gender": "female",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "ead1c888-b361-4f5d-827a-39b89ab2cb22",
+            "first_name": "Karin",
+            "last_name": "Blomqvist",
+            "age": 27,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "2ceb577f-6484-429b-94df-39014e1b5f94",
+            "first_name": "Maria",
+            "last_name": "Isaksson",
+            "age": 30,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "d2bec98e-3284-4d0b-af7e-01047646f982",
+            "first_name": "Maria",
+            "last_name": "Nordin",
+            "age": 34,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "fb79a68e-daa8-4821-8fae-a3a966cec4dd",
+            "first_name": "Lena",
+            "last_name": "Bergman",
+            "age": 20,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "cd3e79bf-5ae5-4f33-929b-8e09966d6f51",
+            "first_name": "Maria",
+            "last_name": "Forsberg",
+            "age": 22,
+            "gender": "female",
+            "position": "half back"
+        },
+        {
+            "uuid": "c400d6b7-eb1c-4123-9af9-ae7e3ea2f79f",
+            "first_name": "Lena",
+            "last_name": "Johansson",
+            "age": 26,
+            "gender": "female",
+            "position": "half back"
+        },
+        {
+            "uuid": "b7529fa1-6103-4586-9c11-86916c533e75",
+            "first_name": "Karin",
+            "last_name": "Bergman",
+            "age": 25,
+            "gender": "female",
+            "position": "half back"
+        },
+        {
+            "uuid": "78366d2c-c6a4-4062-bd2f-9b4a25787bc3",
+            "first_name": "Karin",
+            "last_name": "Str\u00c3\u00b6m",
+            "age": 26,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "1b9ba3d9-56d1-4dc4-b0cf-6fe2f1ef9161",
+            "first_name": "Anna",
+            "last_name": "Andersson",
+            "age": 36,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "39c84f76-d71d-4a9f-be9e-68488d63f16f",
+            "first_name": "Lena",
+            "last_name": "Nilsson",
+            "age": 27,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "0ca31434-f072-4d90-ac28-820b5f09a7e3",
+            "first_name": "Lena",
+            "last_name": "Holmqvist",
+            "age": 26,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "db89197c-751c-41c2-a50a-44ad85bb7c1e",
+            "first_name": "Maria",
+            "last_name": "Magnusson",
+            "age": 21,
+            "gender": "female",
+            "position": "forward"
+        },
+        {
+            "uuid": "c3765473-1027-46da-bc8a-6efb71443774",
+            "first_name": "Anna",
+            "last_name": "Eliasson",
+            "age": 29,
+            "gender": "female",
+            "position": "forward"
+        },
+        {
+            "uuid": "cee1d65a-5844-4cef-94b8-c0d29f4ee431",
+            "first_name": "Eva",
+            "last_name": "Holmgren",
+            "age": 23,
+            "gender": "female",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "4e14fab1-4d46-4a20-bfad-91075147ac8a",
+            "first_name": "Karin",
+            "last_name": "Fredriksson",
+            "age": 25,
+            "gender": "female",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "e17dd5d2-ec0a-4043-9414-54bc5d97bcdf",
+            "first_name": "Maria",
+            "last_name": "Hermansson",
+            "age": 35,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "87c81fd1-527e-44c9-8033-4d68017ca4c0",
+            "first_name": "Lena",
+            "last_name": "Sundstr\u00c3\u00b6m",
+            "age": 28,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "81bb5234-86b3-42a7-b4dd-0c2adfbc4ac9",
+            "first_name": "Maria",
+            "last_name": "J\u00c3\u00b6nsson",
+            "age": 31,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "98b821ea-37b1-4237-a311-0e9c3f305421",
+            "first_name": "Maria",
+            "last_name": "Mohamed",
+            "age": 24,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "55c36173-0547-4bd0-8348-e474bd9366bc",
+            "first_name": "Eva",
+            "last_name": "Sj\u00c3\u00b6gren",
+            "age": 35,
+            "gender": "female",
+            "position": "half back"
+        },
+        {
+            "uuid": "3583fb44-8f12-4e11-8c0f-c365aa318b56",
+            "first_name": "Anna",
+            "last_name": "Bergwall",
+            "age": 21,
+            "gender": "female",
+            "position": "half back"
+        },
+        {
+            "uuid": "0cf747dd-e665-4995-84fa-43b5f9f2f692",
+            "first_name": "Lena",
+            "last_name": "Larsson",
+            "age": 31,
+            "gender": "female",
+            "position": "half back"
+        },
+        {
+            "uuid": "6faa6104-ff3c-45f6-91d0-e6816d1b7cdf",
+            "first_name": "Karin",
+            "last_name": "Jonsson",
+            "age": 29,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "b8472bff-e91e-4d6b-a9cf-3228cdd65c25",
+            "first_name": "Lena",
+            "last_name": "M\u00c3\u00a5rtensson",
+            "age": 27,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "90abae01-752b-40fa-8a90-639caac20497",
+            "first_name": "Anna",
+            "last_name": "Abrahamsson",
+            "age": 24,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "be644b8d-3a54-4937-a202-c1228fe808f2",
+            "first_name": "Anna",
+            "last_name": "Lundberg",
+            "age": 23,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "013976fb-42fe-4ea8-8ed6-60620d5cffbc",
+            "first_name": "Lena",
+            "last_name": "Bengtsson",
+            "age": 34,
+            "gender": "female",
+            "position": "forward"
+        },
+        {
+            "uuid": "81504ddd-4fad-49c6-933a-888838e8f7b9",
+            "first_name": "Maria",
+            "last_name": "Bj\u00c3\u00b6rk",
+            "age": 30,
+            "gender": "female",
+            "position": "forward"
+        },
+        {
+            "uuid": "9721ca7c-ff34-4e21-b1d5-424e8cb8606b",
+            "first_name": "Karin",
+            "last_name": "Mohamed",
+            "age": 30,
+            "gender": "female",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "4d38ab6e-a3fa-4443-8c77-dab5ed2075ce",
+            "first_name": "Eva",
+            "last_name": "Westh",
+            "age": 31,
+            "gender": "female",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "0fc77fa0-cde6-44a7-94ef-d35fae70de20",
+            "first_name": "Anna",
+            "last_name": "Ek",
+            "age": 28,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "50b77774-89d5-4fc1-8203-a26438d03137",
+            "first_name": "Karin",
+            "last_name": "Lindstr\u00c3\u00b6m",
+            "age": 28,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "e2670063-9896-44b0-a010-f18f6457e9b2",
+            "first_name": "Lena",
+            "last_name": "Carlsson",
+            "age": 30,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "95948586-95e8-46cc-af34-8ff46e5661f6",
+            "first_name": "Karin",
+            "last_name": "Hansson",
+            "age": 23,
+            "gender": "female",
+            "position": "defender"
+        },
+        {
+            "uuid": "6ae84e0f-57eb-4be2-ae18-f4b4c8df1541",
+            "first_name": "Anna",
+            "last_name": "Lindgren",
+            "age": 21,
+            "gender": "female",
+            "position": "half back"
+        },
+        {
+            "uuid": "40263721-81b2-46a4-9380-48fcfccc9de4",
+            "first_name": "Eva",
+            "last_name": "Larsson",
+            "age": 22,
+            "gender": "female",
+            "position": "half back"
+        },
+        {
+            "uuid": "fa1cc07c-0721-4e64-b1e0-ab456c93c84e",
+            "first_name": "Eva",
+            "last_name": "Hellstr\u00c3\u00b6m",
+            "age": 31,
+            "gender": "female",
+            "position": "half back"
+        },
+        {
+            "uuid": "f580e38a-bf8e-484f-80d0-73a3e20cba20",
+            "first_name": "Karin",
+            "last_name": "Fransson",
+            "age": 22,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "8a137eca-ae80-44d9-bed5-3c57ee59df0b",
+            "first_name": "Karin",
+            "last_name": "Claesson",
+            "age": 32,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "9051a5fa-2c7b-4014-af85-239eb37811a8",
+            "first_name": "Karin",
+            "last_name": "Elfving",
+            "age": 22,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "44afef9e-eabc-4bcc-8dbf-210ee72bfb14",
+            "first_name": "Eva",
+            "last_name": "Svensson",
+            "age": 36,
+            "gender": "female",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "319ecad5-94e4-4822-8b16-ece50cc2a70b",
+            "first_name": "Karin",
+            "last_name": "Engstr\u00c3\u00b6m",
+            "age": 36,
+            "gender": "female",
+            "position": "forward"
+        },
+        {
+            "uuid": "99982b36-e70a-4ea7-8d29-bc73de1890ee",
+            "first_name": "Anna",
+            "last_name": "L\u00c3\u00b6fgren",
+            "age": 28,
+            "gender": "female",
+            "position": "forward"
+        },
+        {
+            "uuid": "20ad64af-13b0-456f-ae01-5b69fffc34f7",
+            "first_name": "Karin",
+            "last_name": "Lindgren",
+            "age": 32,
+            "gender": "female",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "04d366a7-5453-4964-b08a-3475232f19e5",
+            "first_name": "Rickard",
+            "last_name": "L\u00c3\u00b6fstedt",
+            "age": 33,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "f5ec1669-483b-4500-afd4-dc906eb12bbf",
+            "first_name": "Odd",
+            "last_name": "Lind",
+            "age": 36,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "fcf11f8d-9974-4d61-8294-bab3a681605a",
+            "first_name": "Lage",
+            "last_name": "Bj\u00c3\u00b6rk",
+            "age": 26,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "5b5aac75-08c7-4751-9ef6-9bd4d446a176",
+            "first_name": "Tore",
+            "last_name": "J\u00c3\u00b6nsson",
+            "age": 31,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "71d5ab0c-61c9-4896-a318-78b03d26125d",
+            "first_name": "Carl",
+            "last_name": "\u00c3\u2026berg",
+            "age": 25,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "bbfc2584-1456-49f4-a2f8-2ba4a6363829",
+            "first_name": "Jonas",
+            "last_name": "Bergqvist",
+            "age": 25,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "01843e7d-a362-4a67-846e-4f70ec5e9f8f",
+            "first_name": "B\u00c3\u00b6rje",
+            "last_name": "Mattsson",
+            "age": 25,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "5e8ce6ec-f037-4c9a-9cf5-0b17d36ecaa4",
+            "first_name": "Gunnar",
+            "last_name": "Nordstr\u00c3\u00b6m",
+            "age": 36,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "b614973a-4b54-4381-ba0c-da6a8ec74196",
+            "first_name": "Peter",
+            "last_name": "Sandberg",
+            "age": 28,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "f95db8cf-7db6-4e8f-b7e1-2241ec13afa8",
+            "first_name": "\u00c3\u2013sten",
+            "last_name": "Fransson",
+            "age": 28,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "e2b61977-a77b-46e5-920c-d0aff55fc10a",
+            "first_name": "Hilding",
+            "last_name": "Lind",
+            "age": 20,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "80e6e46b-ceeb-4287-abe0-b272ab5ce44f",
+            "first_name": "Thomas",
+            "last_name": "Hansen",
+            "age": 31,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "5aa9b3eb-1730-43a0-ad51-15b1f05ed205",
+            "first_name": "Lasse",
+            "last_name": "Lundqvist",
+            "age": 36,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "2ac188f4-fa53-49fb-8a18-0fa587d3796e",
+            "first_name": "Dan",
+            "last_name": "Norberg",
+            "age": 24,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "16c1de66-1f5f-4eb1-9af1-d32d11420295",
+            "first_name": "Sam",
+            "last_name": "Sundstr\u00c3\u00b6m",
+            "age": 28,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "6f2ead83-36cd-4235-8a49-bf47557d1c24",
+            "first_name": "\u00c3\u2013rjan",
+            "last_name": "Fredriksson",
+            "age": 33,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "6b376333-06aa-47b0-aa37-24df33b793b5",
+            "first_name": "Hans",
+            "last_name": "Gunnarsson",
+            "age": 31,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "bd4eb3e1-4650-40ef-8ed2-1a2fd13a41c3",
+            "first_name": "Bernt",
+            "last_name": "\u00c3\u2026berg",
+            "age": 20,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "0ac0967b-83a0-4601-8465-e52f4b1c09e2",
+            "first_name": "Rutger",
+            "last_name": "Holmqvist",
+            "age": 24,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "b56e6a4b-e674-48ee-a1c2-6d0e68c03f66",
+            "first_name": "Hans-Ove",
+            "last_name": "Hermansson",
+            "age": 33,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "e46aa283-3ade-4ff8-940f-e0c591320643",
+            "first_name": "Ronnie",
+            "last_name": "Hansson",
+            "age": 35,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "cc3e53fa-19a2-4a37-90b1-7b256f9e3dd1",
+            "first_name": "Joacim",
+            "last_name": "Lindholm",
+            "age": 29,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "d7b5fe74-de4b-43bc-96ac-1815131a45b2",
+            "first_name": "Glen",
+            "last_name": "Hellmyrs",
+            "age": 26,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "e6931b72-1553-4b7f-8505-a8e8a576ec19",
+            "first_name": "Fredrik",
+            "last_name": "Engstr\u00c3\u00b6m",
+            "age": 22,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "b811f5a3-20cb-4335-918c-081847189fa7",
+            "first_name": "Henrik",
+            "last_name": "Hellstr\u00c3\u00b6m",
+            "age": 32,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "f77521fe-dffc-4b8b-a199-b48bd572bcd9",
+            "first_name": "Christoffer",
+            "last_name": "Andersson",
+            "age": 25,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "fd73a5ef-9169-4d54-8a59-094f98732a85",
+            "first_name": "Michael",
+            "last_name": "Henriksson",
+            "age": 33,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "a53343c1-045d-4126-af22-056abb292886",
+            "first_name": "Gert",
+            "last_name": "Bergwall",
+            "age": 25,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "55fd1809-933a-483a-b327-a96c5e6ab619",
+            "first_name": "Claes-G\u00c3\u00b6ran",
+            "last_name": "Bergman",
+            "age": 25,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "ad39e73e-60bd-4f18-a1f8-67c29748b6f7",
+            "first_name": "M\u00c3\u00a5rten",
+            "last_name": "Lindholm",
+            "age": 36,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "92c81079-0540-4be8-9dd2-fbe02e6b2ef1",
+            "first_name": "\u00c3\u2026ke",
+            "last_name": "Eklund",
+            "age": 34,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "6200ad77-166a-4b63-b6f5-9753c29b9c68",
+            "first_name": "Nils",
+            "last_name": "Henriksson",
+            "age": 30,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "2702b341-e3fd-49d3-ad05-9dd960f9f591",
+            "first_name": "Sam",
+            "last_name": "Bergstr\u00c3\u00b6m",
+            "age": 29,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "3deeb90b-f5ec-4e90-ae2f-08fb1fb6e308",
+            "first_name": "Tage",
+            "last_name": "Viklund",
+            "age": 22,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "a91a4c35-25f9-4d3a-8b13-f68ee4c0400b",
+            "first_name": "Carl",
+            "last_name": "Danielsson",
+            "age": 21,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "f8aba929-8216-40f0-b658-6ea8a4e5b7aa",
+            "first_name": "Ulf",
+            "last_name": "Lund",
+            "age": 31,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "981e20f4-fcfa-4c51-b816-0ec83fae78cd",
+            "first_name": "M\u00c3\u00a5rten",
+            "last_name": "Viklund",
+            "age": 27,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "5100586c-eb44-40b8-b631-1017ea772ac6",
+            "first_name": "Dan",
+            "last_name": "Lundin",
+            "age": 32,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "9bd6ff0b-40e8-4603-b3df-093cb15f43a9",
+            "first_name": "Jan-Erik",
+            "last_name": "Bergwall",
+            "age": 28,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "761d7aa6-e6cb-4b84-8bee-19a139810639",
+            "first_name": "Oskar",
+            "last_name": "Dahlberg",
+            "age": 36,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "dc0e4504-ba98-4999-847d-f21db5b94d04",
+            "first_name": "Per-Anders",
+            "last_name": "Nordin",
+            "age": 27,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "c7f510e6-c3c1-4dd4-a849-d6fe4e5f883d",
+            "first_name": "H\u00c3\u00a5kan",
+            "last_name": "Ali",
+            "age": 30,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "5c6228b9-6deb-46d4-91a2-1822d943ed45",
+            "first_name": "Claes",
+            "last_name": "Samuelsson",
+            "age": 36,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "47151522-9737-417c-8f4a-7d3f55bd86a4",
+            "first_name": "Verner",
+            "last_name": "Jansson",
+            "age": 32,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "c2816a66-0de5-474c-9304-2dfcecc0a5ab",
+            "first_name": "Jonas",
+            "last_name": "Svensson",
+            "age": 32,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "287e05d3-cfa1-4331-b69a-593631af6262",
+            "first_name": "S\u00c3\u00b6ren",
+            "last_name": "P\u00c3\u00a5lsson",
+            "age": 36,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "eb709af5-fa92-4650-8154-5d52fd1b0a7f",
+            "first_name": "Viktor",
+            "last_name": "Lund",
+            "age": 28,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "637391f8-997f-4282-b314-f31facad94ff",
+            "first_name": "Ante",
+            "last_name": "Gunnarsson",
+            "age": 26,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "d157362f-de32-409a-ade4-62fe984fb8d3",
+            "first_name": "Glen",
+            "last_name": "V\u00c3\u00a4litalo",
+            "age": 36,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "031793bc-f870-4598-9165-19a949637394",
+            "first_name": "Harald",
+            "last_name": "Lundstr\u00c3\u00b6m",
+            "age": 24,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "7b052ee8-1109-4706-85cb-b82575432757",
+            "first_name": "Ronnie",
+            "last_name": "Martinsson",
+            "age": 30,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "3c8f0ac5-8be8-47c6-8f87-08eda1dd1f05",
+            "first_name": "Wilhelm",
+            "last_name": "Edlund",
+            "age": 28,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "778ebf01-aa78-4e85-9fdf-6f6577559b95",
+            "first_name": "Lars-Eric",
+            "last_name": "Martinsson",
+            "age": 29,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "a14d4ba6-0427-4c3f-947d-0a0fba3b2e83",
+            "first_name": "Karl-Erik",
+            "last_name": "Nystr\u00c3\u00b6m",
+            "age": 36,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "f5f823f2-78ed-4c36-bac2-650961e12a82",
+            "first_name": "Harry",
+            "last_name": "Wallin",
+            "age": 21,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "7a72ac63-6a36-4fe0-9890-4536a41c28b7",
+            "first_name": "\u00c3\u201erling",
+            "last_name": "H\u00c3\u00a5kansson",
+            "age": 27,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "356f8d27-6cf1-4fbd-b149-1c4a7d1c580a",
+            "first_name": "J\u00c3\u00b6rgen",
+            "last_name": "\u00c3\u2026kesson",
+            "age": 20,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "fdb4caf4-8b98-4025-8f46-a8c6dc1898c0",
+            "first_name": "Per-Ove",
+            "last_name": "Eklund",
+            "age": 29,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "5c068aab-b361-4d88-8230-f1ae4e8afabe",
+            "first_name": "Kent",
+            "last_name": "M\u00c3\u00a5nsson",
+            "age": 23,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "0098ec39-17f3-4d13-b6d9-59c2b715ba3e",
+            "first_name": "Mats-Olof",
+            "last_name": "Bj\u00c3\u00b6rklund",
+            "age": 22,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "8b47e0fe-bcc8-4672-956b-8ff1de0ae1cd",
+            "first_name": "L\u00c3\u00a4nnart",
+            "last_name": "Jansson",
+            "age": 21,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "bdd81065-7999-49ee-86f2-7ab74930a311",
+            "first_name": "Per-Erik",
+            "last_name": "Bj\u00c3\u00b6rk",
+            "age": 24,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "a5b6db45-e76e-4b78-bb55-25f65e0d1de8",
+            "first_name": "Daniel",
+            "last_name": "Gustafsson",
+            "age": 26,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "c629cacc-0a5b-46d6-8787-6588b0fb5992",
+            "first_name": "Ove",
+            "last_name": "Falk",
+            "age": 32,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "2deb77ca-0203-4226-b6cf-b6c79cf1d417",
+            "first_name": "Rutger",
+            "last_name": "L\u00c3\u00b6fgren",
+            "age": 20,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "8b2c0d8f-519f-4dc0-828c-90122deefb39",
+            "first_name": "Jan-Ove",
+            "last_name": "Lund",
+            "age": 28,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "5cd701fc-ee27-4e4c-bcf2-54b908e3cd6e",
+            "first_name": "Elis",
+            "last_name": "Martinsson",
+            "age": 26,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "98853f32-34ba-4174-af3d-49674e354fd6",
+            "first_name": "Artur",
+            "last_name": "Lind",
+            "age": 35,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "f428a725-8246-4de7-a82a-41c4a22489a5",
+            "first_name": "Petter",
+            "last_name": "Westh",
+            "age": 26,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "ed33a9ae-5c18-4cf5-b85f-edf9bfd18f9c",
+            "first_name": "Olle",
+            "last_name": "Gunnarsson",
+            "age": 26,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "e67ab804-e2b5-4935-8c91-e8ede5893173",
+            "first_name": "Per-Erik",
+            "last_name": "Sandberg",
+            "age": 25,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "714b1a46-ae41-40df-a1f5-f436ee9a2bcd",
+            "first_name": "Christoffer",
+            "last_name": "Wikstr\u00c3\u00b6m",
+            "age": 25,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "c89b43f8-19a0-4e73-8ff3-3152551fc254",
+            "first_name": "Ernst",
+            "last_name": "Arvidsson",
+            "age": 34,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "b58e5853-3d1d-4de6-b915-07c0332529c3",
+            "first_name": "Mikael",
+            "last_name": "Karlsson",
+            "age": 33,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "5af5a4d6-67a8-4a8a-9467-af60a237a36a",
+            "first_name": "Jon-Anders",
+            "last_name": "Larsson",
+            "age": 26,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "bb3322ae-9e52-449a-9562-f87048037609",
+            "first_name": "Anders",
+            "last_name": "Forsberg",
+            "age": 21,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "b82bf66a-5f35-4f8c-987c-db7ae130f994",
+            "first_name": "B\u00c3\u00b6rje",
+            "last_name": "Holm",
+            "age": 23,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "020495ca-6ddb-4161-8399-fca9ff294435",
+            "first_name": "G\u00c3\u00b6sta",
+            "last_name": "M\u00c3\u00a5rtensson",
+            "age": 35,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "e9c39b88-74ae-40b3-a416-053e4c74dae4",
+            "first_name": "Claes-G\u00c3\u00b6ran",
+            "last_name": "Martinsson",
+            "age": 28,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "62572b99-8bf8-436e-b2af-9e6b1ec27143",
+            "first_name": "Lennart",
+            "last_name": "Lundin",
+            "age": 26,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "fdedef14-c651-49c8-a814-39a4e8e105b6",
+            "first_name": "Torbj\u00c3\u00b6rn",
+            "last_name": "Einarsson",
+            "age": 27,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "dd733fe7-5fc5-484b-9adf-a3288961db84",
+            "first_name": "Stefan",
+            "last_name": "L\u00c3\u00b6fgren",
+            "age": 35,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "172c2468-8463-40ad-a20e-52a1a0a57739",
+            "first_name": "H\u00c3\u00a5kan",
+            "last_name": "Lundqvist",
+            "age": 34,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "efa36fd3-22de-4a81-ae7b-de8586d7b819",
+            "first_name": "Michael",
+            "last_name": "Lindholm",
+            "age": 30,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "34a5c624-a007-4ab3-b578-48d053ce7366",
+            "first_name": "Per-Ove",
+            "last_name": "Persson",
+            "age": 36,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "9fe6ee89-2d3d-42c9-89c6-9005b66a12b0",
+            "first_name": "Stellan",
+            "last_name": "Fredriksson",
+            "age": 22,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "617e65e7-1780-4894-85d1-42b979b77d16",
+            "first_name": "Nils-Erik",
+            "last_name": "Jonsson",
+            "age": 21,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "ec8860cf-1ab9-45ea-ba03-4a091eff2b92",
+            "first_name": "Lars-G\u00c3\u00b6ran",
+            "last_name": "Sandberg",
+            "age": 21,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "58ac8c15-cb70-4fe1-ac00-5505c14cc770",
+            "first_name": "L\u00c3\u00a4nnart",
+            "last_name": "Lindholm",
+            "age": 24,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "063dd388-a7ca-4851-b631-1b0ac6c8aa5c",
+            "first_name": "Bj\u00c3\u00b6rn",
+            "last_name": "Eklund",
+            "age": 36,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "67bfec58-88ce-4efb-ad9d-fd9adcc549b8",
+            "first_name": "Harry",
+            "last_name": "Lindstr\u00c3\u00b6m",
+            "age": 36,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "66f3cd61-1282-4fad-9696-aa64d29df9d3",
+            "first_name": "\u00c3\u201erling",
+            "last_name": "\u00c3\u2026kesson",
+            "age": 29,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "d1a1b66d-68fe-415d-9799-1a0da11abee8",
+            "first_name": "Stellan",
+            "last_name": "Falk",
+            "age": 25,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "504b2ad3-818b-4e5e-ba08-6feb6d13507b",
+            "first_name": "Jonny",
+            "last_name": "Wallin",
+            "age": 27,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "357e14f5-5e0c-486c-bf52-4bc433ac68d7",
+            "first_name": "J\u00c3\u00b6rgen",
+            "last_name": "Olofsson",
+            "age": 26,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "eece4c2a-f1fb-4256-8a6b-7d54a973c9c5",
+            "first_name": "P\u00c3\u00a4r",
+            "last_name": "Ekstr\u00c3\u00b6m",
+            "age": 35,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "92ebcf54-ef00-45d6-aee7-ea9160233ba5",
+            "first_name": "Magnus",
+            "last_name": "H\u00c3\u00b8gvold",
+            "age": 31,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "07f9d7c1-b2d2-497a-bc70-2bbd71509f16",
+            "first_name": "Lars",
+            "last_name": "Grimelund",
+            "age": 29,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "c3a77ff1-f1d8-45fc-a03e-16fc934cf50c",
+            "first_name": "Bj\u00c3\u00b8rn",
+            "last_name": "Teigen",
+            "age": 22,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "8610db89-4160-4e05-912e-1fdeccd6bfda",
+            "first_name": "Sverre",
+            "last_name": "Svedrup",
+            "age": 22,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "64074ecc-9cdf-4cd3-a0a7-e075a39b2fed",
+            "first_name": "Christoffer",
+            "last_name": "Lindahl",
+            "age": 33,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "d5d5764d-8184-4085-b9f6-985154baa5f4",
+            "first_name": "Paul",
+            "last_name": "L\u00c3\u00b8yning",
+            "age": 22,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "87172d53-4f78-4bd0-895f-79e710b4c4ed",
+            "first_name": "Bj\u00c3\u00b8rge",
+            "last_name": "Haug",
+            "age": 30,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "90dc136d-8581-473c-b82f-7e93fcf9d9c2",
+            "first_name": "Bork",
+            "last_name": "Brecheisen",
+            "age": 24,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "c4f38b06-b317-4f44-84ec-24d16259a379",
+            "first_name": "Marius",
+            "last_name": "Lindahl",
+            "age": 31,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "1c8d41ac-8422-4150-a7ec-d8788dbf14dc",
+            "first_name": "Aage",
+            "last_name": "Brecheisen",
+            "age": 28,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "b16a3812-9cfe-4395-8fe8-cfdac11265c9",
+            "first_name": "Lars",
+            "last_name": "Hagberg",
+            "age": 31,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "8f6f89f6-fc77-4938-b2e1-163279cccd49",
+            "first_name": "Olav",
+            "last_name": "Teigen",
+            "age": 33,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "ca4aa15e-c192-4e5a-bfef-9a29e45021b0",
+            "first_name": "Bork",
+            "last_name": "Gr\u00c3\u00b8terud",
+            "age": 30,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "55373c09-a932-4c14-aff3-5ab1e1adc6f2",
+            "first_name": "Odd",
+            "last_name": "Gr\u00c3\u00b8terud",
+            "age": 30,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "1c8e5eab-3cbe-47f7-82f3-885325735af3",
+            "first_name": "John Olav",
+            "last_name": "Rohde",
+            "age": 25,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "d4a3a15e-9f7e-4cb7-b987-f015632c779d",
+            "first_name": "Christer",
+            "last_name": "Rohde",
+            "age": 34,
+            "gender": "male",
+            "position": "goalkeeper"
+        },
+        {
+            "uuid": "d2c7fbb6-390f-4ea9-b771-d291577691df",
+            "first_name": "Bork",
+            "last_name": "Smerkerud",
+            "age": 21,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "88d3bb7f-09f8-4994-b51b-574dba56490b",
+            "first_name": "Kjetil",
+            "last_name": "H\u00c3\u00b8gvold",
+            "age": 34,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "140d5eed-ee00-4a90-b4f9-bc93659ce444",
+            "first_name": "Lars",
+            "last_name": "Hammar",
+            "age": 33,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "1d8eb387-341e-446c-9ddd-af570501799b",
+            "first_name": "Aksel",
+            "last_name": "Hansen",
+            "age": 24,
+            "gender": "male",
+            "position": "defender"
+        },
+        {
+            "uuid": "5e16cc1a-3e74-4786-ac3c-1c444e31e1ea",
+            "first_name": "Marius",
+            "last_name": "Pedersen",
+            "age": 25,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "cfccc5e5-4bbc-4e88-9242-e4beee41c696",
+            "first_name": "Bori",
+            "last_name": "Johansen",
+            "age": 22,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "e1ade5b7-a13b-47ae-b4f4-3e9b5a7cbea5",
+            "first_name": "Gabian",
+            "last_name": "Bruun",
+            "age": 23,
+            "gender": "male",
+            "position": "half back"
+        },
+        {
+            "uuid": "0e60615e-4476-470b-86c2-ba90e00dbabb",
+            "first_name": "Kjell",
+            "last_name": "Waahler",
+            "age": 28,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "0c1cf06c-5910-465c-9a45-68cda027be10",
+            "first_name": "Bodvar",
+            "last_name": "Jensen",
+            "age": 36,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "a7f376df-4072-4249-8a1a-7b69e72157d3",
+            "first_name": "Magnus",
+            "last_name": "Grimelund",
+            "age": 31,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "67ca13a7-c78b-41cd-a727-5dba9f4269d7",
+            "first_name": "Nikolay",
+            "last_name": "Aamot",
+            "age": 29,
+            "gender": "male",
+            "position": "midfielder"
+        },
+        {
+            "uuid": "a773e2f7-a943-4a6c-96bc-49cec7da5111",
+            "first_name": "Bj\u00c3\u00b8rn",
+            "last_name": "Teigen",
+            "age": 20,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "61a9043a-9e6e-4cac-aee7-6acd0b35a167",
+            "first_name": "Bori",
+            "last_name": "Pihl",
+            "age": 34,
+            "gender": "male",
+            "position": "forward"
+        },
+        {
+            "uuid": "6c18faf2-8325-4c30-9137-2bcdcd53f3d7",
+            "first_name": "Morten",
+            "last_name": "Edelman",
+            "age": 34,
+            "gender": "male",
+            "position": "goalkeeper"
+        }
+    ]
 }

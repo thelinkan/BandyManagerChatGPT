@@ -17,13 +17,14 @@ class Country:
 
     def load_names(self):
         filename = "data/" + self.name.lower() + '_names.json'
+        print (self.name.lower())
         if os.path.isfile(filename):
             with open(filename, 'r') as file:
                 data = json.load(file)
                 self.male_first_names = data['male_first_names']
                 self.female_first_names = data['female_first_names']
                 self.family_names = data['family_names']
- 
+
     def random_name(self,name_type):
         if(name_type == "male"):
             antnamn = len(self.male_first_names)
@@ -38,7 +39,7 @@ class Country:
             randnamn = random.randint(0,antnamn-1)
             return(self.family_names[randnamn])
         return ""
- 
+
     def to_dict(self):
         return {
             'name': self.name,
@@ -48,9 +49,9 @@ class Country:
             'male_proficiency': self.male_proficiency,
             'female_proficiency': self.female_proficiency
         }
-        
+
     def return_flag(self):
         return self.flag_small
-        
+
     def return_name(self):
         return self.name

@@ -1,0 +1,38 @@
+{
+    "male_first_names": [
+            "Aleksei",
+            "Artem",
+            "Darja",
+            "Ihar",
+            "Ivan",
+            "Jury",
+            "Leanid",
+            "Maksim",
+            "Mikalaj",
+            "Mikita",
+            "Nikita",
+            "Piatra",
+            "Siarhiej"
+
+	],
+    "female_first_names": [
+            "Aleksandra",
+            "Alena",
+            "Branislava"
+
+	],
+    "family_names": [
+            "Astapenia",
+            "Dashkevich",
+            "Lukashenka",
+            "Malashonak",
+            "Manionak",
+            "Matskevich",
+            "Maysenia",
+            "Mickewicz",
+            "Shushkevich",
+            "Vaytsiushkevich",
+            "Yakavenka"
+
+	]
+}

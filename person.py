@@ -22,16 +22,16 @@ class Player(Person):
 
     def to_dict(self):
         player_dict = {
+            'uuid': str(self.uuid),
             'first_name': self.first_name,
             'last_name': self.last_name,
             'age': self.age,
             'gender': self.gender,
             'position': self.position,
-            'uuid': str(self.uuid),
-            'teams': [team.name for team in self.teams]  # Include only the team names
+            #'teams': [team.name for team in self.team_ref]  # Include only the team names
         }
         return player_dict
-        
+
     def return_position(self):
         return self.position
 
@@ -48,32 +48,32 @@ class ClubStaff(Person):
         super().__init__(first_name, last_name, age, gender)
         self.role = role
         self.team = team
-        
+
 class PlayerManager:
     def __init__(self):
         self.players = []
-        
+
     def add_player(self, player):
         self.players.append(player)
-        
+
     def remove_player(self, player):
         self.players.remove(player)
-        
+
     def find_player_by_id(self, player_id):
         for player in self.players:
             if player.id == player_id:
                 return player
         return None
-        
+
     def find_players_by_name(self, name):
         return [player for player in self.players if player.name == name]
-    
+
     def find_players_by_age_range(self, min_age, max_age):
         return [player for player in self.players if min_age <= player.age <= max_age]
-    
+
     def find_players_by_gender(self, gender):
         return [player for player in self.players if player.gender == gender]
-        
+
     def print_players(self):
         for player in self.players:
             print(player)

@@ -1,0 +1,63 @@
+{
+    "male_first_names": [
+            "Aleksander",
+            "Andrus",
+            "Anton",
+            "Artur",
+            "Eduard",
+            "Georg",
+            "Heino",
+            "Hendrik",
+            "Jaak",
+            "Mihkel",
+            "Oliver",
+            "Paavo",
+            "Peeter",
+            "Simon",
+            "Tonis",
+            "Toomas"
+
+	],
+    "female_first_names": [
+            "Emily",
+            "Lenna",
+            "Maria",
+            "Mia",
+            "Saskia"
+
+	],
+    "family_names": [
+            "Aare",
+            "Aasmäe",
+            "Allik",
+            "Alver",
+            "Eenpalu",
+            "Eskola",
+            "Härma",
+            "Jänes",
+            "Jögi",
+            "Keskküla",
+            "Klavan",
+            "Korjus",
+            "Kuusik",
+            "Kütt",
+            "Kärner",
+            "Laht",
+            "Lilla",
+            "Masing",
+            "Mets",
+            "Mänd",
+            "Nurme",
+            "Oja",
+            "Orav",
+            "Pärn",
+            "Sokk",
+            "Tarvas",
+            "Teder",
+            "Vaher",
+            "Valk",
+            "Viiding",
+            "Vitsut"
+
+	]
+}

@@ -6,6 +6,7 @@ from club import Club
 from team import Team
 from person import Player
 from person import PlayerManager
+from uuidencoder import UUIDEncoder
 
 class Game:
     def __init__(self,year,month,day):
@@ -60,7 +61,17 @@ class Game:
                         #print(f"== {key} == {value} ==")
                     age = random.randint(20,36)
                     #team.create_player(player_first_name,player_familyname,age,gender,"forward",team)
-                    player = self.player_manager.create_player(player_first_name, player_familyname, age, gender, "forward", team)
+                    if (i == 0 or i == 14):
+                        position = "goalkeeper"
+                    elif (i>=1 and i<=4):
+                        position = "defender"
+                    elif (i>=5 and i<=7):
+                        position = "half back"
+                    elif ((i>=8 and i<=11) or (i>=15 and i<=16)):
+                        position = "midfielder"
+                    elif ((i>=12 and i<=13) or (i>=17 and i<=18)):
+                        position = "forward"
+                    player = self.player_manager.create_player(player_first_name, player_familyname, age, gender, position, team)
                     team.add_player(player)
                     print(f"- - {player.__str__()}")
                 team.print_players()
@@ -96,7 +107,7 @@ class Game:
             print(club.name)
             for team in club.teams:
                 print(f"- {team.name} ({team.team_type})")
-      
+
         #for key, value in self.countries.items():
         #    print(value.to_dict())
         print("Data loaded")
@@ -108,13 +119,19 @@ class Game:
         countries_data = []
         clubs_data =[]
         players = []
-        
+        player_data = []
+
         for key, value in self.countries.items():
             countries_data.append(value.to_dict())
         for club in self.clubs:
             clubs_data.append(club.to_dict())
             for team in club.teams:
                 print(f"save: {team.name}");
+                for player in team.players:
+                    if player not in players:
+                         players.append(player)
+
+        player_data = [player.to_dict() for player in players]
 
         game_data = {
                 'year': self.year,
@@ -128,10 +145,11 @@ class Game:
                 'countries': countries_data,
                 'club_data':{
                     'clubs': clubs_data
-                }
+                },
+                'players': player_data
             }
         with open('savedgames/save_game.json','w') as file:
-            json.dump(game_data, file, indent=4)
+            json.dump(game_data, file, indent=4, cls=UUIDEncoder)
         print("Game Data Saved")
 
     def set_manager_team(self,team):

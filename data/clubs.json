@@ -68,7 +68,7 @@
           "name": "Ljusdals BK",
           "team_type": "Men",
           "team_rating": 70,
-          "num_players": 15,
+          "num_players": 18,
           "num_int_players": 3
         },
         {
@@ -90,7 +90,7 @@
           "name": "Brobergs IF",
           "team_type": "Men",
           "team_rating": 70,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 3
         },
         {
@@ -112,7 +112,7 @@
           "name": "IFK Vänersborg",
           "team_type": "Men",
           "team_rating": 70,
-          "num_players": 15,
+          "num_players": 17,
           "num_int_players": 3
         },
         {

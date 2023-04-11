@@ -1,0 +1,53 @@
+{
+    "male_first_names": [
+            "Alex",
+            "Benjamin",
+            "Brandon",
+            "Drew",
+            "Gabriel",
+            "Liam",
+            "Lucas",
+            "Jacob",
+            "Justin",
+            "Nathan",
+            "Nick",
+            "Noah",
+            "Phillippe",
+            "Ronnie",
+            "Samuel",
+            "Simon",
+            "Vincent",
+            "William"
+
+	],
+    "female_first_names": [
+            "Amelia",
+            "Aria",
+            "Emma",
+            "Olivia",
+            "Sophia",
+            "Zoey"
+
+	],
+    "family_names": [
+            "Bélanger",
+            "Bell",
+            "Caron",
+            "Dubé",
+            "Ellement",
+            "Fortin",
+            "Gagnon",
+            "Lapointe",
+            "Leclerc",
+            "Krul",
+            "Landerville",
+            "Leblanc",
+            "Lintick",
+            "Poulin",
+            "Ross",
+            "Roy",
+            "Thibault",
+            "Tremblay"
+
+	]
+}
