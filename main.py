@@ -8,18 +8,16 @@ pygame.init()
 from game import Game
 
 from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY
-from screens import screen,draw_start_menu, draw_credits, draw_newgame_menu, draw_newgame2_menu, draw_game_mainscreen
+from screens import screen,draw_start_menu, draw_credits, draw_newgame_menu, draw_newgame2_menu
+from screens_game import draw_game_mainscreen
 from guielements import font,medium_font, small_font, button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
+from guielements import home_button,senior_squad_button,u19_squad_button,forward_time_button
 
 game_state = "start_menu"
 
 # Set the title of the window
 pygame.display.set_caption("Bandymanager")
-
-#Define swedish flag
-swedish_flag = pygame.image.load("flags/sweden.png").convert_alpha()
-swedish_flag_small = pygame.transform.scale(swedish_flag, (40, 40))
 
 selected_country_index=-1
 selected_team_index=-1
@@ -75,9 +73,19 @@ while running:
                     if choose_team_button.rect.collidepoint(event.pos):
                         game.set_manager_team(selected_team)
                         game_state = "game_mainscreen"
+                        game_page = "home"
                         print("klick "+ selected_team)
                         game.save_game('c:\temp')
                         break
+            elif event.button == 1 and game_state == "game_mainscreen":
+                if home_button.rect.collidepoint(event.pos):
+                    game_page = "home"
+                if senior_squad_button.rect.collidepoint(event.pos):
+                    game_page = "player_list"
+                if u19_squad_button.rect.collidepoint(event.pos):
+                    game_page = "player_list_u19"
+                break
+
         if game_state =="new_game":
             input_name.handle_event(event)
             input_age.handle_event(event)
@@ -85,13 +93,13 @@ while running:
     if game_state == "start_menu":
         draw_start_menu()
     if game_state == "show_credits":
-        draw_credits(swedish_flag_small)
+        draw_credits()
     if game_state == "new_game":
         draw_newgame_menu()
     if game_state == "new_game_2":
         country_rects,team_rects,selected_team=draw_newgame2_menu(game,selected_country_index,selected_team_index)
     if game_state == "game_mainscreen":
-        draw_game_mainscreen(game)
+        draw_game_mainscreen(game,game_page)
     clock.tick(30)
 
 pygame.quit()
