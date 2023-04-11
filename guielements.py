@@ -1,7 +1,7 @@
 import pygame
 from button import Button
 from inputbox import InputBox
-from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY,FONTSIZE_LARGE,FONTSIZE_MEDIUM,FONTSIZE_SMALL
+from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY,FONTSIZE_LARGE,FONTSIZE_MEDIUM,FONTSIZE_SMALL, FONTSIZE_VERY_SMALL
 
 
 
@@ -14,6 +14,7 @@ def quit_game():
 font = pygame.font.Font(None, FONTSIZE_LARGE)
 medium_font = pygame.font.Font(None, FONTSIZE_MEDIUM)
 small_font = pygame.font.Font(None, FONTSIZE_SMALL)
+very_small_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
 
 # Define buttons
 button_width = 230
@@ -27,6 +28,12 @@ quit_button = Button(button_x, credits_button.rect.bottom + button_spacing, butt
 new_game_ok_button = Button(button_x,450, button_width, button_height, "OK", font, BLACK, WHITE, GRAY)
 choose_team_button = Button(button_x,690, button_width, button_height, "OK", font, BLACK, WHITE, GRAY)
 
+#Define maingame buttons
+button_width = 110
+button_height = 50
+button_x = 10
+button_spacing = 15
+senior_team_button = Button(button_x,100,button_width,button_height, "Senior team", very_small_font, BLACK, WHITE, GRAY)
 #Define Input
 input_name = InputBox(300, 200, 140, 32)
 input_age = InputBox(300, 300, 140, 32)
