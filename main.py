@@ -91,7 +91,7 @@ while running:
     if game_state == "new_game_2":
         country_rects,team_rects,selected_team=draw_newgame2_menu(game,selected_country_index,selected_team_index)
     if game_state == "game_mainscreen":
-        draw_game_mainscreen()
+        draw_game_mainscreen(game)
     clock.tick(30)
 
 pygame.quit()

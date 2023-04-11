@@ -21,14 +21,14 @@
           "num_int_players": 0
         },
         {
-          "name": "Sandvikens AIK",
+          "name": "Sandvikens AIK (W)",
           "team_type": "Women",
           "team_rating": 75,
           "num_players": 15,
           "num_int_players": 3
         },
         {
-          "name": "Sandvikens AIK U19",
+          "name": "Sandvikens AIK F19",
           "team_type": "Women U19",
           "team_rating": 65,
           "num_players": 15,
@@ -43,14 +43,14 @@
       "club_rating": 80,
       "teams": [
         {
-          "name": "AIK",
+          "name": "AIK (W)",
           "team_type": "Women",
           "team_rating": 75,
           "num_players": 15,
           "num_int_players": 3
         },
         {
-          "name": "AIK U19",
+          "name": "AIK F19",
           "team_type": "Women U19",
           "team_rating": 65,
           "num_players": 15,

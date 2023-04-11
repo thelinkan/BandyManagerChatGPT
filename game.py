@@ -8,6 +8,7 @@ from person import Player
 from person import PlayerManager
 from uuidencoder import UUIDEncoder
 
+
 class Game:
     def __init__(self,year,month,day):
         self.year = year
@@ -18,6 +19,7 @@ class Game:
         #self.leagues = []
         self.clubs = []
         self.player_manager = PlayerManager()
+        self.teams = {} # Add a dictionary to store teams
 
     def new_game(self,manager_name,manager_age):
         # create new game
@@ -26,7 +28,6 @@ class Game:
         self.manager.set_age(manager_age)
         with open('data/countries.json') as f:
             countries_data = json.load(f)
-        #self.countries = {}
         for country_data in countries_data:
             name = country_data['name']
             bandy_knowledge = country_data['bandy_knowledge']
@@ -37,10 +38,10 @@ class Game:
             self.countries[name] = Country(name, flag_path, bandy_knowledge, population, male_proficiency, female_proficiency)
         with open('data/clubs.json') as f:
             data = json.load(f)
-        print(data)
+        #print(data)
         self.clubs = self.read_clubs_from_json(data)
         for club in self.clubs:
-            print(club.name)
+            #print(club.name)
             for team in club.teams:
                 if (team.team_type == "Men" or team.team_type == "Men U19"):
                     gender="male"
@@ -73,8 +74,8 @@ class Game:
                         position = "forward"
                     player = self.player_manager.create_player(player_first_name, player_familyname, age, gender, position, team)
                     team.add_player(player)
-                    print(f"- - {player.__str__()}")
-                team.print_players()
+                    #print(f"- - {player.__str__()}")
+                #team.print_players()
         #print(self.countries['Sweden'].male_first_names)
         #keys = self.countries.keys()
         #print(keys)
@@ -134,7 +135,7 @@ class Game:
         for club in self.clubs:
             clubs_data.append(club.to_dict())
             for team in club.teams:
-                print(f"save: {team.name}");
+                #print(f"save: {team.name}");
                 for player in team.players:
                     if player not in players:
                          players.append(player)
@@ -198,6 +199,7 @@ class Game:
                 num_int_players = team_data['num_int_players']
                 team = Team(name, team_type, team_rating, num_players, num_int_players)
                 club.add_team(team)
+                self.teams[name] = team # Add team to the dictionary
 
             clubs.append(club)
 

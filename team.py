@@ -31,6 +31,12 @@ class Team:
         for player in self.players:
             print(f"- {player.first_name} {player.last_name} ({player.position})")
 
+    def get_players(self):
+        player_list = []
+        for player in self.players:
+            player_list.append((player.uuid, player.first_name, player.last_name, player.age, player.position))
+        return player_list
+
     def add_player(self, player):
         player.add_team(self)
         self.players.append(player)
