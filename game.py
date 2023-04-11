@@ -101,7 +101,15 @@ class Game:
             male_proficiency = country_data['male_proficiency']
             female_proficiency = country_data['female_proficiency']
             self.countries[name] = Country(name, flag_path, bandy_knowledge, population, male_proficiency, female_proficiency)
-        print(game_data['club_data'])
+        #print(game_data['club_data'])
+        players_data = game_data.get('players_data', [])
+        for player_load in players_data:
+            print(player_load)
+        #print(game_data['players_data'])
+        #PlayerManager.from_list(self, game_data['players_data'])
+        #self.player_manager.from_list(game_data['players_data'])
+
+
         self.clubs = self.read_clubs_from_json(game_data['club_data'])
         for club in self.clubs:
             print(club.name)
@@ -131,7 +139,7 @@ class Game:
                     if player not in players:
                          players.append(player)
 
-        player_data = [player.to_dict() for player in players]
+        players_data = [player.to_dict() for player in players]
 
         game_data = {
                 'year': self.year,
@@ -146,7 +154,7 @@ class Game:
                 'club_data':{
                     'clubs': clubs_data
                 },
-                'players': player_data
+                'players_data': players_data
             }
         with open('savedgames/save_game.json','w') as file:
             json.dump(game_data, file, indent=4, cls=UUIDEncoder)
@@ -203,7 +211,25 @@ class Game:
                 team_list.extend(teams)
         return team_list
 
+    def tick(self):
+        self.day += 1
+        if self.month in [4, 6, 9, 11]:
+            month_days = 30
+        elif self.month == 2:
+            if self.year % 4 == 0 and (self.year % 100 != 0 or self.year % 400 == 0):
+                month_days = 29
+            else:
+                month_days = 28
+        else:
+            month_days = 31
 
+        if self.day > month_days:
+            self.day = 1
+            self.month += 1
+
+        if self.month > 12:
+            self.month = 1
+            self.year += 1
 
     def quit_game(self):
         # quit game

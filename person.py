@@ -28,6 +28,7 @@ class Player(Person):
             'age': self.age,
             'gender': self.gender,
             'position': self.position,
+            'team': self.team.name,
             #'teams': [team.name for team in self.team_ref]  # Include only the team names
         }
         return player_dict
@@ -82,3 +83,16 @@ class PlayerManager:
         player = Player(first_name, last_name, age, gender, position, team)
         self.players.append(player)
         return player
+
+    def load_player(self, first_name, last_name, age, gender, position, team, uuid):
+        player = Player(first_name, last_name, age, gender, position, team)
+        player.uuid = uuid.UUID(uuid)
+        self.players.append(player)
+        return player
+
+    #def from_list(cls, game, players_data):
+    #    for player_data in players_data:
+    #        player = Player(player_data['first_name'], player_data['last_name'], player_data['age'], player_data['gender'], player_data['position'], player_data['team'])
+    #        player.uuid = uuid.UUID(player_data['uuid'])
+    #        game.player_manager.add_player(player)
+
