@@ -105,11 +105,7 @@ class Game:
         #print(game_data['club_data'])
         players_data = game_data.get('players_data', [])
         for player_load in players_data:
-            print(player_load)
-        #print(game_data['players_data'])
-        #PlayerManager.from_list(self, game_data['players_data'])
-        #self.player_manager.from_list(game_data['players_data'])
-
+            self.player_manager.load_player(player_load["first_name"],player_load["last_name"],player_load["age"],player_load["gender"],player_load["position"],player_load["team"],player_load["uuid"])
 
         self.clubs = self.read_clubs_from_json(game_data['club_data'])
         for club in self.clubs:
@@ -200,6 +196,14 @@ class Game:
                 team = Team(name, team_type, team_rating, num_players, num_int_players)
                 club.add_team(team)
                 self.teams[name] = team # Add team to the dictionary
+                #print(team_data)
+                # Check if there are players in the team_data dictionary
+                if 'players' in team_data:
+                    for player_uuid in team_data['players']:
+                        # Get the Player object with the corresponding UUID
+                        player = self.player_manager.find_player_by_uuid(player_uuid)
+                        # Add the Player object to the team's squad
+                        team.add_player(player)
 
             clubs.append(club)
 

@@ -44,6 +44,7 @@ while running:
                     game.load_game('')
                     #print("Load game click");
                     game_state = "game_mainscreen"
+                    game_page = "home"
                 if credits_button.rect.collidepoint(event.pos):
                     game_state="show_credits"
                     print("Credits click");

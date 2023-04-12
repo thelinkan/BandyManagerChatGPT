@@ -60,9 +60,9 @@ class PlayerManager:
     def remove_player(self, player):
         self.players.remove(player)
 
-    def find_player_by_id(self, player_id):
+    def find_player_by_uuid(self, player_uuid):
         for player in self.players:
-            if player.id == player_id:
+            if str(player.uuid) == player_uuid:
                 return player
         return None
 
@@ -84,9 +84,9 @@ class PlayerManager:
         self.players.append(player)
         return player
 
-    def load_player(self, first_name, last_name, age, gender, position, team, uuid):
+    def load_player(self, first_name, last_name, age, gender, position, team, uuidload):
         player = Player(first_name, last_name, age, gender, position, team)
-        player.uuid = uuid.UUID(uuid)
+        player.uuid = uuid.UUID(uuidload)
         self.players.append(player)
         return player
 
