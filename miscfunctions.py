@@ -1,6 +1,7 @@
 import datetime
 import time
 import pygame
+import random
 from club import Club
 from team import Team
 from constants import WHITE,BLACK,GRAY
@@ -64,3 +65,17 @@ def draw_calendar(year, month, day):
     border_surface.blit(calendar_surface, (2, 2))
 
     return border_surface
+
+def return_schedule(num_teams,num_rounds):
+    if(num_teams == 4):
+        if(num_rounds == 3):
+            schedule = [[(1,2),(3,0)],[(2,3),(0,1)],[(1,3),(2,0)]]
+            random.shuffle(schedule)
+        if(num_rounds == 6):
+            schedule1 = [[(1,2),(3,0)],[(2,3),(0,1)],[(1,3),(2,0)]]
+            schedule2 = [[(2,1),(0,3)],[(3,2),(1,0)],[(3,1),(0,2)]]
+            random.shuffle(schedule1)
+            random.shuffle(schedule2)
+            schedule = schedule1 + schedule2
+    
+    return schedule

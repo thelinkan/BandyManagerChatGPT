@@ -84,15 +84,32 @@ class Game:
             league_data = json.load(f)
         for data in league_data:
             team_names = data.pop("teams")
-
+            #print("league data")
+            #print(data)
+            
             league_teams = []
             for team_name in team_names:
-                print(self.teams)
+                #print(self.teams)
                 team = self.teams.get(team_name, None)
                 if not team:
                     raise ValueError(f"No team found with name '{team_name}'")
                 league_teams.append(team)
-            print(data['league'])
+            league = League(data["name"],data["country"],data["level"],league_teams,data["num_rounds"], match_manager=self.match_manager)
+            league.generate_schedule()
+            self.leagues.append(league)
+            league.print_table()
+            matches = league.get_matches_by_team(team)
+            for match in matches:
+                print(f"{match.year}-{match.month}-{match.day}")
+        #matches = self.match_manager.get_all_matches()
+        #for match in matches:
+        #    print(match.year)
+        #    print(match.month)
+        #    print(match.day)
+            #for round_num, matches in enumerate(league.schedule):
+            #    print(f"Round {round_num+1}:")
+            #    for match in matches:
+            #        print(f"{match[0].name} vs {match[1].name}")
             #league = League(league_teams)
             #self.leagues.append(league)
 
