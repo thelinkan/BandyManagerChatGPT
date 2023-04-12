@@ -84,6 +84,8 @@ while running:
                     game_page = "player_list"
                 if u19_squad_button.rect.collidepoint(event.pos):
                     game_page = "player_list_u19"
+                if forward_time_button.rect.collidepoint(event.pos):
+                    game.tick()
                 break
 
         if game_state =="new_game":
