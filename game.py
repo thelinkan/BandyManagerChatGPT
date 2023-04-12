@@ -78,7 +78,7 @@ class Game:
                         position = "midfielder"
                     elif ((i>=12 and i<=13) or (i>=17 and i<=18)):
                         position = "forward"
-                    player = self.player_manager.create_player(player_first_name, player_familyname, age, gender, position, team)
+                    player = self.player_manager.create_player(player_first_name, player_familyname, age, gender, position, team.name)
                     team.add_player(player)
         with open("data/leagues.json", encoding='utf-8') as f:
             league_data = json.load(f)
@@ -98,7 +98,7 @@ class Game:
 
     def load_game(self, file_path):
         # load game from file
-        with open('savedgames/save_game.json', 'r') as file:
+        with open('savedgames/save_game.json', 'r', encoding='utf-8') as file:
             game_data = json.load(file)
         self.year = game_data['year']
         self.month = game_data['month']
@@ -169,7 +169,7 @@ class Game:
             }
         if not os.path.exists('savedgames'):
             os.makedirs('savedgames')
-        with open('savedgames/save_game.json','w') as file:
+        with open('savedgames/save_game.json','w', encoding='utf-8') as file:
             json.dump(game_data, file, indent=4, cls=UUIDEncoder)
         print("Game Data Saved")
 

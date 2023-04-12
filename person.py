@@ -28,7 +28,7 @@ class Player(Person):
             'age': self.age,
             'gender': self.gender,
             'position': self.position,
-            'team': self.team.name,
+            'team': self.team,
             #'teams': [team.name for team in self.team_ref]  # Include only the team names
         }
         return player_dict

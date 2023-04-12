@@ -19,7 +19,7 @@ class Country:
         filename = "data/names/" + self.name.lower() + '_names.json'
         #print (self.name.lower())
         if os.path.isfile(filename):
-            with open(filename, 'r') as file:
+            with open(filename, 'r', encoding='utf-8') as file:
                 data = json.load(file)
                 self.male_first_names = data['male_first_names']
                 self.female_first_names = data['female_first_names']
