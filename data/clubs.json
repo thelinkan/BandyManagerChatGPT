@@ -37,6 +37,42 @@
       ]
     },
     {
+      "name": "Villa Lidköping BK",
+      "country": "Sweden",
+      "home_arena": "Sparbanken Lidköping Arena",
+      "club_rating": 95,
+      "teams": [
+        {
+          "name": "Villa Lidköping BK",
+          "team_type": "Men",
+          "team_rating": 80,
+          "num_players": 15,
+          "num_int_players": 3
+        },
+        {
+          "name": "Villa Lidköping BK U19",
+          "team_type": "Men U19",
+          "team_rating": 70,
+          "num_players": 15,
+          "num_int_players": 0
+        },
+        {
+          "name": "Villa Lidköping BK (W)",
+          "team_type": "Women",
+          "team_rating": 75,
+          "num_players": 15,
+          "num_int_players": 3
+        },
+        {
+          "name": "Villa Lidköping BK F19",
+          "team_type": "Women U19",
+          "team_rating": 65,
+          "num_players": 15,
+          "num_int_players": 0
+        }
+      ]
+    },
+    {
       "name": "AIK",
       "country": "Sweden",
       "home_arena": "Hovet",

@@ -1,0 +1,18 @@
+[
+    			  {
+    			  	"league": "Elitserien",
+    			  	"country": "Sweden",
+    			  	"level": 1,
+    			  	"num_rounds": 6,
+    			  	"win_points": 2,
+    			  	"draw_points": 1,
+    			  	"startmonth": 10,
+    			  	"startday": 20,
+    			  	"endmonth": 2,
+    			  	"endday": 10,
+    			  	"teams":
+    			  		[
+    			  				"Villa Lidköping BK","Sandvikens AIK","Brobergs IF","IFK Vänersborg"
+    			  		]
+    			 	}
+]

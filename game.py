@@ -1,13 +1,15 @@
 import json
 import random
+import os
 from manager import Manager
 from country import Country
 from club import Club
 from team import Team
+from league import League
 from person import Player
 from person import PlayerManager
 from uuidencoder import UUIDEncoder
-
+from matchmanager import MatchManager
 
 class Game:
     def __init__(self,year,month,day):
@@ -16,10 +18,11 @@ class Game:
         self.day = day
         self.manager = Manager()
         self.countries = {}
-        #self.leagues = []
+        self.leagues = []
         self.clubs = []
         self.player_manager = PlayerManager()
         self.teams = {} # Add a dictionary to store teams
+        self.match_manager = MatchManager()
 
     def new_game(self,manager_name,manager_age):
         # create new game
@@ -38,15 +41,17 @@ class Game:
             self.countries[name] = Country(name, flag_path, bandy_knowledge, population, male_proficiency, female_proficiency)
         with open('data/clubs.json') as f:
             data = json.load(f)
-        #print(data)
         self.clubs = self.read_clubs_from_json(data)
         for club in self.clubs:
-            #print(club.name)
             for team in club.teams:
                 if (team.team_type == "Men" or team.team_type == "Men U19"):
                     gender="male"
                 else:
                     gender="female"
+                if (team.team_type == "Men U19" or team.team_type == "Women U19"):
+                    age_type="youth"
+                else:
+                    age_type="senior"
                 player_first_name = ""
                 player_familyname = ""
                 antspelare = team.num_players
@@ -59,9 +64,10 @@ class Game:
                             else:
                                 player_first_name = value.random_name("female")
                             player_familyname = value.random_name("family")
-                        #print(f"== {key} == {value} ==")
-                    age = random.randint(20,36)
-                    #team.create_player(player_first_name,player_familyname,age,gender,"forward",team)
+                    if(age_type == "youth"):
+                        age = random.randint(18,19)
+                    else:
+                        age = random.randint(20,36)
                     if (i == 0 or i == 14):
                         position = "goalkeeper"
                     elif (i>=1 and i<=4):
@@ -74,13 +80,19 @@ class Game:
                         position = "forward"
                     player = self.player_manager.create_player(player_first_name, player_familyname, age, gender, position, team)
                     team.add_player(player)
-                    #print(f"- - {player.__str__()}")
-                #team.print_players()
-        #print(self.countries['Sweden'].male_first_names)
-        #keys = self.countries.keys()
-        #print(keys)
-        #values = self.countries.values()
-        #print(values)
+        with open("data/leagues.json") as f:
+            league_data = json.load(f)
+        for data in league_data:
+            team_names = data.pop("teams")
+            league_teams = []
+            #for team_name in team_names:
+            #    team = next((t for t in teams if t.name == team_name), None)
+            #    if not team:
+            #        raise ValueError(f"No team found with name '{team_name}'")
+            #    league_teams.append(team)
+            print(data['league'])
+            #league = League(league_teams)
+            #self.leagues.append(league)
 
     def load_game(self, file_path):
         # load game from file
@@ -153,6 +165,8 @@ class Game:
                 },
                 'players_data': players_data
             }
+        if not os.path.exists('savedgames'):
+            os.makedirs('savedgames')
         with open('savedgames/save_game.json','w') as file:
             json.dump(game_data, file, indent=4, cls=UUIDEncoder)
         print("Game Data Saved")
@@ -236,6 +250,10 @@ class Game:
         if self.month > 12:
             self.month = 1
             self.year += 1
+
+    def schedule_match(self, match):
+        # logic to schedule match goes here
+        self.match_manager.add_match(match)
 
     def quit_game(self):
         # quit game

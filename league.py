@@ -1,7 +1,11 @@
+from team import Team
 from match import Match
+from country import Country
 
 class League:
-    def __init__(self, teams, num_rounds=2, win_points=3, draw_points=1):
+    def __init__(self, name, country, level,teams , num_rounds=2, win_points=2, draw_points=1, start_month=11, start_day=1, end_month=2, end_day=15):
+        self.name = name
+        self.country = country
         self.num_teams = len(teams)
         self.num_rounds = num_rounds
         self.win_points = win_points
