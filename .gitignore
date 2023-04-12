@@ -154,3 +154,4 @@ cython_debug/
 
 #Save-filer
 savedgames/*.json
+savedgames/save_game.json
