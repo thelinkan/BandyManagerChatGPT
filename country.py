@@ -17,7 +17,7 @@ class Country:
 
     def load_names(self):
         filename = "data/" + self.name.lower() + '_names.json'
-        print (self.name.lower())
+        #print (self.name.lower())
         if os.path.isfile(filename):
             with open(filename, 'r') as file:
                 data = json.load(file)
