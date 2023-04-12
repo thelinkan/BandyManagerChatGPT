@@ -29,7 +29,7 @@ class Game:
         # Set name and age
         self.manager.set_name(manager_name)
         self.manager.set_age(manager_age)
-        with open('data/countries.json') as f:
+        with open('data/countries.json', encoding='utf-8') as f:
             countries_data = json.load(f)
         for country_data in countries_data:
             name = country_data['name']
@@ -39,7 +39,7 @@ class Game:
             male_proficiency = country_data['male_proficiency']
             female_proficiency = country_data['female_proficiency']
             self.countries[name] = Country(name, flag_path, bandy_knowledge, population, male_proficiency, female_proficiency)
-        with open('data/clubs.json') as f:
+        with open('data/clubs.json', encoding='utf-8') as f:
             data = json.load(f)
         self.clubs = self.read_clubs_from_json(data)
         for club in self.clubs:
@@ -80,16 +80,18 @@ class Game:
                         position = "forward"
                     player = self.player_manager.create_player(player_first_name, player_familyname, age, gender, position, team)
                     team.add_player(player)
-        with open("data/leagues.json") as f:
+        with open("data/leagues.json", encoding='utf-8') as f:
             league_data = json.load(f)
         for data in league_data:
             team_names = data.pop("teams")
+
             league_teams = []
-            #for team_name in team_names:
-            #    team = next((t for t in teams if t.name == team_name), None)
-            #    if not team:
-            #        raise ValueError(f"No team found with name '{team_name}'")
-            #    league_teams.append(team)
+            for team_name in team_names:
+                print(self.teams)
+                team = self.teams.get(team_name, None)
+                if not team:
+                    raise ValueError(f"No team found with name '{team_name}'")
+                league_teams.append(team)
             print(data['league'])
             #league = League(league_teams)
             #self.leagues.append(league)
