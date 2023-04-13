@@ -159,6 +159,7 @@ class Game:
         clubs_data =[]
         players = []
         player_data = []
+        leagues_data = []
 
         for key, value in self.countries.items():
             countries_data.append(value.to_dict())
@@ -171,6 +172,9 @@ class Game:
                          players.append(player)
 
         players_data = [player.to_dict() for player in players]
+
+        for league in self.leagues:
+            leagues_data.append(league.to_dict())
 
         game_data = {
                 'year': self.year,
@@ -185,7 +189,8 @@ class Game:
                 'club_data':{
                     'clubs': clubs_data
                 },
-                'players_data': players_data
+                'players_data': players_data,
+                'leagues_data': leagues_data
             }
         if not os.path.exists('savedgames'):
             os.makedirs('savedgames')

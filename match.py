@@ -16,6 +16,16 @@ class Match:
         # Implementation of match simulation
         self.result = simulate_match(self.home_team, self.away_team)
 
-
+    def to_dict(self):
+        return {
+            'home_team': self.home_team.name,
+            'away_team': self.away_team.name,
+            'year': self.year,
+            'month': self.month,
+            'day': self.day,
+            'home_goals': self.home_goals,
+            'away_goals': self.away_goals,
+            'played': self.played
+        }
 
 

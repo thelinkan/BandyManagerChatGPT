@@ -53,74 +53,23 @@ class League:
     def get_matches_by_team(self, team):
         return [match for match in self.matches if team in [match.home_team, match.away_team]]
 
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'country': self.country,
+            'num_teams': self.num_teams,
+            'num_rounds': self.num_rounds,
+            'win_points': self.win_points,
+            'draw_points': self.draw_points,
+            'start_year': self.start_year,
+            'start_month': self.start_month,
+            'start_day': self.start_day,
+            'end_month': self.end_month,
+            'end_day': self.end_day,
+            'teams': [team.name for team in self.teams],
+            'matches': [match.to_dict() for match in self.matches],
+        }
 
-        #matches_per_round = n // 2
-
-        # Make a list of all the possible matches
-        #possible_matches = [(self.teams[i], self.teams[j]) for i in range(n) for j in range(i+1, n)]
-        #for match in possible_matches:
-        #    print(f"{match[0].name} vs {match[1].name}")
-        #print(possible_matches)
-        # Loop through each round
-        #for round_num in range(rounds):
-        #        # Shuffle the list of possible matches to randomize the schedule
-        #    random.shuffle(possible_matches)
-
-        #    # Make a list of matches for this round
-        #    matches_this_round = []
-
-        #    # Loop through each match for this round
-        #    for match_num in range(matches_per_round):
-        #        # Get the next available match from the list of possible matches
-        #        match = possible_matches.pop(0)
-
-        #        # Check if either team is already playing in this round
-        #        if any(match[0] in m or match[1] in m for m in matches_this_round):
-        #            # If so, put the match back into the list of possible matches
-        #            possible_matches.append(match)
-        #        else:
-        #            # Otherwise, add the match to the list of matches for this round
-        #            matches_this_round.append(match)
-
-        #    # Add the matches for this round to the schedule
-        #    self.schedule.append(matches_this_round)
-
-    #def generate_schedule(self):
-    #    # Round-robin scheduling
-    #    for round in range(self.num_rounds):
-    #        round_matches = []
-    #        for i in range(self.num_teams):
-    #            for j in range(i + 1, self.num_teams):
-    #                home_team = self.teams[i]
-    #                away_team = self.teams[j]
-    #                round_matches.append(Match(home_team, away_team))
-    #        self.rounds.append(round_matches)
-
-    #def play_round(self, round_number):
-    #    for game in self.rounds[round_number]:
-    #        game.play()
-    #        home_team = game.home_team
-    #        away_team = game.away_team
-    #        self.table[home_team]['played'] += 1
-    #        self.table[away_team]['played'] += 1
-    #        self.table[home_team]['goals_for'] += game.home_score
-    #        self.table[away_team]['goals_for'] += game.away_score
-    #        self.table[home_team]['goals_against'] += game.away_score
-    #        self.table[away_team]['goals_against'] += game.home_score
-    #        if game.home_score > game.away_score:
-    #            self.table[home_team]['won'] += 1
-    #            self.table[home_team]['points'] += self.win_points
-    #            self.table[away_team]['lost'] += 1
-    #        elif game.home_score < game.away_score:
-    #            self.table[away_team]['won'] += 1
-    #            self.table[away_team]['points'] += self.win_points
-    #            self.table[home_team]['lost'] += 1
-    #        else:
-    #            self.table[home_team]['drawn'] += 1
-    #            self.table[home_team]['points'] += self.draw_points
-    #            self.table[away_team]['drawn'] += 1
-    #            self.table[away_team]['points'] += self.draw_points
-    #        self.games.append(game)
 
     def print_table(self):
         print("{:<20} {:<6} {:<6} {:<6} {:<6} {:<6} {:<6} {:<6}".format("Team", "Pld", "W", "D", "L", "GF", "GA", "Pts"))

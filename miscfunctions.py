@@ -79,6 +79,6 @@ def return_schedule(num_teams,num_rounds):
             schedule = schedule1 + schedule2
     if(num_teams == 6):
         if(num_rounds == 5):
-            schedule = [[(1,2),(3,0)],[(2,3),(0,1)],[(1,3),(2,0)]]
+            schedule = [[(5,3),(4,2),(1,0)],[(3,2),(0,5),(1,4)],[(0,3),(2,1),(5,4)],[(0,3),(2,1),(5,4)]]
             random.shuffle(schedule)
     return schedule
