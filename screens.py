@@ -5,7 +5,7 @@ from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY,FONTSIZE_LARGE
 from constants import TABLE_HEADER_COLOR, TABLE_ROW_ODD_COLOR, TABLE_ROW_EVEN_COLOR
 from guielements import font, medium_font, small_font, button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
-from miscfunctions import get_club_from_team
+from miscfunctions import get_club_from_team, draw_jersey
 
 pygame.init()
 
@@ -132,6 +132,9 @@ def draw_newgame2_menu(game,selected_country_index,selected_team_index):
         selected_team = teams[selected_team_index].return_name()
         text_team_name = medium_font.render(selected_team,False, BLACK)
         screen.blit(text_team_name, (940, 155))
+        jersey_colors = teams[selected_team_index].return_jersey_colors()
+        jersey = draw_jersey(jersey_colors,"17")
+        screen.blit(jersey,(940,400))
         choose_team_button.draw(screen)
         #print(selected_team)
         pass

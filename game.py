@@ -234,7 +234,8 @@ class Game:
                 team_rating = team_data['team_rating']
                 num_players = team_data['num_players']
                 num_int_players = team_data['num_int_players']
-                team = Team(name, team_type, team_rating, num_players, num_int_players)
+                jersey_colors = team_data['jersey_colors']
+                team = Team(name, team_type, team_rating, num_players, num_int_players, jersey_colors)
                 club.add_team(team)
                 self.teams[name] = team # Add team to the dictionary
                 #print(team_data)
