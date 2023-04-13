@@ -32,7 +32,7 @@ class League:
                 match = Match(self.teams[match[0]],self.teams[match[1]],r_year,r_month,r_day)
                 self.matches.append(match)
                 if self.match_manager is not None:
-                    self.match_manager.add_match(match)
+                    self.match_manager.add_match(match,self)
             r_day += 7
             if(r_day>30):
                 r_day = r_day - 30

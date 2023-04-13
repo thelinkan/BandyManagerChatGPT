@@ -37,7 +37,7 @@ home_button = Button(button_x,0,button_width,button_height, "Home", very_small_f
 senior_squad_button = Button(button_x,home_button.rect.bottom + button_spacing,button_width,button_height, "Squad", very_small_font, WHITE, BLACK, GRAY)
 u19_squad_button = Button(button_x,senior_squad_button.rect.bottom + button_spacing,button_width,button_height, "U19 squad", very_small_font, WHITE, BLACK, GRAY)
 forward_time_button = Button(button_x,u19_squad_button.rect.bottom + button_spacing,button_width,button_height, "Forward Time", very_small_font, WHITE, BLACK, GRAY)
-save_game_button = Button(button_x,forward_time_button.rect.bottom + button_spacing,button_width,button_height, "Save gamne", very_small_font, WHITE, BLACK, GRAY)
+save_game_button = Button(button_x,forward_time_button.rect.bottom + button_spacing,button_width,button_height, "Save game", very_small_font, WHITE, BLACK, GRAY)
 quit_game_button = Button(button_x, save_game_button.rect.bottom + button_spacing, button_width, button_height, "Quit game", very_small_font, WHITE, BLACK, GRAY, quit_game)
 #Define Input
 input_name = InputBox(300, 200, 140, 32)

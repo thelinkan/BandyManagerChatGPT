@@ -18,7 +18,7 @@ def draw_playerlist(game,team):
     #team = game.teams[team_name]
     # Draw player table
     header_rect = pygame.Rect(10+x_offset, 100, 600, 30)
-    
+
     pygame.draw.rect(screen, TABLE_HEADER_COLOR, header_rect)
     header_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
     text = header_font.render("Name", True, BLACK)
@@ -56,8 +56,35 @@ def draw_playerlist(game,team):
         text = player_font.render(player[4], True, BLACK)
         text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
         screen.blit(text, text_rect)
-        
-        
+
+def draw_home(game,team):
+    month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    next_match = game.match_manager.get_next_match_for_team(team, game.year, game.month, game.day)
+    if(next_match is not None):
+        #print(next_match)
+        next_match_hometeam_name = next_match.home_team.name
+        next_match_awayteam_name = next_match.away_team.name
+
+        small_font = pygame.font.Font(None, FONTSIZE_SMALL)
+
+        y = 130
+        text = small_font.render("Next game", True, BLACK)
+        text_rect = pygame.Rect(10+x_offset, y,200, 20)
+        screen.blit(text, text_rect)
+        y += 20
+        text = small_font.render(next_match.league.name, True, BLACK)
+        text_rect = pygame.Rect(10+x_offset, y,200, 20)
+        screen.blit(text, text_rect)
+        y += 20
+        text = small_font.render(f"{next_match.day} {month_names[next_match.month]}", True, BLACK)
+        text_rect = pygame.Rect(10+x_offset, y ,200, 20)
+        screen.blit(text, text_rect)
+        y += 20
+        text = small_font.render(f"{next_match_hometeam_name} - {next_match_awayteam_name}", True, BLACK)
+        text_rect = pygame.Rect(10+x_offset, y ,200, 20)
+        screen.blit(text, text_rect)
+
 def draw_game_mainscreen(game, game_page):
     # Draw screen
     screen.fill(WHITE)
@@ -90,6 +117,8 @@ def draw_game_mainscreen(game, game_page):
 
     screen.blit(calendar_surface, (1150,10))
 
+    if (game_page == "home"):
+        draw_home(game,manager_team_name)
     if (game_page == "player_list"):
         draw_playerlist(game,manager_team)
     if (game_page == "player_list_u19"):
