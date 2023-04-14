@@ -55,3 +55,23 @@ class Team:
     def return_position(self):
         postion=self.player.return_position()
         return postion
+
+    def change_player_jersey_number(self, player_uuid, new_jersey_number):
+        # Check if jersey number is between 1 and 99
+        if new_jersey_number < 1 or new_jersey_number > 99:
+            print("Jersey number must be between 1 and 99.")
+            return False
+
+        # Check if no other player has the same jersey number
+        for player in self.players.values():
+            if player.jersey_number == new_jersey_number and player.uuid != player_uuid:
+                print(f"Player {player.first_name} {player.last_name} already has jersey number {new_jersey_number}.")
+                return False
+
+        # Add or change the jersey number in the players dictionary
+        if player_uuid in self.players:
+            self.players[player_uuid].jersey_number = new_jersey_number
+            return True
+        else:
+            print(f"Player with UUID {player_uuid} not found in team {self.name}.")
+            return False
