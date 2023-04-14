@@ -80,6 +80,8 @@ class Game:
                         position = "forward"
                     player = self.player_manager.create_player(player_first_name, player_familyname, age, gender, position, team.name)
                     team.add_player(player)
+                    team.change_player_jersey_number(player.uuid,i+1)
+                #team.print_players();
         with open("data/leagues.json", encoding='utf-8') as f:
             league_data = json.load(f)
         for data in league_data:
@@ -101,20 +103,6 @@ class Game:
             matches = league.get_matches_by_team(team)
             for match in matches:
                 print(f"{match.year}-{match.month}-{match.day}")
-            #print("Next match Sandviken")
-            #next_match = self.match_manager.get_next_match_for_team("Sandvikens AIK", self.year, self.month, self.day)
-            #print(f"{next_match.league.name}")
-        #matches = self.match_manager.get_all_matches()
-        #for match in matches:
-        #    print(match.year)
-        #    print(match.month)
-        #    print(match.day)
-            #for round_num, matches in enumerate(league.schedule):
-            #    print(f"Round {round_num+1}:")
-            #    for match in matches:
-            #        print(f"{match[0].name} vs {match[1].name}")
-            #league = League(league_teams)
-            #self.leagues.append(league)
 
     def load_game(self, file_path):
         # load game from file
@@ -245,12 +233,15 @@ class Game:
                 #print(team_data)
                 # Check if there are players in the team_data dictionary
                 if 'players' in team_data:
-                    for player_uuid in team_data['players']:
+                    for team_player in team_data['players']:
+                        player_uuid = team_player['uuid']
+                        jersey_number = team_player['jersey_number']
                         # Get the Player object with the corresponding UUID
                         player = self.player_manager.find_player_by_uuid(player_uuid)
                         # Add the Player object to the team's squad
-                        print(player_uuid)
+                        #print(player_uuid)
                         team.add_player(player)
+                        team.change_player_jersey_number(player.uuid,jersey_number)
 
             clubs.append(club)
 

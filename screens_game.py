@@ -5,7 +5,8 @@ from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY,FONTSIZE_LARGE
 from constants import TABLE_HEADER_COLOR, TABLE_ROW_ODD_COLOR, TABLE_ROW_EVEN_COLOR
 from guielements import font, medium_font, small_font, button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
-from guielements import home_button,senior_squad_button,u19_squad_button,forward_time_button, save_game_button, quit_game_button
+from guielements import home_button, inbox_button, newspaper_button, senior_squad_button, tactics_button, training_button, schedule_button, competition_button
+from guielements import u19_squad_button,forward_time_button, save_game_button, quit_game_button
 from miscfunctions import get_club_from_team, draw_calendar
 
 pygame.init()
@@ -45,15 +46,15 @@ def draw_playerlist(game,team):
         row_rect = pygame.Rect(10+x_offset, 130 + i * row_height, 600, row_height)
         pygame.draw.rect(screen, row_color, row_rect)
 
-        text = player_font.render(player[1] + " " + player[2], True, BLACK)
+        text = player_font.render(str(player[1]) + ") " + player[2] + " " + player[3], True, BLACK)
         text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
-        text = player_font.render(str(player[3]), True, BLACK)
+        text = player_font.render(str(player[4]), True, BLACK)
         text_rect = text.get_rect(centerx=row_rect.centerx, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
-        text = player_font.render(player[4], True, BLACK)
+        text = player_font.render(player[5], True, BLACK)
         text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
@@ -109,7 +110,13 @@ def draw_game_mainscreen(game, game_page):
     calendar_surface = draw_calendar(game.year, game.month, game.day)
 
     home_button.draw(screen)
+    inbox_button.draw(screen)
+    newspaper_button.draw(screen)
     senior_squad_button.draw(screen)
+    tactics_button.draw(screen)
+    training_button.draw(screen)
+    schedule_button.draw(screen)
+    competition_button.draw(screen)
     u19_squad_button.draw(screen)
     forward_time_button.draw(screen)
     save_game_button.draw(screen)

@@ -34,8 +34,16 @@ button_height = 23
 button_x = 0
 button_spacing = 0
 home_button = Button(button_x,0,button_width,button_height, "Home", very_small_font,WHITE , BLACK, GRAY)
-senior_squad_button = Button(button_x,home_button.rect.bottom + button_spacing,button_width,button_height, "Squad", very_small_font, WHITE, BLACK, GRAY)
-u19_squad_button = Button(button_x,senior_squad_button.rect.bottom + button_spacing,button_width,button_height, "U19 squad", very_small_font, WHITE, BLACK, GRAY)
+inbox_button = Button(button_x,home_button.rect.bottom + button_spacing,button_width,button_height, "Inbox", very_small_font, WHITE, BLACK, GRAY)
+newspaper_button = Button(button_x,inbox_button.rect.bottom + button_spacing,button_width,button_height, "Newspapers", very_small_font, WHITE, BLACK, GRAY)
+senior_squad_button = Button(button_x,newspaper_button.rect.bottom + button_spacing,button_width,button_height, "Squad", very_small_font, WHITE, BLACK, GRAY)
+tactics_button = Button(button_x,senior_squad_button.rect.bottom + button_spacing,button_width,button_height, "Tactics", very_small_font, WHITE, BLACK, GRAY)
+training_button = Button(button_x,tactics_button.rect.bottom + button_spacing,button_width,button_height, "Training", very_small_font, WHITE, BLACK, GRAY)
+schedule_button = Button(button_x,training_button.rect.bottom + button_spacing,button_width,button_height, "Schedule", very_small_font, WHITE, BLACK, GRAY)
+competition_button = Button(button_x,schedule_button.rect.bottom + button_spacing,button_width,button_height, "Competition", very_small_font, WHITE, BLACK, GRAY)
+u19_squad_button = Button(button_x,competition_button.rect.bottom + button_spacing,button_width,button_height, "U19 squad", very_small_font, WHITE, BLACK, GRAY)
+#Club info
+#Finances
 forward_time_button = Button(button_x,u19_squad_button.rect.bottom + button_spacing,button_width,button_height, "Forward Time", very_small_font, WHITE, BLACK, GRAY)
 save_game_button = Button(button_x,forward_time_button.rect.bottom + button_spacing,button_width,button_height, "Save game", very_small_font, WHITE, BLACK, GRAY)
 quit_game_button = Button(button_x, save_game_button.rect.bottom + button_spacing, button_width, button_height, "Quit game", very_small_font, WHITE, BLACK, GRAY, quit_game)

@@ -22,6 +22,13 @@ class Team:
         return self.team_type
 
     def to_dict(self):
+        player_list = []
+        for player_uuid in self.players.keys():
+            player_dict = {
+                'uuid': str(player_uuid),
+                'jersey_number': self.players[player_uuid].jersey_number
+            }
+            player_list.append(player_dict)
         #print(self.players)
         return {
             'name': self.name,
@@ -29,24 +36,26 @@ class Team:
             'team_rating': self.rating,
             'num_players': 0,
             'num_int_players': 0,
-            'players': [str(player_uuid) for player_uuid in self.players.keys()],
+            'players': player_list,
             'jersey_colors': str(self.jersey_colors)
         }
 
     def print_players(self):
         print(f"Players in team {self.name}:")
-        for player in self.players:
-            print(f"- {player.first_name} {player.last_name} ({player.position})")
+        for player_uuid in self.players:
+            #print(f"- {self.player[player.uuid].jersey_number}  {player.first_name} {player.last_name} ({player.position})")
+            print(f"- {self.players[player_uuid].jersey_number}")
 
     def get_players(self):
         player_list = []
         for player in self.players.values():
-            player_list.append((player.uuid, player.first_name, player.last_name, player.age, player.position))
+            player_list.append((player.uuid, self.players[player.uuid].jersey_number, player.first_name, player.last_name, player.age, player.position))
         return player_list
 
     def add_player(self, player):
         player.add_team(self)
         self.players[player.uuid] = player
+        self.players[player.uuid].jersey_number = 0
         #self.players.append(player)
 
     def return_num_players(self):
@@ -58,13 +67,16 @@ class Team:
 
     def change_player_jersey_number(self, player_uuid, new_jersey_number):
         # Check if jersey number is between 1 and 99
+        #print (new_jersey_number)
         if new_jersey_number < 1 or new_jersey_number > 99:
             print("Jersey number must be between 1 and 99.")
             return False
 
         # Check if no other player has the same jersey number
-        for player in self.players.values():
-            if player.jersey_number == new_jersey_number and player.uuid != player_uuid:
+        #print(self.players)
+        for player_uuid in self.players.keys():
+            #print(self.players[player_uuid].jersey_number)
+            if self.players[player_uuid].jersey_number == new_jersey_number and str(player.uuid) != str(player_uuid):
                 print(f"Player {player.first_name} {player.last_name} already has jersey number {new_jersey_number}.")
                 return False
 
