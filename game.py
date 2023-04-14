@@ -101,9 +101,9 @@ class Game:
             matches = league.get_matches_by_team(team)
             for match in matches:
                 print(f"{match.year}-{match.month}-{match.day}")
-            print("Next match Sandviken")
-            next_match = self.match_manager.get_next_match_for_team("Sandvikens AIK", self.year, self.month, self.day)
-            print(f"{next_match.league.name}")
+            #print("Next match Sandviken")
+            #next_match = self.match_manager.get_next_match_for_team("Sandvikens AIK", self.year, self.month, self.day)
+            #print(f"{next_match.league.name}")
         #matches = self.match_manager.get_all_matches()
         #for match in matches:
         #    print(match.year)
@@ -158,7 +158,7 @@ class Game:
         countries_data = []
         clubs_data =[]
         players = []
-        player_data = []
+        players_data = []
         leagues_data = []
 
         for key, value in self.countries.items():
@@ -171,7 +171,11 @@ class Game:
                     if player not in players:
                          players.append(player)
 
-        players_data = [player.to_dict() for player in players]
+        for player_uuid in players:
+            player = self.player_manager.find_player_by_uuid(player_uuid)
+            if player is not None:
+                players_data.append(player.to_dict())
+
 
         for league in self.leagues:
             leagues_data.append(league.to_dict())
@@ -245,6 +249,7 @@ class Game:
                         # Get the Player object with the corresponding UUID
                         player = self.player_manager.find_player_by_uuid(player_uuid)
                         # Add the Player object to the team's squad
+                        print(player_uuid)
                         team.add_player(player)
 
             clubs.append(club)

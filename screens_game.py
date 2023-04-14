@@ -77,7 +77,7 @@ def draw_home(game,team):
         text_rect = pygame.Rect(10+x_offset, y,200, 20)
         screen.blit(text, text_rect)
         y += 20
-        text = small_font.render(f"{next_match.day} {month_names[next_match.month]}", True, BLACK)
+        text = small_font.render(f"{next_match.day} {month_names[next_match.month-1]}", True, BLACK)
         text_rect = pygame.Rect(10+x_offset, y ,200, 20)
         screen.blit(text, text_rect)
         y += 20

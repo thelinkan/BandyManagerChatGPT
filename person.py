@@ -62,7 +62,7 @@ class PlayerManager:
 
     def find_player_by_uuid(self, player_uuid):
         for player in self.players:
-            if str(player.uuid) == player_uuid:
+            if str(player.uuid) == str(player_uuid):
                 return player
         return None
 
@@ -77,7 +77,7 @@ class PlayerManager:
 
     def print_players(self):
         for player in self.players:
-            print(player)
+            print(player.uuid)
 
     def create_player(self, first_name, last_name, age, gender, position, team):
         player = Player(first_name, last_name, age, gender, position, team)

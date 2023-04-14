@@ -93,8 +93,8 @@ def draw_jersey(jersey_colors,jersey_number):
     number_rect = number_text.get_rect(center=(125, 125))
     jersey_surface.blit(number_text, number_rect)
 
-    return jersey_surface    
-    
+    return jersey_surface
+
 
 def return_schedule(num_teams,num_rounds):
     if(num_teams == 4):
@@ -109,6 +109,16 @@ def return_schedule(num_teams,num_rounds):
             schedule = schedule1 + schedule2
     if(num_teams == 6):
         if(num_rounds == 5):
-            schedule = [[(5,3),(4,2),(1,0)],[(3,2),(0,5),(1,4)],[(0,3),(2,1),(5,4)],[(0,3),(2,1),(5,4)]]
+            schedule = [[(5,3),(4,2),(1,0)],[(3,2),(0,5),(1,4)],[(0,3),(2,1),(5,4)],[(3,1),(4,0),(5,2)],[(4,3),(1,5),(0,2)]]
             random.shuffle(schedule)
+    if(num_teams == 8):
+        if(num_rounds == 7):
+            schedule = [[(7,5),(6,2),(0,1),(4,3)],[(5,2),(1,7),(3,6),(4,0)],[(1,5),(2,3),(7,4),(6,0)],[(5,3),(4,1),(0,2),(6,7)],[(4,5),(3,0),(1,6),(2,7)],[(5,0),(6,4),(7,3),(2,1)],[(6,5),(0,7),(4,2),(3,1)]]
+            random.shuffle(schedule)
+    if(num_teams == 10):
+        if(num_rounds == 9):
+            schedule = [[(3,8),(2,6),(0,5),(9,1),(7,4)],[(8,6),(5,3),(1,2),(4,0),(7,9)],[(5,8),(6,1),(3,4),(2,7),(0,9)],[(8,1),(4,5),(7,6),(9,3),(0,2)],[(4,8),(1,7),(5,9),(6,0),(3,2)],[(8,7),(9,4),(0,1),(2,5),(3,6)],[(9,8),(7,0),(4,2),(1,3),(5,6)],[(8,0),(2,9),(3,7),(6,4),(5,1)],[(2,8),(0,3),(9,6),(7,5),(4,1)]]
+            random.shuffle(schedule)
+
     return schedule
+

@@ -18,3 +18,8 @@ class MatchManager:
             return min(matches, key=lambda match: dt.datetime(match.year, match.month, match.day))
         else:
             return None
+
+    def get_matches_by_date(self, year, month, day):
+        date = dt.datetime(year, month, day)
+        matches = [match for match in self.matches if dt.datetime(match.year, match.month, match.day) == date]
+        return matches

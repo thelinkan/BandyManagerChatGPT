@@ -13,8 +13,9 @@ class Match:
         self.played = False
 
     def play(self):
-        # Implementation of match simulation
-        self.result = simulate_match(self.home_team, self.away_team)
+        self.home_goals = random.randint(0, 5)
+        self.away_goals = random.randint(0, 5)
+        self.played = True
 
     def to_dict(self):
         return {

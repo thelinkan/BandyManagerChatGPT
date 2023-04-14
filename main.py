@@ -87,6 +87,11 @@ while running:
                     game_page = "player_list_u19"
                 if forward_time_button.rect.collidepoint(event.pos):
                     game.tick()
+                    matches_today = game.match_manager.get_matches_by_date(game.year, game.month, game.day)
+                    if len(matches_today) > 0:
+                        for match in matches_today:
+                            match.play()
+                            print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
                 if save_game_button.rect.collidepoint(event.pos):
                     game.save_game('c:\temp')
                 if quit_game_button.rect.collidepoint(event.pos):
