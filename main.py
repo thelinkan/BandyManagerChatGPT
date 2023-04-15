@@ -21,6 +21,7 @@ pygame.display.set_caption("Bandymanager")
 
 selected_country_index=-1
 selected_team_index=-1
+selected_player_index=-1
 
 # Define game loop
 running = True
@@ -81,6 +82,11 @@ while running:
             elif event.button == 1 and game_state == "game_mainscreen":
                 if home_button.rect.collidepoint(event.pos):
                     game_page = "home"
+                if(game_page == "player_list" or game_page == "player_list_U19"):
+                    for i, rect in enumerate(player_rects):
+                        if rect.collidepoint(event.pos):
+                            selected_player_index = i
+                            break
                 if senior_squad_button.rect.collidepoint(event.pos):
                     game_page = "player_list"
                 if u19_squad_button.rect.collidepoint(event.pos):
@@ -96,6 +102,7 @@ while running:
                     game.save_game('c:\temp')
                 if quit_game_button.rect.collidepoint(event.pos):
                     quit_game_button.do_action()
+                
                 break
 
         if game_state =="new_game":
@@ -111,7 +118,8 @@ while running:
     if game_state == "new_game_2":
         country_rects,team_rects,selected_team=draw_newgame2_menu(game,selected_country_index,selected_team_index)
     if game_state == "game_mainscreen":
-        draw_game_mainscreen(game,game_page)
+        player_rects = draw_game_mainscreen(game,game_page, selected_player_index)
+        #print(player_rects)
     clock.tick(30)
 
 pygame.quit()

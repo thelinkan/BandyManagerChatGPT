@@ -15,7 +15,8 @@ screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
 x_offset = 150
 
-def draw_playerlist(game,team):
+def draw_playerlist(game,team, selected_player_index):
+    #print(selected_player_index)
     #team = game.teams[team_name]
     # Draw player table
     header_rect = pygame.Rect(10+x_offset, 100, 600, 30)
@@ -43,8 +44,12 @@ def draw_playerlist(game,team):
             row_color = TABLE_ROW_EVEN_COLOR
         else:
             row_color = TABLE_ROW_ODD_COLOR
+        if(selected_player_index == i):
+            row_color = (200,0,0)
         row_rect = pygame.Rect(10+x_offset, 130 + i * row_height, 600, row_height)
         pygame.draw.rect(screen, row_color, row_rect)
+
+        player_rects.append(row_rect)
 
         text = player_font.render(str(player[1]) + ") " + player[2] + " " + player[3], True, BLACK)
         text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
@@ -57,6 +62,9 @@ def draw_playerlist(game,team):
         text = player_font.render(player[5], True, BLACK)
         text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
         screen.blit(text, text_rect)
+    #print(len(player_rects))
+    #print(player_rects)
+    return player_rects
 
 def draw_home(game,team):
     month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -86,12 +94,14 @@ def draw_home(game,team):
         text_rect = pygame.Rect(10+x_offset, y ,200, 20)
         screen.blit(text, text_rect)
 
-def draw_game_mainscreen(game, game_page):
+def draw_game_mainscreen(game, game_page, selected_player_index):
     # Draw screen
     screen.fill(WHITE)
     title = font.render("Bandymanager - Main screen", True, BLACK)
     title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, 40))
     screen.blit(title, title_rect)
+
+    list1 = []
 
     manager_name = game.manager.return_name()
     manager_team_name = game.manager.return_team()
@@ -127,9 +137,10 @@ def draw_game_mainscreen(game, game_page):
     if (game_page == "home"):
         draw_home(game,manager_team_name)
     if (game_page == "player_list"):
-        draw_playerlist(game,manager_team)
+        list1 = draw_playerlist(game,manager_team, selected_player_index)
     if (game_page == "player_list_u19"):
-        draw_playerlist(game,manager_u19team)
+        list1 = draw_playerlist(game,manager_u19team, selected_player_index)
     # Update display
     pygame.display.flip()
 
+    return list1
