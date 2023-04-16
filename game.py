@@ -63,7 +63,8 @@ class Game:
                                 player_first_name = value.random_name("male")
                             else:
                                 player_first_name = value.random_name("female")
-                            player_familyname = value.random_name("family")
+                            player_last_name = value.random_name("family")
+                            nationality = club.country
                     if(age_type == "youth"):
                         age = random.randint(18,19)
                     else:
@@ -78,7 +79,7 @@ class Game:
                         position = "midfielder"
                     elif ((i>=12 and i<=13) or (i>=17 and i<=18)):
                         position = "forward"
-                    player = self.player_manager.create_player(player_first_name, player_familyname, age, gender, position, team.name)
+                    player = self.player_manager.create_player(player_first_name, player_last_name, age, gender, nationality, position, team.name)
                     team.add_player(player)
                     team.change_player_jersey_number(player.uuid,i+1)
                 #team.print_players();
@@ -127,7 +128,7 @@ class Game:
         #print(game_data['club_data'])
         players_data = game_data.get('players_data', [])
         for player_load in players_data:
-            self.player_manager.load_player(player_load["first_name"],player_load["last_name"],player_load["age"],player_load["gender"],player_load["position"],player_load["team"],player_load["uuid"])
+            self.player_manager.load_player(player_load["first_name"],player_load["last_name"],player_load["age"],player_load["gender"],player_load["nationality"],player_load["position"],player_load["team"],player_load["uuid"])
 
         self.clubs = self.read_clubs_from_json(game_data['club_data'])
         for club in self.clubs:

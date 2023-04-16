@@ -82,14 +82,16 @@ while running:
             elif event.button == 1 and game_state == "game_mainscreen":
                 if home_button.rect.collidepoint(event.pos):
                     game_page = "home"
-                if(game_page == "player_list" or game_page == "player_list_U19"):
+                if(game_page == "player_list" or game_page == "player_list_u19"):
                     for i, rect in enumerate(player_rects):
                         if rect.collidepoint(event.pos):
                             selected_player_index = i
                             break
                 if senior_squad_button.rect.collidepoint(event.pos):
+                    selected_player_index=-1
                     game_page = "player_list"
                 if u19_squad_button.rect.collidepoint(event.pos):
+                    selected_player_index=-1
                     game_page = "player_list_u19"
                 if forward_time_button.rect.collidepoint(event.pos):
                     game.tick()

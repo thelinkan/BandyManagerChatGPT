@@ -1,40 +1,59 @@
 import uuid
 import weakref
+from skill import Skill
 #from team import Team
 
 class Person:
-    def __init__(self, first_name, last_name, age, gender):
+    def __init__(self, first_name, last_name, age, gender, nationality):
         self.first_name = first_name
         self.last_name = last_name
         self.age = age
         self.gender = gender
+        self.nationality = nationality
 
 class Player(Person):
-    def __init__(self, first_name, last_name, age, gender, position, team):
-        super().__init__(first_name, last_name, age, gender)
+    def __init__(self, first_name, last_name, age, gender, nationality, position, team):
+        super().__init__(first_name, last_name, age, gender, nationality)
         self.position = position
         self.team = team
         self.uuid = uuid.uuid4()
         self.team_ref = None
-
+        self.skills = [
+            Skill('Skating', 1, 0),
+            Skill('Shooting', 1, 0),
+            Skill('Endurance', 1, 0)
+        ]
+        
     def add_team(self, team):
         self.team_ref = weakref.ref(team)
 
     def to_dict(self):
+        skills_dict = {skill.name: skill.to_dict() for skill in self.skills}
         player_dict = {
             'uuid': str(self.uuid),
             'first_name': self.first_name,
             'last_name': self.last_name,
             'age': self.age,
             'gender': self.gender,
+            'nationality': self.nationality,
             'position': self.position,
             'team': self.team,
+            'skills': skills_dict
             #'teams': [team.name for team in self.team_ref]  # Include only the team names
         }
         return player_dict
 
     def return_position(self):
         return self.position
+
+    def return_skills(self):
+        return self.skills
+        
+    def get_skill(self, skill_name):
+        for skill in self.skills:
+            if skill.name == skill_name:
+                return skill
+        return None
 
     def __str__(self):
         return f"Player first name: {self.first_name} last name: {self.last_name} age: {self.age}"
@@ -79,13 +98,13 @@ class PlayerManager:
         for player in self.players:
             print(player.uuid)
 
-    def create_player(self, first_name, last_name, age, gender, position, team):
-        player = Player(first_name, last_name, age, gender, position, team)
+    def create_player(self, first_name, last_name, age, gender, nationality, position, team):
+        player = Player(first_name, last_name, age, gender, nationality, position, team)
         self.players.append(player)
         return player
 
-    def load_player(self, first_name, last_name, age, gender, position, team, uuidload):
-        player = Player(first_name, last_name, age, gender, position, team)
+    def load_player(self, first_name, last_name, age, gender, nationality, position, team, uuidload):
+        player = Player(first_name, last_name, age, gender, nationality, position, team)
         player.uuid = uuid.UUID(uuidload)
         self.players.append(player)
         return player

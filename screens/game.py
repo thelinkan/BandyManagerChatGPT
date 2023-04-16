@@ -20,6 +20,7 @@ def draw_playerlist(game,team, selected_player_index):
     #team = game.teams[team_name]
     # Draw player table
     header_rect = pygame.Rect(10+x_offset, 100, 600, 30)
+    selected_player_uuid = None
 
     pygame.draw.rect(screen, TABLE_HEADER_COLOR, header_rect)
     header_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
@@ -46,6 +47,8 @@ def draw_playerlist(game,team, selected_player_index):
             row_color = TABLE_ROW_ODD_COLOR
         if(selected_player_index == i):
             row_color = (200,0,0)
+            selected_player_uuid = player[0]
+            #print(f"{player[2]} {selected_player_uuid}")
         row_rect = pygame.Rect(10+x_offset, 130 + i * row_height, 600, row_height)
         pygame.draw.rect(screen, row_color, row_rect)
 
@@ -64,8 +67,36 @@ def draw_playerlist(game,team, selected_player_index):
         screen.blit(text, text_rect)
     #print(len(player_rects))
     #print(player_rects)
+    if(selected_player_uuid is not None):
+        draw_player(game,selected_player_uuid)
     return player_rects
 
+def draw_player(game,player_uuid):
+    player = game.player_manager.find_player_by_uuid(player_uuid)
+    #print(player_uuid)
+    text = medium_font.render(f"{player.first_name} {player.last_name}", True, BLACK)
+    text_rect = pygame.Rect(790, 160, 300, 30)
+    screen.blit(text,text_rect)
+
+    text = medium_font.render(f"Age: {player.age}", True, BLACK)
+    text_rect = pygame.Rect(790, 190, 300, 30)
+    screen.blit(text,text_rect)
+
+    text = medium_font.render(f"Nationality: {game.countries[player.nationality].name}", True, BLACK)
+    text_rect = pygame.Rect(790, 220, 300, 30)
+    screen.blit(text,text_rect)
+
+    skills = []
+    for skill_name in ['Skating', 'Shooting', 'Endurance']:
+        skill = player.get_skill(skill_name)
+        if skill:
+            skills.append(f"{skill.name}: {skill.level} ({skill.experience})")
+    skills_text = '\n'.join(skills)
+    text = small_font.render(skills_text, True, BLACK)
+    text_rect = pygame.Rect(790, 250, 300, len(skills) * 20)
+    screen.blit(text,text_rect)
+
+    
 def draw_home(game,team):
     month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
