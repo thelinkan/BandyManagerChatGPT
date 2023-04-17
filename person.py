@@ -1,6 +1,6 @@
 import uuid
 import weakref
-from skill import Skill
+from attribute import Attribute
 #from team import Team
 
 class Person:
@@ -18,17 +18,17 @@ class Player(Person):
         self.team = team
         self.uuid = uuid.uuid4()
         self.team_ref = None
-        self.skills = [
-            Skill('Skating', 1, 0),
-            Skill('Shooting', 1, 0),
-            Skill('Endurance', 1, 0)
+        self.attributes = [
+            Attribute('Skating', 1, 0),
+            Attribute('Shooting', 1, 0),
+            Attribute('Endurance', 1, 0)
         ]
         
     def add_team(self, team):
         self.team_ref = weakref.ref(team)
 
     def to_dict(self):
-        skills_dict = {skill.name: skill.to_dict() for skill in self.skills}
+        attributes_dict = {attribute.name: attribute.to_dict() for attribute in self.attributes}
         player_dict = {
             'uuid': str(self.uuid),
             'first_name': self.first_name,
@@ -38,7 +38,7 @@ class Player(Person):
             'nationality': self.nationality,
             'position': self.position,
             'team': self.team,
-            'skills': skills_dict
+            'attributes': attributes_dict
             #'teams': [team.name for team in self.team_ref]  # Include only the team names
         }
         return player_dict
@@ -49,10 +49,10 @@ class Player(Person):
     def return_skills(self):
         return self.skills
         
-    def get_skill(self, skill_name):
-        for skill in self.skills:
-            if skill.name == skill_name:
-                return skill
+    def get_attribute(self, attribute_name):
+        for attribute in self.attributes:
+            if attribute.name == attribute_name:
+                return attribute
         return None
 
     def __str__(self):

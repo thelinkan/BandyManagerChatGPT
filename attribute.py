@@ -1,4 +1,4 @@
-class Skill:
+class Attribute:
     def __init__(self, name, level, experience):
         self.name = name
         self.level = level

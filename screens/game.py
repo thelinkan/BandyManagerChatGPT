@@ -86,14 +86,14 @@ def draw_player(game,player_uuid):
     text_rect = pygame.Rect(790, 220, 300, 30)
     screen.blit(text,text_rect)
 
-    skills = []
-    for skill_name in ['Skating', 'Shooting', 'Endurance']:
-        skill = player.get_skill(skill_name)
-        if skill:
-            skills.append(f"{skill.name}: {skill.level} ({skill.experience})")
-    skills_text = '\n'.join(skills)
-    text = small_font.render(skills_text, True, BLACK)
-    text_rect = pygame.Rect(790, 250, 300, len(skills) * 20)
+    attributes = []
+    for attribute_name in ['Skating', 'Shooting', 'Endurance']:
+        attribute = player.get_attribute(attribute_name)
+        if attribute:
+            attributes.append(f"{attribute.name}: {attribute.level} ({attribute.experience})")
+    attributes_text = '\n'.join(attributes)
+    text = small_font.render(attributes_text, True, BLACK)
+    text_rect = pygame.Rect(790, 250, 300, len(attributes) * 20)
     screen.blit(text,text_rect)
 
     
