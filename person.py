@@ -1,4 +1,5 @@
 import uuid
+import random
 import weakref
 from attribute import Attribute
 #from team import Team
@@ -19,11 +20,52 @@ class Player(Person):
         self.uuid = uuid.uuid4()
         self.team_ref = None
         self.attributes = [
-            Attribute('Skating', 1, 0),
-            Attribute('Shooting', 1, 0),
-            Attribute('Endurance', 1, 0)
+            Attribute('Saveing', -1, 0),
+            Attribute('Reflexes', -1, 0),
+            Attribute('Placement', -1, 0),
+            Attribute('Throwing', -1, 0),
+            Attribute('Dribbling', -1, 0),
+            Attribute('Corners', -1, 0),
+            Attribute('Passing', -1, 0),
+            Attribute('Long pass', -1, 0),
+            Attribute('Shooting', -1, 0),
+            Attribute('Skating', -1, 0),
+            Attribute('Acceleration', -1, 0),
+            Attribute('Agression', -1, 0),
+            Attribute('Agility', -1, 0),
+            Attribute('Endurance', -1, 0),
+            Attribute('Condition', -1, 0)
         ]
-        
+ 
+    def generate_attributes(self, country_knowledge, gender_proficiency, club_rating, team_rating):
+        for attribute in self.attributes:
+            #generic attributes
+            if attribute.name == "Endurance":
+                age_scale = -0.3125 * self.age * self.age + 16.25 * self.age - 111.25
+                attribute.level = round(random.randint(70,100)*age_scale/100)
+            if attribute.name == "Agility":
+                age_scale = -0.3125 * self.age * self.age + 16.25 * self.age - 111.25
+                attribute.level = round(random.randint(70,100)*age_scale/100)
+            if attribute.name == "Agression":
+                mean = 70
+                stddev = 15
+                num = int(random.normalvariate(mean, stddev))
+                #num = int(num * 10 + 70)
+                attribute.level = min(max(num, 1), 100)
+                #attribute.level = num
+ 
+    def set_attribute(self, attribute_name,value,experience):
+        for attribute in self.attributes:
+            if attribute.name == attribute_name:
+                attribute.level = value
+                attribute.experience = experience
+ 
+    def get_attribute(self, attribute_name):
+        for attribute in self.attributes:
+            if attribute.name == attribute_name:
+                return attribute
+        return None
+
     def add_team(self, team):
         self.team_ref = weakref.ref(team)
 
@@ -49,12 +91,6 @@ class Player(Person):
     def return_skills(self):
         return self.skills
         
-    def get_attribute(self, attribute_name):
-        for attribute in self.attributes:
-            if attribute.name == attribute_name:
-                return attribute
-        return None
-
     def __str__(self):
         return f"Player first name: {self.first_name} last name: {self.last_name} age: {self.age}"
 

@@ -87,7 +87,7 @@ def draw_player(game,player_uuid):
     screen.blit(text,text_rect)
 
     attributes = []
-    for attribute_name in ['Skating', 'Shooting', 'Endurance']:
+    for attribute_name in ['Skating', 'Agility', 'Shooting', 'Agression','Endurance']:
         attribute = player.get_attribute(attribute_name)
         if attribute:
             attributes.append(f"{attribute.name}: {attribute.level} ({attribute.experience})")

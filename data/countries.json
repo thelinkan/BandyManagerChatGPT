@@ -1,10 +1,10 @@
 [
     {
         "name": "Sweden",
-        "bandy_knowledge": 90,
+        "bandy_knowledge": 100,
         "population": 10000000,
-        "male_proficiency": 90,
-        "female_proficiency": 90,
+        "male_proficiency": 100,
+        "female_proficiency": 100,
     		"flag_path": "flags/sweden.png",
         "player_origins_male": [
             {"country": "Finland", "percentage": 40},
