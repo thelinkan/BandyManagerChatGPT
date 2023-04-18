@@ -219,9 +219,9 @@ class Game:
                 return country.return_flag()
 
     def return_league_by_name(self, league_name):
-        print(self.leagues)
+        #print(self.leagues)
         for league in self.leagues:
-            print(f"league: {league} {league.name}")
+            #print(f"league: {league} {league.name}")
             if league.name == league_name:
                 return league
         return None

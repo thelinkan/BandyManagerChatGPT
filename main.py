@@ -91,7 +91,7 @@ while running:
                     selected_player_index=-1
                     game_page = "player_list"
                 if competition_button.rect.collidepoint(event.pos):
-                    print(game_page)
+                    #print(game_page)
                     game_page = "competition"
                 if u19_squad_button.rect.collidepoint(event.pos):
                     selected_player_index=-1

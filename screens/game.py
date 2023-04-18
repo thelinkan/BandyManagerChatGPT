@@ -135,7 +135,7 @@ def draw_league_table(game, selected_league):
     league = game.return_league_by_name(selected_league)
 
     # Define table header
-    header_rect = pygame.Rect(10, 100, 600, 30)
+    header_rect = pygame.Rect(10+x_offset, 100, 600, 30)
     pygame.draw.rect(screen, TABLE_HEADER_COLOR, header_rect)
 
     # Define header font and draw header labels
@@ -145,19 +145,19 @@ def draw_league_table(game, selected_league):
     screen.blit(text, text_rect)
 
     text = header_font.render("Played", True, BLACK)
-    text_rect = text.get_rect(centerx=header_rect.left + 100, centery=header_rect.centery)
+    text_rect = text.get_rect(centerx=header_rect.left + 150, centery=header_rect.centery)
     screen.blit(text, text_rect)
 
     text = header_font.render("Wins", True, BLACK)
-    text_rect = text.get_rect(centerx=header_rect.left + 180, centery=header_rect.centery)
+    text_rect = text.get_rect(centerx=header_rect.left + 200, centery=header_rect.centery)
     screen.blit(text, text_rect)
 
     text = header_font.render("Draws", True, BLACK)
-    text_rect = text.get_rect(centerx=header_rect.left + 260, centery=header_rect.centery)
+    text_rect = text.get_rect(centerx=header_rect.left + 270, centery=header_rect.centery)
     screen.blit(text, text_rect)
 
     text = header_font.render("Losses", True, BLACK)
-    text_rect = text.get_rect(centerx=header_rect.left + 340, centery=header_rect.centery)
+    text_rect = text.get_rect(centerx=header_rect.left + 350, centery=header_rect.centery)
     screen.blit(text, text_rect)
 
     text = header_font.render("GF", True, BLACK)
@@ -176,8 +176,8 @@ def draw_league_table(game, selected_league):
     team_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
     row_height = FONTSIZE_VERY_SMALL + 8
 
-    print(selected_league)
-    print(league)
+    #print(selected_league)
+    #print(league)
 
     # Sort the table by points, then by goal difference, then by goals for
     sorted_table = sorted(league.table.items(), key=lambda x: (-x[1]['points'], -x[1]['goals_for'] + x[1]['goals_against'], -x[1]['goals_for']))
@@ -196,37 +196,38 @@ def draw_league_table(game, selected_league):
         text = player_font.render(str(i+1), True, BLACK)
         text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
         screen.blit(text, text_rect)
-
-        text = player_font.render(team.name, True, BLACK)
+        
+        league_row = team[1]
+        text = player_font.render(team[0].name, True, BLACK)
         text_rect = text.get_rect(left=row_rect.left + 40, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
-        played = league.table[team]['played']
+        played = league_row['played']
         text = player_font.render(str(played), True, BLACK)
-        text_rect = text.get_rect(centerx=row_rect.left + 150, centery=row_rect.centery)
+        text_rect = text.get_rect(centerx=row_rect.left + 180, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
-        won = league.table[team]['won']
+        won = league_row['won']
         text = player_font.render(str(won), True, BLACK)
         text_rect = text.get_rect(centerx=row_rect.left + 210, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
-        drawn = league.table[team]['drawn']
+        drawn = league_row['drawn']
         text = player_font.render(str(drawn), True, BLACK)
         text_rect = text.get_rect(centerx=row_rect.left + 270, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
-        lost = league.table[team]['lost']
+        lost = league_row['lost']
         text = player_font.render(str(lost), True, BLACK)
         text_rect = text.get_rect(centerx=row_rect.left + 330, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
-        goals_for = league.table[team]['goals_for']
+        goals_for = league_row['goals_for']
         text = player_font.render(str(goals_for), True, BLACK)
         text_rect = text.get_rect(centerx=row_rect.left + 390, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
-        goals_against = league.table[team]['goals_against']
+        goals_against = league_row['goals_against']
         text = player_font.render(str(goals_against), True, BLACK)
         text_rect = text.get_rect(centerx=row_rect.left + 450, centery=row_rect.centery)
         screen.blit(text, text_rect)
@@ -236,7 +237,7 @@ def draw_league_table(game, selected_league):
         text_rect = text.get_rect(centerx=row_rect.left + 510, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
-        points = league.table[team]['points']
+        points = league_row['points']
         text = player_font.render(str(points), True, BLACK)
         text_rect = text.get_rect(centerx=row_rect.left + 570, centery=row_rect.centery)
         screen.blit(text, text_rect)
