@@ -70,6 +70,38 @@ class League:
             'matches': [match.to_dict() for match in self.matches],
         }
 
+    def calculate_table(self):
+        for team in self.table:
+            self.table[team] = {'played': 0, 'won': 0, 'drawn': 0, 'lost': 0, 'goals_for': 0, 'goals_against': 0, 'points': 0}
+
+        for match in self.matches:
+            if match.played:
+                home_team = match.home_team
+                away_team = match.away_team
+                home_goals = match.home_goals
+                away_goals = match.away_goals
+
+                self.table[home_team]['played'] += 1
+                self.table[away_team]['played'] += 1
+
+                if home_goals > away_goals:
+                    self.table[home_team]['won'] += 1
+                    self.table[home_team]['points'] += self.win_points
+                    self.table[away_team]['lost'] += 1
+                elif home_goals < away_goals:
+                    self.table[away_team]['won'] += 1
+                    self.table[away_team]['points'] += self.win_points
+                    self.table[home_team]['lost'] += 1
+                else:
+                    self.table[home_team]['drawn'] += 1
+                    self.table[home_team]['points'] += self.draw_points
+                    self.table[away_team]['drawn'] += 1
+                    self.table[away_team]['points'] += self.draw_points
+
+                self.table[home_team]['goals_for'] += home_goals
+                self.table[home_team]['goals_against'] += away_goals
+                self.table[away_team]['goals_for'] += away_goals
+                self.table[away_team]['goals_against'] += home_goals
 
     def print_table(self):
         print("{:<20} {:<6} {:<6} {:<6} {:<6} {:<6} {:<6} {:<6}".format("Team", "Pld", "W", "D", "L", "GF", "GA", "Pts"))

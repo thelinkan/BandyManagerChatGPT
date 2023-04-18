@@ -1,15 +1,55 @@
 {
   "clubs": [
     {
+      "name": "IFK Rättvik",
+      "country": "Sweden",
+      "home_arena": "Rättvik Arena",
+      "club_rating": 85,
+      "teams": [
+        {
+          "name": "IFK Rättvik",
+          "team_type": "Men",
+          "team_rating": 60,
+          "num_players": 15,
+          "num_int_players": 3,
+		  "jersey_colors": "[(16,29,71),(16,29,71),(16,29,71),(90,90,90),(255,255,255)]"
+        },
+        {
+          "name": "IFK Rättvik U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 15,
+          "num_int_players": 0,
+		  "jersey_colors": "[(16,29,71),(16,29,71),(16,29,71),(90,90,90),(255,255,255)]"
+        },
+        {
+          "name": "IFK Rättvik (W)",
+          "team_type": "Women",
+          "team_rating": 75,
+          "num_players": 15,
+          "num_int_players": 3,
+		  "jersey_colors": "[(16,29,71),(16,29,71),(16,29,71),(90,90,90),(255,255,255)]"
+        },
+        {
+          "name": "IFK Rättvik F19",
+          "team_type": "Women U19",
+          "team_rating": 65,
+          "num_players": 15,
+          "num_int_players": 0,
+		  "jersey_colors": "[(16,29,71),(16,29,71),(16,29,71),(90,90,90),(255,255,255)]"
+        }
+      ]
+    },
+    {
       "name": "Sandvikens AIK",
       "country": "Sweden",
       "home_arena": "Göransson Arena",
-      "club_rating": 85,
+      "club_rating": 95,
       "teams": [
         {
           "name": "Sandvikens AIK",
           "team_type": "Men",
-          "team_rating": 80,
+          "team_rating": 90,
           "num_players": 15,
           "num_int_players": 3,
 		  "jersey_colors": "[(0,0,0),(0,0,0),(0,0,0),(90,90,90),(255,255,255)]"
@@ -44,12 +84,12 @@
       "name": "Villa Lidköping BK",
       "country": "Sweden",
       "home_arena": "Sparbanken Lidköping Arena",
-      "club_rating": 95,
+      "club_rating": 100,
       "teams": [
         {
           "name": "Villa Lidköping BK",
           "team_type": "Men",
-          "team_rating": 80,
+          "team_rating": 100,
           "num_players": 15,
           "num_int_players": 3,
 		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
@@ -57,7 +97,7 @@
         {
           "name": "Villa Lidköping BK U19",
           "team_type": "Men U19",
-          "team_rating": 70,
+          "team_rating": 100,
           "num_players": 15,
           "num_int_players": 0,
 		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
@@ -77,6 +117,46 @@
           "num_players": 15,
           "num_int_players": 0,
 		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+        }
+      ]
+    },
+    {
+      "name": "Västerås SK",
+      "country": "Sweden",
+      "home_arena": "ABB Arena",
+      "club_rating": 95,
+      "teams": [
+        {
+          "name": "Västerås SK",
+          "team_type": "Men",
+          "team_rating": 90,
+          "num_players": 15,
+          "num_int_players": 3,
+          "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(17,191,91)]"
+        },
+        {
+          "name": "Västerås SK U19",
+          "team_type": "Men U19",
+          "team_rating": 70,
+          "num_players": 15,
+          "num_int_players": 0,
+          "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(17,191,91)]"
+        },
+        {
+          "name": "Västerås SK (W)",
+          "team_type": "Women",
+          "team_rating": 75,
+          "num_players": 15,
+          "num_int_players": 3,
+          "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(17,191,91)]"
+        },
+        {
+          "name": "Västerås SK F19",
+          "team_type": "Women U19",
+          "team_rating": 65,
+          "num_players": 15,
+          "num_int_players": 0,
+          "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(17,191,91)]"
         }
       ]
     },
@@ -213,7 +293,7 @@
           "num_players": 15,
           "num_int_players": 1,
 		  "jersey_colors": "[(52,145,241),(54,59,91),(52,145,241),(0,0,0),(255,255,255)]"
-		},		
+		},
         {
           "name": "Stabaek bandy U19",
           "team_type": "Men U19",

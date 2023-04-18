@@ -137,7 +137,7 @@ class Game:
             for attribute_name, attribute_data in attributes.items():
                 player.set_attribute(attribute_name, attribute_data["level"], attribute_data["experience"])
                 #print(attributes)
-            
+
         self.clubs = self.read_clubs_from_json(game_data['club_data'])
         for club in self.clubs:
             print(club.name)
@@ -263,6 +263,9 @@ class Game:
                 teams = club.get_teams_by_type(teamtype)
                 team_list.extend(teams)
         return team_list
+
+    def get_leagues(self):
+        return self.leagues
 
     def tick(self):
         self.day += 1

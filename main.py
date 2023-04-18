@@ -100,6 +100,10 @@ while running:
                         for match in matches_today:
                             match.play()
                             print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
+                        leagues = game.get_leagues()
+                        for league in leagues:
+                            league.calculate_table()
+                            league.print_table()
                 if save_game_button.rect.collidepoint(event.pos):
                     game.save_game('c:\temp')
                 if quit_game_button.rect.collidepoint(event.pos):

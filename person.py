@@ -36,30 +36,72 @@ class Player(Person):
             Attribute('Endurance', -1, 0),
             Attribute('Condition', -1, 0)
         ]
- 
+
     def generate_attributes(self, country_knowledge, gender_proficiency, club_rating, team_rating):
+        total_rating = gender_proficiency * team_rating/10000
+        #print (f"Team {total_rating} - {gender_proficiency} - {team_rating}")
         for attribute in self.attributes:
             #generic attributes
             if attribute.name == "Endurance":
-                age_scale = -0.3125 * self.age * self.age + 16.25 * self.age - 111.25
-                attribute.level = round(random.randint(70,100)*age_scale/100)
+                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                attribute.level = round(random.randint(70,100)*age_scale)
             if attribute.name == "Agility":
-                age_scale = -0.3125 * self.age * self.age + 16.25 * self.age - 111.25
-                attribute.level = round(random.randint(70,100)*age_scale/100)
+                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                attribute.level = round(random.randint(70,100)*age_scale)
             if attribute.name == "Agression":
                 mean = 70
                 stddev = 15
                 num = int(random.normalvariate(mean, stddev))
-                #num = int(num * 10 + 70)
                 attribute.level = min(max(num, 1), 100)
-                #attribute.level = num
- 
+            if attribute.name == "Condition":
+                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                attribute.level = round(random.randint(70,100)*age_scale)
+            #skating attributes
+            if attribute.name == "Skating":
+                if self.position == "goalkeeper":
+                    pos_scale = random.randint(50,70)/100
+                else:
+                    pos_scale = random.randint(60,100)/100
+                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                attribute.level = round(random.randint(70,100) * age_scale * total_rating  * pos_scale)
+            if attribute.name == "Acceleration":
+                if self.position == "goalkeeper":
+                    pos_scale = random.randint(30,50)/100
+                elif self.position == "defender":
+                    pos_scale = random.randint(40,70)/100
+                else:
+                    pos_scale = random.randint(60,100)/100
+                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                attribute.level = round(random.randint(70,100) * age_scale * total_rating  * pos_scale)
+            #Goalkeeper attributes
+            if attribute.name == "Saveing":
+                if self.position == "goalkeeper":
+                    pos_scale = random.randint(80,100)/100
+                else:
+                    pos_scale = random.randint(1,25)/100
+                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                base_skill = random.randint(90,100)
+                attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
+                #print (f"{base_skill} - {age_scale} - {total_rating} - {pos_scale}")
+            #Other player attributes
+            if attribute.name == "Dribbling":
+                if self.position == "goalkeeper":
+                    pos_scale = random.randint(1,40)/100
+                else:
+                    pos_scale = random.randint(60,100)/100
+                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                base_skill = random.randint(80,100)
+                attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
+                #print (f"{base_skill} - {age_scale} - {total_rating} - {pos_scale}")
+
+
+
     def set_attribute(self, attribute_name,value,experience):
         for attribute in self.attributes:
             if attribute.name == attribute_name:
                 attribute.level = value
                 attribute.experience = experience
- 
+
     def get_attribute(self, attribute_name):
         for attribute in self.attributes:
             if attribute.name == attribute_name:
@@ -90,7 +132,7 @@ class Player(Person):
 
     def return_skills(self):
         return self.skills
-        
+
     def __str__(self):
         return f"Player first name: {self.first_name} last name: {self.last_name} age: {self.age}"
 

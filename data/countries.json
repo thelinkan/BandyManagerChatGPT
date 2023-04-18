@@ -23,10 +23,10 @@
     },
     {
         "name": "Finland",
-        "bandy_knowledge": 85,
+        "bandy_knowledge": 90,
         "population": 5500000,
-        "male_proficiency": 80,
-        "female_proficiency": 90,
+        "male_proficiency": 90,
+        "female_proficiency": 95,
     		"flag_path": "flags/finland.png",
         "player_origins_male": [
             {"country": "Sweden", "percentage": 40},
@@ -40,8 +40,8 @@
         "name": "Norway",
         "bandy_knowledge": 80,
         "population": 5300000,
-        "male_proficiency": 70,
-        "female_proficiency": 75,
+        "male_proficiency": 80,
+        "female_proficiency": 85,
     		"flag_path": "flags/norway.png",
         "player_origins_male": [
             {"country": "Sweden", "percentage": 80},
