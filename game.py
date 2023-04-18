@@ -218,6 +218,14 @@ class Game:
             if country.name == country_name:
                 return country.return_flag()
 
+    def return_league_by_name(self, league_name):
+        print(self.leagues)
+        for league in self.leagues:
+            print(f"league: {league} {league.name}")
+            if league.name == league_name:
+                return league
+        return None
+
     def read_clubs_from_json(self,data):
 
         clubs = []
