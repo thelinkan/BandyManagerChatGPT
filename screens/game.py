@@ -3,7 +3,7 @@ from button import Button
 from inputbox import InputBox
 from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY,FONTSIZE_LARGE,FONTSIZE_MEDIUM,FONTSIZE_SMALL,FONTSIZE_VERY_SMALL
 from constants import TABLE_HEADER_COLOR, TABLE_ROW_ODD_COLOR, TABLE_ROW_EVEN_COLOR
-from guielements import font, medium_font, small_font,very_small_font , button_width, button_height, button_x, button_spacing
+from guielements import font, medium_font, small_font,very_small_font ,very_small_bold_font , button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
 from guielements import home_button, inbox_button, newspaper_button, senior_squad_button, tactics_button, training_button, schedule_button, competition_button
 from guielements import u19_squad_button,forward_time_button, save_game_button, quit_game_button
@@ -16,8 +16,6 @@ screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 x_offset = 150
 
 def draw_playerlist(game,team, selected_player_index):
-    #print(selected_player_index)
-    #team = game.teams[team_name]
     # Draw player table
     header_rect = pygame.Rect(10+x_offset, 100, 600, 30)
     selected_player_uuid = None
@@ -89,12 +87,29 @@ def draw_player(game,player_uuid):
     attributes = []
     i=0
     if player.position == "goalkeeper":
-        attribute_list = ['Skating','Acceleration', 'Agility', 'Shooting', 'Agression','Endurance',"Saveing"]
+        attribute_list = ['Saveing','Reflexes','Placement','Throwing','Skating','Acceleration', 'Agility', 'Agression','Endurance']
     else:
-        attribute_list = ['Skating','Acceleration', 'Agility', 'Shooting', 'Agression','Endurance',"Dribbling"]
+        attribute_list = ["Dribbling", "Intercept", 'Shooting', 'Passing', 'Long pass', 'Corners','Skating','Acceleration', 'Agility', 'Agression','Endurance']
     for attribute_name in attribute_list:
         attribute = player.get_attribute(attribute_name)
         if attribute:
+            if attribute.name == "Saveing":
+                text = very_small_bold_font.render("Goalkeeper attributes", True, BLACK)
+                text_rect = pygame.Rect(790, 250 + i*15 , 300, 15)
+                screen.blit(text,text_rect)
+                i += 1
+            if attribute.name == "Dribbling":
+                text = very_small_bold_font.render("Outfield attributes", True, BLACK)
+                text_rect = pygame.Rect(790, 250 + i*15 , 300, 15)
+                screen.blit(text,text_rect)
+                i += 1
+            if attribute.name == "Skating":
+                i += 1
+                text = very_small_bold_font.render("Generic attributes", True, BLACK)
+                text_rect = pygame.Rect(790, 250 + i*15 , 300, 15)
+                screen.blit(text,text_rect)
+                i += 1
+                
             #attributes.append(f"{attribute.name}: {attribute.level}")
             attributes_text = f"{attribute.name}: {attribute.level}"
             text = very_small_font.render(attributes_text, True, BLACK)

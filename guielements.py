@@ -15,6 +15,7 @@ font = pygame.font.Font(None, FONTSIZE_LARGE)
 medium_font = pygame.font.Font(None, FONTSIZE_MEDIUM)
 small_font = pygame.font.Font(None, FONTSIZE_SMALL)
 very_small_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
+very_small_bold_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL,underline=True)
 
 # Define buttons
 button_width = 230
