@@ -8,6 +8,7 @@ class League:
     def __init__(self, name, country, level,teams , num_rounds, win_points=2, draw_points=1, start_year = 2023, start_month=11, start_day=1, end_month=2, end_day=15, match_manager=None):
         self.name = name
         self.country = country
+        self.level = level
         self.num_teams = len(teams)
         self.num_rounds = num_rounds
         self.win_points = win_points
@@ -43,6 +44,24 @@ class League:
                 #print(f"{match[0]}  -  {match[1]}")
                 #print(f"{self.teams[match[0]].name}  -  {self.teams[match[1]].name}")
 
+    def load_schedule(self,matches,teams):
+        #print(teams['Sandvikens AIK'])
+        for match in matches:
+            home_team = teams[match['home_team']]
+            away_team = teams[match['away_team']]
+            year = match['year']
+            month = match['month']
+            day = match['day']
+            home_goals = match['home_goals']
+            away_goals = match['away_goals']
+            played = match['played']
+            new_match = Match(home_team,away_team,year,month,day)
+            new_match.load_match(home_goals,away_goals,played)
+            self.matches.append(new_match)
+            if self.match_manager is not None:
+                self.match_manager.add_match(new_match,self)
+                #print(new_match)
+            #print(match)
 
     def get_all_matches(self):
         return self.matches
@@ -54,9 +73,11 @@ class League:
         return [match for match in self.matches if team in [match.home_team, match.away_team]]
 
     def to_dict(self):
+        print(self.matches)
         return {
             'name': self.name,
             'country': self.country,
+            'level': self.level,
             'num_teams': self.num_teams,
             'num_rounds': self.num_rounds,
             'win_points': self.win_points,

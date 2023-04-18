@@ -144,6 +144,23 @@ class Game:
             for team in club.teams:
                 print(f"- {team.name} ({team.team_type})")
 
+        for league_data in game_data['leagues_data']:
+            #print(league_data['name'])
+            team_names = league_data.pop("teams")
+            league_teams = []
+            for team_name in team_names:
+                #print(self.teams)
+                team = self.teams.get(team_name, None)
+                if not team:
+                    raise ValueError(f"No team found with name '{team_name}'")
+                league_teams.append(team)
+            #print(league_data)
+            league = League(league_data['name'],league_data['country'],league_data['level'],league_teams,league_data['num_rounds'], match_manager=self.match_manager)
+            league_matches = league_data['matches']
+            league.load_schedule(league_matches,self.teams)
+            league.calculate_table()
+            #print(league_matches)
+            self.leagues.append(league)
         #for key, value in self.countries.items():
         #    print(value.to_dict())
         print("Data loaded")
