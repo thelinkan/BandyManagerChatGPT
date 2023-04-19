@@ -2,7 +2,7 @@ import random
 from team import Team
 from match import Match
 from country import Country
-from miscfunctions import return_schedule
+from miscfunctions import return_schedule, adddays
 
 class League:
     def __init__(self, name, country, level,teams , num_rounds, win_points=2, draw_points=1, start_year = 2023, start_month=11, start_day=1, end_month=2, end_day=15, match_manager=None):
@@ -34,15 +34,16 @@ class League:
                 self.matches.append(match)
                 if self.match_manager is not None:
                     self.match_manager.add_match(match,self)
-            r_day += 7
-            if(r_day>30):
-                r_day = r_day - 30
-                r_month += 1
-                if(r_month>12):
-                    r_month = r_month - 12
-                    r_year += 1
-                #print(f"{match[0]}  -  {match[1]}")
-                #print(f"{self.teams[match[0]].name}  -  {self.teams[match[1]].name}")
+            r_year, r_month, r_day = adddays(r_year, r_month, r_day, 7)
+            #r_day += 7
+            #if(r_day>30):
+            #    r_day = r_day - 30
+            #    r_month += 1
+            #    if(r_month>12):
+            #        r_month = r_month - 12
+            #        r_year += 1
+            #    #print(f"{match[0]}  -  {match[1]}")
+            #    #print(f"{self.teams[match[0]].name}  -  {self.teams[match[1]].name}")
 
     def load_schedule(self,matches,teams):
         #print(teams['Sandvikens AIK'])

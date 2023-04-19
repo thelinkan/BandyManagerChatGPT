@@ -193,3 +193,23 @@ def return_schedule(num_teams,num_rounds):
 
     return schedule
 
+def adddays(year, month, day, days_to_add):
+    day += days_to_add
+    if month in [4, 6, 9, 11]:
+        month_days = 30
+    elif month == 2:
+        if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
+            month_days = 29
+        else:
+            month_days = 28
+    else:
+        month_days = 31
+
+    if day > month_days:
+        day = day - month_days
+        month += 1
+
+    if month > 12:
+        month = 1
+        year += 1
+    return year, month, day
