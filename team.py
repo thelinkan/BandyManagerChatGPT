@@ -1,4 +1,5 @@
 import json
+import random
 import ast
 #from person import Player
 
@@ -11,6 +12,24 @@ class Team:
         self.num_players = num_players
         self.num_int_players = num_int_players
         self.jersey_colors = ast.literal_eval(jersey_colors)
+        self.actual_positions = {
+            "goalkeeper": {"player_uuid": None, "tactic": 0},
+            "libero": {"player_uuid": None, "tactic": 0},
+            "leftdef": {"player_uuid": None, "tactic": 0},
+            "rightdef": {"player_uuid": None, "tactic": 0},
+            "lefthalf": {"player_uuid": None, "tactic": 0},
+            "righthalf": {"player_uuid": None, "tactic": 0},
+            "leftmid": {"player_uuid": None, "tactic": 0},
+            "centralmid": {"player_uuid": None, "tactic": 0},
+            "rightmid": {"player_uuid": None, "tactic": 0},
+            "leftattack": {"player_uuid": None, "tactic": 0},
+            "rightattack": {"player_uuid": None, "tactic": 0},
+            'sub1': {'player_uuid': None, 'tactic': 0},
+            'sub2': {'player_uuid': None, 'tactic': 0},
+            'sub3': {'player_uuid': None, 'tactic': 0},
+            'sub4': {'player_uuid': None, 'tactic': 0},
+            'sub5': {'player_uuid': None, 'tactic': 0}
+        }
 
     def return_name(self):
         return self.name
@@ -87,3 +106,23 @@ class Team:
         else:
             print(f"Player with UUID {player_uuid} not found in team {self.name}.")
             return False
+
+    def assign_players_to_positions(self):
+        # Create a list of player UUIDs
+        player_uuids = list(self.players.keys())
+
+        # Shuffle the list of player UUIDs
+        random.shuffle(player_uuids)
+
+        # Assign each position to a player UUID
+        self.actual_positions["goalkeeper"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["libero"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["leftdef"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["rightdef"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["lefthalf"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["righthalf"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["leftmid"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["centralmid"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["rightmid"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["leftattack"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["rightattack"]["player_uuid"] = player_uuids.pop(0)

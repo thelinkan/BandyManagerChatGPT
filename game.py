@@ -85,6 +85,7 @@ class Game:
                     player.generate_attributes(100,100,club_rating,team_rating)
                     team.add_player(player)
                     team.change_player_jersey_number(player.uuid,i+1)
+                team.assign_players_to_positions()
                 #team.print_players();
         with open("data/leagues.json", encoding='utf-8') as f:
             league_data = json.load(f)
@@ -103,10 +104,10 @@ class Game:
             league = League(data["name"],data["country"],data["level"],league_teams,data["num_rounds"], match_manager=self.match_manager)
             league.generate_schedule()
             self.leagues.append(league)
-            league.print_table()
+            #league.print_table()
             matches = league.get_matches_by_team(team)
-            for match in matches:
-                print(f"{match.year}-{match.month}-{match.day}")
+            #for match in matches:
+            #    print(f"{match.year}-{match.month}-{match.day}")
 
     def load_game(self, file_path):
         # load game from file

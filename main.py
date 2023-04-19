@@ -12,7 +12,7 @@ from screens.start import screen,draw_start_menu, draw_credits, draw_newgame_men
 from screens.game import draw_game_mainscreen
 from guielements import font,medium_font, small_font, button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
-from guielements import home_button,senior_squad_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
+from guielements import home_button,senior_squad_button, tactics_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
 
 game_state = "start_menu"
 
@@ -76,7 +76,7 @@ while running:
                         game.set_manager_team(selected_team)
                         game_state = "game_mainscreen"
                         game_page = "home"
-                        print("klick "+ selected_team)
+                        #print("klick "+ selected_team)
                         game.save_game('c:\temp')
                         break
             elif event.button == 1 and game_state == "game_mainscreen":
@@ -90,6 +90,9 @@ while running:
                 if senior_squad_button.rect.collidepoint(event.pos):
                     selected_player_index=-1
                     game_page = "player_list"
+                if tactics_button.rect.collidepoint(event.pos):
+                    #print(game_page)
+                    game_page = "tactics"
                 if competition_button.rect.collidepoint(event.pos):
                     #print(game_page)
                     game_page = "competition"

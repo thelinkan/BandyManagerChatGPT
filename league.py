@@ -74,7 +74,7 @@ class League:
         return [match for match in self.matches if team in [match.home_team, match.away_team]]
 
     def to_dict(self):
-        print(self.matches)
+        #print(self.matches)
         return {
             'name': self.name,
             'country': self.country,

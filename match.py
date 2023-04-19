@@ -22,9 +22,9 @@ class Match:
         self.away_goals = away_goals
         self.played = played
         #print (f"{self.home_team.name} - {self.away_team.name}    {self.home_goals}-{self.away_goals}")
-        
+
     def to_dict(self):
-        print (f"{self.home_team.name} - {self.away_team.name}    {self.home_goals}-{self.away_goals}")
+        #print (f"{self.home_team.name} - {self.away_team.name}    {self.home_goals}-{self.away_goals}")
         return {
             'home_team': self.home_team.name,
             'away_team': self.away_team.name,
