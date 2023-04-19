@@ -3,7 +3,7 @@
     			  	"name": "Elitserien",
     			  	"country": "Sweden",
     			  	"level": 1,
-    			  	"num_rounds": 10,
+    			  	"num_rounds": 26,
     			  	"win_points": 2,
     			  	"draw_points": 1,
     			  	"startmonth": 10,
@@ -12,7 +12,7 @@
     			  	"endday": 10,
     			  	"teams":
     			  		[
-    			  				"Villa Lidköping BK","Sandvikens AIK","Brobergs IF","IFK Vänersborg", "IFK Rättvik", "Västerås SK"
+    			  				"Bollnäs GIF", "Brobergs IF", "Edsbyns IF", "Frillesås BK", "Gripen Trollhättan BK", "Hammarby IF", "IFK Motala", "Vetlanda BK", "Villa Lidköping BK" ,"Sandvikens AIK", "IK Sirius BK", "IFK Vänersborg", "IFK Rättvik", "Västerås SK"
     			  		]
     			 	}
 ]
