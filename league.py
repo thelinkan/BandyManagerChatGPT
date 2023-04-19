@@ -35,15 +35,6 @@ class League:
                 if self.match_manager is not None:
                     self.match_manager.add_match(match,self)
             r_year, r_month, r_day = adddays(r_year, r_month, r_day, 7)
-            #r_day += 7
-            #if(r_day>30):
-            #    r_day = r_day - 30
-            #    r_month += 1
-            #    if(r_month>12):
-            #        r_month = r_month - 12
-            #        r_year += 1
-            #    #print(f"{match[0]}  -  {match[1]}")
-            #    #print(f"{self.teams[match[0]].name}  -  {self.teams[match[1]].name}")
 
     def load_schedule(self,matches,teams):
         #print(teams['Sandvikens AIK'])

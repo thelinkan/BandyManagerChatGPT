@@ -48,6 +48,15 @@ class Team:
                 'jersey_number': self.players[player_uuid].jersey_number
             }
             player_list.append(player_dict)
+        position_list = []
+        for actual_position in self.actual_positions.keys():
+            position_dict = {
+                'actual_position': actual_position,
+                'player_uuid': str(self.actual_positions[actual_position]['player_uuid']),
+                'tactic': self.actual_positions[actual_position]['tactic']
+            }
+            position_list.append(position_dict)
+            
         #print(self.players)
         return {
             'name': self.name,
@@ -56,6 +65,7 @@ class Team:
             'num_players': 0,
             'num_int_players': 0,
             'players': player_list,
+            'actual_positions': position_list,
             'jersey_colors': str(self.jersey_colors)
         }
 
@@ -106,6 +116,19 @@ class Team:
         else:
             print(f"Player with UUID {player_uuid} not found in team {self.name}.")
             return False
+    
+    def assign_player_to_position(self,position,position_uuid):
+        # Create a list of player UUIDs
+        player_uuids = list(self.players.keys())
+        
+        assign_uuid = None
+        
+        for player_uuid in player_uuids:
+            if str(player_uuid) == str(position_uuid):
+                assign_uuid = player_uuid
+        
+        if assign_uuid is not None:
+            self.actual_positions[position]["player_uuid"] = assign_uuid
 
     def assign_players_to_positions(self):
         # Create a list of player UUIDs
@@ -126,3 +149,10 @@ class Team:
         self.actual_positions["rightmid"]["player_uuid"] = player_uuids.pop(0)
         self.actual_positions["leftattack"]["player_uuid"] = player_uuids.pop(0)
         self.actual_positions["rightattack"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["sub1"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["sub2"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["sub3"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["sub4"]["player_uuid"] = player_uuids.pop(0)
+        self.actual_positions["sub5"]["player_uuid"] = player_uuids.pop(0)
+                
+                

@@ -10,7 +10,7 @@
           "name": "Bollnäs GIF",
           "team_type": "Men",
           "team_rating": 70,
-          "num_players": 16,
+          "num_players": 18,
           "num_int_players": 3,
 		  "jersey_colors": "[(208,92,45),(208,92,45),(208,92,45),(0,0,0),(255,255,255)]"
         },
@@ -18,7 +18,7 @@
           "name": "Bollnäs GIF U19",
           "team_type": "Men U19",
           "team_rating": 60,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(208,92,45),(208,92,45),(208,92,45),(0,0,0),(255,255,255)]"
         }
@@ -42,7 +42,7 @@
           "name": "Brobergs IF U19",
           "team_type": "Men U19",
           "team_rating": 60,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(249,220,59),(249,220,59),(249,220,59),(0,0,0),(0,0,0)]"
         }
@@ -58,7 +58,7 @@
           "name": "Edsbyns IF",
           "team_type": "Men",
           "team_rating": 70,
-          "num_players": 16,
+          "num_players": 18,
           "num_int_players": 3,
 		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
         },
@@ -66,7 +66,7 @@
           "name": "Edsbyns IF U19",
           "team_type": "Men U19",
           "team_rating": 60,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
         }
@@ -90,7 +90,7 @@
           "name": "Frillesås BK U19",
           "team_type": "Men U19",
           "team_rating": 60,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(0,0,0),(0,0,0),(0,0,0),(90,90,90),(226,214,40)]"
         }
@@ -114,7 +114,7 @@
           "name": "Gripen Trollhättan BK U19",
           "team_type": "Men U19",
           "team_rating": 50,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(0,0,0),(0,0,0),(0,0,0),(90,90,90),(226,214,40)]"
         }
@@ -138,7 +138,7 @@
           "name": "Hammarby IF U19",
           "team_type": "Men U19",
           "team_rating": 70,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
           "jersey_colors": "[(17,191,91),(17,191,91),(17,191,91),(0,0,0),(255,255,255)]"
         }
@@ -162,7 +162,7 @@
           "name": "IFK Motala U19",
           "team_type": "Men U19",
           "team_rating": 60,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
         }
@@ -178,7 +178,7 @@
           "name": "IFK Rättvik",
           "team_type": "Men",
           "team_rating": 60,
-          "num_players": 15,
+          "num_players": 18,
           "num_int_players": 3,
 		  "jersey_colors": "[(16,29,71),(16,29,71),(16,29,71),(90,90,90),(255,255,255)]"
         },
@@ -186,7 +186,7 @@
           "name": "IFK Rättvik U19",
           "team_type": "Men U19",
           "team_rating": 60,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(16,29,71),(16,29,71),(16,29,71),(90,90,90),(255,255,255)]"
         },
@@ -194,7 +194,7 @@
           "name": "IFK Rättvik (W)",
           "team_type": "Women",
           "team_rating": 75,
-          "num_players": 15,
+          "num_players": 18,
           "num_int_players": 3,
 		  "jersey_colors": "[(16,29,71),(16,29,71),(16,29,71),(90,90,90),(255,255,255)]"
         },
@@ -202,7 +202,7 @@
           "name": "IFK Rättvik F19",
           "team_type": "Women U19",
           "team_rating": 65,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(16,29,71),(16,29,71),(16,29,71),(90,90,90),(255,255,255)]"
         }
@@ -218,7 +218,7 @@
           "name": "Sandvikens AIK",
           "team_type": "Men",
           "team_rating": 90,
-          "num_players": 15,
+          "num_players": 19,
           "num_int_players": 3,
 		  "jersey_colors": "[(0,0,0),(0,0,0),(0,0,0),(90,90,90),(255,255,255)]"
         },
@@ -226,7 +226,7 @@
           "name": "Sandvikens AIK U19",
           "team_type": "Men U19",
           "team_rating": 70,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(0,0,0),(0,0,0),(0,0,0),(90,90,90),(255,255,255)]"
         },
@@ -234,7 +234,7 @@
           "name": "Sandvikens AIK (W)",
           "team_type": "Women",
           "team_rating": 75,
-          "num_players": 15,
+          "num_players": 19,
           "num_int_players": 3,
 		  "jersey_colors": "[(0,0,0),(0,0,0),(0,0,0),(90,90,90),(255,255,255)]"
         },
@@ -242,7 +242,7 @@
           "name": "Sandvikens AIK F19",
           "team_type": "Women U19",
           "team_rating": 65,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(0,0,0),(0,0,0),(0,0,0),(90,90,90),(255,255,255)]"
         }
@@ -266,7 +266,7 @@
           "name": "IK Sirius BK U19",
           "team_type": "Men U19",
           "team_rating": 60,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(0,0,0),(25,19,163),(0,0,0),(90,90,90),(255,255,255)]"
         }
@@ -290,7 +290,7 @@
           "name": "Vetlanda BK U19",
           "team_type": "Men U19",
           "team_rating": 60,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(254,242,96),(254,242,96),(254,242,96),(0,0,0),(0,0,0)]"
         }
@@ -306,7 +306,7 @@
           "name": "Villa Lidköping BK",
           "team_type": "Men",
           "team_rating": 100,
-          "num_players": 15,
+          "num_players": 17,
           "num_int_players": 3,
 		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
         },
@@ -314,7 +314,7 @@
           "name": "Villa Lidköping BK U19",
           "team_type": "Men U19",
           "team_rating": 100,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
         },
@@ -322,7 +322,7 @@
           "name": "Villa Lidköping BK (W)",
           "team_type": "Women",
           "team_rating": 75,
-          "num_players": 15,
+          "num_players": 17,
           "num_int_players": 3,
 		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
         },
@@ -330,7 +330,7 @@
           "name": "Villa Lidköping BK F19",
           "team_type": "Women U19",
           "team_rating": 65,
-          "num_players": 15,
+          "num_players": 18,
           "num_int_players": 0,
 		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
         }
@@ -346,7 +346,7 @@
           "name": "Västerås SK",
           "team_type": "Men",
           "team_rating": 90,
-          "num_players": 15,
+          "num_players": 20,
           "num_int_players": 3,
           "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(17,191,91)]"
         },
@@ -354,7 +354,7 @@
           "name": "Västerås SK U19",
           "team_type": "Men U19",
           "team_rating": 70,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
           "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(17,191,91)]"
         },
@@ -362,7 +362,7 @@
           "name": "Västerås SK (W)",
           "team_type": "Women",
           "team_rating": 75,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 3,
           "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(17,191,91)]"
         },
@@ -370,7 +370,7 @@
           "name": "Västerås SK F19",
           "team_type": "Women U19",
           "team_rating": 65,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
           "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(17,191,91)]"
         }
@@ -386,7 +386,7 @@
           "name": "AIK (W)",
           "team_type": "Women",
           "team_rating": 75,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 3,
 		  "jersey_colors": "[(70,70,70),(0,0,0),(70,70,70),(120,120,120),(211,191,2)]"
         },
@@ -394,7 +394,7 @@
           "name": "AIK F19",
           "team_type": "Women U19",
           "team_rating": 65,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(70,70,70),(0,0,0),(70,70,70),(120,120,120),(211,191,2)]"
         }
@@ -418,7 +418,7 @@
           "name": "Ljusdals BK U19",
           "team_type": "Men U19",
           "team_rating": 60,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(249,220,59),(249,220,59),(249,220,59),(0,0,0),(26,62,27)]"
         }
@@ -442,7 +442,7 @@
           "name": "IFK Vänersborg U19",
           "team_type": "Men U19",
           "team_rating": 60,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
         }
@@ -458,7 +458,7 @@
           "name": "Mjöndalens IF",
           "team_type": "Men",
           "team_rating": 70,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 1,
 		  "jersey_colors": "[(106,63,32),(106,63,32),(106,63,32),(0,0,0),(255,255,255)]"
         },
@@ -466,7 +466,7 @@
           "name": "Mjöndalens IF U19",
           "team_type": "Men U19",
           "team_rating": 60,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(106,63,32),(106,63,32),(106,63,32),(0,0,0),(255,255,255)]"
         }
@@ -482,7 +482,7 @@
           "name": "Stabaek bandy",
           "team_type": "Men",
           "team_rating": 70,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 1,
 		  "jersey_colors": "[(52,145,241),(54,59,91),(52,145,241),(0,0,0),(255,255,255)]"
 		},
@@ -490,7 +490,7 @@
           "name": "Stabaek bandy U19",
           "team_type": "Men U19",
           "team_rating": 60,
-          "num_players": 15,
+          "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(52,145,241),(54,59,91),(52,145,241),(0,0,0),(255,255,255)]"
         }

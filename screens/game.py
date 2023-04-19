@@ -258,83 +258,43 @@ def draw_league_table(game, selected_league):
         screen.blit(text, text_rect)
 
 def draw_tactics(game,team):
+    pitch_surface = draw_tactics_pitch(game,team)
+    screen.blit(pitch_surface,(700,125))
+
+def draw_tactics_pitch(game,team):
+    pitch_surface = pygame.Surface((600,600), pygame.SRCALPHA)
     pitch = pygame.image.load("images/pitch.png")
     pitch = pygame.transform.scale(pitch,(int(611*0.60),int(1000*0.60)))
     pitch_rect = pitch.get_rect()
-    pitch_rect.left=700
-    pitch_rect.top=125
-    screen.blit(pitch,pitch_rect)
-
+    pitch_surface.blit(pitch,pitch_rect)
+    position_list = [("goalkeeper",(140,525)),("libero",(140,455)),("leftdef",(40,405)),("rightdef",(240,405)),("lefthalf",(10,335)),("righthalf",(270,335)),("leftmid",(25,235)),("centralmid",(140,275)),("rightmid",(255,235)),("leftattack",(60,135)),("rightattack",(220,135)),("sub1",(380,100)),("sub2",(380,200)),("sub3",(380,300)),("sub4",(380,400)),("sub5",(380,500))]
     jersey_colors = team.return_jersey_colors()
-
     actual_positions = team.actual_positions
     players = team.get_players()
-    goalkeeper_uuid = actual_positions["goalkeeper"]["player_uuid"]
-    for player in players:
-        player_uuid = player[0]
-        #print(f" {player_uuid} - {goalkeeper_uuid}")
-        if(str(player_uuid) == str(goalkeeper_uuid)):
-            jersey_number = player[1]
-            jersey_name = player[3]
-            draw_tactics_jersey(0,jersey_colors,jersey_number,jersey_name)
+    
+    for position in position_list:
+        position_uuid = actual_positions[position[0]]["player_uuid"]
+        for player in players:
+            player_uuid = player[0]
+            if(str(player_uuid) == str(position_uuid)):
+                jersey_number = player[1]
+                jersey_name = player[3]
+                tactics_jersey = draw_tactics_jersey(jersey_colors,jersey_number,jersey_name)
+                pitch_surface.blit(tactics_jersey,position[1])
+    return pitch_surface
 
-    #print(actual_positions["goalkeeper"]["player_uuid"])
-    #for actual_position in actual_positions:
-    #    print(actual_position)
-    #    #print(actual_position['player_uuid'])
-
-
-    draw_tactics_jersey(1,jersey_colors,2,"Lindquist")
-    draw_tactics_jersey(2,jersey_colors,3,"Jansson")
-    draw_tactics_jersey(3,jersey_colors,4,"Berg")
-    draw_tactics_jersey(4,jersey_colors,5,"Karlsson")
-    draw_tactics_jersey(5,jersey_colors,6,"Muhren")
-    draw_tactics_jersey(6,jersey_colors,7,"Fosshaug")
-    draw_tactics_jersey(7,jersey_colors,11,"Erixon")
-    draw_tactics_jersey(8,jersey_colors,19,"Johansson")
-    draw_tactics_jersey(9,jersey_colors,13,"Jonung")
-    draw_tactics_jersey(10,jersey_colors,8,"Larsson")
-
-def draw_tactics_jersey(position,jersey_colors,number,name):
-    if (position == 0):
-        x_pos = 864
-        y_pos = 650
-    if (position == 1):
-        x_pos = 864
-        y_pos = 580
-    if (position == 2):
-        x_pos = 764
-        y_pos = 530
-    if (position == 3):
-        x_pos = 964
-        y_pos = 530
-    if (position == 4):
-        x_pos = 710
-        y_pos = 490
-    if (position == 5):
-        x_pos = 1018
-        y_pos = 490
-    if (position == 6):
-        x_pos = 864
-        y_pos = 440
-    if (position == 7):
-        x_pos = 764
-        y_pos = 390
-    if (position == 8):
-        x_pos = 964
-        y_pos = 390
-    if (position == 9):
-        x_pos = 710
-        y_pos = 210
-    if (position == 10):
-        x_pos = 1018
-        y_pos = 210
-    jersey = draw_jersey(jersey_colors,str(number))
-    jersey = pygame.transform.scale(jersey,(40,40))
-    screen.blit(jersey,(x_pos,y_pos))
+def draw_tactics_jersey(jersey_colors, number, name):
+    jersey_surface = pygame.Surface((90, 70), pygame.SRCALPHA)
+    jersey = draw_jersey(jersey_colors, str(number))
+    jersey = pygame.transform.scale(jersey, (40, 40))
+    jersey_surface.blit(jersey, (25, 0))
     text = very_small_bold_font.render(name, True, BLACK)
-    text_rect = pygame.Rect(x_pos-10, y_pos+40 , 90, 15)
-    screen.blit(text,text_rect)
+    text_rect = pygame.Rect(0, 40, 90, 15)
+    # Calculate the position of the text to center it in the text_rect
+    text_rect.center = (45, 50)
+    text_pos = text.get_rect(center=text_rect.center)
+    jersey_surface.blit(text, text_pos)
+    return jersey_surface
 
 def draw_game_mainscreen(game, game_page, selected_player_index):
     # Draw screen

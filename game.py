@@ -265,7 +265,6 @@ class Game:
                 team = Team(name, team_type, team_rating, num_players, num_int_players, jersey_colors)
                 club.add_team(team)
                 self.teams[name] = team # Add team to the dictionary
-                #print(team_data)
                 # Check if there are players in the team_data dictionary
                 if 'players' in team_data:
                     for team_player in team_data['players']:
@@ -274,9 +273,11 @@ class Game:
                         # Get the Player object with the corresponding UUID
                         player = self.player_manager.find_player_by_uuid(player_uuid)
                         # Add the Player object to the team's squad
-                        #print(player_uuid)
                         team.add_player(player)
                         team.change_player_jersey_number(player.uuid,jersey_number)
+                if 'actual_positions' in team_data:
+                    for actual_position in team_data['actual_positions']:
+                        team.assign_player_to_position(actual_position['actual_position'],actual_position['player_uuid'])
 
             clubs.append(club)
 
