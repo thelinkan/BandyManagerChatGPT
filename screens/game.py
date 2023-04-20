@@ -258,8 +258,10 @@ def draw_league_table(game, selected_league):
         screen.blit(text, text_rect)
 
 def draw_tactics(game,team):
+    playerlist_surface, player_rects = draw_tactics_playerlist(game,team)
+    screen.blit(playerlist_surface,(140,125))
     pitch_surface = draw_tactics_pitch(game,team)
-    screen.blit(pitch_surface,(700,125))
+    screen.blit(pitch_surface,(740,125))
 
 def draw_tactics_pitch(game,team):
     pitch_surface = pygame.Surface((600,600), pygame.SRCALPHA)
@@ -296,6 +298,53 @@ def draw_tactics_jersey(jersey_colors, number, name):
     jersey_surface.blit(text, text_pos)
     return jersey_surface
 
+def draw_tactics_playerlist(game,team):
+    playerlist_surface = pygame.Surface((600,600), pygame.SRCALPHA)
+    header_rect = pygame.Rect(0, 0, 300, 30)
+    selected_player_uuid = None
+
+    pygame.draw.rect(playerlist_surface, TABLE_HEADER_COLOR, header_rect)
+    header_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
+    text = header_font.render("Name", True, BLACK)
+    text_rect = text.get_rect(left=header_rect.left + 10, centery=header_rect.centery)
+    playerlist_surface.blit(text, text_rect)
+
+    text = header_font.render("Position", True, BLACK)
+    text_rect = text.get_rect(right=header_rect.right - 10, centery=header_rect.centery)
+    playerlist_surface.blit(text, text_rect)
+
+    player_rects = []
+    row_height = 30
+    player_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
+    row_height = FONTSIZE_VERY_SMALL+8
+    for i, player in enumerate(team.get_players()):
+        if i % 2 == 0:
+            row_color = TABLE_ROW_EVEN_COLOR
+        else:
+            row_color = TABLE_ROW_ODD_COLOR
+        #if(selected_player_index == i):
+        #    row_color = (200,0,0)
+        #    selected_player_uuid = player[0]
+        #    #print(f"{player[2]} {selected_player_uuid}")
+        row_rect = pygame.Rect(0, 30 + i * row_height, 300, row_height)
+        pygame.draw.rect(playerlist_surface, row_color, row_rect)
+
+        player_rects.append(row_rect)
+
+        text = player_font.render(str(player[1]) + ") " + player[2] + " " + player[3], True, BLACK)
+        text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
+        playerlist_surface.blit(text, text_rect)
+
+        text = player_font.render(player[5], True, BLACK)
+        text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
+        playerlist_surface.blit(text, text_rect)
+    #print(len(player_rects))
+    #print(player_rects)
+    if(selected_player_uuid is not None):
+        draw_player(game,selected_player_uuid)
+    return playerlist_surface,player_rects
+
+    
 def draw_game_mainscreen(game, game_page, selected_player_index):
     # Draw screen
     screen.fill(WHITE)
