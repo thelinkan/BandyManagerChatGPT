@@ -118,6 +118,57 @@ def draw_player(game,player_uuid):
             i += 1
 
 
+def draw_player2(game,player_uuid):
+    player_surface = pygame.Surface((250,600), pygame.SRCALPHA)
+    player = game.player_manager.find_player_by_uuid(player_uuid)
+    #print(player_uuid)
+    text = small_font.render(f"{player.first_name} {player.last_name}", True, BLACK)
+    text_rect = pygame.Rect(0, 0, 250, 20)
+    player_surface.blit(text,text_rect)
+
+    text = small_font.render(f"Age: {player.age}", True, BLACK)
+    text_rect = pygame.Rect(0, 20, 250, 20)
+    player_surface.blit(text,text_rect)
+
+    text = small_font.render(f"Nationality: {game.countries[player.nationality].name}", True, BLACK)
+    text_rect = pygame.Rect(0, 40, 250, 20)
+    player_surface.blit(text,text_rect)
+
+    attributes = []
+    i=0
+    if player.position == "goalkeeper":
+        attribute_list = ['Saveing','Reflexes','Placement','Throwing','Skating','Acceleration', 'Agility', 'Agression','Endurance']
+    else:
+        attribute_list = ["Dribbling", "Intercept", 'Shooting', 'Passing', 'Long pass', 'Corners','Skating','Acceleration', 'Agility', 'Agression','Endurance']
+    for attribute_name in attribute_list:
+        attribute = player.get_attribute(attribute_name)
+        if attribute:
+            if attribute.name == "Saveing":
+                text = very_small_bold_font.render("Goalkeeper attributes", True, BLACK)
+                text_rect = pygame.Rect(0, 80 + i*15 , 250, 15)
+                player_surface.blit(text,text_rect)
+                i += 1
+            if attribute.name == "Dribbling":
+                text = very_small_bold_font.render("Outfield attributes", True, BLACK)
+                text_rect = pygame.Rect(0, 80 + i*15 , 250, 15)
+                player_surface.blit(text,text_rect)
+                i += 1
+            if attribute.name == "Skating":
+                i += 1
+                text = very_small_bold_font.render("Generic attributes", True, BLACK)
+                text_rect = pygame.Rect(0, 80 + i*15 , 250, 15)
+                player_surface.blit(text,text_rect)
+                i += 1
+
+            #attributes.append(f"{attribute.name}: {attribute.level}")
+            attributes_text = f"{attribute.name}: {attribute.level}"
+            text = very_small_font.render(attributes_text, True, BLACK)
+            text_rect = pygame.Rect(0, 80 + i*15 , 250, 15)
+            player_surface.blit(text,text_rect)
+            i += 1
+
+    return player_surface
+
 def draw_home(game,team):
     month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
@@ -371,7 +422,8 @@ def draw_tactics_playerlist(game,team, selected_player_index, playerlist_offset)
     #print(len(player_rects))
     #print(player_rects)
     if(selected_player_uuid is not None):
-        draw_player(game,selected_player_uuid)
+        player_surface = draw_player2(game,selected_player_uuid)
+        playerlist_surface.blit(player_surface,(350,0))
     return playerlist_surface,player_rects,hover_player_uuid, selected_player_uuid
 
 

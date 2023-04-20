@@ -1,6 +1,5 @@
 import pygame
 
-
 from screens.game import draw_game_mainscreen
 from guielements import font,medium_font, small_font, button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
@@ -33,7 +32,7 @@ def gameloop_tactics(game, player_rects, jersey_rects, selected_player_index, ev
                 for j in range (15):
                     if str(selected_player_uuid) == str(manager_team.actual_positions[position_list[j]]["player_uuid"]):
                         selected_player_pos = j
-        print(selected_player_pos)
+        #print(selected_player_pos)
         for i, rect in enumerate(jersey_rects):
             if rect.collidepoint(event_pos_on_field):
                 position_uuid = manager_team.actual_positions[position_list[i]]["player_uuid"]
@@ -42,13 +41,5 @@ def gameloop_tactics(game, player_rects, jersey_rects, selected_player_index, ev
                 else:
                     manager_team.actual_positions[position_list[selected_player_pos]]["player_uuid"]=position_uuid
                     manager_team.actual_positions[position_list[i]]["player_uuid"]=selected_player_uuid
-
-                #for actual_position in manager_team.actual_positions:
-                print(f" {position_uuid}")
-                print(f"  {manager_team.actual_positions[position_list[i]]} __ {position_list[i]}")
-
-
-
-
 
     return selected_player_index
