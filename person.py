@@ -226,6 +226,32 @@ class Player(Person):
         }
         return player_dict
 
+    def calculate_composite_values(self, position):
+        if position == 'goalkeeper':
+            defense_stat = (0.5 * self.attributes[0].level + 0.25 * self.attributes[1].level + 0.2 * self.attributes[2].level + 0.05 * self.attributes[3].level) * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
+            offense_stat = self.attributes[3].level * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
+            return (offense_stat, defense_stat)
+        if position == 'libero':
+            offense_stat = (0.1 * self.attributes[5].level + 0.1 * self.attributes[6].level + 0.15 * self.attributes[7].level + 0.30 * self.attributes[9].level + 0.05 * self.attributes[10].level + 0.10 * self.attributes[11].level + 0.05 * self.attributes[12].level + 0.10 * self.attributes[14].level + 0.05 * self.attributes[15].level) * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
+            defense_stat = (0.05 * self.attributes[7].level + 0.70 * self.attributes[8].level + 0.05 * self.attributes[9].level + 0.05 * self.attributes[11].level + 0.05 * self.attributes[12].level + 0.05 * self.attributes[13].level + 0.05 * self.attributes[14].level + 0.05 * self.attributes[15].level) * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
+            return (offense_stat, defense_stat)
+        if position == 'leftdef' or position == 'rightdef':
+            offense_stat = (0.1 * self.attributes[5].level + 0.1 * self.attributes[6].level + 0.15 * self.attributes[7].level + 0.30 * self.attributes[9].level + 0.05 * self.attributes[10].level + 0.10 * self.attributes[11].level + 0.05 * self.attributes[12].level + 0.10 * self.attributes[14].level + 0.05 * self.attributes[15].level) * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
+            defense_stat = (0.10 * self.attributes[7].level + 0.65 * self.attributes[8].level + 0.05 * self.attributes[9].level + 0.05 * self.attributes[11].level + 0.05 * self.attributes[12].level + 0.05 * self.attributes[13].level + 0.05 * self.attributes[14].level + 0.05 * self.attributes[15].level) * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
+            return (offense_stat, defense_stat)
+        if position == 'lefthalf' or position == 'righthalf':
+            offense_stat = (0.1 * self.attributes[5].level + 0.1 * self.attributes[6].level + 0.15 * self.attributes[7].level + 0.25 * self.attributes[9].level + 0.10 * self.attributes[10].level + 0.10 * self.attributes[11].level + 0.05 * self.attributes[12].level + 0.10 * self.attributes[14].level + 0.05 * self.attributes[15].level) * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
+            defense_stat = (0.05 * self.attributes[7].level + 0.60 * self.attributes[8].level + 0.05 * self.attributes[9].level + 0.10 * self.attributes[11].level + 0.05 * self.attributes[12].level + 0.10 * self.attributes[14].level + 0.05 * self.attributes[15].level) * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
+            return (offense_stat, defense_stat)
+        if position == 'leftmid' or position == 'centralmid' or position == 'rightmid':
+            offense_stat = (0.15 * self.attributes[5].level + 0.05 * self.attributes[6].level + 0.15 * self.attributes[7].level + 0.15 * self.attributes[9].level + 0.15 * self.attributes[10].level + 0.10 * self.attributes[11].level + 0.10 * self.attributes[12].level + 0.10 * self.attributes[14].level + 0.10 * self.attributes[15].level) * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
+            defense_stat = (0.05 * self.attributes[7].level + 0.40 * self.attributes[8].level + 0.05 * self.attributes[9].level + 0.20 * self.attributes[11].level + 0.10 * self.attributes[12].level + 0.10 * self.attributes[14].level + 0.10 * self.attributes[15].level) * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
+            return (offense_stat, defense_stat)
+        if position == 'leftattack' or position == 'rightattack':
+            offense_stat = (0.15 * self.attributes[5].level + 0.15 * self.attributes[7].level + 0.30 * self.attributes[10].level + 0.10 * self.attributes[11].level + 0.10 * self.attributes[12].level + 0.10 * self.attributes[14].level + 0.10 * self.attributes[15].level) * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
+            defense_stat = (0.35 * self.attributes[8].level + 0.35 * self.attributes[11].level + 0.10 * self.attributes[12].level + 0.10 * self.attributes[14].level + 0.10 * self.attributes[15].level) * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
+            return (offense_stat, defense_stat)
+        
     def return_position(self):
         return self.position
 
