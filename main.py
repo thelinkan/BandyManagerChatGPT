@@ -10,6 +10,7 @@ from game import Game
 from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY
 from screens.start import screen,draw_start_menu, draw_credits, draw_newgame_menu, draw_newgame2_menu
 from screens.game import draw_game_mainscreen
+from gameloop.tactics import gameloop_tactics
 from guielements import font,medium_font, small_font, button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
 from guielements import home_button,senior_squad_button, tactics_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
@@ -87,11 +88,13 @@ while running:
                         if rect.collidepoint(event.pos):
                             selected_player_index = i
                             break
+                if(game_page == "tactics"):
+                    selected_player_index = gameloop_tactics(game, player_rects, jersey_rects, selected_player_index, event.pos)
                 if senior_squad_button.rect.collidepoint(event.pos):
                     selected_player_index=-1
                     game_page = "player_list"
                 if tactics_button.rect.collidepoint(event.pos):
-                    #print(game_page)
+                    selected_player_index=-1
                     game_page = "tactics"
                 if competition_button.rect.collidepoint(event.pos):
                     #print(game_page)
@@ -130,7 +133,7 @@ while running:
     if game_state == "new_game_2":
         country_rects,team_rects,selected_team=draw_newgame2_menu(game,selected_country_index,selected_team_index)
     if game_state == "game_mainscreen":
-        player_rects = draw_game_mainscreen(game,game_page, selected_player_index)
+        player_rects, jersey_rects = draw_game_mainscreen(game,game_page, selected_player_index)
         #print(player_rects)
     clock.tick(30)
 

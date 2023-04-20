@@ -257,13 +257,17 @@ def draw_league_table(game, selected_league):
         text_rect = text.get_rect(centerx=row_rect.left + 570, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
-def draw_tactics(game,team):
-    playerlist_surface, player_rects = draw_tactics_playerlist(game,team)
+def draw_tactics(game,team, selected_player_index):
+    playerlist_surface, player_rects, hover_player_uuid, selected_player_uuid = draw_tactics_playerlist(game,team,selected_player_index, (140,125))
     screen.blit(playerlist_surface,(140,125))
-    pitch_surface = draw_tactics_pitch(game,team)
+    pitch_surface, jersey_rects = draw_tactics_pitch(game,team,hover_player_uuid, selected_player_uuid, (740,125))
     screen.blit(pitch_surface,(740,125))
 
-def draw_tactics_pitch(game,team):
+    return player_rects, jersey_rects
+
+def draw_tactics_pitch(game, team, hover_player_uuid, selected_player_uuid, pitch_offset):
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos_on_pitch = mouse_pos[0] - pitch_offset[0], mouse_pos[1] - pitch_offset[1]
     pitch_surface = pygame.Surface((600,600), pygame.SRCALPHA)
     pitch = pygame.image.load("images/pitch.png")
     pitch = pygame.transform.scale(pitch,(int(611*0.60),int(1000*0.60)))
@@ -273,20 +277,36 @@ def draw_tactics_pitch(game,team):
     jersey_colors = team.return_jersey_colors()
     actual_positions = team.actual_positions
     players = team.get_players()
-    
+
+    jersey_rects = []
+
     for position in position_list:
+        jersey_rect = pygame.Rect(position[1], (90, 70))
+        jersey_rects.append(jersey_rect)
+        if mouse_pos and jersey_rect.collidepoint(mouse_pos_on_pitch):
+            is_hovered = True
+        else:
+            is_hovered = False
         position_uuid = actual_positions[position[0]]["player_uuid"]
         for player in players:
             player_uuid = player[0]
             if(str(player_uuid) == str(position_uuid)):
                 jersey_number = player[1]
                 jersey_name = player[3]
-                tactics_jersey = draw_tactics_jersey(jersey_colors,jersey_number,jersey_name)
+                if str(selected_player_uuid) == str(position_uuid):
+                    is_selected = True
+                else:
+                    is_selected = False
+                tactics_jersey = draw_tactics_jersey(jersey_colors,jersey_number,jersey_name,is_hovered,is_selected)
                 pitch_surface.blit(tactics_jersey,position[1])
-    return pitch_surface
+    return pitch_surface,jersey_rects
 
-def draw_tactics_jersey(jersey_colors, number, name):
+def draw_tactics_jersey(jersey_colors, number, name, is_hovered=False, is_selected=False):
     jersey_surface = pygame.Surface((90, 70), pygame.SRCALPHA)
+    if is_selected:
+        jersey_surface.fill((200,0,0,128))
+    if is_hovered:
+        jersey_surface.fill((255,200,200,128))
     jersey = draw_jersey(jersey_colors, str(number))
     jersey = pygame.transform.scale(jersey, (40, 40))
     jersey_surface.blit(jersey, (25, 0))
@@ -298,7 +318,12 @@ def draw_tactics_jersey(jersey_colors, number, name):
     jersey_surface.blit(text, text_pos)
     return jersey_surface
 
-def draw_tactics_playerlist(game,team):
+def draw_tactics_playerlist(game,team, selected_player_index, playerlist_offset):
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos_on_list = mouse_pos[0] - playerlist_offset[0], mouse_pos[1] - playerlist_offset[1]
+
+    hover_player_uuid = None
+
     playerlist_surface = pygame.Surface((600,600), pygame.SRCALPHA)
     header_rect = pygame.Rect(0, 0, 300, 30)
     selected_player_uuid = None
@@ -322,11 +347,16 @@ def draw_tactics_playerlist(game,team):
             row_color = TABLE_ROW_EVEN_COLOR
         else:
             row_color = TABLE_ROW_ODD_COLOR
-        #if(selected_player_index == i):
-        #    row_color = (200,0,0)
-        #    selected_player_uuid = player[0]
-        #    #print(f"{player[2]} {selected_player_uuid}")
+        if(selected_player_index == i):
+            row_color = (200,0,0)
+            selected_player_uuid = player[0]
+            #print(f"{player[2]} {selected_player_uuid}")
         row_rect = pygame.Rect(0, 30 + i * row_height, 300, row_height)
+        if mouse_pos and row_rect.collidepoint(mouse_pos_on_list):
+            row_color = (255,200,200)
+            hover_player_uuid = player[0]
+
+
         pygame.draw.rect(playerlist_surface, row_color, row_rect)
 
         player_rects.append(row_rect)
@@ -342,9 +372,9 @@ def draw_tactics_playerlist(game,team):
     #print(player_rects)
     if(selected_player_uuid is not None):
         draw_player(game,selected_player_uuid)
-    return playerlist_surface,player_rects
+    return playerlist_surface,player_rects,hover_player_uuid, selected_player_uuid
 
-    
+
 def draw_game_mainscreen(game, game_page, selected_player_index):
     # Draw screen
     screen.fill(WHITE)
@@ -353,6 +383,7 @@ def draw_game_mainscreen(game, game_page, selected_player_index):
     screen.blit(title, title_rect)
 
     list1 = []
+    list2 = []
 
     manager_name = game.manager.return_name()
     manager_team_name = game.manager.return_team()
@@ -390,7 +421,7 @@ def draw_game_mainscreen(game, game_page, selected_player_index):
     if (game_page == "player_list"):
         list1 = draw_playerlist(game,manager_team, selected_player_index)
     if (game_page == "tactics"):
-        draw_tactics(game,manager_team)
+        list1, list2 = draw_tactics(game,manager_team, selected_player_index)
     if (game_page == "competition"):
         draw_league_table(game, "Elitserien")
     if (game_page == "player_list_u19"):
@@ -398,4 +429,4 @@ def draw_game_mainscreen(game, game_page, selected_player_index):
     # Update display
     pygame.display.flip()
 
-    return list1
+    return list1, list2
