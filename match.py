@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 import random
+from numpy import random as rand
 
 class Match:
     def __init__(self, home_team, away_team, year, month, day):
@@ -18,15 +19,15 @@ class Match:
         def_weight = [20,16,14,14,10,10,4,4,4,2,2]
         home_team_players = self.home_team.get_players()
         away_team_players = self.away_team.get_players()
-        
+
         home_off_total = 0
         away_off_total = 0
         home_def_total = 0
         away_def_total = 0
-        
+
         for i in range(11):
             #print(i)
-            
+
             position_uuid = self.home_team.actual_positions[position_list[i]]["player_uuid"]
             player = self.home_team.players[position_uuid]
             composite_values = player.calculate_composite_values(position_list[i])
@@ -41,9 +42,9 @@ class Match:
 
         #print(f"{self.home_team.name} ({home_off_total},{home_def_total}) - {self.away_team.name} ({away_off_total},{away_def_total})")
         #print(f"{player.first_name} {player.last_name} -  {player.calculate_composite_values(position_list[0])}")
-        
-        self.home_goals = random.randint(0, 10)
-        self.away_goals = random.randint(0, 10)
+
+        self.home_goals = rand.poisson(3*home_off_total/away_def_total)
+        self.away_goals = rand.poisson(3*away_off_total/home_def_total)
         self.played = True
 
     def load_match(self, home_goals, away_goals,played):
