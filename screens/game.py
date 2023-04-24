@@ -252,6 +252,47 @@ def draw_home(game,team,isMatchesPlayed):
         yesterdays_result_surface = draw_yesterday_results(game, team)
         screen.blit(yesterdays_result_surface,(470,110))
 
+def draw_schedule_page(game, selected_league, highlighted_team,page):
+    league = game.return_league_by_name(selected_league)
+    schedule_surface = pygame.Surface((350,600), pygame.SRCALPHA)
+    schedule_surface.fill(WHITE)
+    y=10
+    text = medium_font.render(selected_league, True, BLACK)
+    text_rect = pygame.Rect(10, y,200, 20)
+    schedule_surface.blit(text, text_rect)
+    
+    matches_league = game.match_manager.get_matches_by_league(selected_league)
+
+    if len(matches_league) > 0:
+        #y = 10
+        #text = medium_font.render(f"Matches {day_yesterday} {month_names[month_yesterday-1]} {year_yesterday}", True, BLACK)
+        #text_rect = pygame.Rect(10, y,200, 20)
+        #schedule_surface.blit(text, text_rect)
+        for match in matches_league:
+            y += 20
+            if(match.home_team.name == highlighted_team or match.away_team.name == highlighted_team):
+                row_text_color = (255,0,0)
+            else:
+                row_text_color = (0,0,0)
+            text = small_font.render(f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}", True, row_text_color)
+            text_rect = pygame.Rect(10, y,200, 20)
+            schedule_surface.blit(text, text_rect)
+
+
+    border_surface = pygame.Surface((schedule_surface.get_width() + 4, schedule_surface.get_height() + 4))
+    border_surface.fill(BLACK)
+    border_surface.blit(schedule_surface, (2, 2))
+
+    return border_surface
+    
+
+def draw_schedule(game, selected_league, highlighted_team):
+    league = game.return_league_by_name(selected_league) 
+    schedule_surface = draw_schedule_page(game, selected_league, highlighted_team,1)
+    screen.blit(schedule_surface,(150,110))
+    schedule_surface = draw_schedule_page(game, selected_league, highlighted_team,2)
+    screen.blit(schedule_surface,(520,110))
+
 
 def draw_league_table(game, selected_league, highlighted_team):
     league = game.return_league_by_name(selected_league)
@@ -535,6 +576,8 @@ def draw_game_mainscreen(game, game_page, selected_player_index, isMatchesPlayed
         list1 = draw_playerlist(game,manager_team, selected_player_index)
     if (game_page == "tactics"):
         list1, list2 = draw_tactics(game,manager_team, selected_player_index)
+    if (game_page == "schedule"):
+        draw_schedule(game,"Elitserien", manager_team)
     if (game_page == "competition"):
         draw_league_table(game, "Elitserien", manager_team)
     if (game_page == "player_list_u19"):

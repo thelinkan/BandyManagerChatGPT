@@ -23,3 +23,8 @@ class MatchManager:
         date = dt.datetime(year, month, day)
         matches = [match for match in self.matches if dt.datetime(match.year, match.month, match.day) == date]
         return matches
+
+    def get_matches_by_league(self, league_name):
+        league_matches = [match for match in self.matches if match.league.name == league_name]
+        sorted_matches = sorted(league_matches, key=lambda match: dt.date(match.year, match.month, match.day))
+        return sorted_matches
