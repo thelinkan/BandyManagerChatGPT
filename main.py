@@ -23,6 +23,7 @@ pygame.display.set_caption("Bandymanager")
 selected_country_index=-1
 selected_team_index=-1
 selected_player_index=-1
+isMatchesPlayed = False
 
 # Define game loop
 running = True
@@ -103,16 +104,8 @@ while running:
                     selected_player_index=-1
                     game_page = "player_list_u19"
                 if forward_time_button.rect.collidepoint(event.pos):
-                    game.tick()
-                    matches_today = game.match_manager.get_matches_by_date(game.year, game.month, game.day)
-                    if len(matches_today) > 0:
-                        for match in matches_today:
-                            match.play()
-                            print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
-                        leagues = game.get_leagues()
-                        for league in leagues:
-                            league.calculate_table()
-                            league.print_table()
+                    game_page, isMatchesPlayed = game.tick(game_page)
+
                 if save_game_button.rect.collidepoint(event.pos):
                     game.save_game('c:\temp')
                 if quit_game_button.rect.collidepoint(event.pos):
@@ -133,7 +126,7 @@ while running:
     if game_state == "new_game_2":
         country_rects,team_rects,selected_team=draw_newgame2_menu(game,selected_country_index,selected_team_index)
     if game_state == "game_mainscreen":
-        player_rects, jersey_rects = draw_game_mainscreen(game,game_page, selected_player_index)
+        player_rects, jersey_rects = draw_game_mainscreen(game,game_page, selected_player_index,isMatchesPlayed)
         #print(player_rects)
     clock.tick(30)
 

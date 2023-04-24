@@ -7,7 +7,7 @@ from guielements import font, medium_font, small_font,very_small_font ,very_smal
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
 from guielements import home_button, inbox_button, newspaper_button, senior_squad_button, tactics_button, training_button, schedule_button, competition_button
 from guielements import u19_squad_button,forward_time_button, save_game_button, quit_game_button
-from miscfunctions import get_club_from_team, draw_calendar, draw_jersey
+from miscfunctions import get_club_from_team, draw_calendar, draw_jersey, yesterday
 
 pygame.init()
 
@@ -169,35 +169,91 @@ def draw_player2(game,player_uuid):
 
     return player_surface
 
-def draw_home(game,team):
+def draw_next_match(game, team):
+    next_match_surface = pygame.Surface((300,130), pygame.SRCALPHA)
+    next_match_surface.fill(WHITE)
     month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
     next_match = game.match_manager.get_next_match_for_team(team, game.year, game.month, game.day)
+
+    y = 10
+    text = medium_font.render("Next game", True, BLACK)
+    text_rect = pygame.Rect(10, y,200, 20)
+    next_match_surface.blit(text, text_rect)
     if(next_match is not None):
-        #print(next_match)
         next_match_hometeam_name = next_match.home_team.name
         next_match_awayteam_name = next_match.away_team.name
 
-        small_font = pygame.font.Font(None, FONTSIZE_SMALL)
-
-        y = 130
-        text = small_font.render("Next game", True, BLACK)
-        text_rect = pygame.Rect(10+x_offset, y,200, 20)
-        screen.blit(text, text_rect)
         y += 20
         text = small_font.render(next_match.league.name, True, BLACK)
-        text_rect = pygame.Rect(10+x_offset, y,200, 20)
-        screen.blit(text, text_rect)
+        text_rect = pygame.Rect(10, y,200, 20)
+        next_match_surface.blit(text, text_rect)
         y += 20
         text = small_font.render(f"{next_match.day} {month_names[next_match.month-1]}", True, BLACK)
-        text_rect = pygame.Rect(10+x_offset, y ,200, 20)
-        screen.blit(text, text_rect)
+        text_rect = pygame.Rect(10, y ,200, 20)
+        next_match_surface.blit(text, text_rect)
         y += 20
         text = small_font.render(f"{next_match_hometeam_name} - {next_match_awayteam_name}", True, BLACK)
-        text_rect = pygame.Rect(10+x_offset, y ,200, 20)
-        screen.blit(text, text_rect)
+        text_rect = pygame.Rect(10, y ,200, 20)
+        next_match_surface.blit(text, text_rect)
+    else:
+        y += 20
+        text = medium_font.render("No game in system", True, BLACK)
+        text_rect = pygame.Rect(10, y,200, 20)
+        next_match_surface.blit(text, text_rect)
 
-def draw_league_table(game, selected_league):
+    border_surface = pygame.Surface((next_match_surface.get_width() + 4, next_match_surface.get_height() + 4))
+    border_surface.fill(BLACK)
+    border_surface.blit(next_match_surface, (2, 2))
+
+    return border_surface
+
+
+def draw_yesterday_results(game, team):
+    year_yesterday, month_yesterday, day_yesterday = yesterday(game.year, game.month, game.day)
+    matches_today = game.match_manager.get_matches_by_date(year_yesterday, month_yesterday, day_yesterday)
+    yesterdays_result_surface = pygame.Surface((300,600), pygame.SRCALPHA)
+    yesterdays_result_surface.fill(WHITE)
+    month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    if len(matches_today) > 0:
+        y = 10
+        text = medium_font.render(f"Matches {day_yesterday} {month_names[month_yesterday-1]} {year_yesterday}", True, BLACK)
+        text_rect = pygame.Rect(10, y,200, 20)
+        yesterdays_result_surface.blit(text, text_rect)
+        for match in matches_today:
+            y += 20
+            if(match.home_team.name == team or match.away_team.name == team):
+                row_text_color = (255,0,0)
+            else:
+                row_text_color = (0,0,0)
+            text = small_font.render(f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}", True, row_text_color)
+            text_rect = pygame.Rect(10, y,200, 20)
+            yesterdays_result_surface.blit(text, text_rect)
+            #print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
+
+    border_surface = pygame.Surface((yesterdays_result_surface.get_width() + 4, yesterdays_result_surface.get_height() + 4))
+    border_surface.fill(BLACK)
+    border_surface.blit(yesterdays_result_surface, (2, 2))
+
+    return border_surface
+
+
+
+
+def draw_home(game,team,isMatchesPlayed):
+    month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    next_match_surface = draw_next_match(game,team)
+    screen.blit(next_match_surface,(150,110))
+
+    if isMatchesPlayed == True:
+        #year_yesterday, month_yesterday, day_yesterday = yesterday(game.year, game.month, game.day)
+        yesterdays_result_surface = draw_yesterday_results(game, team)
+        screen.blit(yesterdays_result_surface,(470,110))
+
+
+def draw_league_table(game, selected_league, highlighted_team):
     league = game.return_league_by_name(selected_league)
 
     # Define table header
@@ -255,56 +311,61 @@ def draw_league_table(game, selected_league):
         else:
             row_color = TABLE_ROW_ODD_COLOR
 
+        #print(f"{team[0].name} - {highlighted_team}")
+        if team[0].name == highlighted_team.name:
+            row_text_color = (255,0,0)
+        else:
+            row_text_color = BLACK
 
         row_rect = pygame.Rect(10+x_offset, 130 + i * row_height, 600, row_height)
         pygame.draw.rect(screen, row_color, row_rect)
 
-        text = player_font.render(str(i+1), True, BLACK)
+        text = player_font.render(str(i+1), True, row_text_color)
         text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
         league_row = team[1]
-        text = player_font.render(team[0].name, True, BLACK)
+        text = player_font.render(team[0].name, True, row_text_color)
         text_rect = text.get_rect(left=row_rect.left + 40, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
         played = league_row['played']
-        text = player_font.render(str(played), True, BLACK)
+        text = player_font.render(str(played), True, row_text_color)
         text_rect = text.get_rect(centerx=row_rect.left + 180, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
         won = league_row['won']
-        text = player_font.render(str(won), True, BLACK)
+        text = player_font.render(str(won), True, row_text_color)
         text_rect = text.get_rect(centerx=row_rect.left + 210, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
         drawn = league_row['drawn']
-        text = player_font.render(str(drawn), True, BLACK)
+        text = player_font.render(str(drawn), True, row_text_color)
         text_rect = text.get_rect(centerx=row_rect.left + 270, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
         lost = league_row['lost']
-        text = player_font.render(str(lost), True, BLACK)
+        text = player_font.render(str(lost), True, row_text_color)
         text_rect = text.get_rect(centerx=row_rect.left + 330, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
         goals_for = league_row['goals_for']
-        text = player_font.render(str(goals_for), True, BLACK)
+        text = player_font.render(str(goals_for), True, row_text_color)
         text_rect = text.get_rect(centerx=row_rect.left + 390, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
         goals_against = league_row['goals_against']
-        text = player_font.render(str(goals_against), True, BLACK)
+        text = player_font.render(str(goals_against), True, row_text_color)
         text_rect = text.get_rect(centerx=row_rect.left + 450, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
         gd = goals_for - goals_against
-        text = player_font.render(str(gd), True, BLACK)
+        text = player_font.render(str(gd), True, row_text_color)
         text_rect = text.get_rect(centerx=row_rect.left + 510, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
         points = league_row['points']
-        text = player_font.render(str(points), True, BLACK)
+        text = player_font.render(str(points), True, row_text_color)
         text_rect = text.get_rect(centerx=row_rect.left + 570, centery=row_rect.centery)
         screen.blit(text, text_rect)
 
@@ -427,7 +488,7 @@ def draw_tactics_playerlist(game,team, selected_player_index, playerlist_offset)
     return playerlist_surface,player_rects,hover_player_uuid, selected_player_uuid
 
 
-def draw_game_mainscreen(game, game_page, selected_player_index):
+def draw_game_mainscreen(game, game_page, selected_player_index, isMatchesPlayed):
     # Draw screen
     screen.fill(WHITE)
     title = font.render("Bandymanager - Main screen", True, BLACK)
@@ -469,13 +530,13 @@ def draw_game_mainscreen(game, game_page, selected_player_index):
     screen.blit(calendar_surface, (1150,10))
 
     if (game_page == "home"):
-        draw_home(game,manager_team_name)
+        draw_home(game,manager_team_name,isMatchesPlayed)
     if (game_page == "player_list"):
         list1 = draw_playerlist(game,manager_team, selected_player_index)
     if (game_page == "tactics"):
         list1, list2 = draw_tactics(game,manager_team, selected_player_index)
     if (game_page == "competition"):
-        draw_league_table(game, "Elitserien")
+        draw_league_table(game, "Elitserien", manager_team)
     if (game_page == "player_list_u19"):
         list1 = draw_playerlist(game,manager_u19team, selected_player_index)
     # Update display

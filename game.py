@@ -294,7 +294,19 @@ class Game:
     def get_leagues(self):
         return self.leagues
 
-    def tick(self):
+    def tick(self, game_page):
+        matches_today = self.match_manager.get_matches_by_date(self.year, self.month, self.day)
+        if len(matches_today) > 0:
+            for match in matches_today:
+                match.play()
+                print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
+            leagues = self.get_leagues()
+            for league in leagues:
+                league.calculate_table()
+                league.print_table()
+            isMatchesPlayed = True
+        else:
+            isMatchesPlayed = False
         self.day += 1
         if self.month in [4, 6, 9, 11]:
             month_days = 30
@@ -313,6 +325,11 @@ class Game:
         if self.month > 12:
             self.month = 1
             self.year += 1
+
+        if isMatchesPlayed == True:
+            return "home", isMatchesPlayed
+        else:
+           return game_page, isMatchesPlayed
 
     def schedule_match(self, match):
         # logic to schedule match goes here

@@ -214,6 +214,26 @@ def adddays(year, month, day, days_to_add):
         year += 1
     return year, month, day
 
+def yesterday(year, month, day):
+    if day == 1:
+        month -= 1
+        if month == 0:
+            year -= 1
+            month = 12
+        if month in [4, 6, 9, 11]:
+            day = 30
+        elif month == 2:
+            if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
+                day = 29
+            else:
+                day = 28
+        else:
+            day = 31
+    else:
+        day -= 1
+    return year, month, day
+
+
 def get_weekdays(start_date, end_date, weekday):
     weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     weekday_idx = weekdays.index(weekday)
