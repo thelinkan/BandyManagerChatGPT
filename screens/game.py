@@ -254,29 +254,51 @@ def draw_home(game,team,isMatchesPlayed):
 
 def draw_schedule_page(game, selected_league, highlighted_team,page):
     league = game.return_league_by_name(selected_league)
+    num_teams = league.num_teams
+    num_rounds = league.num_rounds
+
+    month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    if (num_teams == 14):
+        match_per_round = 7
+        rounds_per_page = 3
     schedule_surface = pygame.Surface((350,600), pygame.SRCALPHA)
     schedule_surface.fill(WHITE)
     y=10
     text = medium_font.render(selected_league, True, BLACK)
     text_rect = pygame.Rect(10, y,200, 20)
     schedule_surface.blit(text, text_rect)
-    
+
     matches_league = game.match_manager.get_matches_by_league(selected_league)
 
     if len(matches_league) > 0:
-        #y = 10
-        #text = medium_font.render(f"Matches {day_yesterday} {month_names[month_yesterday-1]} {year_yesterday}", True, BLACK)
-        #text_rect = pygame.Rect(10, y,200, 20)
-        #schedule_surface.blit(text, text_rect)
+        round = 0
+        last_month = 0
+        last_day = 0
         for match in matches_league:
-            y += 20
-            if(match.home_team.name == highlighted_team or match.away_team.name == highlighted_team):
-                row_text_color = (255,0,0)
-            else:
-                row_text_color = (0,0,0)
-            text = small_font.render(f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}", True, row_text_color)
-            text_rect = pygame.Rect(10, y,200, 20)
-            schedule_surface.blit(text, text_rect)
+            if match.day != last_day or match.month != last_month:
+                round += 1
+                last_day = match.day
+                last_month = match.month
+                if round > rounds_per_page*(page-1) and round <= rounds_per_page*page:
+                    y += 30
+                    row_text_color = (0,0,0)
+                    text = small_font.render(f"{match.day} {month_names[match.month-1]} {match.year}: ", True, row_text_color)
+                    text_rect = pygame.Rect(10, y,200, 20)
+                    schedule_surface.blit(text, text_rect)
+
+            if round > rounds_per_page*(page-1) and round <= rounds_per_page*page:
+                y += 20
+                if(match.home_team.name == highlighted_team.name or match.away_team.name == highlighted_team.name):
+                    row_text_color = (255,0,0)
+                else:
+                    row_text_color = (0,0,0)
+                if match.played == True:
+                    text = small_font.render(f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}", True, row_text_color)
+                else:
+                    text = small_font.render(f"{match.home_team.name} - {match.away_team.name}: ", True, row_text_color)
+                text_rect = pygame.Rect(10, y,200, 20)
+                schedule_surface.blit(text, text_rect)
 
 
     border_surface = pygame.Surface((schedule_surface.get_width() + 4, schedule_surface.get_height() + 4))
@@ -284,14 +306,44 @@ def draw_schedule_page(game, selected_league, highlighted_team,page):
     border_surface.blit(schedule_surface, (2, 2))
 
     return border_surface
-    
 
-def draw_schedule(game, selected_league, highlighted_team):
-    league = game.return_league_by_name(selected_league) 
-    schedule_surface = draw_schedule_page(game, selected_league, highlighted_team,1)
+
+def draw_schedule(game, selected_league, highlighted_team, start_page):
+    league = game.return_league_by_name(selected_league)
+    num_teams = league.num_teams
+    num_rounds = league.num_rounds
+
+    month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    navigation_rects = []
+
+    if (num_teams == 14):
+        num_pages = 9
+    if start_page < 1:
+        start_page = 1
+    if start_page >= num_pages:
+        start_page = num_pages - 1
+
+    schedule_surface = draw_schedule_page(game, selected_league, highlighted_team,start_page)
     screen.blit(schedule_surface,(150,110))
-    schedule_surface = draw_schedule_page(game, selected_league, highlighted_team,2)
+    schedule_surface = draw_schedule_page(game, selected_league, highlighted_team,start_page +1)
     screen.blit(schedule_surface,(520,110))
+
+    # Define button positions and text
+    x1, x2, y = 40, 1000, 700
+    font = pygame.font.Font(None, 20)
+    prev_text = font.render("Previous Page", True, BLACK)
+    prev_rect = prev_text.get_rect(midleft=(x1, y))
+    navigation_rects.append(prev_rect)
+    next_text = font.render("Next Page", True, BLACK)
+    next_rect = next_text.get_rect(midright=(x2, y))
+    navigation_rects.append(next_rect)
+
+    # Blit buttons onto screen surface
+    screen.blit(prev_text, prev_rect)
+    screen.blit(next_text, next_rect)
+
+    return navigation_rects, start_page
 
 
 def draw_league_table(game, selected_league, highlighted_team):
@@ -529,15 +581,15 @@ def draw_tactics_playerlist(game,team, selected_player_index, playerlist_offset)
     return playerlist_surface,player_rects,hover_player_uuid, selected_player_uuid
 
 
-def draw_game_mainscreen(game, game_page, selected_player_index, isMatchesPlayed):
+def draw_game_mainscreen(game, game_page, selected_player_index, isMatchesPlayed, start_page):
     # Draw screen
     screen.fill(WHITE)
     title = font.render("Bandymanager - Main screen", True, BLACK)
     title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, 40))
     screen.blit(title, title_rect)
 
-    list1 = []
-    list2 = []
+    rectlist_1 = []
+    rectlist_2 = []
 
     manager_name = game.manager.return_name()
     manager_team_name = game.manager.return_team()
@@ -575,14 +627,14 @@ def draw_game_mainscreen(game, game_page, selected_player_index, isMatchesPlayed
     if (game_page == "player_list"):
         list1 = draw_playerlist(game,manager_team, selected_player_index)
     if (game_page == "tactics"):
-        list1, list2 = draw_tactics(game,manager_team, selected_player_index)
+        rectlist_1, rectlist_2 = draw_tactics(game,manager_team, selected_player_index)
     if (game_page == "schedule"):
-        draw_schedule(game,"Elitserien", manager_team)
+        rectlist_1, start_page = draw_schedule(game,"Elitserien", manager_team, start_page)
     if (game_page == "competition"):
         draw_league_table(game, "Elitserien", manager_team)
     if (game_page == "player_list_u19"):
-        list1 = draw_playerlist(game,manager_u19team, selected_player_index)
+        rectlist_1 = draw_playerlist(game,manager_u19team, selected_player_index)
     # Update display
     pygame.display.flip()
 
-    return list1, list2
+    return rectlist_1, rectlist_2, start_page

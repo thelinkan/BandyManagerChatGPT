@@ -24,6 +24,7 @@ selected_country_index=-1
 selected_team_index=-1
 selected_player_index=-1
 isMatchesPlayed = False
+start_page=-1
 
 # Define game loop
 running = True
@@ -58,10 +59,6 @@ while running:
                     manager_name=input_name.return_text()
                     manager_age=int(input_age.return_text())
                     game.new_game(manager_name, manager_age)
-                    #print(Sweden.male_first_names)
-                    #print(Sweden.female_first_names)
-                    #print(sweden.family_names)
-                    #game.save_game('c:\temp')
                     game_state="new_game_2"
             elif event.button == 1 and game_state == "new_game_2":
                 for i, rect in enumerate(country_rects):
@@ -85,12 +82,20 @@ while running:
                 if home_button.rect.collidepoint(event.pos):
                     game_page = "home"
                 if(game_page == "player_list" or game_page == "player_list_u19"):
-                    for i, rect in enumerate(player_rects):
+                    for i, rect in enumerate(rectslist_1):
                         if rect.collidepoint(event.pos):
                             selected_player_index = i
                             break
                 if(game_page == "tactics"):
-                    selected_player_index = gameloop_tactics(game, player_rects, jersey_rects, selected_player_index, event.pos)
+                    selected_player_index = gameloop_tactics(game, rectslist_1, rectslist_2, selected_player_index, event.pos)
+                if (game_page == "schedule"):
+                    for i, rect in enumerate(rectslist_1):
+                        if rect.collidepoint(event.pos) and i == 0:
+                            start_page = start_page - 1
+                            break                    
+                        if rect.collidepoint(event.pos) and i == 1:
+                            start_page = start_page + 1
+                            break                    
                 if senior_squad_button.rect.collidepoint(event.pos):
                     selected_player_index=-1
                     game_page = "player_list"
@@ -98,6 +103,7 @@ while running:
                     selected_player_index=-1
                     game_page = "tactics"
                 if schedule_button.rect.collidepoint(event.pos):
+                    start_page = 1
                     game_page = "schedule"
                 if competition_button.rect.collidepoint(event.pos):
                     #print(game_page)
@@ -128,7 +134,7 @@ while running:
     if game_state == "new_game_2":
         country_rects,team_rects,selected_team=draw_newgame2_menu(game,selected_country_index,selected_team_index)
     if game_state == "game_mainscreen":
-        player_rects, jersey_rects = draw_game_mainscreen(game,game_page, selected_player_index,isMatchesPlayed)
+        rectslist_1, rectslist_2, start_page = draw_game_mainscreen(game,game_page, selected_player_index,isMatchesPlayed, start_page)
         #print(player_rects)
     clock.tick(30)
 
