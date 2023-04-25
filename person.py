@@ -77,10 +77,10 @@ class Player(Person):
             #Goalkeeper attributes
             if attribute.name == "Saveing":
                 if self.position == "goalkeeper":
-                    pos_scale = random.randint(80,100)/100
+                    pos_scale = random.randint(90,100)/100
                 else:
                     pos_scale = random.randint(1,25)/100
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                age_scale = (-0.2511 * self.age * self.age + 13.5 * self.age - 81.4481)/100
                 base_skill = random.randint(90,100)
                 attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
             if attribute.name == "Reflexes":
@@ -154,13 +154,13 @@ class Player(Person):
                 if self.position == "goalkeeper":
                     pos_scale = random.randint(1,40)/100
                 elif self.position == "defender":
-                    pos_scale = random.randint(45,70)/100
+                    pos_scale = random.randint(70,100)/100
                 elif self.position == "half back":
                     pos_scale = random.randint(60,90)/100
                 elif self.position == "midfielder":
-                    pos_scale = random.randint(60,100)/100
+                    pos_scale = random.randint(30,60)/100
                 else:
-                    pos_scale = random.randint(70,100)/100
+                    pos_scale = random.randint(20,40)/100
                 age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
                 base_skill = random.randint(80,100)
                 attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
@@ -182,13 +182,13 @@ class Player(Person):
                 if self.position == "goalkeeper":
                     pos_scale = random.randint(1,40)/100
                 elif self.position == "defender":
-                    pos_scale = random.randint(45,70)/100
+                    pos_scale = random.randint(70,100)/100
                 elif self.position == "half back":
                     pos_scale = random.randint(60,90)/100
                 elif self.position == "midfielder":
-                    pos_scale = random.randint(60,100)/100
+                    pos_scale = random.randint(50,80)/100
                 else:
-                    pos_scale = random.randint(70,100)/100
+                    pos_scale = random.randint(30,60)/100
                 age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
                 base_skill = random.randint(80,100)
                 attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
@@ -251,7 +251,7 @@ class Player(Person):
             offense_stat = (0.15 * self.attributes[5].level + 0.15 * self.attributes[7].level + 0.30 * self.attributes[10].level + 0.10 * self.attributes[11].level + 0.10 * self.attributes[12].level + 0.10 * self.attributes[14].level + 0.10 * self.attributes[15].level) * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
             defense_stat = (0.35 * self.attributes[8].level + 0.35 * self.attributes[11].level + 0.10 * self.attributes[12].level + 0.10 * self.attributes[14].level + 0.10 * self.attributes[15].level) * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
             return (offense_stat, defense_stat)
-        
+
     def return_position(self):
         return self.position
 

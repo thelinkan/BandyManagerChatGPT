@@ -167,6 +167,51 @@ def draw_player2(game,player_uuid):
             player_surface.blit(text,text_rect)
             i += 1
 
+    stats_goalkeeper = player.calculate_composite_values('goalkeeper')
+    stats_libero = player.calculate_composite_values('libero')
+    stats_defender = player.calculate_composite_values('leftdef')
+    stats_half = player.calculate_composite_values('lefthalf')
+    stats_midfield = player.calculate_composite_values('leftmid')
+    stats_attack = player.calculate_composite_values('leftattack')
+
+    i +=2
+
+    attributes_text = f"Goalkeeper: {int(stats_goalkeeper[0])} - {int(stats_goalkeeper[1])}"
+    text = very_small_font.render(attributes_text, True, BLACK)
+    text_rect = pygame.Rect(0, 80 + i*15 , 250, 15)
+    player_surface.blit(text,text_rect)
+    i += 1
+
+    attributes_text = f"Libero: {int(stats_libero[0])} - {int(stats_libero[1])}"
+    text = very_small_font.render(attributes_text, True, BLACK)
+    text_rect = pygame.Rect(0, 80 + i*15 , 250, 15)
+    player_surface.blit(text,text_rect)
+    i += 1
+
+    attributes_text = f"Defender: {int(stats_defender[0])} - {int(stats_defender[1])}"
+    text = very_small_font.render(attributes_text, True, BLACK)
+    text_rect = pygame.Rect(0, 80 + i*15 , 250, 15)
+    player_surface.blit(text,text_rect)
+    i += 1
+
+    attributes_text = f"Half back: {int(stats_half[0])} - {int(stats_half[1])}"
+    text = very_small_font.render(attributes_text, True, BLACK)
+    text_rect = pygame.Rect(0, 80 + i*15 , 250, 15)
+    player_surface.blit(text,text_rect)
+    i += 1
+
+    attributes_text = f"Midfielder: {int(stats_midfield[0])} - {int(stats_midfield[1])}"
+    text = very_small_font.render(attributes_text, True, BLACK)
+    text_rect = pygame.Rect(0, 80 + i*15 , 250, 15)
+    player_surface.blit(text,text_rect)
+    i += 1
+
+    attributes_text = f"Attacker: {int(stats_attack[0])} - {int(stats_attack[1])}"
+    text = very_small_font.render(attributes_text, True, BLACK)
+    text_rect = pygame.Rect(0, 80 + i*15 , 250, 15)
+    player_surface.blit(text,text_rect)
+    i += 1
+
     return player_surface
 
 def draw_next_match(game, team):
