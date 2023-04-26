@@ -39,15 +39,18 @@ class Player(Person):
         ]
 
     def generate_attributes(self, country_knowledge, gender_proficiency, club_rating, team_rating):
+        agescale_a1 = -0.2511
+        agescale_b1 = 13.5
+        agescale_c1 = -81.481
         total_rating = gender_proficiency * team_rating/10000
         #print (f"Team {total_rating} - {gender_proficiency} - {team_rating}")
         for attribute in self.attributes:
             #generic attributes
             if attribute.name == "Endurance":
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
                 attribute.level = round(random.randint(70,100)*age_scale)
             if attribute.name == "Agility":
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
                 attribute.level = round(random.randint(70,100)*age_scale)
             if attribute.name == "Agression":
                 mean = 70
@@ -55,24 +58,28 @@ class Player(Person):
                 num = int(random.normalvariate(mean, stddev))
                 attribute.level = min(max(num, 1), 100)
             if attribute.name == "Condition":
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
                 attribute.level = round(random.randint(70,100)*age_scale)
             #skating attributes
             if attribute.name == "Skating":
                 if self.position == "goalkeeper":
                     pos_scale = random.randint(50,70)/100
                 else:
-                    pos_scale = random.randint(60,100)/100
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
-                attribute.level = round(random.randint(70,100) * age_scale * total_rating  * pos_scale)
+                    pos_scale = random.randint(70,100)/100
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
+                attribute_base_level = random.randint(70,100)
+                attribute.level = round(attribute_base_level * age_scale * total_rating  * pos_scale)
+                
+                print(f"{attribute_base_level} - {age_scale} - {total_rating} - {pos_scale}")
+                
             if attribute.name == "Acceleration":
                 if self.position == "goalkeeper":
                     pos_scale = random.randint(30,50)/100
                 elif self.position == "defender":
-                    pos_scale = random.randint(40,70)/100
+                    pos_scale = random.randint(50,80)/100
                 else:
-                    pos_scale = random.randint(60,100)/100
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                    pos_scale = random.randint(70,100)/100
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
                 attribute.level = round(random.randint(70,100) * age_scale * total_rating  * pos_scale)
             #Goalkeeper attributes
             if attribute.name == "Saveing":
@@ -80,31 +87,31 @@ class Player(Person):
                     pos_scale = random.randint(90,100)/100
                 else:
                     pos_scale = random.randint(1,25)/100
-                age_scale = (-0.2511 * self.age * self.age + 13.5 * self.age - 81.4481)/100
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
                 base_skill = random.randint(90,100)
                 attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
             if attribute.name == "Reflexes":
                 if self.position == "goalkeeper":
-                    pos_scale = random.randint(80,100)/100
+                    pos_scale = random.randint(90,100)/100
                 else:
                     pos_scale = random.randint(1,25)/100
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
                 base_skill = random.randint(90,100)
                 attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
             if attribute.name == "Placement":
                 if self.position == "goalkeeper":
-                    pos_scale = random.randint(80,100)/100
+                    pos_scale = random.randint(90,100)/100
                 else:
                     pos_scale = random.randint(1,25)/100
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
                 base_skill = random.randint(90,100)
                 attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
             if attribute.name == "Throwing":
                 if self.position == "goalkeeper":
-                    pos_scale = random.randint(60,100)/100
+                    pos_scale = random.randint(70,100)/100
                 else:
                     pos_scale = random.randint(1,15)/100
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
                 base_skill = random.randint(90,100)
                 attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
             #Other player attributes
@@ -112,56 +119,56 @@ class Player(Person):
                 if self.position == "goalkeeper":
                     pos_scale = random.randint(1,40)/100
                 elif self.position == "defender":
-                    pos_scale = random.randint(45,70)/100
+                    pos_scale = random.randint(65,80)/100
                 elif self.position == "half back":
-                    pos_scale = random.randint(60,90)/100
+                    pos_scale = random.randint(70,90)/100
                 elif self.position == "midfielder":
-                    pos_scale = random.randint(60,100)/100
+                    pos_scale = random.randint(80,100)/100
                 else:
-                    pos_scale = random.randint(70,100)/100
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                    pos_scale = random.randint(90,100)/100
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
                 base_skill = random.randint(80,100)
                 attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
             if attribute.name == "Corners":
                 if self.position == "goalkeeper":
                     pos_scale = random.randint(1,40)/100
                 elif self.position == "defender":
-                    pos_scale = random.randint(45,70)/100
+                    pos_scale = random.randint(90,100)/100
                 elif self.position == "half back":
-                    pos_scale = random.randint(60,90)/100
+                    pos_scale = random.randint(70,90)/100
                 elif self.position == "midfielder":
-                    pos_scale = random.randint(60,100)/100
+                    pos_scale = random.randint(60,80)/100
                 else:
-                    pos_scale = random.randint(70,100)/100
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                    pos_scale = random.randint(40,60)/100
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
                 base_skill = random.randint(80,100)
                 attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
             if attribute.name == "Passing":
                 if self.position == "goalkeeper":
                     pos_scale = random.randint(1,40)/100
                 elif self.position == "defender":
-                    pos_scale = random.randint(45,70)/100
+                    pos_scale = random.randint(55,70)/100
                 elif self.position == "half back":
-                    pos_scale = random.randint(60,90)/100
+                    pos_scale = random.randint(70,90)/100
                 elif self.position == "midfielder":
-                    pos_scale = random.randint(60,100)/100
+                    pos_scale = random.randint(70,100)/100
                 else:
                     pos_scale = random.randint(70,100)/100
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
                 base_skill = random.randint(80,100)
                 attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
             if attribute.name == "Long pass":
                 if self.position == "goalkeeper":
                     pos_scale = random.randint(1,40)/100
                 elif self.position == "defender":
-                    pos_scale = random.randint(70,100)/100
+                    pos_scale = random.randint(90,100)/100
                 elif self.position == "half back":
-                    pos_scale = random.randint(60,90)/100
+                    pos_scale = random.randint(70,90)/100
                 elif self.position == "midfielder":
                     pos_scale = random.randint(30,60)/100
                 else:
                     pos_scale = random.randint(20,40)/100
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
                 base_skill = random.randint(80,100)
                 attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
             if attribute.name == "Shooting":
@@ -172,25 +179,25 @@ class Player(Person):
                 elif self.position == "half back":
                     pos_scale = random.randint(60,90)/100
                 elif self.position == "midfielder":
-                    pos_scale = random.randint(60,100)/100
+                    pos_scale = random.randint(80,90)/100
                 else:
-                    pos_scale = random.randint(70,100)/100
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
-                base_skill = random.randint(80,100)
+                    pos_scale = random.randint(90,100)/100
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
+                base_skill = random.randint(90,100)
                 attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
             if attribute.name == "Intercept":
                 if self.position == "goalkeeper":
                     pos_scale = random.randint(1,40)/100
                 elif self.position == "defender":
-                    pos_scale = random.randint(70,100)/100
+                    pos_scale = random.randint(90,100)/100
                 elif self.position == "half back":
-                    pos_scale = random.randint(60,90)/100
+                    pos_scale = random.randint(80,90)/100
                 elif self.position == "midfielder":
                     pos_scale = random.randint(50,80)/100
                 else:
                     pos_scale = random.randint(30,60)/100
-                age_scale = (-0.3125 * self.age * self.age + 16.25 * self.age - 111.25)/100
-                base_skill = random.randint(80,100)
+                age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
+                base_skill = random.randint(90,100)
                 attribute.level = round(base_skill * age_scale * total_rating * pos_scale)
 
 
