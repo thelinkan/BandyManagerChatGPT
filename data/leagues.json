@@ -1,5 +1,5 @@
 [
-    			  {
+    			{
     			  	"name": "Elitserien",
     			  	"country": "Sweden",
     			  	"level": 1,
@@ -14,5 +14,21 @@
     			  		[
     			  				"Bollnäs GIF", "Brobergs IF", "Edsbyns IF", "Frillesås BK", "Gripen Trollhättan BK", "Hammarby IF", "IFK Motala", "Vetlanda BK", "Villa Lidköping BK" ,"Sandvikens AIK", "IK Sirius BK", "IFK Vänersborg", "IFK Rättvik", "Västerås SK"
     			  		]
-    			 	}
+    			},
+    			{
+    			  	"name": "Eliteserien",
+    			  	"country": "Norway",
+    			  	"level": 1,
+    			  	"num_rounds": 18,
+    			  	"win_points": 2,
+    			  	"draw_points": 1,
+    			  	"startmonth": 10,
+    			  	"startday": 20,
+    			  	"endmonth": 2,
+    			  	"endday": 10,
+    			  	"teams":
+    			  		[
+    			  				"Drammen bandy", "Høvik IF", "Mjøndalen IF", "Ready bandy", "Røa IL", "Solberg SK", "Stabæk bandy", "Sarpsborg BK", "Ullern IF" 
+    			  		]
+    			}
 ]

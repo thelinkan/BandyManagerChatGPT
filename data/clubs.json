@@ -449,13 +449,93 @@
       ]
     },
     {
-      "name": "Mjöndalens IF",
+      "name": "Drammen bandy",
       "country": "Norway",
       "home_arena": "Vassenga",
       "club_rating": 75,
       "teams": [
         {
-          "name": "Mjöndalens IF",
+          "name": "Drammen bandy",
+          "team_type": "Men",
+          "team_rating": 70,
+          "num_players": 16,
+          "num_int_players": 1,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+		},
+        {
+          "name": "Drammen bandy U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Drammen bandy (W)",
+          "team_type": "Women",
+          "team_rating": 75,
+          "num_players": 16,
+          "num_int_players": 3,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Drammen bandy F19",
+          "team_type": "Women U19",
+          "team_rating": 65,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        }
+      ]
+    },
+    {
+      "name": "Høvik IF",
+      "country": "Norway",
+      "home_arena": "Vassenga",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Høvik IF",
+          "team_type": "Men",
+          "team_rating": 70,
+          "num_players": 16,
+          "num_int_players": 1,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(25,19,163)]"
+		},
+        {
+          "name": "Høvik IF U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(25,19,163)]"
+        },
+        {
+          "name": "Høvik IF (W)",
+          "team_type": "Women",
+          "team_rating": 75,
+          "num_players": 16,
+          "num_int_players": 3,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(25,19,163)]"
+        },
+        {
+          "name": "Høvik IF F19",
+          "team_type": "Women U19",
+          "team_rating": 65,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(25,19,163)]"
+        }
+      ]
+    },
+    {
+      "name": "Mjøndalen IF",
+      "country": "Norway",
+      "home_arena": "Vassenga",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Mjøndalen IF",
           "team_type": "Men",
           "team_rating": 70,
           "num_players": 16,
@@ -463,7 +543,7 @@
 		  "jersey_colors": "[(106,63,32),(106,63,32),(106,63,32),(0,0,0),(255,255,255)]"
         },
         {
-          "name": "Mjöndalens IF U19",
+          "name": "Mjøndalen IF U19",
           "team_type": "Men U19",
           "team_rating": 60,
           "num_players": 16,
@@ -473,13 +553,117 @@
       ]
     },
     {
-      "name": "Stabaek bandy",
+      "name": "Ready bandy",
       "country": "Norway",
       "home_arena": "Vassenga",
       "club_rating": 75,
       "teams": [
         {
-          "name": "Stabaek bandy",
+          "name": "Ready bandy",
+          "team_type": "Men",
+          "team_rating": 70,
+          "num_players": 16,
+          "num_int_players": 1,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+		},
+        {
+          "name": "Ready bandy U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Ready bandy (W)",
+          "team_type": "Women",
+          "team_rating": 75,
+          "num_players": 16,
+          "num_int_players": 3,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Ready bandy F19",
+          "team_type": "Women U19",
+          "team_rating": 65,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        }
+      ]
+    },
+    {
+      "name": "Røa IL",
+      "country": "Norway",
+      "home_arena": "Vassenga",
+      "club_rating": 90,
+      "teams": [
+        {
+          "name": "Røa IL",
+          "team_type": "Men",
+          "team_rating": 90,
+          "num_players": 17,
+          "num_int_players": 1,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Røa IL U19",
+          "team_type": "Men U19",
+          "team_rating": 80,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        }
+      ]
+    },
+    {
+      "name": "Solberg SK",
+      "country": "Norway",
+      "home_arena": "Solbergbanen",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Solberg SK",
+          "team_type": "Men",
+          "team_rating": 70,
+          "num_players": 18,
+          "num_int_players": 1,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
+		},
+        {
+          "name": "Solberg SK U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
+        },
+        {
+          "name": "Solberg SK (W)",
+          "team_type": "Women",
+          "team_rating": 75,
+          "num_players": 16,
+          "num_int_players": 3,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
+        },
+        {
+          "name": "Solberg SK F19",
+          "team_type": "Women U19",
+          "team_rating": 65,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
+        }
+      ]
+    },
+    {
+      "name": "Stabæk bandy",
+      "country": "Norway",
+      "home_arena": "Vassenga",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Stabæk bandy",
           "team_type": "Men",
           "team_rating": 70,
           "num_players": 16,
@@ -487,12 +671,116 @@
 		  "jersey_colors": "[(52,145,241),(54,59,91),(52,145,241),(0,0,0),(255,255,255)]"
 		},
         {
-          "name": "Stabaek bandy U19",
+          "name": "Stabæk bandy U19",
           "team_type": "Men U19",
           "team_rating": 60,
           "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(52,145,241),(54,59,91),(52,145,241),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Stabæk bandy (W)",
+          "team_type": "Women",
+          "team_rating": 75,
+          "num_players": 16,
+          "num_int_players": 3,
+		  "jersey_colors": "[(52,145,241),(54,59,91),(52,145,241),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Stabæk bandy F19",
+          "team_type": "Women U19",
+          "team_rating": 65,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(52,145,241),(54,59,91),(52,145,241),(0,0,0),(255,255,255)]"
+        }
+      ]
+    },
+    {
+      "name": "Sarpsborg BK",
+      "country": "Norway",
+      "home_arena": "Vassenga",
+      "club_rating": 90,
+      "teams": [
+        {
+          "name": "Sarpsborg BK",
+          "team_type": "Men",
+          "team_rating": 90,
+          "num_players": 17,
+          "num_int_players": 1,
+		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Sarpsborg BK U19",
+          "team_type": "Men U19",
+          "team_rating": 80,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+        }
+      ]
+    },
+    {
+      "name": "Ullern IF",
+      "country": "Norway",
+      "home_arena": "Ullernbanen",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Ullern IF",
+          "team_type": "Men",
+          "team_rating": 70,
+          "num_players": 16,
+          "num_int_players": 1,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(255,0,0)]"
+        },
+        {
+          "name": "Ullern IF U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(255,0,0)]"
+        }
+      ]
+    },
+    {
+      "name": "Ullevål IL",
+      "country": "Norway",
+      "home_arena": "Bergbanen",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Ullevål IL",
+          "team_type": "Men",
+          "team_rating": 70,
+          "num_players": 18,
+          "num_int_players": 1,
+		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+		},
+        {
+          "name": "Ullevål IL U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Ullevål IL (W)",
+          "team_type": "Women",
+          "team_rating": 75,
+          "num_players": 16,
+          "num_int_players": 3,
+		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Ullevål IL F19",
+          "team_type": "Women U19",
+          "team_rating": 65,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
         }
       ]
     }

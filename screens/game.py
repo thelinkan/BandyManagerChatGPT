@@ -304,6 +304,9 @@ def draw_schedule_page(game, selected_league, highlighted_team,page):
 
     month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
+    if (num_teams == 10):
+        match_per_round = 5
+        rounds_per_page = 4
     if (num_teams == 14):
         match_per_round = 7
         rounds_per_page = 3
