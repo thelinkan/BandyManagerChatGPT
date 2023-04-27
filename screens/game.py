@@ -272,11 +272,18 @@ def draw_yesterday_results(game, team):
             match_league = game.match_manager.get_league_of_match(match)
             if match_league.name != last_league:
                 last_league = match_league.name
+                country = match_league.country
+                flag = game.return_countryflag(country)
                 y+=25
-                text = small_font.render(f"{match_league.name}", True, (0,0,0))
-                text_rect = pygame.Rect(10, y,200, 20)
-                yesterdays_result_surface.blit(text, text_rect)
-                y+=5
+                text = medium_font.render(f"{match_league.name}", True, (80,80,80))
+                combined_surface = pygame.Surface((300,30))
+                combined_surface.fill((240,240,240))
+                combined_surface.blit(text, (4,4))
+                combined_surface.blit(flag, (275,2))
+                rect = combined_surface.get_rect()
+                rect.topleft = (0, y)
+                yesterdays_result_surface.blit(combined_surface, rect)
+                y+=12
             y += 20
             if(match.home_team.name == team or match.away_team.name == team):
                 row_text_color = (255,0,0)
