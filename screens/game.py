@@ -365,6 +365,8 @@ def draw_schedule(game, selected_league, highlighted_team, start_page):
 
     navigation_rects = []
 
+    if (num_teams == 10):
+        num_pages = 5
     if (num_teams == 14):
         num_pages = 9
     if start_page < 1:
@@ -670,6 +672,8 @@ def draw_game_mainscreen(game, game_page, selected_player_index, isMatchesPlayed
 
     screen.blit(calendar_surface, (1150,10))
 
+    leagues = game.get_leagues_for_team(manager_team_name)
+
     if (game_page == "home"):
         draw_home(game,manager_team_name,isMatchesPlayed)
     if (game_page == "player_list"):
@@ -677,9 +681,9 @@ def draw_game_mainscreen(game, game_page, selected_player_index, isMatchesPlayed
     if (game_page == "tactics"):
         rectlist_1, rectlist_2 = draw_tactics(game,manager_team, selected_player_index)
     if (game_page == "schedule"):
-        rectlist_1, start_page = draw_schedule(game,"Elitserien", manager_team, start_page)
+        rectlist_1, start_page = draw_schedule(game,leagues[0].name, manager_team, start_page)
     if (game_page == "competition"):
-        draw_league_table(game, "Elitserien", manager_team)
+        draw_league_table(game, leagues[0].name, manager_team)
     if (game_page == "player_list_u19"):
         rectlist_1 = draw_playerlist(game,manager_u19team, selected_player_index)
     # Update display

@@ -96,7 +96,8 @@ def draw_jersey(jersey_colors,jersey_number):
     return jersey_surface
 
 
-def return_schedule(num_teams,num_rounds):
+def return_schedule(num_teams,num_rounds):
+    print(f"{num_teams}  {num_rounds}")
     if(num_teams == 4):
         schedule1 = [[(1,2),(3,0)],[(2,3),(0,1)],[(1,3),(2,0)]]
         schedule2 = [[(game[1], game[0]) for game in round] for round in schedule1]

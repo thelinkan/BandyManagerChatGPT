@@ -69,9 +69,9 @@ class Player(Person):
                 age_scale = (agescale_a1 * self.age * self.age + agescale_b1 * self.age + agescale_c1)/100
                 attribute_base_level = random.randint(70,100)
                 attribute.level = round(attribute_base_level * age_scale * total_rating  * pos_scale)
-                
-                print(f"{attribute_base_level} - {age_scale} - {total_rating} - {pos_scale}")
-                
+
+                #print(f"{attribute_base_level} - {age_scale} - {total_rating} - {pos_scale}")
+
             if attribute.name == "Acceleration":
                 if self.position == "goalkeeper":
                     pos_scale = random.randint(30,50)/100

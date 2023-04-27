@@ -335,6 +335,23 @@ class Game:
         # logic to schedule match goes here
         self.match_manager.add_match(match)
 
+    def get_leagues_in_country(self, country_name):
+        """
+        Returns a list of all leagues in the specified country.
+        """
+        return [league for league in self.leagues if league.country == country_name]
+
+    def get_leagues_for_team(self, team_name):
+        """
+        Returns a list of all leagues in which the specified team participates.
+        """
+        leagues = []
+        for league in self.leagues:
+            if any(team.name == team_name for team in league.teams):
+                leagues.append(league)
+        return leagues
+
     def quit_game(self):
         # quit game
         pass
+
