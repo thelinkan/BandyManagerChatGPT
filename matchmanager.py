@@ -3,10 +3,13 @@ import datetime as dt
 class MatchManager:
     def __init__(self):
         self.matches = []
+        self.leagues = []
 
     def add_match(self, match, league):
         match.league = league
         self.matches.append(match)
+        if league not in self.leagues:
+            self.leagues.append(league)
 
     def get_all_matches(self):
         return self.matches
@@ -28,3 +31,7 @@ class MatchManager:
         league_matches = [match for match in self.matches if match.league.name == league_name]
         sorted_matches = sorted(league_matches, key=lambda match: dt.date(match.year, match.month, match.day))
         return sorted_matches
+
+    def get_league_of_match(self, match):
+        return match.league
+

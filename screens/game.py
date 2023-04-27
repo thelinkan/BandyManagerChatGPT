@@ -264,9 +264,19 @@ def draw_yesterday_results(game, team):
     if len(matches_today) > 0:
         y = 10
         text = medium_font.render(f"Matches {day_yesterday} {month_names[month_yesterday-1]} {year_yesterday}", True, BLACK)
+        y += 5
+        last_league = ""
         text_rect = pygame.Rect(10, y,200, 20)
         yesterdays_result_surface.blit(text, text_rect)
         for match in matches_today:
+            match_league = game.match_manager.get_league_of_match(match)
+            if match_league.name != last_league:
+                last_league = match_league.name
+                y+=25
+                text = small_font.render(f"{match_league.name}", True, (0,0,0))
+                text_rect = pygame.Rect(10, y,200, 20)
+                yesterdays_result_surface.blit(text, text_rect)
+                y+=5
             y += 20
             if(match.home_team.name == team or match.away_team.name == team):
                 row_text_color = (255,0,0)
