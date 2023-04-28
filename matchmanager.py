@@ -35,3 +35,14 @@ class MatchManager:
     def get_league_of_match(self, match):
         return match.league
 
+    def play_viewed_match(self,match):
+        time_scaling_factor = 0.1875
+        if(match.played == False):
+            start_time = time.time()
+            match.played = True
+            game_time = 0
+        current_time = time.time()
+        elapsed_time = current_time - start_time
+        game_time_delta = elapsed_time * time_scaling_factor
+        game_time += game_time_delta
+

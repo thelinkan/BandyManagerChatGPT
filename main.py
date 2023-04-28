@@ -116,6 +116,7 @@ while running:
                     game_page, isMatchesPlayed, match_viewed, match_to_view = game.tick(game_page)
                     if match_viewed:
                         game_state = "view_match"
+                        
 
                 if save_game_button.rect.collidepoint(event.pos):
                     game.save_game('c:\temp')
@@ -140,7 +141,7 @@ while running:
         rectslist_1, rectslist_2, start_page = draw_game_mainscreen(game,game_page, selected_player_index,isMatchesPlayed, start_page)
     if game_state == "view_match":
         draw_view_match(game,match_to_view)
-        #print(player_rects)
+        game_state = "game_mainscreen"
     clock.tick(30)
 
 pygame.quit()

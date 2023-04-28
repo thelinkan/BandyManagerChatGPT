@@ -12,6 +12,8 @@ class Match:
         self.home_goals = 0
         self.away_goals = 0
         self.played = False
+        self.is_over = False
+        self.time_since_last_goal = 0
 
     def play(self, manager_team):
         position_list = ["goalkeeper","libero","leftdef","rightdef","lefthalf","righthalf","leftmid","centralmid","rightmid","leftattack","rightattack","sub1","sub2","sub3","sub4","sub5"]
@@ -49,6 +51,45 @@ class Match:
         self.away_goals = rand.poisson(3*away_off_total/home_def_total)
         self.played = True
 
+    def update_state(self,game_time_delta):
+        position_list = ["goalkeeper","libero","leftdef","rightdef","lefthalf","righthalf","leftmid","centralmid","rightmid","leftattack","rightattack","sub1","sub2","sub3","sub4","sub5"]
+        off_weight = [2,2,3,3,8,8,12,12,12,19,19]
+        def_weight = [20,16,14,14,10,10,4,4,4,2,2]
+        home_team_players = self.home_team.get_players()
+        away_team_players = self.away_team.get_players()
+
+        home_off_total = 0
+        away_off_total = 0
+        home_def_total = 0
+        away_def_total = 0
+        #if manager_team == self.home_team.name or manager_team == self.away_team.name:
+        #    print(f"Manager game {manager_team}")
+
+        for i in range(11):
+            #print(i)
+
+            position_uuid = self.home_team.actual_positions[position_list[i]]["player_uuid"]
+            player = self.home_team.players[position_uuid]
+            composite_values = player.calculate_composite_values(position_list[i])
+            home_off_total += composite_values[0] * off_weight[i]
+            home_def_total += composite_values[1] * def_weight[i]
+
+            position_uuid = self.away_team.actual_positions[position_list[i]]["player_uuid"]
+            player = self.away_team.players[position_uuid]
+            composite_values = player.calculate_composite_values(position_list[i])
+            away_off_total += composite_values[0] * off_weight[i]
+            away_def_total += composite_values[1] * def_weight[i]
+
+        self.time_since_last_goal += game_time_delta
+        if (self.time_since_last_goal>10 and random.randint(1, 1000) <= 5):
+            self.time_since_last_goal = 0
+            home_goal_chance = random.randint(1,int(20*home_off_total/away_def_total))
+            away_goal_chance = random.randint(1,int(20*away_off_total/home_def_total))
+            if away_goal_chance > home_goal_chance:
+                self.away_goals += 1
+            else:
+                self.home_goals += 1
+
     def load_match(self, home_goals, away_goals,played):
         self.home_goals = home_goals
         self.away_goals = away_goals
@@ -70,5 +111,5 @@ class Match:
 
     def involves_team(self, team):
         return team == self.home_team or team == self.away_team
-        
+
 
