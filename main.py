@@ -10,6 +10,7 @@ from game import Game
 from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY
 from screens.start import screen,draw_start_menu, draw_credits, draw_newgame_menu, draw_newgame2_menu
 from screens.game import draw_game_mainscreen
+from screens.screensMatch import draw_view_match
 from gameloop.tactics import gameloop_tactics
 from guielements import font,medium_font, small_font, button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
@@ -112,7 +113,10 @@ while running:
                     selected_player_index=-1
                     game_page = "player_list_u19"
                 if forward_time_button.rect.collidepoint(event.pos):
-                    game_page, isMatchesPlayed = game.tick(game_page)
+                    game_page, isMatchesPlayed, match_viewed, match_to_view = game.tick(game_page)
+                    if match_viewed:
+                        game_state = "view_match"
+                        
 
                 if save_game_button.rect.collidepoint(event.pos):
                     game.save_game('c:\temp')
@@ -135,7 +139,9 @@ while running:
         country_rects,team_rects,selected_team=draw_newgame2_menu(game,selected_country_index,selected_team_index)
     if game_state == "game_mainscreen":
         rectslist_1, rectslist_2, start_page = draw_game_mainscreen(game,game_page, selected_player_index,isMatchesPlayed, start_page)
-        #print(player_rects)
+    if game_state == "view_match":
+        draw_view_match(game,match_to_view)
+        game_state = "game_mainscreen"
     clock.tick(30)
 
 pygame.quit()
