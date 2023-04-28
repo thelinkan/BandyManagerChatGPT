@@ -257,7 +257,7 @@ def draw_next_match(game, team):
 def draw_yesterday_results(game, team):
     year_yesterday, month_yesterday, day_yesterday = yesterday(game.year, game.month, game.day)
     matches_today = game.match_manager.get_matches_by_date(year_yesterday, month_yesterday, day_yesterday)
-    yesterdays_result_surface = pygame.Surface((300,600), pygame.SRCALPHA)
+    yesterdays_result_surface = pygame.Surface((375,600), pygame.SRCALPHA)
     yesterdays_result_surface.fill(WHITE)
     month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
@@ -276,10 +276,10 @@ def draw_yesterday_results(game, team):
                 flag = game.return_countryflag(country)
                 y+=25
                 text = medium_font.render(f"{match_league.name}", True, (80,80,80))
-                combined_surface = pygame.Surface((300,30))
+                combined_surface = pygame.Surface((375,30))
                 combined_surface.fill((240,240,240))
                 combined_surface.blit(text, (4,4))
-                combined_surface.blit(flag, (275,2))
+                combined_surface.blit(flag, (325,2))
                 rect = combined_surface.get_rect()
                 rect.topleft = (0, y)
                 yesterdays_result_surface.blit(combined_surface, rect)
@@ -290,7 +290,7 @@ def draw_yesterday_results(game, team):
             else:
                 row_text_color = (0,0,0)
             text = small_font.render(f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}", True, row_text_color)
-            text_rect = pygame.Rect(10, y,200, 20)
+            text_rect = pygame.Rect(10, y,375, 20)
             yesterdays_result_surface.blit(text, text_rect)
             #print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
 
