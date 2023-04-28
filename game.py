@@ -296,14 +296,20 @@ class Game:
 
     def tick(self, game_page):
         matches_today = self.match_manager.get_matches_by_date(self.year, self.month, self.day)
+        match_viewed = False
+        match_to_view = None
         if len(matches_today) > 0:
             for match in matches_today:
-                match.play()
-                print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
+                if self.manager.team == match.home_team.name or self.manager.team == match.away_team.name:
+                    match_viewed = True
+                    match_to_view = match                    
+                else:
+                    match.play(self.manager.team)
+                #print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
             leagues = self.get_leagues()
             for league in leagues:
                 league.calculate_table()
-                league.print_table()
+                #league.print_table()
             isMatchesPlayed = True
         else:
             isMatchesPlayed = False
@@ -327,9 +333,9 @@ class Game:
             self.year += 1
 
         if isMatchesPlayed == True:
-            return "home", isMatchesPlayed
-        else:
-           return game_page, isMatchesPlayed
+            game_page = "home"
+
+        return game_page, isMatchesPlayed, match_viewed, match_to_view
 
     def schedule_match(self, match):
         # logic to schedule match goes here

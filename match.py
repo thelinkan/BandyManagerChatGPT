@@ -13,7 +13,7 @@ class Match:
         self.away_goals = 0
         self.played = False
 
-    def play(self):
+    def play(self, manager_team):
         position_list = ["goalkeeper","libero","leftdef","rightdef","lefthalf","righthalf","leftmid","centralmid","rightmid","leftattack","rightattack","sub1","sub2","sub3","sub4","sub5"]
         off_weight = [2,2,3,3,8,8,12,12,12,19,19]
         def_weight = [20,16,14,14,10,10,4,4,4,2,2]
@@ -24,6 +24,8 @@ class Match:
         away_off_total = 0
         home_def_total = 0
         away_def_total = 0
+        if manager_team == self.home_team.name or manager_team == self.away_team.name:
+            print(f"Manager game {manager_team}")
 
         for i in range(11):
             #print(i)
@@ -66,4 +68,7 @@ class Match:
             'played': self.played
         }
 
+    def involves_team(self, team):
+        return team == self.home_team or team == self.away_team
+        
 
