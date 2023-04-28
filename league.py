@@ -1,6 +1,6 @@
 import random
 from team import Team
-from match import Match
+from matchcode.match import Match
 from country import Country
 from miscfunctions import return_schedule, adddays
 

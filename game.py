@@ -9,7 +9,7 @@ from league import League
 from person import Player
 from person import PlayerManager
 from uuidencoder import UUIDEncoder
-from matchmanager import MatchManager
+from matchcode.matchmanager import MatchManager
 
 class Game:
     def __init__(self,year,month,day):
