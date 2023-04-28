@@ -47,6 +47,10 @@
             {"country": "Sweden", "percentage": 80},
             {"country": "Finland", "percentage": 15},
             {"country": "Canada", "percentage": 5}
+        ],
+        "player_origins_female": [
+            {"country": "Finland", "percentage": 60},
+            {"country": "Sweden", "percentage": 40}
         ]
     },
     {

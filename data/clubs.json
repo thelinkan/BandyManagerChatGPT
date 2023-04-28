@@ -783,6 +783,246 @@
 		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
         }
       ]
+    },
+    {
+      "name": "Akilles Porvoo",
+      "country": "Finland",
+      "home_arena": "Porvoon pallokenttä",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Akilles Porvoo",
+          "team_type": "Men",
+          "team_rating": 100,
+          "num_players": 19,
+          "num_int_players": 1,
+		  "jersey_colors": "[(50,80,30),(50,80,30),(50,80,30),(0,0,0),(255,255,255)]"
+		},
+        {
+          "name": "Akilles Porvoo U19",
+          "team_type": "Men U19",
+          "team_rating": 100,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(50,80,30),(50,80,30),(50,80,30),(0,0,0),(255,255,255)]"
+        }
+      ]
+    },
+    {
+      "name": "Botnia 69",
+      "country": "Finland",
+      "home_arena": "Oulunkylä",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Botnia 69",
+          "team_type": "Men",
+          "team_rating": 80,
+          "num_players": 19,
+          "num_int_players": 1,
+		  "jersey_colors": "[(25,45,115),(25,45,115),(25,45,115),(0,0,0),(255,255,255)]"
+		},
+        {
+          "name": "Botnia 69 U19",
+          "team_type": "Men U19",
+          "team_rating": 80,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(25,45,115),(25,45,115),(25,45,115),(0,0,0),(255,255,255)]"
+        }
+      ]
+    },
+    {
+      "name": "IFK Helsinki",
+      "country": "Finland",
+      "home_arena": "Oulunkylä",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "IFK Helsinki",
+          "team_type": "Men",
+          "team_rating": 80,
+          "num_players": 19,
+          "num_int_players": 1,
+		  "jersey_colors": "[(243,28,60),(243,28,60),(243,28,60),(0,0,0),(255,255,255)]"
+		},
+        {
+          "name": "IFK Helsinki U19",
+          "team_type": "Men U19",
+          "team_rating": 80,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(243,28,60),(243,28,60),(243,28,60),(0,0,0),(255,255,255)]"
+        }
+      ]
+    },
+    {
+      "name": "JPS",
+      "country": "Finland",
+      "home_arena": "Oulunkylä",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "JPS",
+          "team_type": "Men",
+          "team_rating": 80,
+          "num_players": 19,
+          "num_int_players": 1,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(243,28,60)]"
+		},
+        {
+          "name": "JPS U19",
+          "team_type": "Men U19",
+          "team_rating": 80,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(243,28,60)]"
+        }
+      ]
+    },
+    {
+      "name": "Kampparit",
+      "country": "Finland",
+      "home_arena": "Hänninhauta",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Kampparit",
+          "team_type": "Men",
+          "team_rating": 80,
+          "num_players": 19,
+          "num_int_players": 1,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(243,28,60)]"
+		},
+        {
+          "name": "Kampparit U19",
+          "team_type": "Men U19",
+          "team_rating": 80,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(243,28,60)]"
+        }
+      ]
+    },
+    {
+      "name": "Narukerä",
+      "country": "Finland",
+      "home_arena": "Porin tekojäärata",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Narukerä",
+          "team_type": "Men",
+          "team_rating": 80,
+          "num_players": 19,
+          "num_int_players": 1,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
+		},
+        {
+          "name": "Narukerä U19",
+          "team_type": "Men U19",
+          "team_rating": 80,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
+        }
+      ]
+    },
+    {
+      "name": "OLS",
+      "country": "Finland",
+      "home_arena": "Pakkalan kenttä",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "OLS",
+          "team_type": "Men",
+          "team_rating": 80,
+          "num_players": 17,
+          "num_int_players": 3,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
+		},
+        {
+          "name": "OLS U19",
+          "team_type": "Men U19",
+          "team_rating": 80,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
+        }
+      ]
+    },
+    {
+      "name": "Veiterä",
+      "country": "Finland",
+      "home_arena": "Kisapuiston tekojäärata",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Veiterä",
+          "team_type": "Men",
+          "team_rating": 80,
+          "num_players": 17,
+          "num_int_players": 3,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(50,80,30)]"
+		},
+        {
+          "name": "Veiterä U19",
+          "team_type": "Men U19",
+          "team_rating": 80,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(50,80,30)]"
+        }
+      ]
+    },
+    {
+      "name": "WP35",
+      "country": "Finland",
+      "home_arena": "Kämäri",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "WP35",
+          "team_type": "Men",
+          "team_rating": 80,
+          "num_players": 17,
+          "num_int_players": 3,
+		  "jersey_colors": "[(255,255,0),(255,255,0),(255,255,0),(0,0,0),(0,0,0)]"
+		},
+        {
+          "name": "WP35 U19",
+          "team_type": "Men U19",
+          "team_rating": 80,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,255,0),(255,255,0),(255,255,0),(0,0,0),(50,80,30)]"
+        }
+      ]
+    },
+    {
+      "name": "Tornio PV",
+      "country": "Finland",
+      "home_arena": "Gränsvallen",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Tornio PV",
+          "team_type": "Men",
+          "team_rating": 80,
+          "num_players": 17,
+          "num_int_players": 3,
+		  "jersey_colors": "[(0,255,0),(0,255,0),(0,255,0),(0,0,0),(0,0,0)]"
+		},
+        {
+          "name": "Tornio PV U19",
+          "team_type": "Men U19",
+          "team_rating": 80,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(0,255,0),(0,255,0),(0,255,0),(0,0,0),(0,0,0)]"
+        }
+      ]
     }
   ]
 }

@@ -30,5 +30,21 @@
     			  		[
     			  				"Drammen bandy", "Høvik IF", "Mjøndalen IF", "Ready bandy", "Røa IL", "Solberg SK", "Stabæk bandy", "Sarpsborg BK", "Ullern IF", "Ullevål IL"
     			  		]
+    			},
+    			{
+    			  	"name": "Bandyliiga",
+    			  	"country": "Finland",
+    			  	"level": 1,
+    			  	"num_rounds": 18,
+    			  	"win_points": 2,
+    			  	"draw_points": 1,
+    			  	"startmonth": 10,
+    			  	"startday": 20,
+    			  	"endmonth": 2,
+    			  	"endday": 10,
+    			  	"teams":
+    			  		[
+    			  				"Akilles Porvoo", "Botnia 69", "IFK Helsinki", "JPS", "Kampparit", "Narukerä", "OLS", "Veiterä", "WP35", "Tornio PV"
+    			  		]
     			}
 ]

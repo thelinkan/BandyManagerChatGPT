@@ -29,6 +29,8 @@ class Game:
         # Set name and age
         self.manager.set_name(manager_name)
         self.manager.set_age(manager_age)
+        player_origins_male = {}
+        player_origins_female = {}
         with open('data/countries.json', encoding='utf-8') as f:
             countries_data = json.load(f)
         for country_data in countries_data:
@@ -39,6 +41,10 @@ class Game:
             male_proficiency = country_data['male_proficiency']
             female_proficiency = country_data['female_proficiency']
             self.countries[name] = Country(name, flag_path, bandy_knowledge, population, male_proficiency, female_proficiency)
+            if 'player_origins_male' in country_data:
+                player_origins_male[name] = country_data['player_origins_male']
+            if 'player_origins_female' in country_data:
+                player_origins_female[name] = country_data['player_origins_female']
         with open('data/clubs.json', encoding='utf-8') as f:
             data = json.load(f)
         self.clubs = self.read_clubs_from_json(data)
@@ -56,17 +62,41 @@ class Game:
                     age_type="senior"
                 player_first_name = ""
                 player_familyname = ""
-                antspelare = team.num_players
+                num_players_national = team.num_players
+                num_players_international = team.num_int_players
                 print(f"- {team.name} ({team.team_type})")
-                for i in range(antspelare):
-                    for key, value in self.countries.items():
-                        if(key == club.country):
-                            if(gender == "male"):
-                                player_first_name = value.random_name("male")
-                            else:
-                                player_first_name = value.random_name("female")
-                            player_last_name = value.random_name("family")
-                            nationality = club.country
+                for key, value in self.countries.items():
+                    if(key == club.country):
+                        team_country = value
+                        team_country_name = key
+
+                for i in range(num_players_national+num_players_international):
+                    #for key, value in self.countries.items():
+                    #    if(key == club.country):
+                    if i < num_players_national:
+                        if(gender == "male"):
+                            player_first_name = team_country.random_name("male")
+                        else:
+                            player_first_name = team_country.random_name("female")
+                        player_last_name = team_country.random_name("family")
+                        nationality = team_country_name
+                    else:
+                        if(gender == "male"):
+                            player_origins_team = player_origins_male[team_country_name]
+                            player_origin = random.choices(player_origins_team, weights=[d["percentage"] for d in player_origins_team])[0]["country"]
+                        else:
+                            player_origins_team = player_origins_female[team_country_name]
+                            player_origin = random.choices(player_origins_team, weights=[d["percentage"] for d in player_origins_team])[0]["country"]
+                        for key, value in self.countries.items():
+                            if(key == player_origin):                        
+                                player_country = value  
+                                player_country_name = key
+                                if(gender == "male"):
+                                    player_first_name = player_country.random_name("male")
+                                else:
+                                    player_first_name = player_country.random_name("female")
+                                player_last_name = player_country.random_name("family")
+                                nationality = player_country_name
                     if(age_type == "youth"):
                         age = random.randint(18,19)
                     else:
