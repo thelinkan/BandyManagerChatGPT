@@ -23,6 +23,7 @@ class Game:
         self.player_manager = PlayerManager()
         self.teams = {} # Add a dictionary to store teams
         self.match_manager = MatchManager()
+        self.inspected_team = None
 
     def new_game(self,manager_name,manager_age):
         # create new game
