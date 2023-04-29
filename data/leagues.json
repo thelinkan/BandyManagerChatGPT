@@ -16,6 +16,22 @@
     			  		]
     			},
     			{
+    			  	"name": "Damelit",
+    			  	"country": "Sweden",
+    			  	"level": 1,
+    			  	"num_rounds": 18,
+    			  	"win_points": 2,
+    			  	"draw_points": 1,
+    			  	"startmonth": 11,
+    			  	"startday": 10,
+    			  	"endmonth": 2,
+    			  	"endday": 10,
+    			  	"teams":
+    			  		[
+    			  				"AIK (W)", "KS Bandy (W)", "Mölndal Bandy (W)", "IFK Rättvik (W)", "Sandvikens AIK (W)", "Skirö AIK (W)", "Sunvära SK (W)", "Uppsala Bois (W)", "Villa Lidköping BK (W)" ,"Västerås SK (W)"
+    			  		]
+    			},
+    			{
     			  	"name": "Eliteserien",
     			  	"country": "Norway",
     			  	"level": 1,

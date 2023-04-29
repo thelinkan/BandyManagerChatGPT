@@ -57,7 +57,7 @@ def draw_newgame_menu():
     new_game_ok_button.draw(screen)
     pygame.display.flip()
 
-def draw_newgame2_menu(game,selected_country_index,selected_team_index):
+def draw_newgame2_menu(game,selected_country_index,selected_league_index,selected_team_index):
     mouse_pos = pygame.mouse.get_pos()
     # Draw screen
     screen.fill(WHITE)
@@ -72,6 +72,7 @@ def draw_newgame2_menu(game,selected_country_index,selected_team_index):
     y = 190
     country_rects = []
     country_num=0
+    league_rects = []
     team_rects = []
     selected_team = ""
     for country in countries:
@@ -98,13 +99,37 @@ def draw_newgame2_menu(game,selected_country_index,selected_team_index):
         selected_country = countries[selected_country_index].return_name()
         text_choose2 = medium_font.render("Choose league",False, BLACK)
         screen.blit(text_choose2, (340, 155))
+        leagues = game.return_leagues_in_country(selected_country)
+        y = 190
+        league_num=0
+        for league in leagues:
+            if league_num == selected_league_index:
+                league_name = league.name
+            text = small_font.render(league.name,False, BLACK)
+            combined_surf = pygame.Surface((130,text.get_height()))
+            if league_num == selected_league_index:
+                combined_surf.fill((200,200,200))
+            else:
+                combined_surf.fill(WHITE)
+            combined_surf.blit(text, (0, 0))
+            rect = combined_surf.get_rect()
+            rect.topleft = (340, y)
+            if rect.collidepoint(mouse_pos):
+                combined_surf.fill(GRAY)
+                combined_surf.blit(text, (0, 0))
+            screen.blit(combined_surf, rect)
+            league_rects.append(rect)
+            y += text.get_height() + 10
+            league_num += 1
+
         #text_test = medium_font.render(str(selected_country_index)+" "+countries[selected_country_index].return_name(),False, BLACK)
         #screen.blit(text_test, (340, 185))
 
-    if(selected_country_index>=0):
+    if(selected_league_index>=0):
         text_choose2 = medium_font.render("Choose team",False, BLACK)
         screen.blit(text_choose2, (640, 155))
-        teams = game.return_teamlist(selected_country, 'Men')
+        teams = game.return_teams_for_league(league_name)
+        #teams = game.return_teamlist(selected_country, 'Men')
         y = 190
         team_num=0
         for team in teams:
@@ -139,5 +164,5 @@ def draw_newgame2_menu(game,selected_country_index,selected_team_index):
         #print(selected_team)
         pass
     pygame.display.flip()
-    return country_rects, team_rects, selected_team
+    return country_rects, league_rects, team_rects, selected_team
 

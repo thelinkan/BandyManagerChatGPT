@@ -270,14 +270,6 @@ class Game:
             if country.name == country_name:
                 return country.return_flag()
 
-    def return_league_by_name(self, league_name):
-        #print(self.leagues)
-        for league in self.leagues:
-            #print(f"league: {league} {league.name}")
-            if league.name == league_name:
-                return league
-        return None
-
     def read_clubs_from_json(self,data):
 
         clubs = []
@@ -317,6 +309,20 @@ class Game:
 
         return clubs
 
+    def return_league_by_name(self, league_name):
+        #print(self.leagues)
+        for league in self.leagues:
+            #print(f"league: {league} {league.name}")
+            if league.name == league_name:
+                return league
+        return None
+
+    def return_leagues_in_country(self, country_name):
+        """
+        Returns a list of all leagues in the specified country.
+        """
+        return [league for league in self.leagues if league.country == country_name]
+
     def return_teamlist(self, country, teamtype):
         team_list = []
         for club in self.clubs:
@@ -324,6 +330,28 @@ class Game:
                 teams = club.get_teams_by_type(teamtype)
                 team_list.extend(teams)
         return team_list
+
+    def return_teams_for_league(self, league_name):
+        """
+        Returns a list of all teams that participate in the specified league.
+        """
+        teams = []
+        for league in self.leagues:
+            if league.name == league_name:
+                teams = league.teams
+                break
+        return teams
+
+    def get_leagues_for_team(self, team_name):
+        """
+        Returns a list of all leagues in which the specified team participates.
+        """
+        leagues = []
+        for league in self.leagues:
+            if any(team.name == team_name for team in league.teams):
+                leagues.append(league)
+        return leagues
+
 
     def get_leagues(self):
         return self.leagues
@@ -374,22 +402,6 @@ class Game:
     def schedule_match(self, match):
         # logic to schedule match goes here
         self.match_manager.add_match(match)
-
-    def get_leagues_in_country(self, country_name):
-        """
-        Returns a list of all leagues in the specified country.
-        """
-        return [league for league in self.leagues if league.country == country_name]
-
-    def get_leagues_for_team(self, team_name):
-        """
-        Returns a list of all leagues in which the specified team participates.
-        """
-        leagues = []
-        for league in self.leagues:
-            if any(team.name == team_name for team in league.teams):
-                leagues.append(league)
-        return leagues
 
     def quit_game(self):
         # quit game

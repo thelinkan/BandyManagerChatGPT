@@ -22,6 +22,7 @@ game_state = "start_menu"
 pygame.display.set_caption("Bandymanager")
 
 selected_country_index=-1
+selected_league_index = -1
 selected_team_index=-1
 selected_player_index=-1
 isMatchesPlayed = False
@@ -65,7 +66,12 @@ while running:
                 for i, rect in enumerate(country_rects):
                     if rect.collidepoint(event.pos):
                         selected_country_index = i
+                        selected_league_index = -1
                         selected_team_index = -1
+                        break
+                for i, rect in enumerate(league_rects):
+                    if rect.collidepoint(event.pos):
+                        selected_league_index = i
                         break
                 for i, rect in enumerate(team_rects):
                     if rect.collidepoint(event.pos):
@@ -153,7 +159,7 @@ while running:
     if game_state == "new_game":
         draw_newgame_menu()
     if game_state == "new_game_2":
-        country_rects,team_rects,selected_team=draw_newgame2_menu(game,selected_country_index,selected_team_index)
+        country_rects,league_rects, team_rects,selected_team=draw_newgame2_menu(game,selected_country_index,selected_league_index,selected_team_index)
     if game_state == "game_mainscreen":
         rectslist_1, rectslist_2, start_page = draw_game_mainscreen(game, selected_player_index,isMatchesPlayed, start_page)
     if game_state == "view_match":

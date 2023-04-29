@@ -379,7 +379,7 @@
     {
       "name": "AIK",
       "country": "Sweden",
-      "home_arena": "Hovet",
+      "home_arena": "Gubbängens bandyhall",
       "club_rating": 80,
       "teams": [
         {
@@ -397,6 +397,190 @@
           "num_players": 16,
           "num_int_players": 0,
 		  "jersey_colors": "[(70,70,70),(0,0,0),(70,70,70),(120,120,120),(211,191,2)]"
+        }
+      ]
+    },
+    {
+      "name": "KS Bandy",
+      "country": "Sweden",
+      "home_arena": "Skarpe Nord",
+      "club_rating": 80,
+      "teams": [
+        {
+          "name": "KS Bandy (W)",
+          "team_type": "Women",
+          "team_rating": 75,
+          "num_players": 17,
+          "num_int_players": 2,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "KS Bandy F19",
+          "team_type": "Women U19",
+          "team_rating": 65,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        }
+      ]
+    },
+    {
+      "name": "Mölndal Bandy",
+      "country": "Sweden",
+      "home_arena": "Åby Isstadion",
+      "club_rating": 95,
+      "teams": [
+        {
+          "name": "Mölndal Bandy",
+          "team_type": "Men",
+          "team_rating": 60,
+          "num_players": 19,
+          "num_int_players": 2,
+		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Mölndal Bandy U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Mölndal Bandy (W)",
+          "team_type": "Women",
+          "team_rating": 85,
+          "num_players": 16,
+          "num_int_players": 3,
+		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Mölndal Bandy F19",
+          "team_type": "Women U19",
+          "team_rating": 85,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+        }
+      ]
+    },
+    {
+      "name": "Skirö AIK",
+      "country": "Sweden",
+      "home_arena": "Hydro Arena",
+      "club_rating": 95,
+      "teams": [
+        {
+          "name": "Skirö AIK",
+          "team_type": "Men",
+          "team_rating": 90,
+          "num_players": 19,
+          "num_int_players": 3,
+		  "jersey_colors": "[(56,78,166),(226,200,30),(56,78,166),(90,90,90),(56,78,166)]"
+        },
+        {
+          "name": "Skirö AIK U19",
+          "team_type": "Men U19",
+          "team_rating": 70,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(206,170,30),(206,170,30),(206,170,30),(90,90,90),(56,78,166)]"
+        },
+        {
+          "name": "Skirö AIK (W)",
+          "team_type": "Women",
+          "team_rating": 75,
+          "num_players": 19,
+          "num_int_players": 3,
+		  "jersey_colors": "[(206,170,30),(206,170,30),(206,170,30),(90,90,90),(56,78,166)]"
+        },
+        {
+          "name": "Skirö AIK F19",
+          "team_type": "Women U19",
+          "team_rating": 65,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(206,170,30),(206,170,30),(206,170,30),(90,90,90),(56,78,166)]"
+        }
+      ]
+    },
+    {
+      "name": "Sunvära SK",
+      "country": "Sweden",
+      "home_arena": "Hydro Arena",
+      "club_rating": 95,
+      "teams": [
+        {
+          "name": "Sunvära SK",
+          "team_type": "Men",
+          "team_rating": 50,
+          "num_players": 19,
+          "num_int_players": 3,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Sunvära SK U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Sunvära SK (W)",
+          "team_type": "Women",
+          "team_rating": 85,
+          "num_players": 19,
+          "num_int_players": 3,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Sunvära SK F19",
+          "team_type": "Women U19",
+          "team_rating": 75,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        }
+      ]
+    },
+    {
+      "name": "Uppsala Bois",
+      "country": "Sweden",
+      "home_arena": "Recoverhallen",
+      "club_rating": 55,
+      "teams": [
+        {
+          "name": "Uppsala Bois",
+          "team_type": "Men",
+          "team_rating": 50,
+          "num_players": 19,
+          "num_int_players": 3,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Uppsala Bois U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Uppsala Bois (W)",
+          "team_type": "Women",
+          "team_rating": 85,
+          "num_players": 19,
+          "num_int_players": 3,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+        },
+        {
+          "name": "Uppsala Bois F19",
+          "team_type": "Women U19",
+          "team_rating": 75,
+          "num_players": 16,
+          "num_int_players": 0,
+		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
         }
       ]
     },
