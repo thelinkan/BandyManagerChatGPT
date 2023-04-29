@@ -49,7 +49,7 @@ while running:
                     game.load_game('')
                     #print("Load game click");
                     game_state = "game_mainscreen"
-                    game_page = "home"
+                    game.game_page = "home"
                 if credits_button.rect.collidepoint(event.pos):
                     game_state="show_credits"
                     print("Credits click");
@@ -75,21 +75,31 @@ while running:
                     if choose_team_button.rect.collidepoint(event.pos):
                         game.set_manager_team(selected_team)
                         game_state = "game_mainscreen"
-                        game_page = "home"
+                        game.game_page = "home"
                         #print("klick "+ selected_team)
                         game.save_game('c:\temp')
                         break
             elif event.button == 1 and game_state == "game_mainscreen":
                 if home_button.rect.collidepoint(event.pos):
-                    game_page = "home"
-                if(game_page == "player_list" or game_page == "player_list_u19"):
+                    game.game_page = "home"
+                if(game.game_page == "player_list" or game.game_page == "player_list_u19"):
                     for i, rect in enumerate(rectslist_1):
                         if rect.collidepoint(event.pos):
                             selected_player_index = i
                             break
-                if(game_page == "tactics"):
+                if(game.game_page == "competition"):
+                    playerlist_offset = (140,110)
+                    event_pos = event.pos
+                    event_pos_on_list = event_pos[0] - playerlist_offset[0], event_pos[1] - playerlist_offset[1]
+                    for i, rect in enumerate(rectslist_1):
+                        if rect.collidepoint(event_pos_on_list):
+                            game.selected_team_index = i
+                            print(game.selected_team_index)
+                            break
+                    
+                if(game.game_page == "tactics"):
                     selected_player_index = gameloop_tactics(game, rectslist_1, rectslist_2, selected_player_index, event.pos)
-                if (game_page == "schedule"):
+                if (game.game_page == "schedule"):
                     for i, rect in enumerate(rectslist_1):
                         if rect.collidepoint(event.pos) and i == 0:
                             start_page = start_page - 1
@@ -98,22 +108,29 @@ while running:
                             start_page = start_page + 1
                             break                    
                 if senior_squad_button.rect.collidepoint(event.pos):
+                    game.selected_team_index=-1
                     selected_player_index=-1
-                    game_page = "player_list"
+                    game.inspected_team = None
+                    game.game_page = "player_list"
                 if tactics_button.rect.collidepoint(event.pos):
                     selected_player_index=-1
-                    game_page = "tactics"
+                    game.selected_team_index=-1
+                    game.inspected_team = None
+                    game.game_page = "tactics"
                 if schedule_button.rect.collidepoint(event.pos):
                     start_page = 1
-                    game_page = "schedule"
+                    game.game_page = "schedule"
                 if competition_button.rect.collidepoint(event.pos):
+                    game.selected_team_index=-1
+                    game.inspected_team = None
                     #print(game_page)
-                    game_page = "competition"
+                    game.game_page = "competition"
                 if u19_squad_button.rect.collidepoint(event.pos):
                     selected_player_index=-1
-                    game_page = "player_list_u19"
+                    game.inspected_team = None
+                    game.game_page = "player_list_u19"
                 if forward_time_button.rect.collidepoint(event.pos):
-                    game_page, isMatchesPlayed, match_viewed, match_to_view = game.tick(game_page)
+                    isMatchesPlayed, match_viewed, match_to_view = game.tick()
                     if match_viewed:
                         game_state = "view_match"
                         
@@ -138,7 +155,7 @@ while running:
     if game_state == "new_game_2":
         country_rects,team_rects,selected_team=draw_newgame2_menu(game,selected_country_index,selected_team_index)
     if game_state == "game_mainscreen":
-        rectslist_1, rectslist_2, start_page = draw_game_mainscreen(game,game_page, selected_player_index,isMatchesPlayed, start_page)
+        rectslist_1, rectslist_2, start_page = draw_game_mainscreen(game, selected_player_index,isMatchesPlayed, start_page)
     if game_state == "view_match":
         draw_view_match(game,match_to_view)
         game_state = "game_mainscreen"

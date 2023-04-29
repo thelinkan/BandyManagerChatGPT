@@ -18,6 +18,7 @@ x_offset = 150
 def draw_playerlist(game,team, selected_player_index):
     #print(selected_player_index)
     # Draw player table
+    
     header_rect = pygame.Rect(10+x_offset, 100, 600, 30)
     selected_player_uuid = None
 
@@ -416,6 +417,8 @@ def draw_schedule(game, selected_league, highlighted_team, start_page):
 
 def draw_league_table(game, selected_league, highlighted_team):
     league = game.return_league_by_name(selected_league)
+    #if game.selected_team_index is not None:
+    #    print(f"Selected team {game.selected_team_index}")
 
     table_width = 600
 
@@ -475,6 +478,9 @@ def draw_league_table(game, selected_league, highlighted_team):
 
     player_font = pygame.font.Font(None, FONTSIZE_SMALL)
     for i, team in enumerate(sorted_table):
+        if i == game.selected_team_index:
+            game.game_page="player_list"
+            game.inspected_team=team[0]
         if i % 2 == 0:
             row_color = TABLE_ROW_EVEN_COLOR
         else:
@@ -666,7 +672,7 @@ def draw_tactics_playerlist(game,team, selected_player_index, playerlist_offset)
     return playerlist_surface,player_rects,hover_player_uuid, selected_player_uuid
 
 
-def draw_game_mainscreen(game, game_page, selected_player_index, isMatchesPlayed, start_page):
+def draw_game_mainscreen(game, selected_player_index, isMatchesPlayed, start_page):
     # Draw screen
     screen.fill(WHITE)
     title = font.render("Bandymanager - Main screen", True, BLACK)
@@ -709,18 +715,22 @@ def draw_game_mainscreen(game, game_page, selected_player_index, isMatchesPlayed
 
     leagues = game.get_leagues_for_team(manager_team_name)
 
-    if (game_page == "home"):
+    if (game.game_page == "home"):
         draw_home(game,manager_team_name,isMatchesPlayed)
-    if (game_page == "player_list"):
-        rectlist_1 = draw_playerlist(game,manager_team, selected_player_index)
-    if (game_page == "tactics"):
+    if (game.game_page == "player_list"):
+        if game.inspected_team is not None:
+            team_viewed = game.inspected_team
+        else:
+            team_viewed = manager_team
+        rectlist_1 = draw_playerlist(game,team_viewed, selected_player_index)
+    if (game.game_page == "tactics"):
         rectlist_1, rectlist_2 = draw_tactics(game,manager_team, selected_player_index)
-    if (game_page == "schedule"):
+    if (game.game_page == "schedule"):
         rectlist_1, start_page = draw_schedule(game,leagues[0].name, manager_team, start_page)
-    if (game_page == "competition"):
+    if (game.game_page == "competition"):
         league_table_surface, rectlist_1 = draw_league_table(game, leagues[0].name, manager_team)
         screen.blit(league_table_surface,(140,110))
-    if (game_page == "player_list_u19"):
+    if (game.game_page == "player_list_u19"):
         rectlist_1 = draw_playerlist(game,manager_u19team, selected_player_index)
     # Update display
     pygame.display.flip()

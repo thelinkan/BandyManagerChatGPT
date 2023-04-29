@@ -23,7 +23,10 @@ class Game:
         self.player_manager = PlayerManager()
         self.teams = {} # Add a dictionary to store teams
         self.match_manager = MatchManager()
+        self.selected_team_index = -1
         self.inspected_team = None
+        
+        self.game_page=None
 
     def new_game(self,manager_name,manager_age):
         # create new game
@@ -325,7 +328,7 @@ class Game:
     def get_leagues(self):
         return self.leagues
 
-    def tick(self, game_page):
+    def tick(self):
         matches_today = self.match_manager.get_matches_by_date(self.year, self.month, self.day)
         match_viewed = False
         match_to_view = None
@@ -364,9 +367,9 @@ class Game:
             self.year += 1
 
         if isMatchesPlayed == True:
-            game_page = "home"
+            self.game_page = "home"
 
-        return game_page, isMatchesPlayed, match_viewed, match_to_view
+        return isMatchesPlayed, match_viewed, match_to_view
 
     def schedule_match(self, match):
         # logic to schedule match goes here
