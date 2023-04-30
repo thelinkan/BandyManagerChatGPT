@@ -688,7 +688,11 @@ def draw_game_mainscreen(game, selected_player_index, isMatchesPlayed, start_pag
     manager_club = get_club_from_team(game, manager_team)
     manager_club_name = manager_club.name
 
-    manager_u19teams = manager_club.get_teams_by_type("Men U19")
+    if(manager_team.team_type == "Men"):
+        manager_u19teams = manager_club.get_teams_by_type("Men U19")
+    else:
+        manager_u19teams = manager_club.get_teams_by_type("Women U19")
+    
     manager_u19team = manager_u19teams[0]
     toprow_font = pygame.font.Font(None, FONTSIZE_SMALL)
     text = toprow_font.render(f"Manager: {manager_name}    Club: {manager_club_name}", True, BLACK)

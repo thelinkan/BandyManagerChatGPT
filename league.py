@@ -24,6 +24,8 @@ class League:
         self.table = {team: {'played': 0, 'won': 0, 'drawn': 0, 'lost': 0, 'goals_for': 0, 'goals_against': 0, 'points': 0} for team in teams}
         self.match_manager = match_manager
         
+        self.num_teams_to_playoff = 8
+        
         if self.start_month > self.end_month:
             self.end_year = self.start_year + 1
 
