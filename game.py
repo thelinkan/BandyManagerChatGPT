@@ -135,7 +135,7 @@ class Game:
                 if not team:
                     raise ValueError(f"No team found with name '{team_name}'")
                 league_teams.append(team)
-            league = League(data["name"],data["country"],data["level"],league_teams,data["num_rounds"], match_manager=self.match_manager)
+            league = League(data["name"],data["country"],data["level"],league_teams,data["num_rounds"], start_month=data["startmonth"], start_day=data["startday"], end_month=data["endmonth"], end_day=data["endday"], match_manager=self.match_manager)
             league.generate_schedule()
             self.leagues.append(league)
             #league.print_table()
@@ -265,49 +265,18 @@ class Game:
         countries_list.sort(key=lambda country: country.name)
         return countries_list
 
+    def return_countries_with_leagues(self):
+        countries_with_leagues = []
+        for league in self.leagues:
+            country = self.countries[league.country]
+            if country not in countries_with_leagues:
+                countries_with_leagues.append(country)
+        return countries_with_leagues
+
     def return_countryflag(self,country_name):
          for country in self.countries.values():
             if country.name == country_name:
                 return country.return_flag()
-
-    def read_clubs_from_json(self,data):
-
-        clubs = []
-
-        for club_data in data['clubs']:
-            name = club_data['name']
-            country = club_data['country']
-            rating = club_data['club_rating']
-            home_arena = club_data['home_arena']
-            club = Club(name, country, rating, home_arena)
-
-            for team_data in club_data['teams']:
-                name = team_data['name']
-                team_type = team_data['team_type']
-                team_rating = team_data['team_rating']
-                num_players = team_data['num_players']
-                num_int_players = team_data['num_int_players']
-                jersey_colors = team_data['jersey_colors']
-                team = Team(name, team_type, team_rating, num_players, num_int_players, jersey_colors)
-                club.add_team(team)
-                self.teams[name] = team # Add team to the dictionary
-                # Check if there are players in the team_data dictionary
-                if 'players' in team_data:
-                    for team_player in team_data['players']:
-                        player_uuid = team_player['uuid']
-                        jersey_number = team_player['jersey_number']
-                        # Get the Player object with the corresponding UUID
-                        player = self.player_manager.find_player_by_uuid(player_uuid)
-                        # Add the Player object to the team's squad
-                        team.add_player(player)
-                        team.change_player_jersey_number(player.uuid,jersey_number)
-                if 'actual_positions' in team_data:
-                    for actual_position in team_data['actual_positions']:
-                        team.assign_player_to_position(actual_position['actual_position'],actual_position['player_uuid'])
-
-            clubs.append(club)
-
-        return clubs
 
     def return_league_by_name(self, league_name):
         #print(self.leagues)
@@ -355,6 +324,45 @@ class Game:
 
     def get_leagues(self):
         return self.leagues
+
+    def read_clubs_from_json(self,data):
+
+        clubs = []
+
+        for club_data in data['clubs']:
+            name = club_data['name']
+            country = club_data['country']
+            rating = club_data['club_rating']
+            home_arena = club_data['home_arena']
+            club = Club(name, country, rating, home_arena)
+
+            for team_data in club_data['teams']:
+                name = team_data['name']
+                team_type = team_data['team_type']
+                team_rating = team_data['team_rating']
+                num_players = team_data['num_players']
+                num_int_players = team_data['num_int_players']
+                jersey_colors = team_data['jersey_colors']
+                team = Team(name, team_type, team_rating, num_players, num_int_players, jersey_colors)
+                club.add_team(team)
+                self.teams[name] = team # Add team to the dictionary
+                # Check if there are players in the team_data dictionary
+                if 'players' in team_data:
+                    for team_player in team_data['players']:
+                        player_uuid = team_player['uuid']
+                        jersey_number = team_player['jersey_number']
+                        # Get the Player object with the corresponding UUID
+                        player = self.player_manager.find_player_by_uuid(player_uuid)
+                        # Add the Player object to the team's squad
+                        team.add_player(player)
+                        team.change_player_jersey_number(player.uuid,jersey_number)
+                if 'actual_positions' in team_data:
+                    for actual_position in team_data['actual_positions']:
+                        team.assign_player_to_position(actual_position['actual_position'],actual_position['player_uuid'])
+
+            clubs.append(club)
+
+        return clubs
 
     def tick(self):
         matches_today = self.match_manager.get_matches_by_date(self.year, self.month, self.day)

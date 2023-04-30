@@ -3,6 +3,7 @@ from team import Team
 from matchcode.match import Match
 from country import Country
 from miscfunctions import return_schedule, adddays
+from datecode.date_functions import get_weekdays, get_evenly_spaced_dates, sort_by_date
 
 class League:
     def __init__(self, name, country, level,teams , num_rounds, win_points=2, draw_points=1, start_year = 2023, start_month=11, start_day=1, end_month=2, end_day=15, match_manager=None):
@@ -22,19 +23,44 @@ class League:
         self.matches = []
         self.table = {team: {'played': 0, 'won': 0, 'drawn': 0, 'lost': 0, 'goals_for': 0, 'goals_against': 0, 'points': 0} for team in teams}
         self.match_manager = match_manager
+        
+        if self.start_month > self.end_month:
+            self.end_year = self.start_year + 1
 
     def generate_schedule(self):
         schedule = return_schedule(self.num_teams,self.num_rounds)
-        r_year = self.start_year
-        r_month = self.start_month
-        r_day = self.start_day
+        #r_year = self.start_year
+        #r_month = self.start_month
+        #r_day = self.start_day
+        
+        sundays = get_weekdays((self.start_year, self.start_month, self.start_day), (self.end_year, self.end_month, self.end_day),"Sunday")
+        fridays = get_weekdays((self.start_year, self.start_month, self.start_day), (self.end_year, self.end_month, self.end_day),"Friday")
+        wednesdays = get_weekdays((self.start_year, self.start_month, self.start_day), (self.end_year, self.end_month, self.end_day),"Wednesday")
+        if self.num_rounds > len(sundays):
+            rounds_left = self.num_rounds - len(sundays)
+            fridays_to_play = get_evenly_spaced_dates(fridays, rounds_left)
+            print(fridays_to_play)
+            print(sundays)
+            sorted_dates = sorted(sundays + fridays_to_play, key=lambda date: sort_by_date(date))
+            
+        #if rounds_left > len(fridays):
+        #    print(rounds_left, len(fridays))
+        #print (fridays)
+        #print (f"Round: {self.num_rounds}, Sundays: {len(sundays)}")
+        #print(sundays)
+        i = 0
         for round in schedule:
+            round_date = sorted_dates[i]
+            r_year = round_date[0]
+            r_month = round_date[1]
+            r_day = round_date[2]
             for match in round:
                 match = Match(self.teams[match[0]],self.teams[match[1]],r_year,r_month,r_day)
                 self.matches.append(match)
                 if self.match_manager is not None:
                     self.match_manager.add_match(match,self)
-            r_year, r_month, r_day = adddays(r_year, r_month, r_day, 7)
+            #r_year, r_month, r_day = adddays(r_year, r_month, r_day, 7)
+            i += 1
 
     def load_schedule(self,matches,teams):
         #print(teams['Sandvikens AIK'])

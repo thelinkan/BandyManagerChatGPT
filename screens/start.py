@@ -68,7 +68,7 @@ def draw_newgame2_menu(game,selected_country_index,selected_league_index,selecte
     screen.blit(text_name, (40, 120))
     text_choose = medium_font.render("Choose country",False, BLACK)
     screen.blit(text_choose, (40, 155))
-    countries = game.return_countrylist()
+    countries = game.return_countries_with_leagues()
     y = 190
     country_rects = []
     country_num=0
