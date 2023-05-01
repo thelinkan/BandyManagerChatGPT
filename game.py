@@ -6,6 +6,7 @@ from country import Country
 from club import Club
 from team import Team
 from league import League
+from playoff import Playoff
 from person import Player
 from person import PlayerManager
 from uuidencoder import UUIDEncoder
@@ -19,6 +20,7 @@ class Game:
         self.manager = Manager()
         self.countries = {}
         self.leagues = []
+        self.playoffs = []
         self.clubs = []
         self.player_manager = PlayerManager()
         self.teams = {} # Add a dictionary to store teams
@@ -123,6 +125,8 @@ class Game:
                 #team.print_players();
         with open("data/leagues.json", encoding='utf-8') as f:
             league_data = json.load(f)
+        with open("data/playoffs.json", encoding='utf-8') as f:
+            playoff_data = json.load(f)
         for data in league_data:
             team_names = data.pop("teams")
             #print("league data")
@@ -137,9 +141,24 @@ class Game:
                 league_teams.append(team)
             league = League(data["name"],data["country"],data["level"],league_teams,data["num_rounds"], start_month=data["startmonth"], start_day=data["startday"], end_month=data["endmonth"], end_day=data["endday"], match_manager=self.match_manager)
             league.generate_schedule()
+            playoff_name = data.pop("playoff_name", None)
+            if playoff_name:
+                playoff = None
+                for p_data in playoff_data:
+                    if p_data["name"] == playoff_name:
+                        playoff = Playoff(p_data["name"], p_data["country"], p_data["quarter_final_rounds"], p_data["semi_final_rounds"], p_data["final_rounds"],league, match_manager=self.match_manager)
+                        self.playoffs.append(playoff)
+                        print(data)
+                        print(league.num_teams_to_playoff)
+                        print(data["num_teams_to_playoff"])
+                        league.num_teams_to_playoff=data["num_teams_to_playoff"]
+                        #print(self.playoffs)
+                        break
+                if playoff is None:
+                    raise ValueError(f"No playoff found with name '{playoff_name}'")
             self.leagues.append(league)
             #league.print_table()
-            matches = league.get_matches_by_team(team)
+            #matches = league.get_matches_by_team(team)
             #for match in matches:
             #    print(f"{match.year}-{match.month}-{match.day}")
 
@@ -179,6 +198,8 @@ class Game:
             for team in club.teams:
                 print(f"- {team.name} ({team.team_type})")
 
+        playoff_data =game_data['playoffs_data']
+        
         for league_data in game_data['leagues_data']:
             #print(league_data['name'])
             team_names = league_data.pop("teams")
@@ -194,6 +215,22 @@ class Game:
             league_matches = league_data['matches']
             league.load_schedule(league_matches,self.teams)
             league.calculate_table()
+            playoff_name = league_data.pop("playoff_name", None)
+            if playoff_name:
+                playoff = None
+                for p_data in playoff_data:
+                    if p_data["name"] == playoff_name:
+                        playoff = Playoff(p_data["name"], p_data["country"], p_data["quarter_final_rounds"], p_data["semi_final_rounds"], p_data["final_rounds"],league, match_manager=self.match_manager)
+                        self.playoffs.append(playoff)
+                        print(league_data)
+                        print(league.num_teams_to_playoff)
+                        print(league_data["num_teams_to_playoff"])
+                        league.num_teams_to_playoff=league_data["num_teams_to_playoff"]
+                        #print(self.playoffs)
+                        break
+                if playoff is None:
+                    raise ValueError(f"No playoff found with name '{playoff_name}'")
+
             #print(league_matches)
             self.leagues.append(league)
         #for key, value in self.countries.items():
@@ -209,6 +246,7 @@ class Game:
         players = []
         players_data = []
         leagues_data = []
+        playoffs_data = []
 
         for key, value in self.countries.items():
             countries_data.append(value.to_dict())
@@ -229,6 +267,9 @@ class Game:
         for league in self.leagues:
             leagues_data.append(league.to_dict())
 
+        for playoff in self.playoffs:
+            playoffs_data.append(playoff.to_dict())
+
         game_data = {
                 'year': self.year,
                 'month': self.month,
@@ -243,7 +284,8 @@ class Game:
                     'clubs': clubs_data
                 },
                 'players_data': players_data,
-                'leagues_data': leagues_data
+                'leagues_data': leagues_data,
+                'playoffs_data': playoffs_data
             }
         if not os.path.exists('savedgames'):
             os.makedirs('savedgames')
@@ -379,6 +421,14 @@ class Game:
             leagues = self.get_leagues()
             for league in leagues:
                 league.calculate_table()
+                print(f"Tick: {league.name} - is_completed: {league.is_completed()}")
+                if(league.playoff_for_league is not None and league.is_completed()):
+                    if(not league.playoff_for_league.is_started):
+                        print(f"Time for playoff - {league.playoff_for_league.name}")
+                        league.print_table()
+                        for team in league.get_playoff_teams():
+                            print(team.name)
+                    league.playoff_for_league.create_quarter_finals_schedule(league.get_playoff_teams())    
                 #league.print_table()
             isMatchesPlayed = True
         else:

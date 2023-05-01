@@ -58,6 +58,8 @@ def draw_view_match(game,match_to_view):
             match_to_view.played = True
             for league in game.leagues:
                 league.calculate_table()
+                
+                print(f"View: {league.name} - is_completed: {league.is_completed()}")
 
     #print("Match ended")
     #game.match_manager.play_viewed_match(match_to_view)

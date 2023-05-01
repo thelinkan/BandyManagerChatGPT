@@ -1,0 +1,17 @@
+[
+	{
+		"name": "Slutspel herrar",
+		"country": "Sweden",
+		"quarter_final_rounds": 5,
+		"semi_final_rounds": 5,
+		"final_rounds": 1	
+	},
+	{
+		"name": "Slutspel damer",
+		"country": "Sweden",
+		"quarter_final_rounds": 3,
+		"semi_final_rounds": 3,
+		"final_rounds": 1	
+	}
+	
+]

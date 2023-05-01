@@ -13,7 +13,9 @@
     			  	"teams":
     			  		[
     			  				"Bollnäs GIF", "Brobergs IF", "Edsbyns IF", "Frillesås BK", "Gripen Trollhättan BK", "Hammarby IF", "IFK Motala", "Vetlanda BK", "Villa Lidköping BK" ,"Sandvikens AIK", "IK Sirius BK", "IFK Vänersborg", "IFK Rättvik", "Västerås SK"
-    			  		]
+    			  		],
+					"playoff_name": "Slutspel herrar",
+					"num_teams_to_playoff": 8
     			},
     			{
     			  	"name": "Damelit",
@@ -29,7 +31,9 @@
     			  	"teams":
     			  		[
     			  				"AIK (W)", "KS Bandy (W)", "Mölndal Bandy (W)", "IFK Rättvik (W)", "Sandvikens AIK (W)", "Skirö AIK (W)", "Sunvära SK (W)", "Uppsala Bois (W)", "Villa Lidköping BK (W)" ,"Västerås SK (W)"
-    			  		]
+    			  		],
+					"playoff_name": "Slutspel damer",
+					"num_teams_to_playoff": 8
     			},
     			{
     			  	"name": "Eliteserien",

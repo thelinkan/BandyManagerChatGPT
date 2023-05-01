@@ -23,8 +23,9 @@ class League:
         self.matches = []
         self.table = {team: {'played': 0, 'won': 0, 'drawn': 0, 'lost': 0, 'goals_for': 0, 'goals_against': 0, 'points': 0} for team in teams}
         self.match_manager = match_manager
+        self.playoff_for_league = None
         
-        self.num_teams_to_playoff = 8
+        self.num_teams_to_playoff = 0
         
         if self.start_month > self.end_month:
             self.end_year = self.start_year + 1
@@ -94,6 +95,11 @@ class League:
 
     def to_dict(self):
         #print(self.matches)
+        print(self.playoff_for_league)
+        if self.playoff_for_league is None:
+            playoff_name = None
+        else:
+            playoff_name = self.playoff_for_league.name
         return {
             'name': self.name,
             'country': self.country,
@@ -108,6 +114,8 @@ class League:
             'end_month': self.end_month,
             'end_day': self.end_day,
             'teams': [team.name for team in self.teams],
+            'playoff_name': playoff_name,
+            'num_teams_to_playoff': self.num_teams_to_playoff,
             'matches': [match.to_dict() for match in self.matches],
         }
 
@@ -150,8 +158,22 @@ class League:
         for team, stats in sorted_table:
             print("{:<20} {:<6} {:<6} {:<6} {:<6} {:<6} {:<6} {:<6}".format(team.name, stats['played'], stats['won'], stats['drawn'], stats['lost'], stats['goals_for'], stats['goals_against'], stats['points']))
 
+    def get_playoff_teams(self):
+        # Sort the table by points and goal difference
+        sorted_table = sorted(self.table.items(), key=lambda x: (x[1]['points'], x[1]['goals_for'] - x[1]['goals_against']), reverse=True)
+        
+        # Get the top self.num_teams_to_playoff teams
+        top_teams = [team[0] for team in sorted_table[:self.num_teams_to_playoff]]
+        
+        return top_teams
+
     def print_schedule(self):
         for i, round in enumerate(self.rounds):
             print(f"Round {i + 1}:")
             for game in round:
                 print(f"{game.home_team} vs. {game.away_team}")
+                
+    def is_completed(self):
+        return all(match.played for match in self.matches)
+        
+        
