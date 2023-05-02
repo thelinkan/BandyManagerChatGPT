@@ -430,6 +430,8 @@ class Game:
                             print(team.name)
                         league.playoff_for_league.create_quarter_finals_schedule(league.get_playoff_teams())    
                 #league.print_table()
+            #for playoff in self.playoffs:
+            #    playoff.check_elimination_quarterfinal()
             isMatchesPlayed = True
         else:
             isMatchesPlayed = False

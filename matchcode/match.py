@@ -90,6 +90,14 @@ class Match:
             else:
                 self.home_goals += 1
 
+    def winner(self):
+        if self.played and self.home_goals > self.away_goals:
+            return self.home_team
+        elif self.played and self.away_goals > self.home_goals:
+            return self.away_team
+        else:
+            return None
+
     def load_match(self, home_goals, away_goals,played):
         self.home_goals = home_goals
         self.away_goals = away_goals
