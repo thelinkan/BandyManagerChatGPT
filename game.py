@@ -424,11 +424,11 @@ class Game:
                 print(f"Tick: {league.name} - is_completed: {league.is_completed()}")
                 if(league.playoff_for_league is not None and league.is_completed()):
                     if(not league.playoff_for_league.is_started):
-                        print(f"Time for playoff - {league.playoff_for_league.name}")
-                        league.print_table()
+                        print(f"Time for playoff - {league.playoff_for_league.name} - is_started: {league.playoff_for_league.is_started}")
+                        #league.print_table()
                         for team in league.get_playoff_teams():
                             print(team.name)
-                    league.playoff_for_league.create_quarter_finals_schedule(league.get_playoff_teams())    
+                        league.playoff_for_league.create_quarter_finals_schedule(league.get_playoff_teams())    
                 #league.print_table()
             isMatchesPlayed = True
         else:

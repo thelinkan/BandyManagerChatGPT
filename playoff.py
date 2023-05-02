@@ -1,3 +1,6 @@
+from matchcode.match import Match
+from country import Country
+
 class Playoff:
     def __init__(self, name, country, quarter_final_rounds, semi_final_rounds, final_rounds, league, match_manager):
         self.name = name
@@ -16,23 +19,23 @@ class Playoff:
         """Create the quarter finals schedule for the given top teams."""
         # Sort the top teams by their ranking (based on their performance in the league)
         top_teams = sorted(top_teams, key=lambda team: self.league.table[team]['points'], reverse=True)
-
+        self.teams = top_teams
         # Determine the number of quarter finals matches
         num_matches = len(top_teams) // 2
-
+        r_year = 2024
+        r_month = 3
+        r_day = 1
+        self.is_started = True
         # Create the quarter finals matches
         for i in range(num_matches):
             # Determine the home and away teams for the match
             home_team = top_teams[i]
             away_team = top_teams[-(i+1)]
             print(f"game {i}: {home_team.name} - {away_team.name}")
-
-        #    # Create the match
-        #    match = Match(home_team, away_team, self.country, self.name)
-
-        #    # Add the match to the playoff and the match manager
-        #    self.matches.append(match)
-        #    self.match_manager.add_match(match, self)
+            match = Match(home_team,away_team,r_year,r_month,r_day)
+            self.matches.append(match)
+            if self.match_manager is not None:
+                self.match_manager.add_match(match,self)
 
         #    # Alternate home and away teams for the number of rounds
         #    for j in range(self.quarter_final_rounds - 1):
