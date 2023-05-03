@@ -385,7 +385,11 @@ class Game:
                 num_players = team_data['num_players']
                 num_int_players = team_data['num_int_players']
                 jersey_colors = team_data['jersey_colors']
-                team = Team(name, team_type, team_rating, num_players, num_int_players, jersey_colors)
+                if 'jersey_decorations' in team_data:
+                    jersey_decorations = team_data['jersey_decorations']
+                else: 
+                    jersey_decorations = "[[0,(0,0,0)]]"
+                team = Team(name, team_type, team_rating, num_players, num_int_players, jersey_colors, jersey_decorations)
                 club.add_team(team)
                 self.teams[name] = team # Add team to the dictionary
                 # Check if there are players in the team_data dictionary
