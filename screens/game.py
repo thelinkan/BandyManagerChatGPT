@@ -572,6 +572,7 @@ def draw_tactics_pitch(game, team, hover_player_uuid, selected_player_uuid, pitc
     position_list = [("goalkeeper",(140,525)),("libero",(140,455)),("leftdef",(40,405)),("rightdef",(240,405)),("lefthalf",(10,335)),("righthalf",(270,335)),("leftmid",(25,235)),("centralmid",(140,275)),("rightmid",(255,235)),("leftattack",(60,135)),("rightattack",(220,135)),("sub1",(380,100)),("sub2",(380,200)),("sub3",(380,300)),("sub4",(380,400)),("sub5",(380,500))]
     jersey_colors = team.return_jersey_colors()
     jersey_decorations = team.return_jersey_decorations()
+    logo = team.club.logo
     actual_positions = team.actual_positions
     players = team.get_players()
     jersey_rects = []
@@ -593,18 +594,18 @@ def draw_tactics_pitch(game, team, hover_player_uuid, selected_player_uuid, pitc
                     is_selected = True
                 else:
                     is_selected = False
-                tactics_jersey = draw_tactics_jersey(jersey_colors, jersey_decorations, jersey_number,jersey_name,is_hovered,is_selected)
+                tactics_jersey = draw_tactics_jersey(jersey_colors, jersey_decorations, jersey_number, logo, jersey_name,is_hovered,is_selected)
                 pitch_surface.blit(tactics_jersey,position[1])
     return pitch_surface,jersey_rects
 
-def draw_tactics_jersey(jersey_colors, jersey_decorations, number, name, is_hovered=False, is_selected=False):
+def draw_tactics_jersey(jersey_colors, jersey_decorations, number, logo, name, is_hovered=False, is_selected=False):
     is_front = False
     jersey_surface = pygame.Surface((90, 70), pygame.SRCALPHA)
     if is_selected:
         jersey_surface.fill((200,0,0,128))
     if is_hovered:
         jersey_surface.fill((255,200,200,128))
-    jersey = draw_jersey(jersey_colors, jersey_decorations, str(number), is_front = is_front)
+    jersey = draw_jersey(jersey_colors, jersey_decorations,  str(number),logo, is_front = is_front)
     jersey = pygame.transform.scale(jersey, (40, 40))
     jersey_surface.blit(jersey, (25, 0))
     text = very_small_bold_font.render(name, True, BLACK)
