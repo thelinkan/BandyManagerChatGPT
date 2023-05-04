@@ -15,7 +15,7 @@ class Match:
         self.is_over = False
         self.time_since_last_goal = 0
 
-    def play(self, manager_team):
+    def play(self, manager_team, is_playoff):
         position_list = ["goalkeeper","libero","leftdef","rightdef","lefthalf","righthalf","leftmid","centralmid","rightmid","leftattack","rightattack","sub1","sub2","sub3","sub4","sub5"]
         off_weight = [2,2,3,3,8,8,12,12,12,19,19]
         def_weight = [20,16,14,14,10,10,4,4,4,2,2]
@@ -49,6 +49,14 @@ class Match:
 
         self.home_goals = rand.poisson(3*home_off_total/away_def_total)
         self.away_goals = rand.poisson(3*away_off_total/home_def_total)
+        print (f"is playoff = {is_playoff}")
+        if is_playoff and self.home_goals == self.away_goals:
+            if rand.randint(1,100)<=60:
+                self.home_goals +=1
+                print("home team won on overtiem")
+            else:
+                self.away_goals +=1
+                print("home team won on overtiem")
         self.played = True
 
     def update_state(self,game_time_delta):

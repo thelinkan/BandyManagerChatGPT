@@ -27,7 +27,7 @@ class Game:
         self.match_manager = MatchManager()
         self.selected_team_index = -1
         self.inspected_team = None
-        
+
         self.game_page=None
 
     def new_game(self,manager_name,manager_age):
@@ -94,8 +94,8 @@ class Game:
                             player_origins_team = player_origins_female[team_country_name]
                             player_origin = random.choices(player_origins_team, weights=[d["percentage"] for d in player_origins_team])[0]["country"]
                         for key, value in self.countries.items():
-                            if(key == player_origin):                        
-                                player_country = value  
+                            if(key == player_origin):
+                                player_country = value
                                 player_country_name = key
                                 if(gender == "male"):
                                     player_first_name = player_country.random_name("male")
@@ -199,7 +199,7 @@ class Game:
                 print(f"- {team.name} ({team.team_type})")
 
         playoff_data =game_data['playoffs_data']
-        
+
         for league_data in game_data['leagues_data']:
             #print(league_data['name'])
             team_names = league_data.pop("teams")
@@ -412,12 +412,19 @@ class Game:
         match_to_view = None
         if len(matches_today) > 0:
             for match in matches_today:
+                is_playoff = False
                 if self.manager.team == match.home_team.name or self.manager.team == match.away_team.name:
                     match_viewed = True
-                    match_to_view = match                    
+                    match_to_view = match
                 else:
-                    match.play(self.manager.team)
-                #print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
+                    print(f"{match.home_team.name} - {match.away_team.name}: {match.league.name}")
+                    #if self.playoff_for_league is not None:
+                    #    playoff_teams = self.playoff_for_league.teams
+                    #    if match.home_team in playoff_teams and match.away_team in playoff_teams:
+                    #    else:
+                    #        is_playoff = False
+                    match.play(self.manager.team, match.league.is_playoff)
+                    #print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
             leagues = self.get_leagues()
             for league in leagues:
                 league.calculate_table()
@@ -428,7 +435,7 @@ class Game:
                         #league.print_table()
                         for team in league.get_playoff_teams():
                             print(team.name)
-                        league.playoff_for_league.create_quarter_finals_schedule(league.get_playoff_teams())    
+                        league.playoff_for_league.create_quarter_finals_schedule(league.get_playoff_teams())
                 #league.print_table()
             #for playoff in self.playoffs:
             #    playoff.check_elimination_quarterfinal()

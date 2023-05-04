@@ -14,7 +14,8 @@ class Playoff:
         self.match_manager = match_manager
         self.is_started = False
         self.rounds = {}  # initialize an empty dictionary to hold the playoff rounds
-        league.playoff_for_league = self  # Set the `playoff_for_league` variable for the league
+        league.playoff_for_league = self  # Set the `playoff_for_league` variable for the league¨
+        self.is_playoff = True
 
     def create_quarter_finals_schedule(self, top_teams):
         """Create the quarter finals schedule for the given top teams."""
@@ -37,8 +38,8 @@ class Playoff:
             home_team = top_teams[i]
             away_team = top_teams[-(i+1)]
             series = f"Quarterfinal {i+1}"
-            print(f"Series: {series}")        
-            self.rounds[series] = {"home_team": home_team, "away_team": away_team, "matches": []}    
+            print(f"Series: {series}")
+            self.rounds[series] = {"home_team": home_team, "away_team": away_team, "matches": []}
             print(f"game {i}: {home_team.name} - {away_team.name}")
             match = Match(home_team,away_team,r_year,r_month,r_day)
             self.rounds[series]["matches"].append(match)
@@ -59,7 +60,7 @@ class Playoff:
                 #series_matches.append(match)  # add the match to the list for this round
                 if self.match_manager is not None:
                     self.match_manager.add_match(match,self)
-            
+
         #self.rounds['quarterfinals'] = round_matches  # add the list of quarterfinals matches to the rounds dictionary with the key 'quarterfinals'
         print(self.rounds)
 
@@ -100,5 +101,5 @@ class Playoff:
             'semi_final_rounds': self.semi_final_rounds,
             'final_rounds': self.final_rounds,
             'is_started': self.is_started,
-            
+
         }
