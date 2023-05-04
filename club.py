@@ -1,11 +1,12 @@
 import json
 
 class Club:
-    def __init__(self, name, country, rating, home_arena):
+    def __init__(self, name, country, rating, home_arena, logo):
         self.name = name
         self.country = country
         self.rating = rating
         self.home_arena = home_arena
+        self.logo = logo
         self.teams = []
 
     def add_team(self, team):
@@ -17,7 +18,7 @@ class Club:
     def to_dict(self):
         teams_data =[]
         for team in self.teams:
-            teams_data.append(team.to_dict())        
+            teams_data.append(team.to_dict())
         return {
             'name': self.name,
             'country': self.country,

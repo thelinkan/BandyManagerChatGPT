@@ -159,8 +159,13 @@ def draw_newgame2_menu(game,selected_country_index,selected_league_index,selecte
         screen.blit(text_team_name, (940, 155))
         jersey_colors = teams[selected_team_index].return_jersey_colors()
         jersey_decorations = teams[selected_team_index].return_jersey_decorations()
-        jersey = draw_jersey(jersey_colors,jersey_decorations,"17")
-        screen.blit(jersey,(940,400))
+        logo = teams[selected_team_index].club.logo
+        is_front = True
+        jersey = draw_jersey(jersey_colors,jersey_decorations,"17", logo,  is_front = is_front)
+        screen.blit(jersey,(940,200))
+        is_front = False
+        jersey = draw_jersey(jersey_colors,jersey_decorations,"17", logo, is_front = is_front)
+        screen.blit(jersey,(940,500))
         choose_team_button.draw(screen)
         #print(selected_team)
         pass

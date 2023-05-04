@@ -27,7 +27,7 @@ class Game:
         self.match_manager = MatchManager()
         self.selected_team_index = -1
         self.inspected_team = None
-        
+
         self.game_page=None
 
     def new_game(self,manager_name,manager_age):
@@ -94,8 +94,8 @@ class Game:
                             player_origins_team = player_origins_female[team_country_name]
                             player_origin = random.choices(player_origins_team, weights=[d["percentage"] for d in player_origins_team])[0]["country"]
                         for key, value in self.countries.items():
-                            if(key == player_origin):                        
-                                player_country = value  
+                            if(key == player_origin):
+                                player_country = value
                                 player_country_name = key
                                 if(gender == "male"):
                                     player_first_name = player_country.random_name("male")
@@ -199,7 +199,7 @@ class Game:
                 print(f"- {team.name} ({team.team_type})")
 
         playoff_data =game_data['playoffs_data']
-        
+
         for league_data in game_data['leagues_data']:
             #print(league_data['name'])
             team_names = league_data.pop("teams")
@@ -375,8 +375,12 @@ class Game:
             name = club_data['name']
             country = club_data['country']
             rating = club_data['club_rating']
+            if 'logo' in club_data:
+                logo = club_data['logo']
+            else:
+                logo = None
             home_arena = club_data['home_arena']
-            club = Club(name, country, rating, home_arena)
+            club = Club(name, country, rating, home_arena, logo)
 
             for team_data in club_data['teams']:
                 name = team_data['name']
@@ -387,9 +391,9 @@ class Game:
                 jersey_colors = team_data['jersey_colors']
                 if 'jersey_decorations' in team_data:
                     jersey_decorations = team_data['jersey_decorations']
-                else: 
+                else:
                     jersey_decorations = "[[0,(0,0,0)]]"
-                team = Team(name, team_type, team_rating, num_players, num_int_players, jersey_colors, jersey_decorations)
+                team = Team(name, team_type, team_rating, num_players, num_int_players, jersey_colors, jersey_decorations, club)
                 club.add_team(team)
                 self.teams[name] = team # Add team to the dictionary
                 # Check if there are players in the team_data dictionary
@@ -418,7 +422,7 @@ class Game:
             for match in matches_today:
                 if self.manager.team == match.home_team.name or self.manager.team == match.away_team.name:
                     match_viewed = True
-                    match_to_view = match                    
+                    match_to_view = match
                 else:
                     match.play(self.manager.team)
                 #print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
@@ -432,7 +436,7 @@ class Game:
                         #league.print_table()
                         for team in league.get_playoff_teams():
                             print(team.name)
-                        league.playoff_for_league.create_quarter_finals_schedule(league.get_playoff_teams())    
+                        league.playoff_for_league.create_quarter_finals_schedule(league.get_playoff_teams())
                 #league.print_table()
             #for playoff in self.playoffs:
             #    playoff.check_elimination_quarterfinal()

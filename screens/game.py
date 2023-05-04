@@ -18,7 +18,7 @@ x_offset = 150
 def draw_playerlist(game,team, selected_player_index):
     #print(selected_player_index)
     # Draw player table
-    
+
     header_rect = pygame.Rect(10+x_offset, 100, 600, 30)
     selected_player_uuid = None
 
@@ -518,32 +518,32 @@ def draw_league_table(game, selected_league, highlighted_team):
         text = player_font.render(str(won), True, row_text_color)
         text_rect = text.get_rect(left=210, top=4)
         row_surface.blit(text, text_rect)
-        
+
         drawn = league_row['drawn']
         text = player_font.render(str(drawn), True, row_text_color)
         text_rect = text.get_rect(left=270, top=4)
         row_surface.blit(text, text_rect)
-        
+
         lost = league_row['lost']
         text = player_font.render(str(lost), True, row_text_color)
         text_rect = text.get_rect(left=330, top=4)
         row_surface.blit(text, text_rect)
-        
+
         goals_for = league_row['goals_for']
         text = player_font.render(str(goals_for), True, row_text_color)
         text_rect = text.get_rect(left=390, top=4)
         row_surface.blit(text, text_rect)
-        
+
         goals_against = league_row['goals_against']
         text = player_font.render(str(goals_against), True, row_text_color)
         text_rect = text.get_rect(left=450, top=4)
         row_surface.blit(text, text_rect)
-        
+
         gd = goals_for - goals_against
         text = player_font.render(str(gd), True, row_text_color)
         text_rect = text.get_rect(left=510, top=4)
         row_surface.blit(text, text_rect)
-        
+
         points = league_row['points']
         text = player_font.render(str(points), True, row_text_color)
         text_rect = text.get_rect(left=570, top=4)
@@ -571,9 +571,9 @@ def draw_tactics_pitch(game, team, hover_player_uuid, selected_player_uuid, pitc
     pitch_surface.blit(pitch,pitch_rect)
     position_list = [("goalkeeper",(140,525)),("libero",(140,455)),("leftdef",(40,405)),("rightdef",(240,405)),("lefthalf",(10,335)),("righthalf",(270,335)),("leftmid",(25,235)),("centralmid",(140,275)),("rightmid",(255,235)),("leftattack",(60,135)),("rightattack",(220,135)),("sub1",(380,100)),("sub2",(380,200)),("sub3",(380,300)),("sub4",(380,400)),("sub5",(380,500))]
     jersey_colors = team.return_jersey_colors()
+    jersey_decorations = team.return_jersey_decorations()
     actual_positions = team.actual_positions
     players = team.get_players()
-
     jersey_rects = []
 
     for position in position_list:
@@ -593,17 +593,18 @@ def draw_tactics_pitch(game, team, hover_player_uuid, selected_player_uuid, pitc
                     is_selected = True
                 else:
                     is_selected = False
-                tactics_jersey = draw_tactics_jersey(jersey_colors,jersey_number,jersey_name,is_hovered,is_selected)
+                tactics_jersey = draw_tactics_jersey(jersey_colors, jersey_decorations, jersey_number,jersey_name,is_hovered,is_selected)
                 pitch_surface.blit(tactics_jersey,position[1])
     return pitch_surface,jersey_rects
 
-def draw_tactics_jersey(jersey_colors, number, name, is_hovered=False, is_selected=False):
+def draw_tactics_jersey(jersey_colors, jersey_decorations, number, name, is_hovered=False, is_selected=False):
+    is_front = False
     jersey_surface = pygame.Surface((90, 70), pygame.SRCALPHA)
     if is_selected:
         jersey_surface.fill((200,0,0,128))
     if is_hovered:
         jersey_surface.fill((255,200,200,128))
-    jersey = draw_jersey(jersey_colors, str(number))
+    jersey = draw_jersey(jersey_colors, jersey_decorations, str(number), is_front = is_front)
     jersey = pygame.transform.scale(jersey, (40, 40))
     jersey_surface.blit(jersey, (25, 0))
     text = very_small_bold_font.render(name, True, BLACK)
@@ -692,7 +693,7 @@ def draw_game_mainscreen(game, selected_player_index, isMatchesPlayed, start_pag
         manager_u19teams = manager_club.get_teams_by_type("Men U19")
     else:
         manager_u19teams = manager_club.get_teams_by_type("Women U19")
-    
+
     manager_u19team = manager_u19teams[0]
     toprow_font = pygame.font.Font(None, FONTSIZE_SMALL)
     text = toprow_font.render(f"Manager: {manager_name}    Club: {manager_club_name}", True, BLACK)
