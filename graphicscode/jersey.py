@@ -10,16 +10,19 @@ def draw_jersey(jersey_colors,jersey_decorations,jersey_number):
     #Draw decorations
     for decoration in jersey_decorations:
         #print(decoration[0])
-        if(decoration[0]==1):
+        if(decoration[0]==100):
             pygame.draw.line(jersey_surface, decoration[1], [100, 8], [115, 20], 15)
             pygame.draw.line(jersey_surface, decoration[1], [115, 20], [135, 20], 15)
             pygame.draw.line(jersey_surface, decoration[1], [135, 20], [150, 8], 15)
-        if(decoration[0]==2):
+        if(decoration[0]==200):
             pygame.draw.rect(jersey_surface,decoration[1],(3,185,47,15))
-        if(decoration[0]==3):
+        if(decoration[0]==300):
             pygame.draw.rect(jersey_surface,decoration[1],(200,185,47,15))
-        if(decoration[0]==4):
+        if(decoration[0]==400):
             pygame.draw.rect(jersey_surface,decoration[1],(50,215,150,30))
+        if(decoration[0]==401):
+            pygame.draw.rect(jersey_surface,decoration[1],(50,215,150,30))
+            pygame.draw.polygon(jersey_surface,decoration[1],[(60,215),(70,200),(75,200),(70,210),(75,215)])
     #Draw outline
     pygame.draw.line(jersey_surface, jersey_colors[3], [3, 65], [3, 200], 5)
     pygame.draw.line(jersey_surface, jersey_colors[3], [3, 200], [50, 200], 5)
