@@ -71,6 +71,7 @@ while running:
                         break
                 for i, rect in enumerate(league_rects):
                     if rect.collidepoint(event.pos):
+                        selected_team_index = -1
                         selected_league_index = i
                         break
                 for i, rect in enumerate(team_rects):

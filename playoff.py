@@ -77,17 +77,22 @@ class Playoff:
         matches = [match for match in self.matches if match.home_team in [team1, team2] and match.away_team in [team1, team2]]
 
         # Count the number of matches won by each team
-        team1_wins = sum(1 for match in matches if match.winner == team1)
-        team2_wins = sum(1 for match in matches if match.winner == team2)
+        team1_wins = sum(1 for match in matches if match.winner() == team1)
+        team2_wins = sum(1 for match in matches if match.winner() == team2)
 
+        print(f"{self.name}: testing {team1.name} - {team2.name} __ {team1_wins} - {team2_wins} __Matches Needed: {matches_needed}")
+        for match in matches:
+            print(f"{match.home_goals} - {match.away_goals} Winner: {match.winner()}")
         # Check if one of the teams has already won enough matches
         if team1_wins >= matches_needed:
             # Delete the remaining matches between the two teams
             self.matches = [match for match in self.matches if not (match.home_team == team1 and match.away_team == team2) and not (match.home_team == team2 and match.away_team == team1)]
+            print(f"team1 elimitates team 2")
             return team1
         elif team2_wins >= matches_needed:
             # Delete the remaining matches between the two teams
             self.matches = [match for match in self.matches if not (match.home_team == team1 and match.away_team == team2) and not (match.home_team == team2 and match.away_team == team1)]
+            print(f"team2 elimitates team 1")
             return team2
 
         # No team has won enough matches yet
