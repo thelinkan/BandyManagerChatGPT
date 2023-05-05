@@ -14,7 +14,7 @@ class Playoff:
         self.match_manager = match_manager
         self.is_started = False
         self.rounds = {}  # initialize an empty dictionary to hold the playoff rounds
-        league.playoff_for_league = self  # Set the `playoff_for_league` variable for the league¨
+        league.playoff_for_league = self  # Set the `playoff_for_league` variable for the leagueï¿½
         self.is_playoff = True
 
     def create_quarter_finals_schedule(self, top_teams):
@@ -80,19 +80,27 @@ class Playoff:
         team1_wins = sum(1 for match in matches if match.winner() == team1)
         team2_wins = sum(1 for match in matches if match.winner() == team2)
 
-        print(f"{self.name}: testing {team1.name} - {team2.name} __ {team1_wins} - {team2_wins} __Matches Needed: {matches_needed}")
-        for match in matches:
-            print(f"{match.home_goals} - {match.away_goals} Winner: {match.winner()}")
+        #print(f"    -    {self.name}: testing {team1.name} - {team2.name} __ {team1_wins} - {team2_wins} __Matches Needed: {matches_needed}")
+        #for match in matches:
+        #    print(f"    -    {match.home_goals} - {match.away_goals} Winner: {match.winner()}")
         # Check if one of the teams has already won enough matches
         if team1_wins >= matches_needed:
             # Delete the remaining matches between the two teams
-            self.matches = [match for match in self.matches if not (match.home_team == team1 and match.away_team == team2) and not (match.home_team == team2 and match.away_team == team1)]
-            print(f"team1 elimitates team 2")
+            #self.matches = [match for match in self.matches if not (match.home_team == team1 and match.away_team == team2) and not (match.home_team == team2 and match.away_team == team1)]
+            for match in self.matches:
+                if (match.home_team == team1 and match.away_team == team2) or  (match.home_team == team2 and match.away_team == team1):
+                    #print (f"      -      eliminating : {match.away_team.name} <--> {match.away_team.name}")
+                    match.played = True
+            #print(f"    -    team1 elimitates team 2")
             return team1
         elif team2_wins >= matches_needed:
             # Delete the remaining matches between the two teams
-            self.matches = [match for match in self.matches if not (match.home_team == team1 and match.away_team == team2) and not (match.home_team == team2 and match.away_team == team1)]
-            print(f"team2 elimitates team 1")
+            #self.matches = [match for match in self.matches if not (match.home_team == team1 and match.away_team == team2) and not (match.home_team == team2 and match.away_team == team1)]
+            for match in self.matches:
+                if (match.home_team == team1 and match.away_team == team2) or  (match.home_team == team2 and match.away_team == team1):
+                    match.played = True
+                    #print (f"      -      eliminating : {match.home_team.name} <--> {match.away_team.name}")
+            #print(f"    -    team2 elimitates team 1")
             return team2
 
         # No team has won enough matches yet

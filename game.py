@@ -423,7 +423,10 @@ class Game:
                     #    if match.home_team in playoff_teams and match.away_team in playoff_teams:
                     #    else:
                     #        is_playoff = False
-                    match.play(self.manager.team, match.league.is_playoff)
+                    if match.played:
+                        print("Not to be played")
+                    else:
+                        match.play(self.manager.team, match.league.is_playoff)
                     #print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
             leagues = self.get_leagues()
             for league in leagues:
@@ -433,11 +436,13 @@ class Game:
                     if(not league.playoff_for_league.is_started):
                         print(f"Time for playoff - {league.playoff_for_league.name} - is_started: {league.playoff_for_league.is_started}")
                         #league.print_table()
-                        for team in league.get_playoff_teams():
-                            print(team.name)
+                        #for team in league.get_playoff_teams():
+                        #    print(team.name)
                         league.playoff_for_league.create_quarter_finals_schedule(league.get_playoff_teams())
                 #league.print_table()
-            #for playoff in self.playoffs:
+            for playoff in self.playoffs:
+                for match in playoff.matches:
+                    print(f" * {match.home_team.name} - {match.away_team.name} : {match.home_goals} - {match.away_goals} __ {match.played}")
             #    playoff.check_elimination_quarterfinal()
             isMatchesPlayed = True
         else:

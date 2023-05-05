@@ -17,6 +17,9 @@ def draw_view_match(game,match_to_view):
     engine = MatchEngine(match_to_view)
     controller = MatchController(match_to_view, engine)
 
+    match_to_view.home_goals = 0
+    match_to_view.away_goals = 0
+
     match_state = "Pre game"
     #pdb.set_trace()
 
