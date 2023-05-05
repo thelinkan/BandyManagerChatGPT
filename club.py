@@ -24,5 +24,6 @@ class Club:
             'country': self.country,
             'club_rating': self.rating,
             'home_arena': self.home_arena,
+            'logo': self.logo,
             'teams': teams_data
         }

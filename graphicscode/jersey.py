@@ -31,15 +31,31 @@ def draw_jersey(jersey_colors,jersey_decorations,jersey_number, logo, is_front):
             pygame.draw.polygon(jersey_surface,decoration[1],[(100,3),(100,245),(117,245),(117,15),(115,15)])
             pygame.draw.polygon(jersey_surface,decoration[1],[(150,3),(150,245),(133,245),(133,15),(135,15)])
             pygame.draw.rect(jersey_surface,decoration[1],(170,3,20,242))
+        if(decoration[0]==106):
+            pygame.draw.rect(jersey_surface,decoration[1],(50,120,150,10))
+            pygame.draw.rect(jersey_surface,decoration[1],(50,160,150,10))
         if(decoration[0]==150 and logo is not None and is_front):
             logo_file = pygame.image.load(f"images/logos/{logo}")
             logo_file = pygame.transform.scale(logo_file,(80,80))
-            logo_rect = logo_file.get_rect(center=(125, 125))
+            logo_rect = logo_file.get_rect(center=(125, 145))
+            jersey_surface.blit(logo_file, logo_rect)
+        if(decoration[0]==151 and logo is not None and is_front):
+            logo_file = pygame.image.load(f"images/logos/{logo}")
+            logo_file = pygame.transform.scale(logo_file,(40,40))
+            logo_rect = logo_file.get_rect()
+            logo_rect.top = 60
+            logo_rect.left = 140
             jersey_surface.blit(logo_file, logo_rect)
         if(decoration[0]==200):
             pygame.draw.rect(jersey_surface,decoration[1],(3,185,47,15))
+        if(decoration[0]==201):
+            pygame.draw.rect(jersey_surface,decoration[1],(3,135,47,10))
+            pygame.draw.rect(jersey_surface,decoration[1],(3,175,47,10))
         if(decoration[0]==300):
             pygame.draw.rect(jersey_surface,decoration[1],(200,185,47,15))
+        if(decoration[0]==301):
+            pygame.draw.rect(jersey_surface,decoration[1],(200,135,47,10))
+            pygame.draw.rect(jersey_surface,decoration[1],(200,175,150,10))
         if(decoration[0]==400):
             pygame.draw.rect(jersey_surface,decoration[1],(50,215,150,30))
         if(decoration[0]==401):

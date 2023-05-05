@@ -4,6 +4,7 @@
       "name": "Bollnäs GIF",
       "country": "Sweden",
       "home_arena": "Sävstaås",
+      "logo": "bollnasgif.png",
       "club_rating": 75,
       "teams": [
         {
@@ -13,7 +14,7 @@
           "num_players": 18,
           "num_int_players": 3,
 		      "jersey_colors": "[(208,92,45),(208,92,45),(208,92,45),(0,0,0),(255,255,255)]",
-          "jersey_decorations": "[[100,(25,19,163)],[200,(25,19,163)],[300,(25,19,163)],[400,(25,19,163)]]"
+          "jersey_decorations": "[[100,(25,19,163)],[151,(0,0,0)],[200,(25,19,163)],[300,(25,19,163)],[400,(25,19,163)]]"
         },
         {
           "name": "Bollnäs GIF U19",
@@ -29,6 +30,7 @@
       "name": "Brobergs IF",
       "country": "Sweden",
       "home_arena": "Helsingehus Arena",
+      "logo": "brobergsif.png",
       "club_rating": 75,
       "teams": [
         {
@@ -37,7 +39,8 @@
           "team_rating": 70,
           "num_players": 16,
           "num_int_players": 3,
-		  "jersey_colors": "[(249,220,59),(249,220,59),(249,220,59),(0,0,0),(0,0,0)]"
+          "jersey_colors": "[(249,220,59),(249,220,59),(249,220,59),(90,90,90),(0,0,0)]",
+          "jersey_decorations": "[[100,(0,0,0)],[151,(0,0,0)],[200,(0,0,0)],[300,(0,0,0)]]"
         },
         {
           "name": "Brobergs IF U19",
@@ -53,6 +56,7 @@
       "name": "Edsbyns IF",
       "country": "Sweden",
       "home_arena": "Svenska Fönster Arena",
+      "logo": "edsbynsif.png",
       "club_rating": 75,
       "teams": [
         {
@@ -61,7 +65,8 @@
           "team_rating": 70,
           "num_players": 18,
           "num_int_players": 3,
-		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+          "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[151,(0,0,0)]]"
         },
         {
           "name": "Edsbyns IF U19",
@@ -77,6 +82,7 @@
       "name": "Frillesås BK",
       "country": "Sweden",
       "home_arena": "Sjöaremossen",
+      "logo": "frillesasbk.png",
       "club_rating": 75,
       "teams": [
         {
@@ -86,7 +92,7 @@
           "num_players": 16,
           "num_int_players": 3,
           "jersey_colors": "[(0,0,0),(0,0,0),(0,0,0),(90,90,90),(226,214,40)]",
-          "jersey_decorations": "[[101,(9,176,50)],[102,(226,214,40)],[200,(9,176,50)],[300,(9,176,50)],[401,(9,176,50)],[402,(226,214,40)]]"
+          "jersey_decorations": "[[101,(9,176,50)],[102,(226,214,40)],[151,(0,0,0)],[200,(9,176,50)],[300,(9,176,50)],[401,(9,176,50)],[402,(226,214,40)]]"
         },
         {
           "name": "Frillesås BK U19",
@@ -102,6 +108,7 @@
       "name": "Gripen Trollhättan BK",
       "country": "Sweden",
       "home_arena": "Slättbergshallen",
+      "logo": "gripenbk.png",
       "club_rating": 75,
       "teams": [
         {
@@ -110,7 +117,8 @@
           "team_rating": 60,
           "num_players": 16,
           "num_int_players": 3,
-		  "jersey_colors": "[(0,0,0),(0,0,0),(0,0,0),(90,90,90),(226,214,40)]"
+          "jersey_colors": "[(0,0,0),(0,0,0),(0,0,0),(90,90,90),(226,214,40)]",
+          "jersey_decorations": "[[150,(0,0,0)]]"
         },
         {
           "name": "Gripen Trollhättan BK U19",
@@ -126,6 +134,7 @@
       "name": "Hammarby IF",
       "country": "Sweden",
       "home_arena": "Zinkendams IP",
+      "logo": "hammarbyif.png",
       "club_rating": 95,
       "teams": [
         {
@@ -134,7 +143,8 @@
           "team_rating": 90,
           "num_players": 17,
           "num_int_players": 3,
-          "jersey_colors": "[(17,191,91),(17,191,91),(17,191,91),(0,0,0),(255,255,255)]"
+          "jersey_colors": "[(17,191,91),(17,191,91),(17,191,91),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[151,(0,0,0)]]"
         },
         {
           "name": "Hammarby IF U19",
@@ -158,7 +168,8 @@
           "team_rating": 70,
           "num_players": 17,
           "num_int_players": 3,
-		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+          "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[100,(255,255,255)],[200,(255,255,255)],[300,(255,255,255)],[400,(255,255,255)]]"
         },
         {
           "name": "IFK Motala U19",
@@ -174,6 +185,7 @@
       "name": "IFK Rättvik",
       "country": "Sweden",
       "home_arena": "Rättvik Arena",
+      "logo": "ifkrattvik.png",
       "club_rating": 85,
       "teams": [
         {
@@ -182,7 +194,8 @@
           "team_rating": 60,
           "num_players": 18,
           "num_int_players": 3,
-		  "jersey_colors": "[(16,29,71),(16,29,71),(16,29,71),(90,90,90),(255,255,255)]"
+          "jersey_colors": "[(16,29,71),(16,29,71),(16,29,71),(90,90,90),(255,255,255)]",
+          "jersey_decorations": "[[106,(255,255,255)],[104,(16,29,71)],[150,(0,0,0)],[201,(255,255,255)],[301,(255,255,255)]]"
         },
         {
           "name": "IFK Rättvik U19",
@@ -214,6 +227,7 @@
       "name": "Sandvikens AIK",
       "country": "Sweden",
       "home_arena": "Göransson Arena",
+      "logo": "sandvikensaik.png",
       "club_rating": 95,
       "teams": [
         {
@@ -222,7 +236,8 @@
           "team_rating": 90,
           "num_players": 19,
           "num_int_players": 3,
-		  "jersey_colors": "[(0,0,0),(0,0,0),(0,0,0),(90,90,90),(255,255,255)]"
+          "jersey_colors": "[(0,0,0),(0,0,0),(0,0,0),(90,90,90),(255,255,255)]",
+          "jersey_decorations": "[[150,(0,0,0)]]"
         },
         {
           "name": "Sandvikens AIK U19",
@@ -253,7 +268,8 @@
     {
       "name": "IK Sirius BK",
       "country": "Sweden",
-	   "home_arena": "Studenternas",
+      "home_arena": "Studenternas",
+      "logo": "iksirius.png",
       "club_rating": 75,
       "teams": [
         {
@@ -263,7 +279,7 @@
           "num_players": 17,
           "num_int_players": 3,
     		  "jersey_colors": "[(34,25,200),(34,25,200),(34,25,200),(90,90,90),(255,255,255)]",
-          "jersey_decorations": "[[105,(0,0,0)]]"
+          "jersey_decorations": "[[105,(0,0,0)],[151,(0,0,0)]]"
         },
         {
           "name": "IK Sirius BK U19",
@@ -278,7 +294,8 @@
     {
       "name": "Vetlanda BK",
       "country": "Sweden",
-	  "home_arena": "Hydro Arena",
+      "home_arena": "Hydro Arena",
+      "logo": "vetlandabk.png",
       "club_rating": 75,
       "teams": [
         {
@@ -287,7 +304,8 @@
           "team_rating": 70,
           "num_players": 17,
           "num_int_players": 3,
-		  "jersey_colors": "[(254,242,96),(254,242,96),(254,242,96),(0,0,0),(0,0,0)]"
+		  "jersey_colors": "[(254,242,96),(254,242,96),(254,242,96),(0,0,0),(0,0,0)]",
+          "jersey_decorations": "[[151,(0,0,0)]]"
         },
         {
           "name": "Vetlanda BK U19",
@@ -303,6 +321,7 @@
       "name": "Villa Lidköping BK",
       "country": "Sweden",
       "home_arena": "Sparbanken Lidköping Arena",
+      "logo": "villabk.png",
       "club_rating": 100,
       "teams": [
         {
@@ -311,7 +330,9 @@
           "team_rating": 100,
           "num_players": 17,
           "num_int_players": 3,
-		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+          "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(90,90,90),(255,255,255)]",
+          "jersey_decorations": "[[100,(255,255,255)],[151,(0,0,0)],[400,(255,255,255)]]"
+
         },
         {
           "name": "Villa Lidköping BK U19",
@@ -327,7 +348,8 @@
           "team_rating": 75,
           "num_players": 17,
           "num_int_players": 3,
-		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+          "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[100,(255,255,255)],[151,(0,0,0)],[400,(255,255,255)]]"
         },
         {
           "name": "Villa Lidköping BK F19",
@@ -369,7 +391,8 @@
           "team_rating": 75,
           "num_players": 16,
           "num_int_players": 3,
-          "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(17,191,91)]"
+          "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(17,191,91)]",
+          "jersey_decorations": "[[103,(17,191,91)],[104,(255,255,255)],[150,(255,255,255)]]"
         },
         {
           "name": "Västerås SK F19",
@@ -617,6 +640,7 @@
       "name": "IFK Vänersborg",
       "country": "Sweden",
       "home_arena": "Vänersborgs Arena",
+      "logo": "ifkvanersborg.png",
       "club_rating": 75,
       "teams": [
         {
@@ -625,7 +649,8 @@
           "team_rating": 70,
           "num_players": 17,
           "num_int_players": 3,
-		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+          "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[100,(255,255,255)],[150,(0,0,0)],[400,(255,255,255)]]"
         },
         {
           "name": "IFK Vänersborg U19",
