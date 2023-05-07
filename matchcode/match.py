@@ -51,19 +51,19 @@ class Match:
 
         self.home_goals = rand.poisson(3*home_off_total/away_def_total)
         self.away_goals = rand.poisson(3*away_off_total/home_def_total)
-        print (f"  -  {self.league.name} is playoff = {is_playoff}")
+        #print (f"  -  {self.league.name} is playoff = {is_playoff}")
         if is_playoff and self.home_goals == self.away_goals:
             if rand.randint(1,100)<=60:
                 self.home_goals +=1
-                print("  -  home team  won on overtime")
+                #print("  -  home team  won on overtime")
             else:
                 self.away_goals +=1
-                print("  -  away team won on overtime")
+                #print("  -  away team won on overtime")
         self.played = True
 
         if is_playoff:
             self.league.check_elimination_quarterfinal(self.home_team, self.away_team)
-        print(f"  --  in play -- {self.played}: {self.home_goals} - {self.away_goals}")
+        #print(f"  --  in play -- {self.played}: {self.home_goals} - {self.away_goals}")
 
     def update_state(self,game_time_delta):
         position_list = ["goalkeeper","libero","leftdef","rightdef","lefthalf","righthalf","leftmid","centralmid","rightmid","leftattack","rightattack","sub1","sub2","sub3","sub4","sub5"]
@@ -105,7 +105,7 @@ class Match:
                 self.home_goals += 1
 
     def winner(self):
-        print(f"     -in winner--- {self.played}: {self.home_goals} - {self.away_goals}")
+        #print(f"     -in winner--- {self.played}: {self.home_goals} - {self.away_goals}")
         if self.played and self.home_goals > self.away_goals:
             return self.home_team
         elif self.played and self.away_goals > self.home_goals:

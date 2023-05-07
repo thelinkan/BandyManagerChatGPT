@@ -1,5 +1,6 @@
 from matchcode.match import Match
 from country import Country
+from debug_functions import print_playoff_series
 
 class Playoff:
     def __init__(self, name, country, quarter_final_rounds, semi_final_rounds, final_rounds, league, match_manager):
@@ -27,9 +28,11 @@ class Playoff:
         date_list = [[2024,2,15],[2024,2,18],[2024,2,21],[2024,2,24],[2024,2,27]]
         self.is_started = True
         round_matches = []  # create an empty list to hold the quarterfinals matches for this round
+        self.rounds["Quarterfinals"] = {"is_completed": False}
+        self.rounds["Semifinals"] = {"is_completed": False}
+        self.rounds["Finals"] = {"is_completed": False}
         # Create the quarter finals matches
         for i in range(num_matches):
-            series_matches = []
             date = date_list[0]
             r_year = date[0]
             r_month = date[1]
@@ -39,12 +42,12 @@ class Playoff:
             away_team = top_teams[-(i+1)]
             series = f"Quarterfinal {i+1}"
             print(f"Series: {series}")
-            self.rounds[series] = {"home_team": home_team, "away_team": away_team, "matches": []}
+            self.rounds["Quarterfinals"][series] = {"home_team": home_team, "away_team": away_team, "home_team_wins": 0, "away_team_wins": 0, "winner_team": None, "matches": []}
             print(f"game {i}: {home_team.name} - {away_team.name}")
             match = Match(home_team,away_team,r_year,r_month,r_day)
-            self.rounds[series]["matches"].append(match)
+            self.rounds["Quarterfinals"][series]["matches"].append(match)
             self.matches.append(match)
-            series_matches.append(match)  # add the match to the list for this round
+            #series_matches.append(match)  # add the match to the list for this round
             if self.match_manager is not None:
                 self.match_manager.add_match(match,self)
             # Alternate home and away teams for the number of rounds
@@ -56,13 +59,14 @@ class Playoff:
                 home_team, away_team = away_team, home_team
                 match = Match(home_team,away_team,r_year,r_month,r_day)
                 self.matches.append(match)
-                self.rounds[series]["matches"].append(match)
+                self.rounds["Quarterfinals"][series]["matches"].append(match)
                 #series_matches.append(match)  # add the match to the list for this round
                 if self.match_manager is not None:
                     self.match_manager.add_match(match,self)
 
         #self.rounds['quarterfinals'] = round_matches  # add the list of quarterfinals matches to the rounds dictionary with the key 'quarterfinals'
-        print(self.rounds)
+        #print("self.rounds")
+        #print(self.rounds)
 
     def check_elimination_quarterfinal(self, team1, team2):
         # Determine the number of matches needed to win the series
@@ -80,31 +84,98 @@ class Playoff:
         team1_wins = sum(1 for match in matches if match.winner() == team1)
         team2_wins = sum(1 for match in matches if match.winner() == team2)
 
-        #print(f"    -    {self.name}: testing {team1.name} - {team2.name} __ {team1_wins} - {team2_wins} __Matches Needed: {matches_needed}")
-        #for match in matches:
-        #    print(f"    -    {match.home_goals} - {match.away_goals} Winner: {match.winner()}")
+        qfinals = ["Quarterfinal 1","Quarterfinal 2","Quarterfinal 3","Quarterfinal 4"]
+        for qfinal in qfinals:
+            if(self.rounds["Quarterfinals"][qfinal]["home_team"] == team1 and self.rounds["Quarterfinals"][qfinal]["away_team"] == team2):
+                self.rounds["Quarterfinals"][qfinal]["home_team_wins"]=team1_wins
+                self.rounds["Quarterfinals"][qfinal]["away_team_wins"]=team2_wins
+                if team1_wins >= matches_needed:
+                    self.rounds["Quarterfinals"][qfinal]["winner_team"]=team1
+                if team2_wins >= matches_needed:
+                    self.rounds["Quarterfinals"][qfinal]["winner_team"]=team2
+                print(qfinal)
+                print_playoff_series(self.rounds["Quarterfinals"][qfinal])
+            if(self.rounds["Quarterfinals"][qfinal]["home_team"] == team2 and self.rounds["Quarterfinals"][qfinal]["away_team"] == team1):
+                self.rounds["Quarterfinals"][qfinal]["home_team_wins"]=team2_wins
+                self.rounds["Quarterfinals"][qfinal]["away_team_wins"]=team1_wins
+                if team1_wins >= matches_needed:
+                    self.rounds["Quarterfinals"][qfinal]["winner_team"]=team1
+                if team2_wins >= matches_needed:
+                    self.rounds["Quarterfinals"][qfinal]["winner_team"]=team2
+                print(qfinal)
+                print_playoff_series(self.rounds["Quarterfinals"][qfinal])
+
         # Check if one of the teams has already won enough matches
         if team1_wins >= matches_needed:
             # Delete the remaining matches between the two teams
-            #self.matches = [match for match in self.matches if not (match.home_team == team1 and match.away_team == team2) and not (match.home_team == team2 and match.away_team == team1)]
             for match in self.matches:
                 if (match.home_team == team1 and match.away_team == team2) or  (match.home_team == team2 and match.away_team == team1):
-                    #print (f"      -      eliminating : {match.away_team.name} <--> {match.away_team.name}")
                     match.played = True
-            #print(f"    -    team1 elimitates team 2")
             return team1
         elif team2_wins >= matches_needed:
             # Delete the remaining matches between the two teams
-            #self.matches = [match for match in self.matches if not (match.home_team == team1 and match.away_team == team2) and not (match.home_team == team2 and match.away_team == team1)]
             for match in self.matches:
                 if (match.home_team == team1 and match.away_team == team2) or  (match.home_team == team2 and match.away_team == team1):
                     match.played = True
-                    #print (f"      -      eliminating : {match.home_team.name} <--> {match.away_team.name}")
-            #print(f"    -    team2 elimitates team 1")
             return team2
 
         # No team has won enough matches yet
         return None
+
+    def check_quarterfinals_completed(self):
+        qfinals = ["Quarterfinal 1","Quarterfinal 2","Quarterfinal 3","Quarterfinal 4"]
+        if(self.is_started):
+            quarterfinals_completed = self.rounds["Quarterfinals"]["is_completed"]
+            if not quarterfinals_completed:
+                quarterfinals_completed = True
+                for qfinal in qfinals:
+                    if self.rounds["Quarterfinals"][qfinal]["winner_team"] is None:
+                        quarterfinals_completed = False
+            print(f"Test quarterfinals {self.name} - {quarterfinals_completed}")
+            return quarterfinals_completed
+        return False
+
+    def create_semi_schedule_from_quarter(self):
+        quarterfinals_completed = self.check_quarterfinals_completed()
+        if quarterfinals_completed:
+            team_list = []
+            for i in range(4):
+                qfinal = f"Quarterfinal {i+1}"
+                team_list.append(self.rounds["Quarterfinals"][qfinal]["winner_team"])
+            num_matches = 2
+            date_list = [[2024,3,3],[2024,3,6],[2024,3,9],[2024,3,12],[2024,3,15]]
+            for i in range(num_matches):
+                date = date_list[0]
+                r_year = date[0]
+                r_month = date[1]
+                r_day = date[2]
+                # Determine the home and away teams for the match
+                home_team = team_list[i]
+                away_team = team_list[-(i+1)]
+                series = f"Semifinal {i+1}"
+                self.rounds["Semifinals"][series] = {"home_team": home_team, "away_team": away_team, "home_team_wins": 0, "away_team_wins": 0, "winner_team": None, "matches": []}
+                match = Match(home_team,away_team,r_year,r_month,r_day)
+                self.rounds["Semifinals"][series]["matches"].append(match)
+                self.matches.append(match)
+                if self.match_manager is not None:
+                    self.match_manager.add_match(match,self)
+                    for j in range(self.semi_final_rounds - 1):
+                        date = date_list[j+1]
+                        r_year = date[0]
+                        r_month = date[1]
+                        r_day = date[2]
+                        home_team, away_team = away_team, home_team
+                        match = Match(home_team,away_team,r_year,r_month,r_day)
+                        self.matches.append(match)
+                        self.rounds["Semifinals"][series]["matches"].append(match)
+                        if self.match_manager is not None:
+                            self.match_manager.add_match(match,self)
+                print_playoff_series(self.rounds["Semifinals"][series])
+            #print(self.rounds["Semifinals"])
+           
+            
+
+
 
     def to_dict(self):
         return {
