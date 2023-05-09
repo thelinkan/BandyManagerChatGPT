@@ -63,6 +63,7 @@ class Match:
 
         if is_playoff:
             self.league.check_elimination_quarterfinal(self.home_team, self.away_team)
+            self.league.check_elimination_semifinal(self.home_team, self.away_team)
         #print(f"  --  in play -- {self.played}: {self.home_goals} - {self.away_goals}")
 
     def update_state(self,game_time_delta):
@@ -105,13 +106,12 @@ class Match:
                 self.home_goals += 1
 
     def winner(self):
-        #print(f"     -in winner--- {self.played}: {self.home_goals} - {self.away_goals}")
-        if self.played and self.home_goals > self.away_goals:
-            return self.home_team
-        elif self.played and self.away_goals > self.home_goals:
-            return self.away_team
-        else:
-            return None
+        if self.played and self.home_goals is not None and self.away_goals is not None:
+            if self.home_goals > self.away_goals:
+                return self.home_team
+            elif self.away_goals > self.home_goals:
+                return self.away_team
+        return None
 
     def load_match(self, home_goals, away_goals,played):
         self.home_goals = home_goals

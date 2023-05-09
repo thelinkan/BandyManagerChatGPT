@@ -175,6 +175,61 @@ class Playoff:
                 print_playoff_series(self.rounds["Semifinals"][series])
             #print(self.rounds["Semifinals"])
            
+    def check_elimination_semifinal(self, team1, team2):
+        if self.rounds["Semifinals"]["is_scheduled"]:
+            # Determine the number of matches needed to win the series
+            if self.semi_final_rounds == 5:
+                matches_needed = 3
+            elif self.semi_final_rounds == 3:
+                matches_needed = 2
+            else:
+                matches_needed = 1
+
+            # Get the matches between the two teams
+            matches = [match for match in self.matches if match.home_team in [team1, team2] and match.away_team in [team1, team2]]
+
+            # Count the number of matches won by each team
+            team1_wins = sum(1 for match in matches if match.winner() == team1)
+            team2_wins = sum(1 for match in matches if match.winner() == team2)
+
+            sfinals = ["Semifinal 1","Semifinal 2"]
+            for sfinal in sfinals:
+                if(self.rounds["Semifinals"][sfinal]["home_team"] == team1 and self.rounds["Semifinals"][sfinal]["away_team"] == team2):
+                    self.rounds["Semifinals"][sfinal]["home_team_wins"]=team1_wins
+                    self.rounds["Semifinals"][sfinal]["away_team_wins"]=team2_wins
+                    if team1_wins >= matches_needed:
+                        self.rounds["Semifinals"][sfinal]["winner_team"]=team1
+                    if team2_wins >= matches_needed:
+                        self.rounds["Semifinals"][sfinal]["winner_team"]=team2
+                    #print(sfinal)
+                    #print_playoff_series(self.rounds["Quarterfinals"][sfinal])
+                if(self.rounds["Semifinals"][sfinal]["home_team"] == team2 and self.rounds["Semifinals"][sfinal]["away_team"] == team1):
+                    self.rounds["Semifinals"][sfinal]["home_team_wins"]=team2_wins
+                    self.rounds["Semifinals"][sfinal]["away_team_wins"]=team1_wins
+                    if team1_wins >= matches_needed:
+                        self.rounds["Semifinals"][sfinal]["winner_team"]=team1
+                    if team2_wins >= matches_needed:
+                        self.rounds["Semifinals"][sfinal]["winner_team"]=team2
+                    #print(sfinal)
+                    #print_playoff_series(self.rounds["Quarterfinals"][sfinal])
+
+            # Check if one of the teams has already won enough matches
+            if team1_wins >= matches_needed:
+                # Delete the remaining matches between the two teams
+                for match in self.matches:
+                    if (match.home_team == team1 and match.away_team == team2) or  (match.home_team == team2 and match.away_team == team1):
+                        match.played = True
+                return team1
+            elif team2_wins >= matches_needed:
+                # Delete the remaining matches between the two teams
+                for match in self.matches:
+                    if (match.home_team == team1 and match.away_team == team2) or  (match.home_team == team2 and match.away_team == team1):
+                        match.played = True
+                return team2
+
+            # No team has won enough matches yet
+            return None
+
     def check_semifinals_completed(self):
         sfinals = ["Semifinal 1","Semifinal 2"]
         if(self.is_started and self.rounds["Semifinals"]["is_scheduled"]):
@@ -214,7 +269,7 @@ class Playoff:
                 self.matches.append(match)
                 if self.match_manager is not None:
                     self.match_manager.add_match(match,self)
-                    for j in range(self.semi_final_rounds - 1):
+                    for j in range(self.final_rounds - 1):
                         date = date_list[j+1]
                         r_year = date[0]
                         r_month = date[1]

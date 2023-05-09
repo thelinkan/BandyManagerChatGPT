@@ -61,11 +61,40 @@ def debugprint_playoff(playoff):
 
     #print(playoff.rounds)
     for round in playoff.rounds:
+        if (round == "Quarterfinals"):
+            serieses = ["Quarterfinal 1","Quarterfinal 2","Quarterfinal 3","Quarterfinal 4"]
+        if (round == "Semifinals"):
+            serieses = ["Semifinal 1","Semifinal 2"]
+        if (round == "Finals"):
+            serieses = ["Final 1"]
         round_data = playoff.rounds[round]
+        is_scheduled = round_data["is_scheduled"]
+        is_completed = round_data["is_completed"]
         print(round)
-        print(f"  is scheduled: {round_data.is_scheduled}")
-        print(f"  is completed: {round_data.is_completed}")
-        print(round_data)
+        print(f"  is scheduled: {is_scheduled}")
+        print(f"  is completed: {is_completed}")
+        print("")
+        if is_scheduled:
+            for series in serieses:
+                series_data = round_data[series]
+                home_team = series_data["home_team"]
+                away_team = series_data["away_team"]
+                home_team_wins = series_data["home_team_wins"]
+                away_team_wins = series_data["away_team_wins"]
+                winner_team = series_data["winner_team"]
+                matches = series_data["matches"]
+                print("")
+                print(f"    {series}")    
+                print(f"    {home_team.name} - {away_team.name}: {home_team_wins} - {away_team_wins}")    
+                if winner_team is not None:
+                    print(f"      Winner - {winner_team.name}")
+                for match in matches:
+                    #match_home_team = match.home_team
+                    #match_home_team = match.awa
+                    print(f"        {match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
+                #print(series_data)
+
+        #print(round_data)
 
     print("========================================")
     print("|                                      |")
