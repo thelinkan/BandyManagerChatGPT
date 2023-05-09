@@ -12,6 +12,8 @@ from person import PlayerManager
 from uuidencoder import UUIDEncoder
 from matchcode.matchmanager import MatchManager
 
+from debug_functions import print_yesterdays_results, debugprint_playoff
+
 class Game:
     def __init__(self,year,month,day):
         self.year = year
@@ -442,6 +444,9 @@ class Game:
                 #league.print_table()
             for playoff in self.playoffs:
                 playoff.create_semi_schedule_from_quarter()
+                playoff.create_final_schedule_from_semi()
+                if playoff.is_started:
+                    debugprint_playoff(playoff)
             #    for match in playoff.matches:
             #        print(f" * {match.home_team.name} - {match.away_team.name} : {match.home_goals} - {match.away_goals} __ {match.played}")
             #    playoff.check_elimination_quarterfinal()

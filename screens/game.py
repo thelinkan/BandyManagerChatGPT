@@ -9,6 +9,8 @@ from guielements import home_button, inbox_button, newspaper_button, senior_squa
 from guielements import u19_squad_button,forward_time_button, save_game_button, quit_game_button
 from miscfunctions import get_club_from_team, draw_calendar, draw_jersey, yesterday
 
+from debug_functions import print_yesterdays_results
+
 pygame.init()
 
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
@@ -264,6 +266,7 @@ def draw_yesterday_results(game, team):
     month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
     if len(matches_today) > 0:
+        #print_yesterdays_results(game)
         y = 10
         text = medium_font.render(f"Matches {day_yesterday} {month_names[month_yesterday-1]} {year_yesterday}", True, BLACK)
         y += 5
