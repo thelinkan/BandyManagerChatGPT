@@ -12,6 +12,8 @@ from person import PlayerManager
 from uuidencoder import UUIDEncoder
 from matchcode.matchmanager import MatchManager
 
+from screens.screensMatch import draw_view_match
+
 from debug_functions import print_yesterdays_results, debugprint_playoff
 
 class Game:
@@ -418,6 +420,10 @@ class Game:
                 if self.manager.team == match.home_team.name or self.manager.team == match.away_team.name:
                     match_viewed = True
                     match_to_view = match
+                    draw_view_match(self,match_to_view)
+                    if match.league.is_playoff:
+                        match.league.check_elimination_quarterfinal(match.home_team, match.away_team)
+                        match.league.check_elimination_semifinal(match.home_team, match.away_team)
                 else:
                     print(f"    tick play {match.home_team.name} - {match.away_team.name}: {match.league.name}")
                     #if self.playoff_for_league is not None:

@@ -164,7 +164,7 @@ while running:
     if game_state == "game_mainscreen":
         rectslist_1, rectslist_2, start_page = draw_game_mainscreen(game, selected_player_index,isMatchesPlayed, start_page)
     if game_state == "view_match":
-        draw_view_match(game,match_to_view)
+        #draw_view_match(game,match_to_view)
         game_state = "game_mainscreen"
     clock.tick(30)
 
