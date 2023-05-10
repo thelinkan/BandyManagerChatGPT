@@ -96,7 +96,8 @@ def draw_jersey(jersey_colors,jersey_number):
     return jersey_surface
 
 
-def return_schedule(num_teams,num_rounds):
+def return_schedule(num_teams,num_rounds):
+
     print(f"{num_teams}  {num_rounds}")
     if(num_teams == 4):
         schedule1 = [[(1,2),(3,0)],[(2,3),(0,1)],[(1,3),(2,0)]]
@@ -246,3 +247,23 @@ def get_weekdays(start_date, end_date, weekday):
     weekdays_list = [start_date + datetime.timedelta(days=x) for x in range(days) if (start_date + datetime.timedelta(days=x)).weekday() == weekday_idx]
 
     return [(d.year, d.month, d.day) for d in weekdays_list]
+
+def get_k_integers(n, k):
+    if k > n:
+        raise ValueError("k cannot be greater than n")
+    elif k == n:
+        return list(range(n))
+    elif k > n/2:
+        excluded = set(get_k_integers(n - k, n - k))
+        result = set()
+        while len(result) < k:
+            num = random.randint(0, n-1)
+            if num not in excluded:
+                result.add(num)
+        return list(result)
+    else:
+        result = set()
+        while len(result) < k:
+            num = random.randint(0, n-1)
+            result.add(num)
+        return list(result)
