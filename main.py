@@ -14,7 +14,7 @@ from screens.screensMatch import draw_view_match
 from gameloop.tactics import gameloop_tactics
 from guielements import font,medium_font, small_font, button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
-from guielements import home_button,senior_squad_button, tactics_button, schedule_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
+from guielements import home_button,media_button,senior_squad_button, tactics_button, schedule_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
 
 game_state = "start_menu"
 
@@ -114,6 +114,11 @@ while running:
                         if rect.collidepoint(event.pos) and i == 1:
                             start_page = start_page + 1
                             break                    
+                if media_button.rect.collidepoint(event.pos):
+                    game.selected_team_index=-1
+                    selected_player_index=-1
+                    game.inspected_team = None
+                    game.game_page = "media"
                 if senior_squad_button.rect.collidepoint(event.pos):
                     game.selected_team_index=-1
                     selected_player_index=-1

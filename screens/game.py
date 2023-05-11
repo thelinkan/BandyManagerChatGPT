@@ -5,7 +5,7 @@ from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY,FONTSIZE_LARGE
 from constants import TABLE_HEADER_COLOR, TABLE_ROW_ODD_COLOR, TABLE_ROW_EVEN_COLOR
 from guielements import font, medium_font, small_font,very_small_font ,very_small_bold_font , button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
-from guielements import home_button, inbox_button, newspaper_button, senior_squad_button, tactics_button, training_button, schedule_button, competition_button
+from guielements import home_button, inbox_button, media_button, senior_squad_button, tactics_button, training_button, schedule_button, competition_button
 from guielements import u19_squad_button,forward_time_button, save_game_button, quit_game_button
 from miscfunctions import get_club_from_team, draw_calendar, draw_jersey, yesterday
 
@@ -674,6 +674,28 @@ def draw_tactics_playerlist(game,team, selected_player_index, playerlist_offset)
         playerlist_surface.blit(player_surface,(350,0))
     return playerlist_surface,player_rects,hover_player_uuid, selected_player_uuid
 
+def draw_media(game):
+    mouse_pos = pygame.mouse.get_pos()
+    media_surface,news_rects = draw_media_newslist(game)
+    screen.blit(media_surface,(140,125))
+
+    return news_rects
+
+def draw_media_newslist(game):
+    news_rects = []
+    media_surface = pygame.Surface((600,600), pygame.SRCALPHA)
+    header_rect = pygame.Rect(0, 0, 450, 30)
+    pygame.draw.rect(media_surface, TABLE_HEADER_COLOR, header_rect)
+    header_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
+    text = header_font.render("Date", True, BLACK)
+    text_rect = text.get_rect(left=header_rect.left + 10, centery=header_rect.centery)
+    media_surface.blit(text, text_rect)
+
+    text = header_font.render("News", True, BLACK)
+    text_rect = text.get_rect(right=header_rect.right - 10, centery=header_rect.centery)
+    media_surface.blit(text, text_rect)
+
+    return media_surface,news_rects
 
 def draw_game_mainscreen(game, selected_player_index, isMatchesPlayed, start_page):
     # Draw screen
@@ -707,7 +729,7 @@ def draw_game_mainscreen(game, selected_player_index, isMatchesPlayed, start_pag
 
     home_button.draw(screen)
     inbox_button.draw(screen)
-    newspaper_button.draw(screen)
+    media_button.draw(screen)
     senior_squad_button.draw(screen)
     tactics_button.draw(screen)
     training_button.draw(screen)
@@ -732,6 +754,8 @@ def draw_game_mainscreen(game, selected_player_index, isMatchesPlayed, start_pag
         rectlist_1 = draw_playerlist(game,team_viewed, selected_player_index)
     if (game.game_page == "tactics"):
         rectlist_1, rectlist_2 = draw_tactics(game,manager_team, selected_player_index)
+    if (game.game_page == "media"):
+        rectlist_1 = draw_media(game)
     if (game.game_page == "schedule"):
         rectlist_1, start_page = draw_schedule(game,leagues[0].name, manager_team, start_page)
     if (game.game_page == "competition"):
