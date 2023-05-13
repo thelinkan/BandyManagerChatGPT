@@ -286,12 +286,34 @@ class Playoff:
 
 
     def to_dict(self):
+        rounds_data = []
+
+        
+        for round in self.rounds:
+            round_data_raw = self.rounds[round]
+
+            
+            round_data = {
+                'name': round,
+                'is_completed': round_data_raw['is_completed'],
+                'is_scheduled': round_data_raw['is_scheduled'],
+
+            }
+            print("round")
+            print("=====")
+            print(round)
+            print()
+            print(self.rounds[round])
+            rounds_data.append(round_data)
         return {
             'name': self.name,
             'country': self.country,
             'quarter_final_rounds': self.quarter_final_rounds,
             'semi_final_rounds': self.semi_final_rounds,
             'final_rounds': self.final_rounds,
+            'league': self.league.name,
+            'rounds': rounds_data,
+            'teams': [team.name for team in self.teams],
             'is_started': self.is_started,
 
         }
