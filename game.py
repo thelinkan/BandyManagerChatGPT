@@ -228,21 +228,23 @@ class Game:
                     if p_data["name"] == playoff_name:
                         playoff = Playoff(p_data["name"], p_data["country"], p_data["quarter_final_rounds"], p_data["semi_final_rounds"], p_data["final_rounds"],league, match_manager=self.match_manager)
                         self.playoffs.append(playoff)
-                        team_names = p_data.pop("teams")
-                        playoff_teams = []
-                        for team_name in team_names:
+                        if "teams" in p_data:
+                            team_names = p_data.pop("teams")
+                            playoff_teams = []
+                            for team_name in team_names:
                                 #print(self.teams)
                                 team = self.teams.get(team_name, None)
                                 if not team:
                                     raise ValueError(f"No team found with name '{team_name}'")
                                 playoff_teams.append(team)
-                        playoff.teams = playoff_teams
+                            playoff.teams = playoff_teams
                         playoff.is_started = p_data["is_started"]
                         #print(league_data)
                         #print(league.num_teams_to_playoff)
                         #print(league_data["num_teams_to_playoff"])
                         league.num_teams_to_playoff=league_data["num_teams_to_playoff"]
-                        playoff.load_rounds(self,p_data["rounds"])
+                        if "rounds" in p_data:
+                            playoff.load_rounds(self,p_data["rounds"])
                         debugprint_playoff(playoff)
 
                         break
@@ -435,7 +437,8 @@ class Game:
                 if self.manager.team == match.home_team.name or self.manager.team == match.away_team.name:
                     match_viewed = True
                     match_to_view = match
-                    draw_view_match(self,match_to_view)
+                    if not match.played:
+                        draw_view_match(self,match_to_view)
                     if match.league.is_playoff:
                         match.league.check_elimination_quarterfinal(match.home_team, match.away_team)
                         match.league.check_elimination_semifinal(match.home_team, match.away_team)
