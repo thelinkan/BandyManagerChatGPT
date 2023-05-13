@@ -209,7 +209,9 @@ class Game:
             team_names = league_data.pop("teams")
             league_teams = []
             for team_name in team_names:
+                #print()
                 #print(self.teams)
+                #print(f"team name {team_name}")
                 team = self.teams.get(team_name, None)
                 if not team:
                     raise ValueError(f"No team found with name '{team_name}'")
@@ -226,11 +228,23 @@ class Game:
                     if p_data["name"] == playoff_name:
                         playoff = Playoff(p_data["name"], p_data["country"], p_data["quarter_final_rounds"], p_data["semi_final_rounds"], p_data["final_rounds"],league, match_manager=self.match_manager)
                         self.playoffs.append(playoff)
-                        print(league_data)
-                        print(league.num_teams_to_playoff)
-                        print(league_data["num_teams_to_playoff"])
+                        team_names = p_data.pop("teams")
+                        playoff_teams = []
+                        for team_name in team_names:
+                                #print(self.teams)
+                                team = self.teams.get(team_name, None)
+                                if not team:
+                                    raise ValueError(f"No team found with name '{team_name}'")
+                                playoff_teams.append(team)
+                        playoff.teams = playoff_teams
+                        playoff.is_started = p_data["is_started"]
+                        #print(league_data)
+                        #print(league.num_teams_to_playoff)
+                        #print(league_data["num_teams_to_playoff"])
                         league.num_teams_to_playoff=league_data["num_teams_to_playoff"]
-                        #print(self.playoffs)
+                        playoff.load_rounds(self,p_data["rounds"])
+                        debugprint_playoff(playoff)
+
                         break
                 if playoff is None:
                     raise ValueError(f"No playoff found with name '{playoff_name}'")
@@ -240,6 +254,7 @@ class Game:
         #for key, value in self.countries.items():
         #    print(value.to_dict())
         print("Data loaded")
+        #print(self.playoffs)
         #print(self.year)
         #print(self.manager.return_team())
 

@@ -283,6 +283,50 @@ class Playoff:
                 print_playoff_series(self.rounds["Finals"][series])
             #print(self.rounds["Semifinals"])
 
+    def load_rounds(self,game,rounds_data):
+        print(game.teams)
+        print()
+        print(f"Rounds_data: {rounds_data}")
+        for round_data in rounds_data:
+            print()
+            print()
+            print(f"Round_data: {round_data}")
+            round_name = round_data["name"]
+            round_is_scheduled = round_data["is_scheduled"]
+            round_is_completed = round_data["is_completed"]
+            self.rounds[round_name] = {"is_completed": round_is_completed, "is_scheduled": round_is_scheduled}            
+            serieses = round_data["serieses"]
+            for series in serieses:
+                series_name = series["name"]
+                home_team = game.teams.get(series["home_team"], None)
+                home_team_wins = series["home_team_wins"]
+                away_team = game.teams.get(series["away_team"], None)
+                away_team_wins = series["away_team_wins"]
+                winner_team = game.teams.get(series["winner_team"], None)
+                self.rounds[round_name][series_name] = {"home_team": home_team, "away_team": away_team, "home_team_wins": home_team_wins, "away_team_wins": away_team_wins, "winner_team": winner_team, "matches": []}
+                series_matches = series["matches"]
+                for match in series_matches:
+                    home_team = game.teams[match['home_team']]
+                    away_team = game.teams[match['away_team']]
+                    year = match['year']
+                    month = match['month']
+                    day = match['day']
+                    home_goals = match['home_goals']
+                    away_goals = match['away_goals']
+                    played = match['played']
+                    new_match = Match(home_team,away_team,year,month,day)
+                    new_match.load_match(home_goals,away_goals,played)
+                    self.matches.append(new_match)
+                    self.rounds[round_name][series_name]["matches"].append(new_match)
+                    if self.match_manager is not None:
+                        self.match_manager.add_match(new_match,self)
+                print()
+                print()
+                print(f"series: {series}")
+                print()
+        print("** self.rounds **")
+        print(self.rounds)
+
 
 
     def to_dict(self):
@@ -291,13 +335,45 @@ class Playoff:
         
         for round in self.rounds:
             round_data_raw = self.rounds[round]
+            if (round == "Quarterfinals"):
+                serieses = ["Quarterfinal 1","Quarterfinal 2","Quarterfinal 3","Quarterfinal 4"]
+            if (round == "Semifinals"):
+                serieses = ["Semifinal 1","Semifinal 2"]
+            if (round == "Finals"):
+                serieses = ["Final 1"]
+            serieses_data = []
+            if round_data_raw['is_scheduled']:
+                
+                for series in serieses:
+                    series_data_raw = round_data_raw[series]
+                    home_team = series_data_raw["home_team"]
+                    home_team_name = home_team.name
+                    away_team = series_data_raw["away_team"]
+                    away_team_name = away_team.name
+                    home_team_wins = series_data_raw["home_team_wins"]
+                    away_team_wins = series_data_raw["away_team_wins"]
+                    winner_team = series_data_raw["winner_team"]
+                    matches = series_data_raw["matches"]
+                    if winner_team is not None:
+                        winner_team = winner_team.name
+                    series_data = {
+                        'name': series,
+                        'home_team': home_team_name,
+                        'home_team_wins': home_team_wins,
+                        'away_team': away_team_name,
+                        'away_team_wins': away_team_wins,
+                        'winner_team': winner_team,
+                        'matches': [match.to_dict() for match in matches],
+                    }
+                    serieses_data.append(series_data)
+                    
 
             
             round_data = {
                 'name': round,
                 'is_completed': round_data_raw['is_completed'],
                 'is_scheduled': round_data_raw['is_scheduled'],
-
+                'serieses': serieses_data
             }
             print("round")
             print("=====")
