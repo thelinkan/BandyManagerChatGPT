@@ -748,6 +748,7 @@
       "name": "Mjøndalen IF",
       "country": "Norway",
       "home_arena": "Vassenga",
+      "logo": "mjondalenif.png",
       "club_rating": 75,
       "teams": [
         {
@@ -756,7 +757,8 @@
           "team_rating": 70,
           "num_players": 16,
           "num_int_players": 1,
-		  "jersey_colors": "[(106,63,32),(106,63,32),(106,63,32),(0,0,0),(255,255,255)]"
+    		  "jersey_colors": "[(106,63,32),(106,63,32),(106,63,32),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[100,(255,255,255)],[151,(0,0,0)]]"
         },
         {
           "name": "Mjøndalen IF U19",
@@ -772,6 +774,7 @@
       "name": "Ready bandy",
       "country": "Norway",
       "home_arena": "Vassenga",
+      "logo": "ready.png",
       "club_rating": 75,
       "teams": [
         {
@@ -780,7 +783,8 @@
           "team_rating": 70,
           "num_players": 16,
           "num_int_players": 1,
-		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+		      "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[100,(255,255,255)],[150,(0,0,0)]]"
 		},
         {
           "name": "Ready bandy U19",
@@ -812,6 +816,7 @@
       "name": "Røa IL",
       "country": "Norway",
       "home_arena": "Vassenga",
+      "logo": "roail.png",
       "club_rating": 90,
       "teams": [
         {
@@ -820,7 +825,8 @@
           "team_rating": 90,
           "num_players": 17,
           "num_int_players": 1,
-		  "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]"
+		      "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[151,(0,0,0)]]"
         },
         {
           "name": "Røa IL U19",
@@ -836,6 +842,7 @@
       "name": "Solberg SK",
       "country": "Norway",
       "home_arena": "Solbergbanen",
+      "logo": "solbergsk.png",
       "club_rating": 75,
       "teams": [
         {
@@ -844,15 +851,16 @@
           "team_rating": 70,
           "num_players": 18,
           "num_int_players": 1,
-		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
-		},
+    		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]",
+          "jersey_decorations": "[[151,(0,0,0)]]"
+		    },
         {
           "name": "Solberg SK U19",
           "team_type": "Men U19",
           "team_rating": 60,
           "num_players": 16,
           "num_int_players": 0,
-		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
+		      "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
         },
         {
           "name": "Solberg SK (W)",
@@ -860,7 +868,7 @@
           "team_rating": 75,
           "num_players": 16,
           "num_int_players": 3,
-		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
+		      "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
         },
         {
           "name": "Solberg SK F19",
@@ -868,7 +876,7 @@
           "team_rating": 65,
           "num_players": 16,
           "num_int_players": 0,
-		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
+		      "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(0,0,0)]"
         }
       ]
     },
@@ -876,6 +884,7 @@
       "name": "Stabæk bandy",
       "country": "Norway",
       "home_arena": "Vassenga",
+      "logo": "stabaek.png",
       "club_rating": 75,
       "teams": [
         {
@@ -885,7 +894,7 @@
           "num_players": 16,
           "num_int_players": 1,
           "jersey_colors": "[(52,145,241),(54,59,91),(52,145,241),(0,0,0),(255,255,255)]",
-          "jersey_decorations": "[[100,(255,255,255)],[200,(255,255,255)],[300,(255,255,255)]]"
+          "jersey_decorations": "[[100,(255,255,255)],[151,(0,0,0)],[200,(255,255,255)],[300,(255,255,255)]]"
         },
         {
           "name": "Stabæk bandy U19",
@@ -941,6 +950,7 @@
       "name": "Ullern IF",
       "country": "Norway",
       "home_arena": "Ullernbanen",
+      "logo": "ullernif.png",
       "club_rating": 75,
       "teams": [
         {
@@ -949,7 +959,8 @@
           "team_rating": 70,
           "num_players": 16,
           "num_int_players": 1,
-		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(255,0,0)]"
+    		  "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(0,0,0),(255,0,0)]",
+          "jersey_decorations": "[[151,(0,0,0)]]"
         },
         {
           "name": "Ullern IF U19",
@@ -965,6 +976,7 @@
       "name": "Ullevål IL",
       "country": "Norway",
       "home_arena": "Bergbanen",
+      "logo": "ullevalil.png",
       "club_rating": 75,
       "teams": [
         {
@@ -973,7 +985,8 @@
           "team_rating": 70,
           "num_players": 18,
           "num_int_players": 1,
-		  "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]"
+    		  "jersey_colors": "[(235,190,75),(235,190,75),(235,190,75),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[100,(25,19,163)],[151,(0,0,0)],[400,(255,255,255)]]"
 		},
         {
           "name": "Ullevål IL U19",
