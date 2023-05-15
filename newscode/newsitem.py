@@ -6,6 +6,7 @@ class NewsItem:
         self.headline = headline
         self.text = text
         self.media_outlet = media_outlet
+        self.is_read = False
         self.tags = []
         
     def add_tag(self, tag):

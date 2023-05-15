@@ -676,15 +676,19 @@ def draw_tactics_playerlist(game,team, selected_player_index, playerlist_offset)
 
 def draw_media(game):
     mouse_pos = pygame.mouse.get_pos()
-    media_surface,news_rects = draw_media_newslist(game)
+    media_surface,news_rects = draw_media_newslist(game,(140,125))
     screen.blit(media_surface,(140,125))
 
     return news_rects
 
-def draw_media_newslist(game):
+def draw_media_newslist(game,newslist_offset):
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos_on_list = mouse_pos[0] - newslist_offset[0], mouse_pos[1] - newslist_offset[1]
     news_rects = []
     media_surface = pygame.Surface((600,600), pygame.SRCALPHA)
     header_rect = pygame.Rect(0, 0, 450, 30)
+
+    
     pygame.draw.rect(media_surface, TABLE_HEADER_COLOR, header_rect)
     header_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
     text = header_font.render("Date", True, BLACK)
@@ -694,6 +698,41 @@ def draw_media_newslist(game):
     text = header_font.render("News", True, BLACK)
     text_rect = text.get_rect(right=header_rect.right - 10, centery=header_rect.centery)
     media_surface.blit(text, text_rect)
+
+    player_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
+    row_height = 30
+
+    for i, newsitem in enumerate(game.newsitems):
+        if i % 2 == 0:
+            row_color = TABLE_ROW_EVEN_COLOR
+        else:
+            row_color = TABLE_ROW_ODD_COLOR
+        #print(game.selected_news_index )
+        row_rect = pygame.Rect(0, 30 + i * row_height, 450, row_height)
+        if(game.selected_news_index == i):
+           row_color = (200,0,0)
+           newsitem.is_read = True
+        if mouse_pos and row_rect.collidepoint(mouse_pos_on_list):
+            row_color = (255,200,200)
+
+        pygame.draw.rect(media_surface, row_color, row_rect) 
+        news_rects.append(row_rect)
+        year = newsitem.date[0]
+        month = newsitem.date[1]
+        day = newsitem.date[2]
+        text = player_font.render(f"{str(year)}-{str(month)}-{str(day)}", True, BLACK)
+        text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
+        media_surface.blit(text, text_rect)
+
+        if(not newsitem.is_read):
+            headline_text = f"(new) {newsitem.headline}"
+        else:
+            headline_text = newsitem.headline
+
+        text = player_font.render(headline_text, True, BLACK)
+        text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
+        media_surface.blit(text, text_rect)
+
 
     return media_surface,news_rects
 

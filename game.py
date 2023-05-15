@@ -11,6 +11,8 @@ from person import Player
 from person import PlayerManager
 from uuidencoder import UUIDEncoder
 from matchcode.matchmanager import MatchManager
+from newscode.mediaoutlet import MediaOutlet
+from newscode.newsitem import NewsItem
 
 from screens.screensMatch import draw_view_match
 
@@ -26,10 +28,13 @@ class Game:
         self.leagues = []
         self.playoffs = []
         self.clubs = []
+        self.mediaoutlets = []
+        self.newsitems = []
         self.player_manager = PlayerManager()
         self.teams = {} # Add a dictionary to store teams
         self.match_manager = MatchManager()
         self.selected_team_index = -1
+        self.selected_news_index = -1
         self.inspected_team = None
 
         self.game_page=None
@@ -55,6 +60,8 @@ class Game:
                 player_origins_male[name] = country_data['player_origins_male']
             if 'player_origins_female' in country_data:
                 player_origins_female[name] = country_data['player_origins_female']
+        mediaoutlet = MediaOutlet('Evening news','paper','Sweden')
+        self.mediaoutlets.append (mediaoutlet)
         with open('data/clubs.json', encoding='utf-8') as f:
             data = json.load(f)
         self.clubs = self.read_clubs_from_json(data)
@@ -297,8 +304,21 @@ class Game:
             json.dump(game_data, file, indent=4, cls=UUIDEncoder)
         print("Game Data Saved")
 
-    def set_manager_team(self,team):
-        self.manager.set_team(team)
+    def set_manager_team(self,team_name,is_new_game):
+        self.manager.set_team(team_name)
+        if is_new_game:
+            print("set manager team")
+            i=0
+            for mediaoutlet in self.mediaoutlets:
+                if i==0:
+                    headline = f"{self.manager.name} new manager of {team_name}"
+                    mediatext = f"{self.manager.name} hase become the manager of {team_name}. "
+                    
+                    newsitem = NewsItem((self.year,self.month,self.day),headline, mediatext, mediaoutlet)
+                    self.newsitems.append(newsitem)
+                i += 1
+
+            pass
 
     def return_manager_team(self):
         self.manager.return_team

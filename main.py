@@ -25,6 +25,7 @@ selected_country_index=-1
 selected_league_index = -1
 selected_team_index=-1
 selected_player_index=-1
+selected_news_index=-1
 isMatchesPlayed = False
 start_page=-1
 
@@ -80,7 +81,7 @@ while running:
                         break
                 if selected_team_index>=0:
                     if choose_team_button.rect.collidepoint(event.pos):
-                        game.set_manager_team(selected_team)
+                        game.set_manager_team(selected_team,True)
                         game_state = "game_mainscreen"
                         game.game_page = "home"
                         #print("klick "+ selected_team)
@@ -103,6 +104,15 @@ while running:
                             game.selected_team_index = i
                             print(game.selected_team_index)
                             break
+                if(game.game_page == "media"):
+                    playerlist_offset = (140,110)
+                    event_pos = event.pos
+                    event_pos_on_list = event_pos[0] - playerlist_offset[0], event_pos[1] - playerlist_offset[1]
+                    for i, rect in enumerate(rectslist_1):
+                        if rect.collidepoint(event_pos_on_list):
+                            game.selected_news_index = i
+                            print(game.selected_news_index)
+                            break
                     
                 if(game.game_page == "tactics"):
                     selected_player_index = gameloop_tactics(game, rectslist_1, rectslist_2, selected_player_index, event.pos)
@@ -117,6 +127,7 @@ while running:
                 if media_button.rect.collidepoint(event.pos):
                     game.selected_team_index=-1
                     selected_player_index=-1
+                    game.selected_news_index=-1
                     game.inspected_team = None
                     game.game_page = "media"
                 if senior_squad_button.rect.collidepoint(event.pos):
@@ -167,8 +178,8 @@ while running:
     if game_state == "new_game_2":
         country_rects,league_rects, team_rects,selected_team=draw_newgame2_menu(game,selected_country_index,selected_league_index,selected_team_index)
     if game_state == "game_mainscreen":
-        rectslist_1, rectslist_2, start_page = draw_game_mainscreen(game, selected_player_index,isMatchesPlayed, start_page)
-    if game_state == "view_match":
+        rectslist_1, rectslist_2, start_page = draw_game_mainscreen(game, selected_player_index, isMatchesPlayed, start_page)
+    if game_state == "view_match":  
         #draw_view_match(game,match_to_view)
         game_state = "game_mainscreen"
     clock.tick(30)
