@@ -5,7 +5,7 @@
         "population": 10000000,
         "male_proficiency": 100,
         "female_proficiency": 100,
-    		"flag_path": "flags/sweden.png",
+    		"flag_path": "images/flags/sweden.png",
         "player_origins_male": [
             {"country": "Finland", "percentage": 40},
             {"country": "Russia", "percentage": 30},
@@ -27,7 +27,7 @@
         "population": 5500000,
         "male_proficiency": 90,
         "female_proficiency": 95,
-    		"flag_path": "flags/finland.png",
+    		"flag_path": "images/flags/finland.png",
         "player_origins_male": [
             {"country": "Sweden", "percentage": 40},
             {"country": "Russia", "percentage": 30},
@@ -42,7 +42,7 @@
         "population": 5300000,
         "male_proficiency": 80,
         "female_proficiency": 85,
-    		"flag_path": "flags/norway.png",
+    		"flag_path": "images/flags/norway.png",
         "player_origins_male": [
             {"country": "Sweden", "percentage": 80},
             {"country": "Finland", "percentage": 15},
@@ -59,7 +59,7 @@
         "population": 144000000,
         "male_proficiency": 85,
         "female_proficiency": 95,
-    		"flag_path": "flags/russia.png"
+    		"flag_path": "images/flags/russia.png"
     },
     {
         "name": "Belarus",
@@ -67,7 +67,7 @@
         "population": 9400000,
         "male_proficiency": 65,
         "female_proficiency": 70,
-    		"flag_path": "flags/belarus.png"
+    		"flag_path": "images/flags/belarus.png"
     },
     {
         "name": "Ukraine",
@@ -75,7 +75,7 @@
         "population": 42000000,
         "male_proficiency": 60,
         "female_proficiency": 65,
-    		"flag_path": "flags/ukraine.png"
+    		"flag_path": "images/flags/ukraine.png"
     },
     {
         "name": "Kazakhstan",
@@ -83,7 +83,7 @@
         "population": 18000000,
         "male_proficiency": 55,
         "female_proficiency": 60,
-    		"flag_path": "flags/kazakhstan.png"
+    		"flag_path": "images/flags/kazakhstan.png"
     },
     {
         "name": "Netherlands",
@@ -91,7 +91,7 @@
         "population": 17000000,
         "male_proficiency": 40,
         "female_proficiency": 45,
-    		"flag_path": "flags/netherlands.png"
+    		"flag_path": "images/flags/netherlands.png"
     },
     {
         "name": "Hungary",
@@ -99,7 +99,7 @@
         "population": 9700000,
         "male_proficiency": 35,
         "female_proficiency": 40,
-    		"flag_path": "flags/hungary.png"
+    		"flag_path": "images/flags/hungary.png"
     },
     {
         "name": "Switzerland",
@@ -107,7 +107,7 @@
         "population": 8600000,
         "male_proficiency": 30,
         "female_proficiency": 35,
-    		"flag_path": "flags/switzerland.png"
+    		"flag_path": "images/flags/switzerland.png"
     },
     {
         "name": "Estonia",
@@ -115,7 +115,7 @@
         "population": 1300000,
         "male_proficiency": 45,
         "female_proficiency": 50,
-    		"flag_path": "flags/estonia.png"
+    		"flag_path": "images/flags/estonia.png"
     },
     {
         "name": "Latvia",
@@ -123,7 +123,7 @@
         "population": 1900000,
         "male_proficiency": 45,
         "female_proficiency": 50,
-    		"flag_path": "flags/latvia.png"
+    		"flag_path": "images/flags/latvia.png"
     },
     {
         "name": "Great Britain",
@@ -131,7 +131,7 @@
         "population": 56000000,
         "male_proficiency": 20,
         "female_proficiency": 25,
-    		"flag_path": "flags/great_britain.png"
+    		"flag_path": "images/flags/great_britain.png"
     },
     {
         "name": "USA",
@@ -139,7 +139,7 @@
         "population": 330000000,
         "male_proficiency": 60,
         "female_proficiency": 75,
-    		"flag_path": "flags/usa.png"
+    		"flag_path": "images/flags/usa.png"
     },
     {
         "name": "Canada",
@@ -147,6 +147,6 @@
         "population": 38000000,
         "male_proficiency": 70,
         "female_proficiency": 80,
-    		"flag_path": "flags/canada.png"
+    		"flag_path": "images/flags/canada.png"
     }
 ]

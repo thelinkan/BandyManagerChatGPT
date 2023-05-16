@@ -59,6 +59,12 @@ def debugprint_playoff(playoff):
     print(playoff.name)
     print("========================================")
 
+    print("Teams")
+    for team in playoff.teams:
+        print(team.name)
+    print()
+    print(f"  is started: {playoff.is_started}")
+
     #print(playoff.rounds)
     for round in playoff.rounds:
         if (round == "Quarterfinals"):

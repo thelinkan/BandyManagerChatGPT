@@ -216,7 +216,9 @@ class Game:
             team_names = league_data.pop("teams")
             league_teams = []
             for team_name in team_names:
+                #print()
                 #print(self.teams)
+                #print(f"team name {team_name}")
                 team = self.teams.get(team_name, None)
                 if not team:
                     raise ValueError(f"No team found with name '{team_name}'")
@@ -233,11 +235,25 @@ class Game:
                     if p_data["name"] == playoff_name:
                         playoff = Playoff(p_data["name"], p_data["country"], p_data["quarter_final_rounds"], p_data["semi_final_rounds"], p_data["final_rounds"],league, match_manager=self.match_manager)
                         self.playoffs.append(playoff)
-                        print(league_data)
-                        print(league.num_teams_to_playoff)
-                        print(league_data["num_teams_to_playoff"])
+                        if "teams" in p_data:
+                            team_names = p_data.pop("teams")
+                            playoff_teams = []
+                            for team_name in team_names:
+                                #print(self.teams)
+                                team = self.teams.get(team_name, None)
+                                if not team:
+                                    raise ValueError(f"No team found with name '{team_name}'")
+                                playoff_teams.append(team)
+                            playoff.teams = playoff_teams
+                        playoff.is_started = p_data["is_started"]
+                        #print(league_data)
+                        #print(league.num_teams_to_playoff)
+                        #print(league_data["num_teams_to_playoff"])
                         league.num_teams_to_playoff=league_data["num_teams_to_playoff"]
-                        #print(self.playoffs)
+                        if "rounds" in p_data:
+                            playoff.load_rounds(self,p_data["rounds"])
+                        debugprint_playoff(playoff)
+
                         break
                 if playoff is None:
                     raise ValueError(f"No playoff found with name '{playoff_name}'")
@@ -247,6 +263,7 @@ class Game:
         #for key, value in self.countries.items():
         #    print(value.to_dict())
         print("Data loaded")
+        #print(self.playoffs)
         #print(self.year)
         #print(self.manager.return_team())
 
@@ -401,8 +418,12 @@ class Game:
             name = club_data['name']
             country = club_data['country']
             rating = club_data['club_rating']
+            if 'logo' in club_data:
+                logo = club_data['logo']
+            else:
+                logo = None
             home_arena = club_data['home_arena']
-            club = Club(name, country, rating, home_arena)
+            club = Club(name, country, rating, home_arena, logo)
 
             for team_data in club_data['teams']:
                 name = team_data['name']
@@ -411,7 +432,11 @@ class Game:
                 num_players = team_data['num_players']
                 num_int_players = team_data['num_int_players']
                 jersey_colors = team_data['jersey_colors']
-                team = Team(name, team_type, team_rating, num_players, num_int_players, jersey_colors)
+                if 'jersey_decorations' in team_data:
+                    jersey_decorations = team_data['jersey_decorations']
+                else:
+                    jersey_decorations = "[[0,(0,0,0)]]"
+                team = Team(name, team_type, team_rating, num_players, num_int_players, jersey_colors, jersey_decorations, club)
                 club.add_team(team)
                 self.teams[name] = team # Add team to the dictionary
                 # Check if there are players in the team_data dictionary
@@ -442,10 +467,13 @@ class Game:
                 if self.manager.team == match.home_team.name or self.manager.team == match.away_team.name:
                     match_viewed = True
                     match_to_view = match
-                    draw_view_match(self,match_to_view)
+
+                    if not match.played:
+                        draw_view_match(self,match_to_view)
                     if match.league.is_playoff:
                         match.league.check_elimination_quarterfinal(match.home_team, match.away_team)
                         match.league.check_elimination_semifinal(match.home_team, match.away_team)
+
                 else:
                     print(f"    tick play {match.home_team.name} - {match.away_team.name}: {match.league.name}")
                     #if self.playoff_for_league is not None:
@@ -466,8 +494,10 @@ class Game:
                     if(not league.playoff_for_league.is_started):
                         print(f"Time for playoff - {league.playoff_for_league.name} - is_started: {league.playoff_for_league.is_started}")
                         #league.print_table()
+
                         #for team in league.get_playoff_teams():
                         #    print(team.name)
+
                         league.playoff_for_league.create_quarter_finals_schedule(league.get_playoff_teams())
                 #league.print_table()
             for playoff in self.playoffs:

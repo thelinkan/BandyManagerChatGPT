@@ -13,7 +13,7 @@ pygame.init()
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
 def draw_view_match(game,match_to_view):
-
+    is_playoff = match_to_view.league.is_playoff
     engine = MatchEngine(match_to_view)
     controller = MatchController(match_to_view, engine)
 
@@ -57,6 +57,8 @@ def draw_view_match(game,match_to_view):
             match_state = "Half time"
         if engine.game_time>60*90:
             engine.game_time = 60*90
+            if(match_to_view.home_goals == match_to_view.away_goals and is_playoff):
+                match_to_view.home_goals += 1
             match_state = "End of game"
             match_to_view.played = True
             for league in game.leagues:
