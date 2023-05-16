@@ -24,9 +24,10 @@ class League:
         self.table = {team: {'played': 0, 'won': 0, 'drawn': 0, 'lost': 0, 'goals_for': 0, 'goals_against': 0, 'points': 0} for team in teams}
         self.match_manager = match_manager
         self.playoff_for_league = None
-        
+        self.is_playoff = False
+
         self.num_teams_to_playoff = 0
-        
+
         if self.start_month > self.end_month:
             self.end_year = self.start_year + 1
 
@@ -35,7 +36,7 @@ class League:
         #r_year = self.start_year
         #r_month = self.start_month
         #r_day = self.start_day
-        
+
         sundays = get_weekdays((self.start_year, self.start_month, self.start_day), (self.end_year, self.end_month, self.end_day),"Sunday")
         fridays = get_weekdays((self.start_year, self.start_month, self.start_day), (self.end_year, self.end_month, self.end_day),"Friday")
         wednesdays = get_weekdays((self.start_year, self.start_month, self.start_day), (self.end_year, self.end_month, self.end_day),"Wednesday")
@@ -45,7 +46,7 @@ class League:
             print(fridays_to_play)
             print(sundays)
             sorted_dates = sorted(sundays + fridays_to_play, key=lambda date: sort_by_date(date))
-            
+
         #if rounds_left > len(fridays):
         #    print(rounds_left, len(fridays))
         #print (fridays)
@@ -161,10 +162,10 @@ class League:
     def get_playoff_teams(self):
         # Sort the table by points and goal difference
         sorted_table = sorted(self.table.items(), key=lambda x: (x[1]['points'], x[1]['goals_for'] - x[1]['goals_against']), reverse=True)
-        
+
         # Get the top self.num_teams_to_playoff teams
         top_teams = [team[0] for team in sorted_table[:self.num_teams_to_playoff]]
-        
+
         return top_teams
 
     def print_schedule(self):
@@ -172,8 +173,7 @@ class League:
             print(f"Round {i + 1}:")
             for game in round:
                 print(f"{game.home_team} vs. {game.away_team}")
-                
+
     def is_completed(self):
         return all(match.played for match in self.matches)
-        
-        
+

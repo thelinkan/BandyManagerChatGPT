@@ -5,7 +5,9 @@ import random
 from club import Club
 from team import Team
 from constants import WHITE,BLACK,GRAY
+
 from graphicscode.jersey import draw_jersey
+
 
 def get_club_from_team(game, team):
     for club in game.clubs:
@@ -66,6 +68,7 @@ def draw_calendar(year, month, day):
     border_surface.blit(calendar_surface, (2, 2))
 
     return border_surface
+
 
 def return_schedule(num_teams,num_rounds):
 
@@ -218,3 +221,25 @@ def get_weekdays(start_date, end_date, weekday):
     weekdays_list = [start_date + datetime.timedelta(days=x) for x in range(days) if (start_date + datetime.timedelta(days=x)).weekday() == weekday_idx]
 
     return [(d.year, d.month, d.day) for d in weekdays_list]
+
+
+def get_k_integers(n, k):
+    if k > n:
+        raise ValueError("k cannot be greater than n")
+    elif k == n:
+        return list(range(n))
+    elif k > n/2:
+        excluded = set(get_k_integers(n - k, n - k))
+        result = set()
+        while len(result) < k:
+            num = random.randint(0, n-1)
+            if num not in excluded:
+                result.add(num)
+        return list(result)
+    else:
+        result = set()
+        while len(result) < k:
+            num = random.randint(0, n-1)
+            result.add(num)
+        return list(result)
+

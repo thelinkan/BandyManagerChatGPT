@@ -12,6 +12,10 @@ from person import PlayerManager
 from uuidencoder import UUIDEncoder
 from matchcode.matchmanager import MatchManager
 
+from screens.screensMatch import draw_view_match
+
+from debug_functions import print_yesterdays_results, debugprint_playoff
+
 class Game:
     def __init__(self,year,month,day):
         self.year = year
@@ -205,7 +209,9 @@ class Game:
             team_names = league_data.pop("teams")
             league_teams = []
             for team_name in team_names:
+                #print()
                 #print(self.teams)
+                #print(f"team name {team_name}")
                 team = self.teams.get(team_name, None)
                 if not team:
                     raise ValueError(f"No team found with name '{team_name}'")
@@ -222,11 +228,25 @@ class Game:
                     if p_data["name"] == playoff_name:
                         playoff = Playoff(p_data["name"], p_data["country"], p_data["quarter_final_rounds"], p_data["semi_final_rounds"], p_data["final_rounds"],league, match_manager=self.match_manager)
                         self.playoffs.append(playoff)
-                        print(league_data)
-                        print(league.num_teams_to_playoff)
-                        print(league_data["num_teams_to_playoff"])
+                        if "teams" in p_data:
+                            team_names = p_data.pop("teams")
+                            playoff_teams = []
+                            for team_name in team_names:
+                                #print(self.teams)
+                                team = self.teams.get(team_name, None)
+                                if not team:
+                                    raise ValueError(f"No team found with name '{team_name}'")
+                                playoff_teams.append(team)
+                            playoff.teams = playoff_teams
+                        playoff.is_started = p_data["is_started"]
+                        #print(league_data)
+                        #print(league.num_teams_to_playoff)
+                        #print(league_data["num_teams_to_playoff"])
                         league.num_teams_to_playoff=league_data["num_teams_to_playoff"]
-                        #print(self.playoffs)
+                        if "rounds" in p_data:
+                            playoff.load_rounds(self,p_data["rounds"])
+                        debugprint_playoff(playoff)
+
                         break
                 if playoff is None:
                     raise ValueError(f"No playoff found with name '{playoff_name}'")
@@ -236,6 +256,7 @@ class Game:
         #for key, value in self.countries.items():
         #    print(value.to_dict())
         print("Data loaded")
+        #print(self.playoffs)
         #print(self.year)
         #print(self.manager.return_team())
 
@@ -420,25 +441,50 @@ class Game:
         match_to_view = None
         if len(matches_today) > 0:
             for match in matches_today:
+                is_playoff = False
                 if self.manager.team == match.home_team.name or self.manager.team == match.away_team.name:
                     match_viewed = True
                     match_to_view = match
+
+                    if not match.played:
+                        draw_view_match(self,match_to_view)
+                    if match.league.is_playoff:
+                        match.league.check_elimination_quarterfinal(match.home_team, match.away_team)
+                        match.league.check_elimination_semifinal(match.home_team, match.away_team)
+
                 else:
-                    match.play(self.manager.team)
-                #print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
+                    print(f"    tick play {match.home_team.name} - {match.away_team.name}: {match.league.name}")
+                    #if self.playoff_for_league is not None:
+                    #    playoff_teams = self.playoff_for_league.teams
+                    #    if match.home_team in playoff_teams and match.away_team in playoff_teams:
+                    #    else:
+                    #        is_playoff = False
+                    if match.played:
+                        print("       Not to be played")
+                    else:
+                        match.play(self.manager.team, match.league.is_playoff)
+                    #print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
             leagues = self.get_leagues()
             for league in leagues:
                 league.calculate_table()
-                print(f"Tick: {league.name} - is_completed: {league.is_completed()}")
+                #print(f"Tick: {league.name} - is_completed: {league.is_completed()}")
                 if(league.playoff_for_league is not None and league.is_completed()):
                     if(not league.playoff_for_league.is_started):
                         print(f"Time for playoff - {league.playoff_for_league.name} - is_started: {league.playoff_for_league.is_started}")
                         #league.print_table()
-                        for team in league.get_playoff_teams():
-                            print(team.name)
+
+                        #for team in league.get_playoff_teams():
+                        #    print(team.name)
+
                         league.playoff_for_league.create_quarter_finals_schedule(league.get_playoff_teams())
                 #league.print_table()
-            #for playoff in self.playoffs:
+            for playoff in self.playoffs:
+                playoff.create_semi_schedule_from_quarter()
+                playoff.create_final_schedule_from_semi()
+                if playoff.is_started:
+                    debugprint_playoff(playoff)
+            #    for match in playoff.matches:
+            #        print(f" * {match.home_team.name} - {match.away_team.name} : {match.home_goals} - {match.away_goals} __ {match.played}")
             #    playoff.check_elimination_quarterfinal()
             isMatchesPlayed = True
         else:
