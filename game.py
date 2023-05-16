@@ -313,6 +313,8 @@ class Game:
                 if i==0:
                     headline = f"{self.manager.name} new manager of {team_name}"
                     mediatext = f"{self.manager.name} hase become the manager of {team_name}. "
+                    mediatext += f"This is {self.manager.name}s first position as a manager, but {team_name} says "
+                    mediatext += f"they are confident in him."
                     
                     newsitem = NewsItem((self.year,self.month,self.day),headline, mediatext, mediaoutlet)
                     self.newsitems.append(newsitem)

@@ -111,7 +111,7 @@ while running:
                     for i, rect in enumerate(rectslist_1):
                         if rect.collidepoint(event_pos_on_list):
                             game.selected_news_index = i
-                            print(game.selected_news_index)
+                            #print(game.selected_news_index)
                             break
                     
                 if(game.game_page == "tactics"):
