@@ -30,6 +30,8 @@ class League:
 
         if self.start_month > self.end_month:
             self.end_year = self.start_year + 1
+        else:
+            self.end_year = self.start_year
 
     def generate_schedule(self):
         schedule = return_schedule(self.num_teams,self.num_rounds)
@@ -43,15 +45,16 @@ class League:
         if self.num_rounds > len(sundays):
             rounds_left = self.num_rounds - len(sundays)
             fridays_to_play = get_evenly_spaced_dates(fridays, rounds_left)
-            print(fridays_to_play)
-            print(sundays)
+            print(f"Fridays {fridays_to_play}")
+            print(f"Sundays {sundays}")
             sorted_dates = sorted(sundays + fridays_to_play, key=lambda date: sort_by_date(date))
-
+        
         #if rounds_left > len(fridays):
         #    print(rounds_left, len(fridays))
         #print (fridays)
         #print (f"Round: {self.num_rounds}, Sundays: {len(sundays)}")
         #print(sundays)
+        print(sorted_dates)
         i = 0
         for round in schedule:
             round_date = sorted_dates[i]

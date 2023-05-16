@@ -34,6 +34,10 @@ def draw_jersey(jersey_colors,jersey_decorations,jersey_number, logo, is_front):
         if(decoration[0]==106):
             pygame.draw.rect(jersey_surface,decoration[1],(50,120,150,10))
             pygame.draw.rect(jersey_surface,decoration[1],(50,160,150,10))
+        if(decoration[0]==107 and is_front):
+            pygame.draw.rect(jersey_surface,decoration[1],(50,120,150,45))
+        if(decoration[0]==108 and is_front):
+            pygame.draw.rect(jersey_surface,decoration[1],(50,125,150,35))
         if(decoration[0]==150 and logo is not None and is_front):
             logo_file = pygame.image.load(f"images/logos/{logo}")
             logo_file = pygame.transform.scale(logo_file,(80,80))

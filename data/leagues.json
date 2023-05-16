@@ -36,6 +36,22 @@
 					"num_teams_to_playoff": 8
     			},
     			{
+					"name": "Allsvenskan",
+					"country": "Sweden",
+					"level": 2,
+					"num_rounds": 3,
+					"win_points": 2,
+					"draw_points": 1,
+					"startmonth": 11,
+					"startday": 10,
+					"endmonth": 11,
+					"endday": 24,
+					"teams":
+						[
+								"IFK Kungälv", "Ljusdals BK", "TB Västerås", "Åby Tjureda IF"
+						]
+			  },
+			  {
     			  	"name": "Eliteserien",
     			  	"country": "Norway",
     			  	"level": 1,
