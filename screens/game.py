@@ -7,7 +7,7 @@ from guielements import font, medium_font, small_font,very_small_font ,very_smal
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
 from guielements import home_button, inbox_button, newspaper_button, senior_squad_button, tactics_button, training_button, schedule_button, competition_button
 from guielements import u19_squad_button,forward_time_button, save_game_button, quit_game_button
-from miscfunctions import get_club_from_team, draw_calendar, draw_jersey, yesterday
+from miscfunctions import get_club_from_team, draw_calendar, draw_jersey, yesterday, get_num_rounds
 
 from debug_functions import print_yesterdays_results
 
@@ -326,12 +326,8 @@ def draw_schedule_page(game, selected_league, highlighted_team,page):
 
     month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
-    if (num_teams == 10):
-        match_per_round = 5
-        rounds_per_page = 4
-    if (num_teams == 14):
-        match_per_round = 7
-        rounds_per_page = 3
+    rounds_per_page,num_pages = get_num_rounds(num_teams,num_rounds)
+
     schedule_surface = pygame.Surface((350,600), pygame.SRCALPHA)
     schedule_surface.fill(WHITE)
     y=10
@@ -387,10 +383,13 @@ def draw_schedule(game, selected_league, highlighted_team, start_page):
 
     navigation_rects = []
 
-    if (num_teams == 10):
-        num_pages = 5
-    if (num_teams == 14):
-        num_pages = 9
+    rounds_per_page,num_pages = get_num_rounds(num_teams,num_rounds)
+
+    #match_per_round = num_teams//2
+
+    #rounds_per_page = 28//(match_per_round+2)
+    #num_pages = -(-num_rounds//rounds_per_page)
+
     if start_page < 1:
         start_page = 1
     if start_page >= num_pages:

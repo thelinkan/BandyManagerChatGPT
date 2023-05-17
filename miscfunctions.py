@@ -243,3 +243,10 @@ def get_k_integers(n, k):
             result.add(num)
         return list(result)
 
+def get_num_rounds(num_teams,num_rounds):
+    match_per_round = num_teams//2
+
+    rounds_per_page = 28//(match_per_round+2)
+    num_pages = -(-num_rounds//rounds_per_page)
+
+    return rounds_per_page,num_pages    
