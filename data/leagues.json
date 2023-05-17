@@ -12,7 +12,7 @@
     			  	"endday": 10,
     			  	"teams":
     			  		[
-    			  				"Bollnäs GIF", "Brobergs IF", "Edsbyns IF", "Frillesås BK", "Gripen Trollhättan BK", "Hammarby IF", "IFK Motala", "Vetlanda BK", "Villa Lidköping BK" ,"Sandvikens AIK", "IK Sirius BK", "IFK Vänersborg", "IFK Rättvik", "Västerås SK"
+    			  				"Bollnäs GIF",  "Brobergs IF", "Edsbyns IF", "Frillesås BK", "Gripen Trollhättan BK", "Hammarby IF", "IFK Motala", "Vetlanda BK", "Villa Lidköping BK" ,"Sandvikens AIK", "IK Sirius BK", "IFK Vänersborg", "IFK Rättvik", "Västerås SK"
     			  		],
 					"playoff_name": "Slutspel herrar",
 					"num_teams_to_playoff": 8
@@ -39,16 +39,16 @@
 					"name": "Allsvenskan",
 					"country": "Sweden",
 					"level": 2,
-					"num_rounds": 7,
+					"num_rounds": 30,
 					"win_points": 2,
 					"draw_points": 1,
-					"startmonth": 11,
-					"startday": 10,
-					"endmonth": 12,
-					"endday": 18,
+					"startmonth": 10,
+					"startday": 21,
+					"endmonth": 2,
+					"endday": 10,
 					"teams":
 						[
-								"IF Boltic","IFK Kungälv", "Ljusdals BK", "Nässjö IF","IK Tellus", "TB Västerås", "Åby Tjureda IF", "Örebro SK"
+							"Borlänge Bandy", "IF Boltic", "Falu BS", "Finspångs AIK", "Kalix Bandy","Katrineholm Bandy","IFK Kungälv", "Lidköpings AIK", "Ljusdals BK", "Nässjö IF", "Surte BK","IK Tellus", "TB Västerås","Tranås Bois", "Åby Tjureda IF", "Örebro SK"
 						]
 			  },
 			  {

@@ -646,6 +646,51 @@
       ]
     },
     {
+      "name": "Tranås Bois",
+      "country": "Sweden",
+      "home_arena": "Recoverhallen",
+      "logo": "tranasbois.png",
+      "club_rating": 55,
+      "teams": [
+        {
+          "name": "Tranås Bois",
+          "team_type": "Men",
+          "team_rating": 50,
+          "num_players": 19,
+          "num_int_players": 3,
+ 		      "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(90,90,90),(255,10,14)]",
+          "jersey_decorations": "[[100,(255,10,14)],[150,(0,0,0)]]"
+        },
+        {
+          "name": "Tranås Bois U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+          "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(90,90,90),(255,10,14)]",
+          "jersey_decorations": "[[100,(255,10,14)],[150,(0,0,0)]]"
+        },
+        {
+          "name": "Tranås Bois (W)",
+          "team_type": "Women",
+          "team_rating": 85,
+          "num_players": 19,
+          "num_int_players": 3,
+          "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(90,90,90),(255,10,14)]",
+          "jersey_decorations": "[[100,(255,10,14)],[150,(0,0,0)]]"
+        },
+        {
+          "name": "Tranås Bois F19",
+          "team_type": "Women U19",
+          "team_rating": 75,
+          "num_players": 16,
+          "num_int_players": 0,
+          "jersey_colors": "[(255,255,255),(255,255,255),(255,255,255),(90,90,90),(255,10,14)]",
+          "jersey_decorations": "[[100,(255,10,14)],[150,(0,0,0)]]"
+        }
+      ]
+    },
+    {
       "name": "Uppsala Bois",
       "country": "Sweden",
       "home_arena": "Recoverhallen",
@@ -686,6 +731,140 @@
       ]
     },
     {
+      "name": "Borlänge Bandy",
+      "country": "Sweden",
+      "home_arena": "Tunets IP",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Borlänge Bandy",
+          "team_type": "Men",
+          "team_rating": 70,
+          "num_players": 18,
+          "num_int_players": 3,
+		      "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(90,90,90),(249,220,59)]",
+          "jersey_decorations": "[[151,(0,0,0)]]"
+        },
+        {
+          "name": "Borlänge Bandy U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		      "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(90,90,90),(249,220,59)]",
+          "jersey_decorations": "[[151,(0,0,0)]]"
+        }
+      ]
+    },
+    {
+      "name": "Falu BS",
+      "country": "Sweden",
+      "home_arena": "Lugnets isstadion",
+      "logo": "falubs.png",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Falu BS",
+          "team_type": "Men",
+          "team_rating": 70,
+          "num_players": 18,
+          "num_int_players": 3,
+		      "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(90,90,90),(249,220,59)]",
+          "jersey_decorations": "[[151,(0,0,0)]]"
+        },
+        {
+          "name": "Falu BS U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		      "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(90,90,90),(249,220,59)]",
+          "jersey_decorations": "[[151,(0,0,0)]]"
+        }
+      ]
+    },
+    {
+      "name": "Finspångs AIK",
+      "country": "Sweden",
+      "home_arena": "Grosvad",
+      "logo": "finspangsaik.png",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Finspångs AIK",
+          "team_type": "Men",
+          "team_rating": 70,
+          "num_players": 18,
+          "num_int_players": 3,
+		      "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[100,(255,255,255)],[151,(0,0,0)],[400,(255,255,255)]]"
+        },
+        {
+          "name": "Finspångs AIK U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		      "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[100,(255,255,255)],[151,(0,0,0)],[400,(255,255,255)]]"
+        }
+      ]
+    },
+    {
+      "name": "Kalix Bandy",
+      "country": "Sweden",
+      "home_arena": "Fomab Arena",
+      "logo": "kalixbandy.png",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Kalix Bandy",
+          "team_type": "Men",
+          "team_rating": 70,
+          "num_players": 18,
+          "num_int_players": 3,
+		      "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[100,(255,255,255)],[151,(0,0,0)]]"
+        },
+        {
+          "name": "Kalix Bandy U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		      "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[100,(255,255,255)],[151,(0,0,0)]]"
+        }
+      ]
+    },
+    {
+      "name": "Katrineholm Bandy",
+      "country": "Sweden",
+      "home_arena": "Skarpe Nord",
+      "logo": "katrineholmbandy.png",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Katrineholm Bandy",
+          "team_type": "Men",
+          "team_rating": 70,
+          "num_players": 18,
+          "num_int_players": 3,
+		      "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[100,(25,19,163)],[151,(0,0,0)],[200,(25,19,163)],[300,(25,19,163)]]"
+        },
+        {
+          "name": "Katrineholm Bandy U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		      "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[100,(25,19,163)],[151,(0,0,0)],[200,(25,19,163)],[300,(25,19,163)]]"
+        }
+      ]
+    },
+    {
       "name": "IFK Kungälv",
       "country": "Sweden",
       "home_arena": "Skarpe Nord",
@@ -709,6 +888,33 @@
           "num_int_players": 0,
 		      "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]",
           "jersey_decorations": "[[100,(25,19,163)],[107,(255,255,255)],[108,(25,19,163)],[150,(0,0,0)],[200,(25,19,163)],[300,(25,19,163)]]"
+        }
+      ]
+    },
+    {
+      "name": "Lidköpings AIK",
+      "country": "Sweden",
+      "home_arena": "Sparbanken Lidköping Arena",
+      "logo": "lidkopingsaik.png",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Lidköpings AIK",
+          "team_type": "Men",
+          "team_rating": 70,
+          "num_players": 18,
+          "num_int_players": 3,
+		      "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[151,(0,0,0)]]"
+        },
+        {
+          "name": "Lidköpings AIK U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		      "jersey_colors": "[(255,10,14),(255,10,14),(255,10,14),(0,0,0),(255,255,255)]",
+          "jersey_decorations": "[[151,(0,0,0)]]"
         }
       ]
     },
@@ -790,6 +996,33 @@
           "num_int_players": 0,
           "jersey_colors": "[(25,19,163),(25,19,163),(25,19,163),(0,0,0),(255,255,255)]",
           "jersey_decorations": "[[100,(255,255,255)],[150,(0,0,0)],[400,(255,255,255)]]"
+        }
+      ]
+    },
+    {
+      "name": "Surte BK",
+      "country": "Sweden",
+      "home_arena": "Ale Arena",
+      "logo": "surtebk.png",
+      "club_rating": 75,
+      "teams": [
+        {
+          "name": "Surte BK",
+          "team_type": "Men",
+          "team_rating": 70,
+          "num_players": 18,
+          "num_int_players": 3,
+		      "jersey_colors": "[(249,220,59),(249,220,59),(249,220,59),(90,90,90),(25,19,163)]",
+          "jersey_decorations": "[[101,(25,19,163)],[151,(0,0,0)]]"
+        },
+        {
+          "name": "Surte BK U19",
+          "team_type": "Men U19",
+          "team_rating": 60,
+          "num_players": 16,
+          "num_int_players": 0,
+		      "jersey_colors": "[(249,220,59),(249,220,59),(249,220,59),(90,90,90),(25,19,163)]",
+          "jersey_decorations": "[[101,(25,19,163)],[151,(0,0,0)]]"
         }
       ]
     },
