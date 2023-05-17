@@ -39,16 +39,16 @@
 					"name": "Allsvenskan",
 					"country": "Sweden",
 					"level": 2,
-					"num_rounds": 3,
+					"num_rounds": 7,
 					"win_points": 2,
 					"draw_points": 1,
 					"startmonth": 11,
 					"startday": 10,
-					"endmonth": 11,
-					"endday": 24,
+					"endmonth": 12,
+					"endday": 18,
 					"teams":
 						[
-								"IFK Kungälv", "Ljusdals BK", "TB Västerås", "Åby Tjureda IF"
+								"IF Boltic","IFK Kungälv", "Ljusdals BK", "Nässjö IF","IK Tellus", "TB Västerås", "Åby Tjureda IF", "Örebro SK"
 						]
 			  },
 			  {

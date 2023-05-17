@@ -72,7 +72,7 @@ def draw_calendar(year, month, day):
 
 def return_schedule(num_teams,num_rounds):
 
-    print(f"{num_teams}  {num_rounds}")
+    print(f"teams: {num_teams}, || numrounds_ {num_rounds}")
     if(num_teams == 4):
         schedule1 = [[(1,2),(3,0)],[(2,3),(0,1)],[(1,3),(2,0)]]
         schedule2 = [[(game[1], game[0]) for game in round] for round in schedule1]

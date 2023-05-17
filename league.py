@@ -54,6 +54,7 @@ class League:
         #print (fridays)
         #print (f"Round: {self.num_rounds}, Sundays: {len(sundays)}")
         #print(sundays)
+        print(f"sundays {len(sundays)}")
         print(sorted_dates)
         i = 0
         for round in schedule:
