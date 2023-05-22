@@ -143,8 +143,9 @@ class Game:
                 if not team:
                     raise ValueError(f"No team found with name '{team_name}'")
                 league_teams.append(team)
-            league = League(data["name"],data["country"],data["level"],league_teams,data["num_rounds"], start_month=data["startmonth"], start_day=data["startday"], end_month=data["endmonth"], end_day=data["endday"], match_manager=self.match_manager)
-            league.generate_schedule()
+            league = League(data["name"],data["country"],data["team_type"],data["level"],data["league_type"],league_teams,data["num_rounds"], start_month=data["startmonth"], start_day=data["startday"], end_month=data["endmonth"], end_day=data["endday"], match_manager=self.match_manager)
+            if data["league_type"] == "Normal":
+                league.generate_schedule()
             playoff_name = data.pop("playoff_name", None)
             if playoff_name:
                 playoff = None
@@ -217,7 +218,7 @@ class Game:
                     raise ValueError(f"No team found with name '{team_name}'")
                 league_teams.append(team)
             #print(league_data)
-            league = League(league_data['name'],league_data['country'],league_data['level'],league_teams,league_data['num_rounds'], match_manager=self.match_manager)
+            league = League(league_data['name'],league_data['country'],league_data["team_type"],league_data['level'],league_data['league_type'],league_teams,league_data['num_rounds'], match_manager=self.match_manager)
             league_matches = league_data['matches']
             league.load_schedule(league_matches,self.teams)
             league.calculate_table()
@@ -388,6 +389,9 @@ class Game:
     def get_leagues(self):
         return self.leagues
 
+    def get_leagues_by_type(self, league_type):
+        return [league for league in self.leagues if league.league_type == league_type]
+
     def read_clubs_from_json(self,data):
 
         clubs = []
@@ -464,20 +468,38 @@ class Game:
                     else:
                         match.play(self.manager.team, match.league.is_playoff)
                     #print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
-            leagues = self.get_leagues()
+            leagues = self.get_leagues_by_type("Normal")
             for league in leagues:
                 league.calculate_table()
-                #print(f"Tick: {league.name} - is_completed: {league.is_completed()}")
                 if(league.playoff_for_league is not None and league.is_completed()):
                     if(not league.playoff_for_league.is_started):
                         print(f"Time for playoff - {league.playoff_for_league.name} - is_started: {league.playoff_for_league.is_started}")
-                        #league.print_table()
-
-                        #for team in league.get_playoff_teams():
-                        #    print(team.name)
-
                         league.playoff_for_league.create_quarter_finals_schedule(league.get_playoff_teams())
-                #league.print_table()
+            qleagues = self.get_leagues_by_type("Qualification")
+            for qleague in qleagues:
+                if(qleague.is_started):
+                    qleague.calculate_table()
+                else:
+                    qleague_list = []
+                    qleagues_completed = True
+                    for league in leagues:
+                        if league.qualification_league_up == qleague.name:
+                            qleague_list.append(league)
+                            if not league.is_completed():
+                                qleagues_completed = False
+                        if league.qualification_league_down == qleague.name:
+                            qleague_list.append(league)
+                            if not league.is_completed():
+                                qleagues_completed = False
+                    if qleagues_completed == True:
+                        qteams = []
+                        for league in qleague_list:
+                            if league.qualification_league_up == qleague.name:
+                                qteams += league.get_teams_to_qualification_up()
+                            if league.qualification_league_down == qleague.name:
+                                qteams += league.get_teams_to_qualification_down()
+                        qleague.teams = qteams
+
             for playoff in self.playoffs:
                 playoff.create_semi_schedule_from_quarter()
                 playoff.create_final_schedule_from_semi()

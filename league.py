@@ -6,10 +6,12 @@ from miscfunctions import return_schedule, adddays
 from datecode.date_functions import get_weekdays, get_evenly_spaced_dates, sort_by_date
 
 class League:
-    def __init__(self, name, country, level,teams , num_rounds, win_points=2, draw_points=1, start_year = 2023, start_month=11, start_day=1, end_month=2, end_day=15, match_manager=None):
+    def __init__(self, name, country, team_type, level, league_type ,teams , num_rounds, win_points=2, draw_points=1, start_year = 2023, start_month=11, start_day=1, end_month=2, end_day=15, match_manager=None):
         self.name = name
         self.country = country
+        self.team_type = team_type
         self.level = level
+        self.league_type = league_type
         self.num_teams = len(teams)
         self.num_rounds = num_rounds
         self.win_points = win_points
@@ -25,6 +27,16 @@ class League:
         self.match_manager = match_manager
         self.playoff_for_league = None
         self.is_playoff = False
+        self.is_started = False
+        self.qualification_league_up = None
+        self.qualification_league_down = None
+        self.num_teams_moved_up = 0
+        self.moved_up_to_level = 0
+        self.num_teams_to_qualification_up = 0
+        self.num_teams_to_qualification_down = 0
+        self.num_teams_moved_down = 0
+        self.moved_down_to_level = 0
+
 
         self.num_teams_to_playoff = 0
 
@@ -33,11 +45,11 @@ class League:
         else:
             self.end_year = self.start_year
 
+        if self.league_type == "Normal":
+            self.is_started = True
+
     def generate_schedule(self):
         schedule = return_schedule(self.num_teams,self.num_rounds)
-        #r_year = self.start_year
-        #r_month = self.start_month
-        #r_day = self.start_day
 
         sundays = get_weekdays((self.start_year, self.start_month, self.start_day), (self.end_year, self.end_month, self.end_day),"Sunday")
         fridays = get_weekdays((self.start_year, self.start_month, self.start_day), (self.end_year, self.end_month, self.end_day),"Friday")
@@ -48,12 +60,8 @@ class League:
             print(f"Fridays {fridays_to_play}")
             print(f"Sundays {sundays}")
             sorted_dates = sorted(sundays + fridays_to_play, key=lambda date: sort_by_date(date))
-        
-        #if rounds_left > len(fridays):
-        #    print(rounds_left, len(fridays))
-        #print (fridays)
-        #print (f"Round: {self.num_rounds}, Sundays: {len(sundays)}")
-        #print(sundays)
+        if self.num_rounds == len(sundays):
+            sorted_dates = sorted(sundays, key=lambda date: sort_by_date(date))
         print(f"sundays {len(sundays)}")
         print(sorted_dates)
         i = 0
@@ -108,7 +116,9 @@ class League:
         return {
             'name': self.name,
             'country': self.country,
+            'team_type': self.team_type,
             'level': self.level,
+            'league_type': self.league_type,
             'num_teams': self.num_teams,
             'num_rounds': self.num_rounds,
             'win_points': self.win_points,
@@ -120,7 +130,16 @@ class League:
             'end_day': self.end_day,
             'teams': [team.name for team in self.teams],
             'playoff_name': playoff_name,
+            'is_started': self.is_started,
             'num_teams_to_playoff': self.num_teams_to_playoff,
+            'qualification_league_up': self.qualification_league_up,
+            'qualification_league_down': self.qualification_league_down,
+            'num_teams_moved_up': self.num_teams_moved_up,
+            'moved_up_to_level': self.moved_up_to_level,
+            'num_teams_to_qualification_up': self.num_teams_to_qualification_up,
+            'num_teams_to_qualification_down': self.num_teams_to_qualification_down,
+            'num_teams_moved_down': self.num_teams_moved_down,
+            'moved_down_to_level': self.moved_down_to_level,
             'matches': [match.to_dict() for match in self.matches],
         }
 
@@ -171,6 +190,25 @@ class League:
         top_teams = [team[0] for team in sorted_table[:self.num_teams_to_playoff]]
 
         return top_teams
+
+    def get_teams_to_move_down(self):
+        sorted_table = sorted(self.table.items(), key=lambda x: (x[1]['points'], x[1]['goals_for'] - x[1]['goals_against']), reverse=False)
+        return [team[0] for team in sorted_table[:self.num_teams_moved_down]]
+
+    def get_teams_to_qualification_down(self):
+        sorted_table = sorted(self.table.items(), key=lambda x: (x[1]['points'], x[1]['goals_for'] - x[1]['goals_against']), reverse=False)
+        teams_to_move_down = self.get_teams_to_move_down()
+        return [team[0] for team in sorted_table[self.num_teams_moved_down:self.num_teams_moved_down+self.num_teams_to_qualification_down] if team[0] not in teams_to_move_down]
+
+    def get_teams_to_move_up(self):
+        sorted_table = sorted(self.table.items(), key=lambda x: (x[1]['points'], x[1]['goals_for'] - x[1]['goals_against']), reverse=True)
+        return [team[0] for team in sorted_table[:self.num_teams_moved_up]]
+
+    def get_teams_to_qualification_up(self):
+        sorted_table = sorted(self.table.items(), key=lambda x: (x[1]['points'], x[1]['goals_for'] - x[1]['goals_against']), reverse=True)
+        teams_to_move_up = self.get_teams_to_move_up()
+        return [team[0] for team in sorted_table[self.num_teams_moved_up:self.num_teams_moved_up+self.num_teams_to_qualification_up] if team[0] not in teams_to_move_up]
+
 
     def print_schedule(self):
         for i, round in enumerate(self.rounds):
