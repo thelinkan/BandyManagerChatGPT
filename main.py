@@ -105,7 +105,7 @@ while running:
                             print(game.selected_team_index)
                             break
                 if(game.game_page == "media"):
-                    playerlist_offset = (140,110)
+                    playerlist_offset = (140,125)
                     event_pos = event.pos
                     event_pos_on_list = event_pos[0] - playerlist_offset[0], event_pos[1] - playerlist_offset[1]
                     for i, rect in enumerate(rectslist_1):

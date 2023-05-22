@@ -38,7 +38,9 @@ def draw_media_newslist(game,newslist_offset):
     player_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
     row_height = 30
 
-    for i, newsitem in enumerate(game.newsitems):
+    sorted_newsitems = sorted(game.newsitems, key=lambda x: x.date, reverse=True)
+
+    for i, newsitem in enumerate(sorted_newsitems):
         if i % 2 == 0:
             row_color = TABLE_ROW_EVEN_COLOR
         else:
@@ -74,7 +76,9 @@ def draw_media_newslist(game,newslist_offset):
 
 def draw_media_news(game):
     news_surface = pygame.Surface((450,600), pygame.SRCALPHA)
-    for i, newsitem in enumerate(game.newsitems):
+    sorted_newsitems = sorted(game.newsitems, key=lambda x: x.date, reverse=True)
+
+    for i, newsitem in enumerate(sorted_newsitems):
         if i == game.selected_news_index:
             news_headline = newsitem.headline
             news_text = newsitem.text

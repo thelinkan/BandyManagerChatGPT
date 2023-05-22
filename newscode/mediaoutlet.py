@@ -4,4 +4,9 @@ class MediaOutlet:
         self.type = type
         self.country = country
         
-
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'type': self.type,
+            'country': self.country
+        }

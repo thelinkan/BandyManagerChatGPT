@@ -13,6 +13,7 @@ from uuidencoder import UUIDEncoder
 from matchcode.matchmanager import MatchManager
 from newscode.mediaoutlet import MediaOutlet
 from newscode.newsitem import NewsItem
+from newscode.matchplayed import matcharticle
 
 from screens.screensMatch import draw_view_match
 
@@ -193,6 +194,16 @@ class Game:
             male_proficiency = country_data['male_proficiency']
             female_proficiency = country_data['female_proficiency']
             self.countries[name] = Country(name, flag_path, bandy_knowledge, population, male_proficiency, female_proficiency)
+        for mediaoutlet_data in game_data['mediaoutlets']:
+            mediaoutlet = MediaOutlet(mediaoutlet_data['name'],mediaoutlet_data['type'],mediaoutlet_data['country'])
+            self.mediaoutlets.append (mediaoutlet)
+        for news_data in game_data['newsitems']:
+            use_mediaoutlet = self.mediaoutlets[0]
+            newsitem = NewsItem((news_data['date'][0], news_data['date'][1], news_data['date'][2]), news_data['headline'], news_data['text'], use_mediaoutlet)
+            newsitem.is_read = news_data['is_read']
+            self.newsitems.append(newsitem)
+
+        
         #print(game_data['club_data'])
         players_data = game_data.get('players_data', [])
         for player_load in players_data:
@@ -275,6 +286,8 @@ class Game:
         players_data = []
         leagues_data = []
         playoffs_data = []
+        mediaoutlet_data = []
+        news_data = []
 
         for key, value in self.countries.items():
             countries_data.append(value.to_dict())
@@ -298,6 +311,12 @@ class Game:
         for playoff in self.playoffs:
             playoffs_data.append(playoff.to_dict())
 
+        for mediaoutlet in self.mediaoutlets:
+            mediaoutlet_data.append(mediaoutlet.to_dict())
+        
+        for newsitem in self.newsitems:
+            news_data.append(newsitem.to_dict())
+
         game_data = {
                 'year': self.year,
                 'month': self.month,
@@ -307,6 +326,8 @@ class Game:
                     'age': self.manager.return_age(),
                     'team': self.manager.return_team()
                 },
+                'mediaoutlets': mediaoutlet_data,
+                'newsitems': news_data,
                 'countries': countries_data,
                 'club_data':{
                     'clubs': clubs_data
@@ -470,6 +491,7 @@ class Game:
 
                     if not match.played:
                         draw_view_match(self,match_to_view)
+                        matcharticle(self,match_to_view,self.manager.team)
                     if match.league.is_playoff:
                         match.league.check_elimination_quarterfinal(match.home_team, match.away_team)
                         match.league.check_elimination_semifinal(match.home_team, match.away_team)

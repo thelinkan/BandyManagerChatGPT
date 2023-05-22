@@ -12,3 +12,11 @@ class NewsItem:
     def add_tag(self, tag):
         self.tags.append(tag)
 
+    def to_dict(self):
+        return{
+            'date': self.date,
+            'headline': self.headline,
+            'text': self.text,
+            'media_outlet': self.media_outlet.name,
+            'is_read': self.is_read
+        }
