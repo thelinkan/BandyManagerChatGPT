@@ -48,6 +48,10 @@ def draw_view_match(game,match_to_view):
 
         match_header_surface,header_button_rect = view_match_header(game,match_to_view,engine,match_state)
         screen.blit(match_header_surface,(0,0))
+
+        match_event_surface = draw_events(match_to_view)
+        screen.blit(match_event_surface,(100,100))
+
         if(match_state == "1st half" or match_state == "2nd half"):
             engine.tick()
         pygame.display.flip()
@@ -55,12 +59,25 @@ def draw_view_match(game,match_to_view):
         if match_state == "1st half" and engine.game_time>60*45:
             engine.game_time = 60*45
             match_state = "Half time"
+            event = {
+                "type": "Half time",
+                "time": "45:00"
+            }
+            match_to_view.events.append(event)
         if engine.game_time>60*90:
             engine.game_time = 60*90
             if(match_to_view.home_goals == match_to_view.away_goals and is_playoff):
                 match_to_view.home_goals += 1
             match_state = "End of game"
             match_to_view.played = True
+            event = {
+                "type": "Match ended",
+                "time": "90:00"
+            }
+            match_to_view.events.append(event)
+            #print(match_to_view.events)
+            #for event in match_to_view.events:
+            #    print(f"Event: \n {event}")
             for league in game.leagues:
                 league.calculate_table()
 
@@ -115,3 +132,32 @@ def view_match_header(game,match_to_view,engine,match_state):
     match_header_surface.blit(header_button_surface,header_button_rect)
 
     return match_header_surface,header_button_rect
+
+def draw_events(match_to_view):
+    sorted_events = sorted(match_to_view.events, key = lambda x:x['time'] , reverse = True)
+
+    event_surface = pygame.Surface((350,600), pygame.SRCALPHA)
+    event_surface.fill(WHITE)
+    y=10
+    row_height = 20
+    event_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
+    for i, event in enumerate(sorted_events):
+        if i % 2 == 0:
+            row_color = TABLE_ROW_EVEN_COLOR
+        else:
+            row_color = TABLE_ROW_ODD_COLOR
+        row_rect = pygame.Rect(10,10+i*row_height,300,row_height)
+        pygame.draw.rect(event_surface, row_color, row_rect)
+        event_time = event["time"]
+        event_type = event["type"]
+        if event_type == "goal":
+            goal_scorer = event["goal_scorer"]
+            goal_team = event["team"]
+            text = event_font.render(f"{event_time}: {goal_scorer.first_name} {goal_scorer.last_name} score for {goal_team}.", True, BLACK)
+            text_rect = text.get_rect(left=row_rect.left + 10, centery = row_rect.centery)
+        else:
+            text = event_font.render(f"{event_time}: {event_type}.", True, BLACK)
+            text_rect = text.get_rect(left=row_rect.left + 10, centery = row_rect.centery)
+        event_surface.blit(text,text_rect)    
+        #print(f"{event_time}: {event_type} {goal_scorer.first_name}")
+    return event_surface

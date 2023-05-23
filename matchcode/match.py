@@ -14,6 +14,7 @@ class Match:
         self.played = False
         self.is_over = False
         self.time_since_last_goal = 0
+        self.events = []
 
     def play(self, manager_team, is_playoff):
         self.home_goals = 0
@@ -66,12 +67,35 @@ class Match:
             self.league.check_elimination_semifinal(self.home_team, self.away_team)
         #print(f"  --  in play -- {self.played}: {self.home_goals} - {self.away_goals}")
 
-    def update_state(self,game_time_delta):
+    def add_goal_event(self, team,time):
+        #print(team.players)
+        player_list = list(team.players.values())
+        goal_scorer = random.choice(player_list)
+        assist_chance = random.random()
+        assisting_player = None
+
+        if assist_chance < 0.75:
+            assisting_player = random.choice(player_list)
+
+        event = {
+            "type": "goal",
+            "time": time,
+            "team": team.name,
+            "goal_scorer": goal_scorer,
+            "assisting_player": assisting_player if assisting_player else None,
+            "goal_type": "Play goal"
+        }
+
+        self.events.append(event)
+
+    def update_state(self,manager,game_time_delta):
         position_list = ["goalkeeper","libero","leftdef","rightdef","lefthalf","righthalf","leftmid","centralmid","rightmid","leftattack","rightattack","sub1","sub2","sub3","sub4","sub5"]
         off_weight = [2,2,3,3,8,8,12,12,12,19,19]
         def_weight = [20,16,14,14,10,10,4,4,4,2,2]
         home_team_players = self.home_team.get_players()
         away_team_players = self.away_team.get_players()
+
+        time = manager.get_current_time()
 
         home_off_total = 0
         away_off_total = 0
@@ -102,8 +126,10 @@ class Match:
             away_goal_chance = random.randint(1,int(20*away_off_total/home_def_total))
             if away_goal_chance > home_goal_chance:
                 self.away_goals += 1
+                self.add_goal_event(self.away_team,time)
             else:
                 self.home_goals += 1
+                self.add_goal_event(self.home_team,time)
 
     def winner(self):
         if self.played and self.home_goals is not None and self.away_goals is not None:

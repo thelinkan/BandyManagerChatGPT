@@ -21,7 +21,7 @@ class MatchEngine:
         # Update game state based on the passage of time
         # This could include things like player movement, ball physics, etc.
         # You can define methods within the match class to handle these updates.
-        self.match.update_state(game_time_delta)
+        self.match.update_state(manager=self, game_time_delta=game_time_delta)
 
 
     def get_current_time(self):
