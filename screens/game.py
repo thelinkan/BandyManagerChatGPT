@@ -417,7 +417,8 @@ def draw_schedule(game, selected_league, highlighted_team, start_page):
     return navigation_rects, start_page
 
 
-def draw_league_table(game, selected_league, highlighted_team):
+def draw_league_table(game, highlighted_team):
+    selected_league = game.inspected_league
     league = game.return_league_by_name(selected_league)
     #if game.selected_team_index is not None:
     #    print(f"Selected team {game.selected_team_index}")
@@ -736,7 +737,7 @@ def draw_game_mainscreen(game, selected_player_index, isMatchesPlayed, start_pag
     if (game.game_page == "schedule"):
         rectlist_1, start_page = draw_schedule(game,leagues[0].name, manager_team, start_page)
     if (game.game_page == "competition"):
-        league_table_surface, rectlist_1 = draw_league_table(game, leagues[0].name, manager_team)
+        league_table_surface, rectlist_1 = draw_league_table(game, manager_team)
         screen.blit(league_table_surface,(140,110))
     if (game.game_page == "player_list_u19"):
         rectlist_1 = draw_playerlist(game,manager_u19team, selected_player_index)

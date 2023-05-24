@@ -103,6 +103,8 @@ def draw_newgame2_menu(game,selected_country_index,selected_league_index,selecte
         y = 190
         league_num=0
         for league in leagues:
+            if league.league_type != "Normal":
+                continue
             if league_num == selected_league_index:
                 league_name = league.name
             text = small_font.render(league.name,False, BLACK)

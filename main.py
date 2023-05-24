@@ -130,6 +130,9 @@ while running:
                 if competition_button.rect.collidepoint(event.pos):
                     game.selected_team_index=-1
                     game.inspected_team = None
+                    manager_team_name = game.manager.return_team()
+                    temp_leagues = game.get_leagues_for_team(manager_team_name)
+                    game.inspected_league = temp_leagues[0].name
                     #print(game_page)
                     game.game_page = "competition"
                 if u19_squad_button.rect.collidepoint(event.pos):

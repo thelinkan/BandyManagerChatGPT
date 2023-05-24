@@ -31,6 +31,7 @@ class Game:
         self.match_manager = MatchManager()
         self.selected_team_index = -1
         self.inspected_team = None
+        self.inspected_league = None
 
         self.game_page=None
 
