@@ -17,8 +17,7 @@ screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
 x_offset = 150
 
-def draw_playerlist(game,team, selected_player_index):
-    #print(selected_player_index)
+def draw_playerlist(game,team):
     # Draw player table
 
     header_rect = pygame.Rect(10+x_offset, 100, 600, 30)
@@ -47,7 +46,7 @@ def draw_playerlist(game,team, selected_player_index):
             row_color = TABLE_ROW_EVEN_COLOR
         else:
             row_color = TABLE_ROW_ODD_COLOR
-        if(selected_player_index == i):
+        if(game.selected_player_index == i):
             row_color = (200,0,0)
             selected_player_uuid = player[0]
             #print(f"{player[2]} {selected_player_uuid}")
@@ -556,8 +555,8 @@ def draw_league_table(game, highlighted_team):
 
     return league_table_surface,team_rects
 
-def draw_tactics(game,team, selected_player_index):
-    playerlist_surface, player_rects, hover_player_uuid, selected_player_uuid = draw_tactics_playerlist(game,team,selected_player_index, (140,125))
+def draw_tactics(game,team):
+    playerlist_surface, player_rects, hover_player_uuid, selected_player_uuid = draw_tactics_playerlist(game,team, (140,125))
     screen.blit(playerlist_surface,(140,125))
     pitch_surface, jersey_rects = draw_tactics_pitch(game,team,hover_player_uuid, selected_player_uuid, (740,125))
     screen.blit(pitch_surface,(740,125))
@@ -619,7 +618,7 @@ def draw_tactics_jersey(jersey_colors, jersey_decorations, number, logo, name, i
     jersey_surface.blit(text, text_pos)
     return jersey_surface
 
-def draw_tactics_playerlist(game,team, selected_player_index, playerlist_offset):
+def draw_tactics_playerlist(game,team, playerlist_offset):
     mouse_pos = pygame.mouse.get_pos()
     mouse_pos_on_list = mouse_pos[0] - playerlist_offset[0], mouse_pos[1] - playerlist_offset[1]
 
@@ -648,7 +647,7 @@ def draw_tactics_playerlist(game,team, selected_player_index, playerlist_offset)
             row_color = TABLE_ROW_EVEN_COLOR
         else:
             row_color = TABLE_ROW_ODD_COLOR
-        if(selected_player_index == i):
+        if(game.selected_player_index == i):
             row_color = (200,0,0)
             selected_player_uuid = player[0]
             #print(f"{player[2]} {selected_player_uuid}")
@@ -677,7 +676,7 @@ def draw_tactics_playerlist(game,team, selected_player_index, playerlist_offset)
     return playerlist_surface,player_rects,hover_player_uuid, selected_player_uuid
 
 
-def draw_game_mainscreen(game, selected_player_index, isMatchesPlayed, start_page):
+def draw_game_mainscreen(game, isMatchesPlayed, start_page):
     # Draw screen
     screen.fill(WHITE)
     title = font.render("Bandymanager - Main screen", True, BLACK)
@@ -731,16 +730,16 @@ def draw_game_mainscreen(game, selected_player_index, isMatchesPlayed, start_pag
             team_viewed = game.inspected_team
         else:
             team_viewed = manager_team
-        rectlist_1 = draw_playerlist(game,team_viewed, selected_player_index)
+        rectlist_1 = draw_playerlist(game,team_viewed)
     if (game.game_page == "tactics"):
-        rectlist_1, rectlist_2 = draw_tactics(game,manager_team, selected_player_index)
+        rectlist_1, rectlist_2 = draw_tactics(game,manager_team)
     if (game.game_page == "schedule"):
         rectlist_1, start_page = draw_schedule(game,leagues[0].name, manager_team, start_page)
     if (game.game_page == "competition"):
         league_table_surface, rectlist_1 = draw_league_table(game, manager_team)
         screen.blit(league_table_surface,(140,110))
     if (game.game_page == "player_list_u19"):
-        rectlist_1 = draw_playerlist(game,manager_u19team, selected_player_index)
+        rectlist_1 = draw_playerlist(game,manager_u19team)
     # Update display
     pygame.display.flip()
 

@@ -1,5 +1,74 @@
 from game import Game
 
+from guielements import home_button,senior_squad_button, tactics_button, schedule_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
+from gameloop.tactics import gameloop_tactics
+
+def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
+    if home_button.rect.collidepoint(event.pos):
+        game.game_page = "home"
+    if(game.game_page == "player_list" or game.game_page == "player_list_u19"):
+        for i, rect in enumerate(rectslist_1):
+            if rect.collidepoint(event.pos):
+                game.selected_player_index = i
+                break
+    if(game.game_page == "competition"):
+        playerlist_offset = (140,110)
+        event_pos = event.pos
+        event_pos_on_list = event_pos[0] - playerlist_offset[0], event_pos[1] - playerlist_offset[1]
+        for i, rect in enumerate(rectslist_1):
+            if rect.collidepoint(event_pos_on_list):
+                game.selected_team_index = i
+                print(game.selected_team_index)
+                break
+        
+    if(game.game_page == "tactics"):
+        gameloop_tactics(game, rectslist_1, rectslist_2, event.pos)
+    if (game.game_page == "schedule"):
+        for i, rect in enumerate(rectslist_1):
+            if rect.collidepoint(event.pos) and i == 0:
+                start_page = start_page - 1
+                break                    
+            if rect.collidepoint(event.pos) and i == 1:
+                start_page = start_page + 1
+                break                    
+    if senior_squad_button.rect.collidepoint(event.pos):
+        game.selected_team_index=-1
+        game.selected_player_index=-1
+        game.inspected_team = None
+        game.game_page = "player_list"
+    if tactics_button.rect.collidepoint(event.pos):
+        game.selected_player_index=-1
+        game.selected_team_index=-1
+        game.inspected_team = None
+        game.game_page = "tactics"
+    if schedule_button.rect.collidepoint(event.pos):
+        start_page = 1
+        game.game_page = "schedule"
+    if competition_button.rect.collidepoint(event.pos):
+        game.selected_team_index=-1
+        game.inspected_team = None
+        manager_team_name = game.manager.return_team()
+        temp_leagues = game.get_leagues_for_team(manager_team_name)
+        game.inspected_league = temp_leagues[0].name
+        #print(game_page)
+        game.game_page = "competition"
+    if u19_squad_button.rect.collidepoint(event.pos):
+        game.selected_player_index=-1
+        game.inspected_team = None
+        game.game_page = "player_list_u19"
+    if forward_time_button.rect.collidepoint(event.pos):
+        isMatchesPlayed, match_viewed, match_to_view = game.tick()
+        if match_viewed:
+            game_state = "view_match"
+            
+
+    if save_game_button.rect.collidepoint(event.pos):
+        game.save_game('c:\temp')
+    if quit_game_button.rect.collidepoint(event.pos):
+        quit_game_button.do_action()
+                
+    return game_state
+
 def start_menu(game_state,new_game_button,load_game_button,credits_button,quit_button,event):
     if game_state == "show_credits":
         game_state = "start_menu"
