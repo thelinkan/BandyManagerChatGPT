@@ -14,7 +14,7 @@ from screens.screensMatch import draw_view_match
 from guielements import font,medium_font, small_font, button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
 from guielements import home_button,senior_squad_button, tactics_button, schedule_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
-from gameloop.mainloop import start_menu, new_game_menu, new_game_menu2, mainscreen_loop
+from gameloop.mainloop import start_menu, new_game_menu, new_game_menu2, mainscreen_loop, new_game_input
 
 game_state = "start_menu"
 
@@ -46,14 +46,7 @@ while running:
             elif event.button == 1 and game_state == "game_mainscreen":
                 game_state = mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event)
         if game_state =="new_game":
-            name_active = False
-            age_active = False
-            if input_name.active:
-                name_active = True
-            if input_age.active:
-                age_active = True
-            input_name.handle_event(event, name_active, input_age)
-            input_age.handle_event(event, age_active, input_name)
+            new_game_input(event)
 
     if game_state == "start_menu":
         draw_start_menu()

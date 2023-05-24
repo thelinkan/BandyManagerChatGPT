@@ -18,6 +18,10 @@ screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 x_offset = 150
 
 def draw_playerlist(game,team):
+    print(f"draw_players team: {team.name}")
+    playerlist_offset = (0, 0)
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos_on_list = mouse_pos[0] - playerlist_offset[0], mouse_pos[1] - playerlist_offset[1]
     # Draw player table
 
     header_rect = pygame.Rect(10+x_offset, 100, 600, 30)
@@ -51,6 +55,10 @@ def draw_playerlist(game,team):
             selected_player_uuid = player[0]
             #print(f"{player[2]} {selected_player_uuid}")
         row_rect = pygame.Rect(10+x_offset, 130 + i * row_height, 600, row_height)
+        if mouse_pos and row_rect.collidepoint(mouse_pos_on_list):
+            row_color = (255,200,200)
+
+
         pygame.draw.rect(screen, row_color, row_rect)
 
         player_rects.append(row_rect)
@@ -419,6 +427,11 @@ def draw_schedule(game, selected_league, highlighted_team, start_page):
 def draw_league_table(game, highlighted_team):
     selected_league = game.inspected_league
     league = game.return_league_by_name(selected_league)
+
+    teamlist_offset = (140,110)
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos_on_list = mouse_pos[0] - teamlist_offset[0], mouse_pos[1] - teamlist_offset[1]
+    
     #if game.selected_team_index is not None:
     #    print(f"Selected team {game.selected_team_index}")
 
@@ -495,10 +508,13 @@ def draw_league_table(game, highlighted_team):
             row_text_color = BLACK
 
         row_surface = pygame.Surface((table_width,row_height), pygame.SRCALPHA)
-        row_surface.fill(row_color)
+
         row_rect = row_surface.get_rect()
         row_rect.top = 30 + i * row_height
         row_rect.left = 0
+        if mouse_pos and row_rect.collidepoint(mouse_pos_on_list):
+            row_color = (255,200,200)
+        row_surface.fill(row_color)
 
         team_rects.append(row_rect)
 
@@ -730,6 +746,7 @@ def draw_game_mainscreen(game, isMatchesPlayed, start_page):
             team_viewed = game.inspected_team
         else:
             team_viewed = manager_team
+        print(f"team viewed {team_viewed}, inspected_team {game.inspected_team}")
         rectlist_1 = draw_playerlist(game,team_viewed)
     if (game.game_page == "tactics"):
         rectlist_1, rectlist_2 = draw_tactics(game,manager_team)

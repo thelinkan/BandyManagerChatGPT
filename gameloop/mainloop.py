@@ -1,5 +1,6 @@
 from game import Game
 
+from guielements import input_name, input_age
 from guielements import home_button,senior_squad_button, tactics_button, schedule_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
 from gameloop.tactics import gameloop_tactics
 
@@ -19,7 +20,14 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
             if rect.collidepoint(event_pos_on_list):
                 game.selected_team_index = i
                 print(game.selected_team_index)
-                break
+                selected_league = game.inspected_league
+                league = game.return_league_by_name(selected_league)
+                sorted_table = sorted(league.table.items(), key=lambda x: (-x[1]['points'], -x[1]['goals_for'] + x[1]['goals_against'], -x[1]['goals_for']))
+                for j, team in enumerate(sorted_table):
+                    if j == game.selected_team_index:
+                        game.inspected_team = team
+                        pass                
+                
         
     if(game.game_page == "tactics"):
         gameloop_tactics(game, rectslist_1, rectslist_2, event.pos)
@@ -66,7 +74,9 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
         game.save_game('c:\temp')
     if quit_game_button.rect.collidepoint(event.pos):
         quit_game_button.do_action()
-                
+
+    print(f"inspected_team {game.inspected_team}")
+
     return game_state
 
 def start_menu(game_state,new_game_button,load_game_button,credits_button,quit_button,event):
@@ -136,3 +146,13 @@ def new_game_menu2(game, game_state,country_rects,league_rects,team_rects, selec
             game.save_game('c:\temp')
             
     return game_state
+
+def new_game_input(event):
+    name_active = False
+    age_active = False
+    if input_name.active:
+        name_active = True
+    if input_age.active:
+        age_active = True
+    input_name.handle_event(event, name_active, input_age)
+    input_age.handle_event(event, age_active, input_name)
