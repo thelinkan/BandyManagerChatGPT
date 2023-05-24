@@ -29,7 +29,10 @@ class Game:
         self.player_manager = PlayerManager()
         self.teams = {} # Add a dictionary to store teams
         self.match_manager = MatchManager()
+        self.selected_player_index = -1
         self.selected_team_index = -1
+        self.selected_league_index = -1
+        self.selected_country_index = -1
         self.inspected_team = None
         self.inspected_league = None
 
