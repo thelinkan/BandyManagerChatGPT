@@ -57,7 +57,7 @@ while running:
     if game_state == "new_game_2":
         country_rects,league_rects, team_rects,selected_team=draw_newgame2_menu(game)
     if game_state == "game_mainscreen":
-        rectslist_1, rectslist_2, start_page = draw_game_mainscreen(game, isMatchesPlayed, start_page)
+        rectslist_1, rectslist_2 = draw_game_mainscreen(game, isMatchesPlayed)
     if game_state == "view_match":
         #draw_view_match(game,match_to_view)
         game_state = "game_mainscreen"

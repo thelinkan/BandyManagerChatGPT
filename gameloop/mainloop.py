@@ -36,10 +36,10 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
     if (game.game_page == "schedule"):
         for i, rect in enumerate(rectslist_1):
             if rect.collidepoint(event.pos) and i == 0:
-                start_page = start_page - 1
+                game.start_page = game.start_page - 1
                 break                    
             if rect.collidepoint(event.pos) and i == 1:
-                start_page = start_page + 1
+                game.start_page = game.start_page + 1
                 break                    
     if senior_squad_button.rect.collidepoint(event.pos):
         game.selected_team_index=-1
@@ -52,7 +52,7 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
         game.inspected_team = None
         game.game_page = "tactics"
     if schedule_button.rect.collidepoint(event.pos):
-        start_page = 1
+        game.start_page = 1
         game.game_page = "schedule"
     if competition_button.rect.collidepoint(event.pos):
         game.selected_team_index=-1
