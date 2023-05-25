@@ -75,10 +75,10 @@ class Game:
                 else:
                     age_type="senior"
                 player_first_name = ""
-                player_familyname = ""
+                player_last_name = ""
                 num_players_national = team.num_players
                 num_players_international = team.num_int_players
-                print(f"- {team.name} ({team.team_type})")
+                #print(f"- {team.name} ({team.team_type})")
                 for key, value in self.countries.items():
                     if(key == club.country):
                         team_country = value
@@ -202,10 +202,10 @@ class Game:
                 #print(attributes)
 
         self.clubs = self.read_clubs_from_json(game_data['club_data'])
-        for club in self.clubs:
-            print(club.name)
-            for team in club.teams:
-                print(f"- {team.name} ({team.team_type})")
+        #for club in self.clubs:
+        #    print(club.name)
+        #    for team in club.teams:
+        #        print(f"- {team.name} ({team.team_type})")
 
         playoff_data =game_data['playoffs_data']
 
@@ -250,7 +250,7 @@ class Game:
                         league.num_teams_to_playoff=league_data["num_teams_to_playoff"]
                         if "rounds" in p_data:
                             playoff.load_rounds(self,p_data["rounds"])
-                        debugprint_playoff(playoff)
+                        #debugprint_playoff(playoff)
 
                         break
                 if playoff is None:
@@ -461,7 +461,7 @@ class Game:
                         match.league.check_elimination_semifinal(match.home_team, match.away_team)
 
                 else:
-                    print(f"    tick play {match.home_team.name} - {match.away_team.name}: {match.league.name}")
+                    #print(f"    tick play {match.home_team.name} - {match.away_team.name}: {match.league.name}")
                     #if self.playoff_for_league is not None:
                     #    playoff_teams = self.playoff_for_league.teams
                     #    if match.home_team in playoff_teams and match.away_team in playoff_teams:
@@ -477,7 +477,7 @@ class Game:
                 league.calculate_table()
                 if(league.playoff_for_league is not None and league.is_completed()):
                     if(not league.playoff_for_league.is_started):
-                        print(f"Time for playoff - {league.playoff_for_league.name} - is_started: {league.playoff_for_league.is_started}")
+                        #print(f"Time for playoff - {league.playoff_for_league.name} - is_started: {league.playoff_for_league.is_started}")
                         league.playoff_for_league.create_quarter_finals_schedule(league.get_playoff_teams())
             qleagues = self.get_leagues_by_type("Qualification")
             for qleague in qleagues:

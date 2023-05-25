@@ -6,7 +6,7 @@ from guielements import new_game_button, load_game_button, credits_button, quit_
 from guielements import home_button,senior_squad_button, tactics_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
 
 def gameloop_tactics(game, player_rects, jersey_rects, event_pos):
-    print("tactics - loop")
+    #print("tactics - loop")
     position_list = ["goalkeeper","libero","leftdef","rightdef","lefthalf","righthalf","leftmid","centralmid","rightmid","leftattack","rightattack","sub1","sub2","sub3","sub4","sub5"]
 
     playerlist_offset = (140,125)
