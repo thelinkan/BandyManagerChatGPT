@@ -17,29 +17,40 @@ screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
 x_offset = 150
 
-def draw_playerlist(game,team):
-    print(f"draw_players team: {team.name}")
-    playerlist_offset = (0, 0)
+def draw_squad(game,team):
+    playerlist_offset = (140,125)
+    player_offset = (790,125)
+    playerlist_surface, player_rects, hover_player_uuid, selected_player_uuid = draw_playerlist(game,team, playerlist_offset)
+    screen.blit(playerlist_surface,playerlist_offset)
+    if(selected_player_uuid is not None):
+        player_surface = draw_player(game,selected_player_uuid)
+        screen.blit(player_surface,player_offset)
+    return player_rects
+
+def draw_playerlist(game,team, playerlist_offset):
     mouse_pos = pygame.mouse.get_pos()
     mouse_pos_on_list = mouse_pos[0] - playerlist_offset[0], mouse_pos[1] - playerlist_offset[1]
-    # Draw player table
 
-    header_rect = pygame.Rect(10+x_offset, 100, 600, 30)
+    hover_player_uuid = None
+
+    playerlist_surface = pygame.Surface((600,600), pygame.SRCALPHA)
+    header_rect = pygame.Rect(0, 0, 600, 30)
     selected_player_uuid = None
 
-    pygame.draw.rect(screen, TABLE_HEADER_COLOR, header_rect)
+    pygame.draw.rect(playerlist_surface, TABLE_HEADER_COLOR, header_rect)
+
     header_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
     text = header_font.render("Name", True, BLACK)
     text_rect = text.get_rect(left=header_rect.left + 10, centery=header_rect.centery)
-    screen.blit(text, text_rect)
+    playerlist_surface.blit(text, text_rect)
 
     text = header_font.render("Age", True, BLACK)
     text_rect = text.get_rect(centerx=header_rect.centerx, centery=header_rect.centery)
-    screen.blit(text, text_rect)
+    playerlist_surface.blit(text, text_rect)
 
     text = header_font.render("Position", True, BLACK)
     text_rect = text.get_rect(right=header_rect.right - 10, centery=header_rect.centery)
-    screen.blit(text, text_rect)
+    playerlist_surface.blit(text, text_rect)
 
     player_rects = []
     row_height = 30
@@ -54,82 +65,31 @@ def draw_playerlist(game,team):
             row_color = (200,0,0)
             selected_player_uuid = player[0]
             #print(f"{player[2]} {selected_player_uuid}")
-        row_rect = pygame.Rect(10+x_offset, 130 + i * row_height, 600, row_height)
+        row_rect = pygame.Rect(0, 30 + i * row_height, 600, row_height)
         if mouse_pos and row_rect.collidepoint(mouse_pos_on_list):
             row_color = (255,200,200)
+            hover_player_uuid = player[0]
 
 
-        pygame.draw.rect(screen, row_color, row_rect)
+        pygame.draw.rect(playerlist_surface, row_color, row_rect)
 
         player_rects.append(row_rect)
 
         text = player_font.render(str(player[1]) + ") " + player[2] + " " + player[3], True, BLACK)
         text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
-        screen.blit(text, text_rect)
+        playerlist_surface.blit(text, text_rect)
 
         text = player_font.render(str(player[4]), True, BLACK)
         text_rect = text.get_rect(centerx=row_rect.centerx, centery=row_rect.centery)
-        screen.blit(text, text_rect)
+        playerlist_surface.blit(text, text_rect)
 
         text = player_font.render(player[5], True, BLACK)
         text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
-        screen.blit(text, text_rect)
-    #print(len(player_rects))
-    #print(player_rects)
-    if(selected_player_uuid is not None):
-        draw_player(game,selected_player_uuid)
-    return player_rects
+        playerlist_surface.blit(text, text_rect)
+
+    return playerlist_surface,player_rects,hover_player_uuid, selected_player_uuid
 
 def draw_player(game,player_uuid):
-    player = game.player_manager.find_player_by_uuid(player_uuid)
-    #print(player_uuid)
-    text = medium_font.render(f"{player.first_name} {player.last_name}", True, BLACK)
-    text_rect = pygame.Rect(790, 160, 300, 30)
-    screen.blit(text,text_rect)
-
-    text = medium_font.render(f"Age: {player.age}", True, BLACK)
-    text_rect = pygame.Rect(790, 190, 300, 30)
-    screen.blit(text,text_rect)
-
-    text = medium_font.render(f"Nationality: {game.countries[player.nationality].name}", True, BLACK)
-    text_rect = pygame.Rect(790, 220, 300, 30)
-    screen.blit(text,text_rect)
-
-    attributes = []
-    i=0
-    if player.position == "goalkeeper":
-        attribute_list = ['Saveing','Reflexes','Placement','Throwing','Skating','Acceleration', 'Agility', 'Agression','Endurance']
-    else:
-        attribute_list = ["Dribbling", "Intercept", 'Shooting', 'Passing', 'Long pass', 'Corners','Skating','Acceleration', 'Agility', 'Agression','Endurance']
-    for attribute_name in attribute_list:
-        attribute = player.get_attribute(attribute_name)
-        if attribute:
-            if attribute.name == "Saveing":
-                text = very_small_bold_font.render("Goalkeeper attributes", True, BLACK)
-                text_rect = pygame.Rect(790, 250 + i*15 , 300, 15)
-                screen.blit(text,text_rect)
-                i += 1
-            if attribute.name == "Dribbling":
-                text = very_small_bold_font.render("Outfield attributes", True, BLACK)
-                text_rect = pygame.Rect(790, 250 + i*15 , 300, 15)
-                screen.blit(text,text_rect)
-                i += 1
-            if attribute.name == "Skating":
-                i += 1
-                text = very_small_bold_font.render("Generic attributes", True, BLACK)
-                text_rect = pygame.Rect(790, 250 + i*15 , 300, 15)
-                screen.blit(text,text_rect)
-                i += 1
-
-            #attributes.append(f"{attribute.name}: {attribute.level}")
-            attributes_text = f"{attribute.name}: {attribute.level}"
-            text = very_small_font.render(attributes_text, True, BLACK)
-            text_rect = pygame.Rect(790, 250 + i*15 , 300, 15)
-            screen.blit(text,text_rect)
-            i += 1
-
-
-def draw_player2(game,player_uuid):
     player_surface = pygame.Surface((250,600), pygame.SRCALPHA)
     player = game.player_manager.find_player_by_uuid(player_uuid)
     #print(player_uuid)
@@ -483,9 +443,6 @@ def draw_league_table(game, highlighted_team):
     team_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
     row_height = FONTSIZE_VERY_SMALL + 8
 
-    #print(selected_league)
-    #print(league)
-
     # Sort the table by points, then by goal difference, then by goals for
     sorted_table = sorted(league.table.items(), key=lambda x: (-x[1]['points'], -x[1]['goals_for'] + x[1]['goals_against'], -x[1]['goals_for']))
 
@@ -572,10 +529,18 @@ def draw_league_table(game, highlighted_team):
     return league_table_surface,team_rects
 
 def draw_tactics(game,team):
-    playerlist_surface, player_rects, hover_player_uuid, selected_player_uuid = draw_tactics_playerlist(game,team, (140,125))
-    screen.blit(playerlist_surface,(140,125))
-    pitch_surface, jersey_rects = draw_tactics_pitch(game,team,hover_player_uuid, selected_player_uuid, (740,125))
-    screen.blit(pitch_surface,(740,125))
+    playerlist_offset = (140,125)
+    player_offset = (490,125)
+    pitch_offset = (740,125)
+
+    playerlist_surface, player_rects, hover_player_uuid, selected_player_uuid = draw_tactics_playerlist(game,team, playerlist_offset)
+    screen.blit(playerlist_surface,playerlist_offset)
+    if(selected_player_uuid is not None):
+        player_surface = draw_player(game,selected_player_uuid)
+        screen.blit(player_surface,player_offset)
+
+    pitch_surface, jersey_rects = draw_tactics_pitch(game,team,hover_player_uuid, selected_player_uuid, pitch_offset)
+    screen.blit(pitch_surface,pitch_offset)
 
     return player_rects, jersey_rects
 
@@ -684,11 +649,6 @@ def draw_tactics_playerlist(game,team, playerlist_offset):
         text = player_font.render(player[5], True, BLACK)
         text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
         playerlist_surface.blit(text, text_rect)
-    #print(len(player_rects))
-    #print(player_rects)
-    if(selected_player_uuid is not None):
-        player_surface = draw_player2(game,selected_player_uuid)
-        playerlist_surface.blit(player_surface,(350,0))
     return playerlist_surface,player_rects,hover_player_uuid, selected_player_uuid
 
 
@@ -746,8 +706,8 @@ def draw_game_mainscreen(game, isMatchesPlayed, start_page):
             team_viewed = game.inspected_team
         else:
             team_viewed = manager_team
-        print(f"team viewed {team_viewed}, inspected_team {game.inspected_team}")
-        rectlist_1 = draw_playerlist(game,team_viewed)
+        #print(f"team viewed {team_viewed}, inspected_team {game.inspected_team}")
+        rectlist_1 = draw_squad(game,team_viewed)
     if (game.game_page == "tactics"):
         rectlist_1, rectlist_2 = draw_tactics(game,manager_team)
     if (game.game_page == "schedule"):
@@ -756,7 +716,7 @@ def draw_game_mainscreen(game, isMatchesPlayed, start_page):
         league_table_surface, rectlist_1 = draw_league_table(game, manager_team)
         screen.blit(league_table_surface,(140,110))
     if (game.game_page == "player_list_u19"):
-        rectlist_1 = draw_playerlist(game,manager_u19team)
+        rectlist_1 = draw_squad(game,manager_u19team)
     # Update display
     pygame.display.flip()
 

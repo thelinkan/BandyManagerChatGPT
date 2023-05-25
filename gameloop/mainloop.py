@@ -8,8 +8,11 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
     if home_button.rect.collidepoint(event.pos):
         game.game_page = "home"
     if(game.game_page == "player_list" or game.game_page == "player_list_u19"):
+        playerlist_offset = (140,125)
+        event_pos = event.pos
+        event_pos_on_list = event_pos[0] - playerlist_offset[0], event_pos[1] - playerlist_offset[1]
         for i, rect in enumerate(rectslist_1):
-            if rect.collidepoint(event.pos):
+            if rect.collidepoint(event_pos_on_list):
                 game.selected_player_index = i
                 break
     if(game.game_page == "competition"):
@@ -19,7 +22,6 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
         for i, rect in enumerate(rectslist_1):
             if rect.collidepoint(event_pos_on_list):
                 game.selected_team_index = i
-                print(game.selected_team_index)
                 selected_league = game.inspected_league
                 league = game.return_league_by_name(selected_league)
                 sorted_table = sorted(league.table.items(), key=lambda x: (-x[1]['points'], -x[1]['goals_for'] + x[1]['goals_against'], -x[1]['goals_for']))
@@ -75,8 +77,6 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
     if quit_game_button.rect.collidepoint(event.pos):
         quit_game_button.do_action()
 
-    print(f"inspected_team {game.inspected_team}")
-
     return game_state
 
 def start_menu(game_state,new_game_button,load_game_button,credits_button,quit_button,event):
@@ -86,7 +86,7 @@ def start_menu(game_state,new_game_button,load_game_button,credits_button,quit_b
         return game,game_state
     if new_game_button.rect.collidepoint(event.pos):
         game_state="new_game"
-        print("New game click");
+        #print("New game click");
         game = Game(2023,8,1)
         return game,game_state
     if load_game_button.rect.collidepoint(event.pos):
@@ -99,7 +99,7 @@ def start_menu(game_state,new_game_button,load_game_button,credits_button,quit_b
         return game,game_state
     if credits_button.rect.collidepoint(event.pos):
         game_state="show_credits"
-        print("Credits click");
+        #print("Credits click");
         game = None
         return game,game_state
     if quit_button.rect.collidepoint(event.pos):
@@ -142,7 +142,7 @@ def new_game_menu2(game, game_state,country_rects,league_rects,team_rects, selec
             game.set_manager_team(selected_team)
             game_state = "game_mainscreen"
             game.game_page = "home"
-            print("klick "+ selected_team)
+            #print("klick "+ selected_team)
             game.save_game('c:\temp')
             
     return game_state
