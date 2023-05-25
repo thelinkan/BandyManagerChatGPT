@@ -7,6 +7,7 @@ from gameloop.tactics import gameloop_tactics
 def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
     if home_button.rect.collidepoint(event.pos):
         game.game_page = "home"
+        game.start_page = 1
     if(game.game_page == "player_list" or game.game_page == "player_list_u19"):
         playerlist_offset = (140,125)
         event_pos = event.pos
@@ -33,6 +34,14 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
         
     if(game.game_page == "tactics"):
         gameloop_tactics(game, rectslist_1, rectslist_2, event.pos)
+    if (game.game_page == "home"):
+        for i, rect in enumerate(rectslist_1):
+            if rect.collidepoint(event.pos) and i == 0:
+                game.start_page = game.start_page - 1
+                break                    
+            if rect.collidepoint(event.pos) and i == 1:
+                game.start_page = game.start_page + 1
+                break               
     if (game.game_page == "schedule"):
         for i, rect in enumerate(rectslist_1):
             if rect.collidepoint(event.pos) and i == 0:
@@ -67,7 +76,7 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
         game.inspected_team = None
         game.game_page = "player_list_u19"
     if forward_time_button.rect.collidepoint(event.pos):
-        isMatchesPlayed, match_viewed, match_to_view = game.tick()
+        match_viewed, match_to_view = game.tick()
         if match_viewed:
             game_state = "view_match"
             

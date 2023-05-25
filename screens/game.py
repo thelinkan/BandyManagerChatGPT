@@ -7,11 +7,14 @@ from guielements import font, medium_font, small_font,very_small_font ,very_smal
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
 from guielements import home_button, inbox_button, newspaper_button, senior_squad_button, tactics_button, training_button, schedule_button, competition_button
 from guielements import u19_squad_button,forward_time_button, save_game_button, quit_game_button
-from miscfunctions import get_club_from_team, draw_calendar, draw_jersey, yesterday
+from miscfunctions import get_club_from_team, draw_calendar, yesterday
+from graphicscode.jersey import draw_jersey
+from graphicscode.arrows import draw_arrow_left, draw_arrow_right, draw_arrow_up, draw_arrow_down
 
 from debug_functions import print_yesterdays_results
 
 from screens.screensleague import draw_league_table, draw_schedule
+
 
 pygame.init()
 
@@ -230,12 +233,17 @@ def draw_next_match(game, team):
     return border_surface
 
 
-def draw_yesterday_results(game, team):
+def draw_yesterday_results(game, team, list_offset):
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos_on_list = mouse_pos[0] - list_offset[0], mouse_pos[1] - list_offset[1]
+
     year_yesterday, month_yesterday, day_yesterday = yesterday(game.year, game.month, game.day)
     matches_today = game.match_manager.get_matches_by_date(year_yesterday, month_yesterday, day_yesterday)
     yesterdays_result_surface = pygame.Surface((375,600), pygame.SRCALPHA)
     yesterdays_result_surface.fill(WHITE)
     month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    arrow_rects = []
 
     if len(matches_today) > 0:
         #print_yesterdays_results(game)
@@ -275,21 +283,52 @@ def draw_yesterday_results(game, team):
     border_surface.fill(BLACK)
     border_surface.blit(yesterdays_result_surface, (2, 2))
 
-    return border_surface
+    total_surface = pygame.Surface((border_surface.get_width() + 60, border_surface.get_height()))
+    total_surface.fill(WHITE)
+    total_surface.blit(border_surface,(0,0))
+
+    arrow_rect = pygame.Rect(total_surface.get_width() -50, 10, 50, 50)
+    arrow_rects.append(arrow_rect)
+    if mouse_pos and arrow_rect.collidepoint(mouse_pos_on_list):
+        arrow_color = (200,100,100)
+    else:
+        arrow_color = (0,0,0)
+    arrow_surface = draw_arrow_up(arrow_color)
+    total_surface.blit(arrow_surface,arrow_rect)
+    arrow_rect = pygame.Rect(total_surface.get_width() -50, total_surface.get_height() - 60, 50, 50)
+    arrow_rects.append(arrow_rect)
+    if mouse_pos and arrow_rect.collidepoint(mouse_pos_on_list):
+        arrow_color = (200,100,100)
+    else:
+        arrow_color = (0,0,0)
+    arrow_surface = draw_arrow_down(arrow_color)
+    total_surface.blit(arrow_surface,arrow_rect)
+    return total_surface, arrow_rects
 
 
 
 
-def draw_home(game,team,isMatchesPlayed):
+def draw_home(game,team):
     month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
+    list_offset = (470,110)
+    arrow_rects = []
     next_match_surface = draw_next_match(game,team)
     screen.blit(next_match_surface,(150,110))
-
-    if isMatchesPlayed == True:
+    if game.isMatchesPlayed == True:
         #year_yesterday, month_yesterday, day_yesterday = yesterday(game.year, game.month, game.day)
-        yesterdays_result_surface = draw_yesterday_results(game, team)
-        screen.blit(yesterdays_result_surface,(470,110))
+        yesterdays_result_surface, arrow_rects = draw_yesterday_results(game, team, list_offset)
+        screen.blit(yesterdays_result_surface,list_offset)
+
+    #arrow_surface = draw_arrow_left((0,0,0))
+    #screen.blit(arrow_surface,(200,300))
+    #arrow_surface = draw_arrow_right((200,0,0))
+    #screen.blit(arrow_surface,(300,300))
+    #arrow_surface = draw_arrow_up((0,100,0))
+    #screen.blit(arrow_surface,(200,400))
+    #arrow_surface = draw_arrow_down((0,0,70))
+    #screen.blit(arrow_surface,(300,400))
+    return arrow_rects
 
 def draw_tactics(game,team):
     playerlist_offset = (140,125)
@@ -415,7 +454,7 @@ def draw_tactics_playerlist(game,team, playerlist_offset):
     return playerlist_surface,player_rects,hover_player_uuid, selected_player_uuid
 
 
-def draw_game_mainscreen(game, isMatchesPlayed):
+def draw_game_mainscreen(game):
     # Draw screen
     screen.fill(WHITE)
     title = font.render("Bandymanager - Main screen", True, BLACK)
@@ -463,7 +502,7 @@ def draw_game_mainscreen(game, isMatchesPlayed):
     leagues = game.get_leagues_for_team(manager_team_name)
 
     if (game.game_page == "home"):
-        draw_home(game,manager_team_name,isMatchesPlayed)
+        rectlist_1 = draw_home(game,manager_team_name)
     if (game.game_page == "player_list"):
         if game.inspected_team is not None:
             team_viewed = game.inspected_team

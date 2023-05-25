@@ -5,7 +5,8 @@ from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY,FONTSIZE_LARGE
 from constants import TABLE_HEADER_COLOR, TABLE_ROW_ODD_COLOR, TABLE_ROW_EVEN_COLOR
 from guielements import font, medium_font, small_font, button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
-from miscfunctions import get_club_from_team, draw_jersey
+from miscfunctions import get_club_from_team
+from graphicscode.jersey import draw_jersey
 
 pygame.init()
 

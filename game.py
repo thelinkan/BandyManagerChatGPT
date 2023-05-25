@@ -35,8 +35,10 @@ class Game:
         self.selected_country_index = -1
         self.inspected_team = None
         self.inspected_league = None
+        self.isMatchesPlayed = False
 
         self.game_page=None
+        self.start_page = -1
 
     def new_game(self,manager_name,manager_age):
         # create new game
@@ -512,9 +514,9 @@ class Game:
             #    for match in playoff.matches:
             #        print(f" * {match.home_team.name} - {match.away_team.name} : {match.home_goals} - {match.away_goals} __ {match.played}")
             #    playoff.check_elimination_quarterfinal()
-            isMatchesPlayed = True
+            self.isMatchesPlayed = True
         else:
-            isMatchesPlayed = False
+            self.isMatchesPlayed = False
         self.day += 1
         if self.month in [4, 6, 9, 11]:
             month_days = 30
@@ -534,10 +536,10 @@ class Game:
             self.month = 1
             self.year += 1
 
-        if isMatchesPlayed == True:
+        if self.isMatchesPlayed == True:
             self.game_page = "home"
 
-        return isMatchesPlayed, match_viewed, match_to_view
+        return match_viewed, match_to_view
 
     def schedule_match(self, match):
         # logic to schedule match goes here

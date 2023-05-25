@@ -25,7 +25,6 @@ selected_country_index=-1
 selected_league_index = -1
 selected_team_index=-1
 selected_player_index=-1
-isMatchesPlayed = False
 start_page=-1
 
 # Define game loop
@@ -57,7 +56,7 @@ while running:
     if game_state == "new_game_2":
         country_rects,league_rects, team_rects,selected_team=draw_newgame2_menu(game)
     if game_state == "game_mainscreen":
-        rectslist_1, rectslist_2 = draw_game_mainscreen(game, isMatchesPlayed)
+        rectslist_1, rectslist_2 = draw_game_mainscreen(game)
     if game_state == "view_match":
         #draw_view_match(game,match_to_view)
         game_state = "game_mainscreen"
