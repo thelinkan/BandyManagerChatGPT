@@ -247,15 +247,39 @@ def draw_yesterday_results(game, team, list_offset):
 
     if len(matches_today) > 0:
         #print_yesterdays_results(game)
+        if game.start_page<1:
+            game.start_page = 1
         y = 10
         text = medium_font.render(f"Matches {day_yesterday} {month_names[month_yesterday-1]} {year_yesterday}", True, BLACK)
         y += 5
         last_league = ""
         text_rect = pygame.Rect(10, y,200, 20)
         yesterdays_result_surface.blit(text, text_rect)
-        for match in matches_today:
+        num_pages = 1
+        page_size = 0
+        page_surfaces = []
+        page_surface = pygame.Surface((375,0))
+        league_surface = pygame.Surface((375,0))
+        size = 0
+        for i,match in enumerate(matches_today):
             match_league = game.match_manager.get_league_of_match(match)
             if match_league.name != last_league:
+                if(page_size + size >28):
+                    num_pages += 1
+                    page_size = 0
+                    page_surfaces.append(page_surface)
+                    page_surface = pygame.Surface((375,0))
+            
+                page_size += size
+                page_height = page_surface.get_height()
+                league_height = league_surface.get_height()
+                new_page_surface =pygame.Surface((league_surface.get_width(),page_height+league_height))
+                new_page_surface.blit(page_surface,(0,0))
+                new_page_surface.blit(league_surface,(0,page_height))
+                page_surface = new_page_surface
+                size = 2
+                league_surface = pygame.Surface((375,30))
+                league_surface.fill(WHITE)
                 last_league = match_league.name
                 country = match_league.country
                 flag = game.return_countryflag(country)
@@ -266,18 +290,42 @@ def draw_yesterday_results(game, team, list_offset):
                 combined_surface.blit(text, (4,4))
                 combined_surface.blit(flag, (325,2))
                 rect = combined_surface.get_rect()
-                rect.topleft = (0, y)
-                yesterdays_result_surface.blit(combined_surface, rect)
+                rect.topleft = (0,0)
+                league_surface.blit(combined_surface, rect)
                 y+=12
             y += 20
+            size += 1
+            new_height = league_surface.get_height() + 20
+            new_surface = pygame.Surface((league_surface.get_width(), new_height))
+            new_surface.fill(WHITE)
+            new_surface.blit(league_surface, (0, 0))
             if(match.home_team.name == team or match.away_team.name == team):
                 row_text_color = (255,0,0)
             else:
                 row_text_color = (0,0,0)
             text = small_font.render(f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}", True, row_text_color)
-            text_rect = pygame.Rect(10, y,375, 20)
-            yesterdays_result_surface.blit(text, text_rect)
-            #print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
+            text_rect = pygame.Rect(10, new_height-20,375, 20)
+            new_surface.blit(text, text_rect)
+            league_surface = new_surface
+
+        if(page_size + size >28):
+            num_pages += 1
+            page_surfaces.append(page_surface)
+            page_surface = pygame.Surface((375,0))
+        page_size += size
+        page_height = page_surface.get_height()
+        league_height = league_surface.get_height()
+        new_page_surface =pygame.Surface((league_surface.get_width(),page_height+league_height))
+        new_page_surface.blit(page_surface,(0,0))
+        new_page_surface.blit(league_surface,(0,page_height))
+        page_surface = new_page_surface
+        page_surfaces.append(page_surface)
+
+        if game.start_page > num_pages:
+            game.start_page = num_pages
+
+        yesterdays_result_surface.blit(page_surfaces[game.start_page-1],(0,35))
+
 
     border_surface = pygame.Surface((yesterdays_result_surface.get_width() + 4, yesterdays_result_surface.get_height() + 4))
     border_surface.fill(BLACK)

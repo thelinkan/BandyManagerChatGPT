@@ -35,13 +35,17 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
     if(game.game_page == "tactics"):
         gameloop_tactics(game, rectslist_1, rectslist_2, event.pos)
     if (game.game_page == "home"):
+        list_offset = (470,110)
+        mouse_pos = event.pos
+        mouse_pos_on_list = mouse_pos[0] - list_offset[0], mouse_pos[1] - list_offset[1]
+
         for i, rect in enumerate(rectslist_1):
-            if rect.collidepoint(event.pos) and i == 0:
+            if rect.collidepoint(mouse_pos_on_list) and i == 0:
                 game.start_page = game.start_page - 1
                 break                    
-            if rect.collidepoint(event.pos) and i == 1:
+            if rect.collidepoint(mouse_pos_on_list) and i == 1:
                 game.start_page = game.start_page + 1
-                break               
+                break
     if (game.game_page == "schedule"):
         for i, rect in enumerate(rectslist_1):
             if rect.collidepoint(event.pos) and i == 0:
