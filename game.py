@@ -152,6 +152,13 @@ class Game:
             league = League(data["name"],data["country"],data["team_type"],data["level"],data["league_type"],league_teams,data["num_rounds"], start_month=data["startmonth"], start_day=data["startday"], end_month=data["endmonth"], end_day=data["endday"], match_manager=self.match_manager)
             if data["league_type"] == "Normal":
                 league.generate_schedule()
+            print(f"League: {league.name}")
+            if "promotion_relegation" in data:
+                print(f"*************")
+                print(f"   promotion")
+                print(f"*************")
+                league.promotion_relegation(data["promotion_relegation"])
+
             playoff_name = data.pop("playoff_name", None)
             if playoff_name:
                 playoff = None
@@ -159,9 +166,9 @@ class Game:
                     if p_data["name"] == playoff_name:
                         playoff = Playoff(p_data["name"], p_data["country"], p_data["quarter_final_rounds"], p_data["semi_final_rounds"], p_data["final_rounds"],league, match_manager=self.match_manager)
                         self.playoffs.append(playoff)
-                        print(data)
-                        print(league.num_teams_to_playoff)
-                        print(data["num_teams_to_playoff"])
+                        #print(data)
+                        #print(league.num_teams_to_playoff)
+                        #print(data["num_teams_to_playoff"])
                         league.num_teams_to_playoff=data["num_teams_to_playoff"]
                         #print(self.playoffs)
                         break
@@ -228,6 +235,22 @@ class Game:
             league_matches = league_data['matches']
             league.load_schedule(league_matches,self.teams)
             league.calculate_table()
+            print(f"League: {league.name}")
+            print(f"Teams: {league.teams}")
+            league.is_started = league_data["is_started"]
+            league.start_year = league_data["start_year"]
+            league.start_month = league_data["start_month"]
+            league.start_day = league_data["start_day"]
+
+            league.end_month = league_data["end_month"]
+            league.end_day = league_data["end_day"]
+
+            print(f"{league.start_year} - {league.start_month} - {league.start_day}")
+            if "promotion_relegation" in league_data:
+                print(f"*************")
+                print(f"   promotion")
+                print(f"*************")
+                league.promotion_relegation(league_data["promotion_relegation"])
             playoff_name = league_data.pop("playoff_name", None)
             if playoff_name:
                 playoff = None
@@ -476,6 +499,9 @@ class Game:
                     #print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
             leagues = self.get_leagues_by_type("Normal")
             for league in leagues:
+                #print(f"league: {league.name}")
+                #print(f"Up {league.qualification_league_up}")
+                #print(f"Down {league.qualification_league_down}")
                 league.calculate_table()
                 if(league.playoff_for_league is not None and league.is_completed()):
                     if(not league.playoff_for_league.is_started):
@@ -486,6 +512,14 @@ class Game:
                 if(qleague.is_started):
                     qleague.calculate_table()
                 else:
+                    #print("============")
+                    #print("Qleague test")
+                    #print("============")
+
+                    #print(f"qleague: {qleague.name}")
+                    #print(f"Up {league.qualification_league_up}")
+                    #print(f"Down {league.qualification_league_down}")
+
                     qleague_list = []
                     qleagues_completed = True
                     for league in leagues:
@@ -500,17 +534,36 @@ class Game:
                     if qleagues_completed == True:
                         qteams = []
                         for league in qleague_list:
+
+
+
+                            #print("Qualification leagues:")
                             if league.qualification_league_up == qleague.name:
+                                #print(f"league name up {league.name}")
                                 qteams += league.get_teams_to_qualification_up()
                             if league.qualification_league_down == qleague.name:
+                                #print(f"league name down {league.name}")
                                 qteams += league.get_teams_to_qualification_down()
                         qleague.teams = qteams
+                        #for team in qleague.teams:
+                        #    print(team.name)
+                        qleague.num_teams = len(qleague.teams)
+                        qleague.generate_schedule()
+                        #for match in qleague.matches:
+                        #    print(f"match: {match}")
+                        qleague.is_started = True
+                qleague.print_schedule()
+                print("")
+                qleague.print_table()
+                #print("============")
+                #print("Qleague end")
+                #print("============")
 
             for playoff in self.playoffs:
                 playoff.create_semi_schedule_from_quarter()
                 playoff.create_final_schedule_from_semi()
-                if playoff.is_started:
-                    debugprint_playoff(playoff)
+                #if playoff.is_started:
+                #    debugprint_playoff(playoff)
             #    for match in playoff.matches:
             #        print(f" * {match.home_team.name} - {match.away_team.name} : {match.home_goals} - {match.away_goals} __ {match.played}")
             #    playoff.check_elimination_quarterfinal()

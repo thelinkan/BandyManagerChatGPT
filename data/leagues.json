@@ -30,10 +30,12 @@
 		],
 		"playoff_name": "Slutspel herrar",
 		"num_teams_to_playoff": 8,
-		"num_teams_moved_down": 1,
-		"moved_down_to_level": 2,
-		"num_teams_to_qualification_down": 2,
-		"qualification_league_down": "Elitseriekval"
+		"promotion_relegation": {
+			"num_teams_moved_down": 1,
+			"moved_down_to_level": 2,
+			"num_teams_to_qualification_down": 2,
+			"qualification_league_down": "Elitseriekval"
+		}
 	},
 	{
 		"name": "Damelit",
@@ -94,10 +96,12 @@
 			"Åby Tjureda IF",
 			"Örebro SK"
 		],
-		"num_teams_moved_up": 1,
-		"moved_up_to_level": 1,
-		"num_teams_to_qualification_up": 2,
-		"qualification_league_up": "Elitseriekval"
+		"promotion_relegation": {
+			"num_teams_moved_up": 1,
+			"moved_up_to_level": 1,
+			"num_teams_to_qualification_up": 2,
+			"qualification_league_up": "Elitseriekval"
+		}
 	},
 	{
 		"name": "Elitseriekval",
@@ -113,10 +117,12 @@
 		"endmonth": 3,
 		"endday": 18,
 		"teams": [],
-		"num_teams_moved_up": 2,
-		"moved_up_to_level": 1,
-		"num_teams_moved_down": 2,
-		"moved_down_to_level": 2
+		"promotion_relegation": {
+			"num_teams_moved_up": 2,
+			"moved_up_to_level": 1,
+			"num_teams_moved_down": 2,
+			"moved_down_to_level": 2
+		}
 	},
 	{
 		"name": "Eliteserien",
