@@ -1,6 +1,6 @@
 import pygame
 
-from screens.game import draw_game_mainscreen
+#from screens.game import draw_game_mainscreen
 from guielements import font,medium_font, small_font, button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
 from guielements import home_button,senior_squad_button, tactics_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button

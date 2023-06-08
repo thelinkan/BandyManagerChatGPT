@@ -15,7 +15,6 @@ from debug_functions import print_yesterdays_results
 
 from screens.screensleague import draw_league_table, draw_schedule
 
-
 pygame.init()
 
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
@@ -561,7 +560,7 @@ def draw_game_mainscreen(game):
     if (game.game_page == "tactics"):
         rectlist_1, rectlist_2 = draw_tactics(game,manager_team)
     if (game.game_page == "schedule"):
-        rectlist_1 = draw_schedule(game,screen, leagues[0].name, manager_team)
+        rectlist_1, rectlist_2 = draw_schedule(game,screen, leagues[0].name, manager_team)
     if (game.game_page == "competition"):
         league_table_surface, rectlist_1 = draw_league_table(game, manager_team)
         screen.blit(league_table_surface,(140,110))

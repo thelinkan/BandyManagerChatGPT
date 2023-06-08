@@ -149,7 +149,7 @@ def draw_league_table(game, highlighted_team):
 
     return league_table_surface,team_rects
 
-def draw_schedule_page(game, screen, selected_league, highlighted_team,page):
+def draw_schedule_page(game, selected_league, highlighted_team,page):
     league = game.return_league_by_name(selected_league)
     num_teams = league.num_teams
     num_rounds = league.num_rounds
@@ -158,13 +158,13 @@ def draw_schedule_page(game, screen, selected_league, highlighted_team,page):
 
     rounds_per_page,num_pages = get_num_rounds(num_teams,num_rounds)
 
-    schedule_surface = pygame.Surface((350,600), pygame.SRCALPHA)
+    schedule_surface = pygame.Surface((350,560), pygame.SRCALPHA)
     schedule_surface.fill(WHITE)
-    y=10
-    text = medium_font.render(selected_league, True, BLACK)
-    text_rect = pygame.Rect(10, y,200, 20)
-    schedule_surface.blit(text, text_rect)
-
+    #y=10
+    #text = medium_font.render(selected_league, True, BLACK)
+    #text_rect = pygame.Rect(10, y,200, 20)
+    #schedule_surface.blit(text, text_rect)
+    y = -20
     matches_league = game.match_manager.get_matches_by_league(selected_league)
 
     if len(matches_league) > 0:
@@ -220,15 +220,23 @@ def draw_schedule(game, screen, selected_league, highlighted_team):
     #rounds_per_page = 28//(match_per_round+2)
     #num_pages = -(-num_rounds//rounds_per_page)
 
+    text = medium_font.render(selected_league, True, BLACK)
+    text_rect = pygame.Rect(160, 120,200, 20)
+    screen.blit(text, text_rect)
+
+
     if game.start_page < 1:
         game.start_page = 1
     if game.start_page >= num_pages:
         game.start_page = num_pages - 1
 
-    schedule_surface = draw_schedule_page(game, screen, selected_league, highlighted_team,game.start_page)
-    screen.blit(schedule_surface,(150,110))
-    schedule_surface = draw_schedule_page(game, screen, selected_league, highlighted_team,game.start_page +1)
-    screen.blit(schedule_surface,(520,110))
+    schedule_surface = draw_schedule_page(game, selected_league, highlighted_team,game.start_page)
+    screen.blit(schedule_surface,(150,150))
+    schedule_surface = draw_schedule_page(game, selected_league, highlighted_team,game.start_page +1)
+    screen.blit(schedule_surface,(520,150))
+
+    buttons_surface,buttons_rect = draw_competition_buttons()
+    screen.blit(buttons_surface,(890,150))
 
     # Define button positions and text
     x1, x2, y = 40, 1000, 700
@@ -244,8 +252,48 @@ def draw_schedule(game, screen, selected_league, highlighted_team):
     screen.blit(prev_text, prev_rect)
     screen.blit(next_text, next_rect)
 
-    return navigation_rects
+    if(game.game_sub_page == "chooseleague"):
+        choice_offset = (250,75)
+        choice_surface = choose_league(game,choice_offset)
+        screen.blit(choice_surface,choice_offset)
 
+    return navigation_rects, buttons_rect
 
+def draw_competition_buttons():
+    buttons_surface = pygame.Surface((250,560), pygame.SRCALPHA)
+    buttons_surface.fill(WHITE)
 
+    button_rects = []
+    button_surface = pygame.Surface((250,30), pygame.SRCALPHA)
+    #button_surface.fill((90,190,90))
+    button_rect = pygame.Rect(0, 0, 250, 30)
+    pygame.draw.rect(button_surface, (200,200,200), button_rect)
+    button_text = small_font.render("Choose League", True, BLACK)
+    button_text_rect = button_text.get_rect(center=button_rect.center)
+    
+    button_surface.blit(button_text,button_text_rect)
+    
+    buttons_surface.blit(button_surface,(0,0))
+    button_rects.append(button_rect)
+    
 
+    return buttons_surface, button_rects
+
+def choose_league(game,choice_offset):
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos_on_choice = mouse_pos[0] - choice_offset[0], mouse_pos[1] - choice_offset[1]
+
+    choice_surface = pygame.Surface((750,600), pygame.SRCALPHA)
+    choice_rect = choice_surface.get_rect()
+    if(choice_rect.collidepoint(mouse_pos_on_choice)):
+        choice_surface.fill((200,255,255))
+    else:
+        choice_surface.fill(WHITE)
+                                    
+    border_surface = pygame.Surface((choice_surface.get_width() + 4, choice_surface.get_height() + 4))
+    border_surface.fill(BLACK)
+    border_surface.blit(choice_surface, (2, 2))
+
+    #screen.blit(border_surface,choice_offset)
+    #print(choice_offset)
+    return border_surface

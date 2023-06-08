@@ -33,11 +33,13 @@ class Game:
         self.selected_team_index = -1
         self.selected_league_index = -1
         self.selected_country_index = -1
+        self.inspected_country = None
         self.inspected_team = None
         self.inspected_league = None
         self.isMatchesPlayed = False
 
         self.game_page=None
+        self.game_sub_page=None
         self.start_page = -1
 
     def new_game(self,manager_name,manager_age):
