@@ -6,7 +6,7 @@ from club import Club
 from team import Team
 from constants import WHITE,BLACK,GRAY
 
-from graphicscode.jersey import draw_jersey
+
 
 
 def get_club_from_team(game, team):

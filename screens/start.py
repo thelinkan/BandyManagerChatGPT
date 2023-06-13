@@ -5,7 +5,8 @@ from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY,FONTSIZE_LARGE
 from constants import TABLE_HEADER_COLOR, TABLE_ROW_ODD_COLOR, TABLE_ROW_EVEN_COLOR
 from guielements import font, medium_font, small_font, button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
-from miscfunctions import get_club_from_team, draw_jersey
+from miscfunctions import get_club_from_team
+from graphicscode.jersey import draw_jersey
 
 pygame.init()
 
@@ -57,7 +58,7 @@ def draw_newgame_menu():
     new_game_ok_button.draw(screen)
     pygame.display.flip()
 
-def draw_newgame2_menu(game,selected_country_index,selected_league_index,selected_team_index):
+def draw_newgame2_menu(game):
     mouse_pos = pygame.mouse.get_pos()
     # Draw screen
     screen.fill(WHITE)
@@ -79,7 +80,7 @@ def draw_newgame2_menu(game,selected_country_index,selected_league_index,selecte
         flag = game.return_countryflag(country.return_name())
         text = small_font.render(country.return_name(), True, BLACK)
         combined_surf = pygame.Surface((130, max(flag.get_height(), text.get_height())))
-        if country_num == selected_country_index:
+        if country_num == game.selected_country_index:
             combined_surf.fill((200,200,200))
         else:
             combined_surf.fill(WHITE)
@@ -95,19 +96,21 @@ def draw_newgame2_menu(game,selected_country_index,selected_league_index,selecte
         country_rects.append(rect)
         y += max(flag.get_height(), text.get_height()) + 10
         country_num+=1
-    if(selected_country_index>=0):
-        selected_country = countries[selected_country_index].return_name()
+    if(game.selected_country_index>=0):
+        selected_country = countries[game.selected_country_index].return_name()
         text_choose2 = medium_font.render("Choose league",False, BLACK)
         screen.blit(text_choose2, (340, 155))
         leagues = game.return_leagues_in_country(selected_country)
         y = 190
         league_num=0
         for league in leagues:
-            if league_num == selected_league_index:
+            if league.league_type != "Normal":
+                continue
+            if league_num == game.selected_league_index:
                 league_name = league.name
             text = small_font.render(league.name,False, BLACK)
             combined_surf = pygame.Surface((130,text.get_height()))
-            if league_num == selected_league_index:
+            if league_num == game.selected_league_index:
                 combined_surf.fill((200,200,200))
             else:
                 combined_surf.fill(WHITE)
@@ -125,7 +128,7 @@ def draw_newgame2_menu(game,selected_country_index,selected_league_index,selecte
         #text_test = medium_font.render(str(selected_country_index)+" "+countries[selected_country_index].return_name(),False, BLACK)
         #screen.blit(text_test, (340, 185))
 
-    if(selected_league_index>=0):
+    if(game.selected_league_index>=0):
         text_choose2 = medium_font.render("Choose team",False, BLACK)
         screen.blit(text_choose2, (640, 155))
         teams = game.return_teams_for_league(league_name)
@@ -135,7 +138,7 @@ def draw_newgame2_menu(game,selected_country_index,selected_league_index,selecte
         for team in teams:
             text = small_font.render(team.return_name(),False, BLACK)
             combined_surf = pygame.Surface((130,text.get_height()))
-            if team_num == selected_team_index:
+            if team_num == game.selected_team_index:
                 combined_surf.fill((200,200,200))
             else:
                 combined_surf.fill(WHITE)
@@ -153,13 +156,13 @@ def draw_newgame2_menu(game,selected_country_index,selected_league_index,selecte
             #team_name = print(team.return_name())
             pass
 
-    if(selected_team_index>=0):
-        selected_team = teams[selected_team_index].return_name()
+    if(game.selected_team_index>=0):
+        selected_team = teams[game.selected_team_index].return_name()
         text_team_name = medium_font.render(selected_team,False, BLACK)
         screen.blit(text_team_name, (940, 155))
-        jersey_colors = teams[selected_team_index].return_jersey_colors()
-        jersey_decorations = teams[selected_team_index].return_jersey_decorations()
-        logo = teams[selected_team_index].club.logo
+        jersey_colors = teams[game.selected_team_index].return_jersey_colors()
+        jersey_decorations = teams[game.selected_team_index].return_jersey_decorations()
+        logo = teams[game.selected_team_index].club.logo
         is_front = True
         jersey = draw_jersey(jersey_colors,jersey_decorations,"17", logo,  is_front = is_front)
         screen.blit(jersey,(940,200))
