@@ -548,6 +548,11 @@ def draw_game_mainscreen(game):
 
     leagues = game.get_leagues_for_team(manager_team_name)
 
+    if(game.inspected_league != ""):
+        inspected_league = game.inspected_league
+    else:
+        inspected_league = leagues[0].name
+
     if (game.game_page == "home"):
         rectlist_1 = draw_home(game,manager_team_name)
     if (game.game_page == "player_list"):
@@ -560,7 +565,7 @@ def draw_game_mainscreen(game):
     if (game.game_page == "tactics"):
         rectlist_1, rectlist_2 = draw_tactics(game,manager_team)
     if (game.game_page == "schedule"):
-        rectlist_1, rectlist_2 = draw_schedule(game,screen, leagues[0].name, manager_team)
+        rectlist_1, rectlist_2 = draw_schedule(game,screen, inspected_league, manager_team)
     if (game.game_page == "competition"):
         league_table_surface, rectlist_1 = draw_league_table(game, manager_team)
         screen.blit(league_table_surface,(140,110))
