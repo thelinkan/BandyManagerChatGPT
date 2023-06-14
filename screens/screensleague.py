@@ -252,12 +252,16 @@ def draw_schedule(game, screen, selected_league, highlighted_team):
     screen.blit(prev_text, prev_rect)
     screen.blit(next_text, next_rect)
 
+    rectslist_1 = navigation_rects
+    rectslist_2 = buttons_rect
     if(game.game_sub_page == "chooseleague"):
         choice_offset = (250,75)
-        choice_surface = choose_league(game,choice_offset)
+        border = (2,2)
+        choice_surface, rectslist_1, rectslist_2 = choose_league(game,choice_offset,border)
         screen.blit(choice_surface,choice_offset)
 
-    return navigation_rects, buttons_rect
+    return rectslist_1, rectslist_2
+
 
 def draw_competition_buttons():
     buttons_surface = pygame.Surface((250,560), pygame.SRCALPHA)
@@ -279,21 +283,125 @@ def draw_competition_buttons():
 
     return buttons_surface, button_rects
 
-def choose_league(game,choice_offset):
+def choose_league(game, choice_offset, border):
     mouse_pos = pygame.mouse.get_pos()
     mouse_pos_on_choice = mouse_pos[0] - choice_offset[0], mouse_pos[1] - choice_offset[1]
 
+    country_offset = (10,10)
+    league_offset = (360,10)
+
     choice_surface = pygame.Surface((750,600), pygame.SRCALPHA)
     choice_rect = choice_surface.get_rect()
-    if(choice_rect.collidepoint(mouse_pos_on_choice)):
-        choice_surface.fill((200,255,255))
-    else:
-        choice_surface.fill(WHITE)
+    #if(choice_rect.collidepoint(mouse_pos_on_choice)):
+    #    choice_surface.fill((200,255,255))
+    #else:
+    choice_surface.fill(WHITE)
                                     
-    border_surface = pygame.Surface((choice_surface.get_width() + 4, choice_surface.get_height() + 4))
+    border_surface = pygame.Surface((choice_surface.get_width() + border[0]*2, choice_surface.get_height() + border[1]*2))
     border_surface.fill(BLACK)
-    border_surface.blit(choice_surface, (2, 2))
+    border_surface.blit(choice_surface, border)
 
-    #screen.blit(border_surface,choice_offset)
-    #print(choice_offset)
-    return border_surface
+    country_surface, country_rects = select_country(game, choice_offset,border,country_offset)
+    border_surface.blit(country_surface,country_offset)
+    league_rects = []
+    if game.selected_country_index>0:
+        league_surface, league_rects = select_league(game, choice_offset,border, league_offset)
+        border_surface.blit(league_surface,league_offset)
+
+    return border_surface, country_rects, league_rects
+
+def select_country(game, choice_offset,border, country_offset):
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos_on_country = mouse_pos[0] - choice_offset[0] - border[0] - country_offset[0], mouse_pos[1] - choice_offset[1] - border[1] - country_offset[1]
+
+    country_surface = pygame.Surface((300,580), pygame.SRCALPHA)
+    y=0
+    text_choose = medium_font.render("Choose country",False, BLACK)
+    country_surface.blit(text_choose, (0, y))
+    y += 20
+
+    countries = game.return_countries_with_leagues()
+    country_rects = []
+    country_num=1
+
+    for country in countries:
+        flag = game.return_countryflag(country.return_name())
+        text = small_font.render(country.return_name(), True, BLACK)
+        combined_surf = pygame.Surface((130, max(flag.get_height(), text.get_height())))
+        if country_num == game.selected_country_index:
+            combined_surf.fill((200,200,200))
+        else:
+            combined_surf.fill(WHITE)
+        combined_surf.blit(flag, (0, 0))
+        combined_surf.blit(text, (flag.get_width() + 5, 2))
+        rect = combined_surf.get_rect()
+        rect.topleft = (5, y)
+        if rect.collidepoint(mouse_pos_on_country):
+            combined_surf.fill(GRAY)
+            combined_surf.blit(flag, (0, 0))
+            combined_surf.blit(text, (flag.get_width() + 5, 2))
+        country_surface.blit(combined_surf, rect)
+        country_rects.append(rect)
+        y += max(flag.get_height(), text.get_height()) + 10
+        country_num+=1
+
+    text = small_font.render("Cancel", True, BLACK)
+    combined_surf = pygame.Surface((130, text.get_height()))
+    combined_surf.fill(WHITE)
+    combined_surf.blit(text, (0, 0))
+    rect = combined_surf.get_rect()
+    rect.topleft = (25, 555)
+    if rect.collidepoint(mouse_pos_on_country):
+        combined_surf.fill(GRAY)
+        combined_surf.blit(text, (0, 0))
+    country_surface.blit(combined_surf, rect)
+    country_rects.insert(0,rect)
+
+    return country_surface, country_rects
+
+def select_league(game, choice_offset,border, league_offset):
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos_on_league = mouse_pos[0] - choice_offset[0] - border[0] - league_offset[0], mouse_pos[1] - choice_offset[1] - border[1] - league_offset[1]
+
+    league_surface = pygame.Surface((300,580), pygame.SRCALPHA)
+    y=0
+    text_choose = medium_font.render("Choose league",False, BLACK)
+    league_surface.blit(text_choose, (0, y))
+    y += 20
+
+    countries = game.return_countries_with_leagues()
+    selected_country = countries[game.selected_country_index-1].return_name()
+    leagues = game.return_leagues_in_country(selected_country)
+    league_rects = []
+    for i, league in enumerate(leagues):
+        #print(f"{i} {league.name}")
+        text = small_font.render(league.name,False, BLACK)
+        combined_surf = pygame.Surface((130,text.get_height()))
+        if i+1 == game.selected_league_index:
+            combined_surf.fill((200,200,200))
+        else:
+            combined_surf.fill(WHITE)
+        combined_surf.blit(text, (0, 0))
+        rect = combined_surf.get_rect()
+        rect.topleft = (0, y)
+        if rect.collidepoint(mouse_pos_on_league):
+            combined_surf.fill(GRAY)
+            combined_surf.blit(text, (0, 0))
+        league_surface.blit(combined_surf, rect)
+        league_rects.append(rect)
+        y += text.get_height() + 10
+        
+    text = small_font.render("OK", True, BLACK)
+    combined_surf = pygame.Surface((130, text.get_height()))
+    combined_surf.fill(WHITE)
+    combined_surf.blit(text, (0, 0))
+    rect = combined_surf.get_rect()
+    rect.topleft = (25, 555)
+    if rect.collidepoint(mouse_pos_on_league):
+        combined_surf.fill(GRAY)
+        combined_surf.blit(text, (0, 0))
+    league_surface.blit(combined_surf, rect)
+    league_rects.insert(0,rect)
+    
+
+    return league_surface, league_rects
