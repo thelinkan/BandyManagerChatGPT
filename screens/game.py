@@ -548,10 +548,14 @@ def draw_game_mainscreen(game):
 
     leagues = game.get_leagues_for_team(manager_team_name)
 
-    if(game.inspected_league != ""):
+    if(game.inspected_league is not None):
         inspected_league = game.inspected_league
     else:
         inspected_league = leagues[0].name
+
+    #print(f"League 0: {leagues[0].name}")
+    #print(f"Inspected League - Game: {game.inspected_league}")
+    #print(f"Inspected League: {inspected_league}")
 
     if (game.game_page == "home"):
         rectlist_1 = draw_home(game,manager_team_name)
@@ -565,6 +569,7 @@ def draw_game_mainscreen(game):
     if (game.game_page == "tactics"):
         rectlist_1, rectlist_2 = draw_tactics(game,manager_team)
     if (game.game_page == "schedule"):
+        print(f"Inspected League again: {inspected_league}")
         rectlist_1, rectlist_2 = draw_schedule(game,screen, inspected_league, manager_team)
     if (game.game_page == "competition"):
         rectlist_1, rectlist_2 = draw_league(game,screen, manager_team)

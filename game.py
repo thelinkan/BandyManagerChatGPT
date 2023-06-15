@@ -18,21 +18,21 @@ from debug_functions import print_yesterdays_results, debugprint_playoff
 
 class Game:
     def __init__(self,year,month,day):
-        self.year = year
-        self.month = month
-        self.day = day
-        self.manager = Manager()
-        self.countries = {}
-        self.leagues = []
-        self.playoffs = []
-        self.clubs = []
+        self.year: int = year
+        self.month: int = month
+        self.day: int = day
+        self.manager: Manager = Manager()
+        self.countries:dict = {}
+        self.leagues: list = []
+        self.playoffs: list = []
+        self.clubs: list = []
         self.player_manager = PlayerManager()
         self.teams = {} # Add a dictionary to store teams
         self.match_manager = MatchManager()
-        self.selected_player_index = -1
-        self.selected_team_index = -1
-        self.selected_league_index = -1
-        self.selected_country_index = -1
+        self.selected_player_index: int = -1
+        self.selected_team_index: int = -1
+        self.selected_league_index: int = -1
+        self.selected_country_index:int = -1
         self.inspected_country = None
         self.inspected_team = None
         self.inspected_league = None
@@ -40,7 +40,7 @@ class Game:
 
         self.game_page=None
         self.game_sub_page=None
-        self.start_page = -1
+        self.start_page:int = -1
 
     def new_game(self,manager_name,manager_age):
         # create new game

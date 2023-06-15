@@ -6,6 +6,7 @@ from guielements import font, medium_font, small_font,very_small_font ,very_smal
 from miscfunctions import get_num_rounds
 
 from game import Game
+from league import League
 from team import Team
 
 def draw_league(game: Game,screen: pygame.surface.Surface, highlighted_team: Team):
@@ -171,7 +172,7 @@ def draw_league_table(game: Game, highlighted_team: Team):
 
     return league_table_surface,team_rects
 
-def draw_schedule_page(game, selected_league, highlighted_team,page):
+def draw_schedule_page(game: Game, selected_league, highlighted_team,page):
     league = game.return_league_by_name(selected_league)
     num_teams = league.num_teams
     num_rounds = league.num_rounds
@@ -226,8 +227,9 @@ def draw_schedule_page(game, selected_league, highlighted_team,page):
     return border_surface
 
 
-def draw_schedule(game, screen, selected_league, highlighted_team):
-    league = game.return_league_by_name(selected_league)
+def draw_schedule(game: Game, screen: pygame.surface.Surface, selected_league: str, highlighted_team):
+    league: League = game.return_league_by_name(selected_league)
+    #print(f"Selected_league: {select_league}")
     num_teams = league.num_teams
     num_rounds = league.num_rounds
 
@@ -332,7 +334,7 @@ def choose_league(game: Game, choice_offset: tuple[int,int], border: int) -> tup
 
     return border_surface, country_rects, league_rects
 
-def select_country(game, choice_offset,border, country_offset):
+def select_country(game: Game, choice_offset: tuple[int,int] ,border: tuple[int,int] , country_offset: tuple[int,int] ):
     mouse_pos = pygame.mouse.get_pos()
     mouse_pos_on_country = mouse_pos[0] - choice_offset[0] - border[0] - country_offset[0], mouse_pos[1] - choice_offset[1] - border[1] - country_offset[1]
 
@@ -381,7 +383,7 @@ def select_country(game, choice_offset,border, country_offset):
 
     return country_surface, country_rects
 
-def select_league(game, choice_offset,border, league_offset):
+def select_league(game: Game, choice_offset: tuple[int,int] ,border: tuple[int,int], league_offset: tuple[int,int] ):
     mouse_pos = pygame.mouse.get_pos()
     mouse_pos_on_league = mouse_pos[0] - choice_offset[0] - border[0] - league_offset[0], mouse_pos[1] - choice_offset[1] - border[1] - league_offset[1]
 
