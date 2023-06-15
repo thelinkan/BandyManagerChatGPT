@@ -5,7 +5,27 @@ from constants import TABLE_HEADER_COLOR, TABLE_ROW_ODD_COLOR, TABLE_ROW_EVEN_CO
 from guielements import font, medium_font, small_font,very_small_font ,very_small_bold_font , button_width, button_height, button_x, button_spacing
 from miscfunctions import get_num_rounds
 
-def draw_league_table(game, highlighted_team):
+from game import Game
+from team import Team
+
+def draw_league(game: Game,screen: pygame.surface.Surface, highlighted_team: Team):
+    navigation_rects = []
+    league_table_surface, rectlist_1 = draw_league_table(game, highlighted_team)
+    screen.blit(league_table_surface,(140,110))    
+
+    buttons_surface,rectlist_2 = draw_competition_buttons()
+    screen.blit(buttons_surface,(890,150))
+
+    if(game.game_sub_page == "chooseleague"):
+        choice_offset = (250,75)
+        border = (2,2)
+        choice_surface, rectlist_1, rectlist_2 = choose_league(game,choice_offset,border)
+        screen.blit(choice_surface,choice_offset)
+
+
+    return rectlist_1, rectlist_2
+
+def draw_league_table(game: Game, highlighted_team: Team):
     selected_league = game.inspected_league
     league = game.return_league_by_name(selected_league)
 
@@ -147,6 +167,8 @@ def draw_league_table(game, highlighted_team):
 
         league_table_surface.blit(row_surface, row_rect)
 
+
+
     return league_table_surface,team_rects
 
 def draw_schedule_page(game, selected_league, highlighted_team,page):
@@ -283,7 +305,7 @@ def draw_competition_buttons():
 
     return buttons_surface, button_rects
 
-def choose_league(game, choice_offset, border):
+def choose_league(game: Game, choice_offset: tuple[int,int], border: int) -> tuple[pygame.surface.Surface, list]: 
     mouse_pos = pygame.mouse.get_pos()
     mouse_pos_on_choice = mouse_pos[0] - choice_offset[0], mouse_pos[1] - choice_offset[1]
 

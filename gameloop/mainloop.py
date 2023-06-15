@@ -13,18 +13,22 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
         game.game_page = "home"
         game.start_page = 1
     if(game.game_page == "player_list" or game.game_page == "player_list_u19"):
-        playerlist_offset = (140,125)
         event_pos = event.pos
+        playerlist_offset = (140,125)
         event_pos_on_list = event_pos[0] - playerlist_offset[0], event_pos[1] - playerlist_offset[1]
         for i, rect in enumerate(rectslist_1):
             if rect.collidepoint(event_pos_on_list):
                 game.selected_player_index = i
                 break
-    if(game.game_page == "competition"):
-        playerlist_offset = (140,110)
+    if(game.game_page == "competition" and game.game_sub_page != "chooseleague"):
         event_pos = event.pos
+        playerlist_offset = (140,110)
         event_pos_on_list = event_pos[0] - playerlist_offset[0], event_pos[1] - playerlist_offset[1]
+        rect_2_offset = (890,150)
+        event_pos_on_list2 = event_pos[0] - rect_2_offset[0], event_pos[1] - rect_2_offset[1]
+        #print(rectslist_1)
         for i, rect in enumerate(rectslist_1):
+            #print(rect)
             if rect.collidepoint(event_pos_on_list):
                 game.selected_team_index = i
                 selected_league = game.inspected_league
@@ -34,13 +38,18 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
                     if j == game.selected_team_index:
                         game.inspected_team = team
                         pass                
-                
+        for i, rect in enumerate(rectslist_2):
+            if rect.collidepoint(event_pos_on_list2) and i==0:
+                game.game_sub_page = "chooseleague"
+                game.selected_league_index = -1
+                print("choose league")                    
+               
         
     if(game.game_page == "tactics"):
         gameloop_tactics(game, rectslist_1, rectslist_2, event.pos)
     if (game.game_page == "home"):
         home_loop(game, rectslist_1, event)
-    if (game.game_page == "schedule" and game.game_sub_page == "chooseleague"):
+    if ((game.game_page == "schedule" or game.game_page == "competition") and game.game_sub_page == "chooseleague"):
         choice_offset = (250,75)
         border = (2,2)
         country_offset = (10,10)

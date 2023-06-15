@@ -13,7 +13,7 @@ from graphicscode.arrows import draw_arrow_left, draw_arrow_right, draw_arrow_up
 
 from debug_functions import print_yesterdays_results
 
-from screens.screensleague import draw_league_table, draw_schedule
+from screens.screensleague import draw_league, draw_schedule
 
 pygame.init()
 
@@ -567,8 +567,9 @@ def draw_game_mainscreen(game):
     if (game.game_page == "schedule"):
         rectlist_1, rectlist_2 = draw_schedule(game,screen, inspected_league, manager_team)
     if (game.game_page == "competition"):
-        league_table_surface, rectlist_1 = draw_league_table(game, manager_team)
-        screen.blit(league_table_surface,(140,110))
+        rectlist_1, rectlist_2 = draw_league(game,screen, manager_team)
+        #league_table_surface, rectlist_1 = draw_league_table(game, manager_team)
+        #screen.blit(league_table_surface,(140,110))
     if (game.game_page == "player_list_u19"):
         rectlist_1 = draw_squad(game,manager_u19team)
     # Update display
