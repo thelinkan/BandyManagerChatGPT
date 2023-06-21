@@ -148,7 +148,9 @@
 			"Sarpsborg BK",
 			"Ullern IF",
 			"Ullevål IL"
-		]
+		],
+		"playoff_name": "Playoff Norway",
+		"num_teams_to_playoff": 8
 	},
 	{
 		"name": "Bandyliiga",
@@ -174,6 +176,8 @@
 			"Veiterä",
 			"WP35",
 			"Tornio PV"
-		]
+		],
+		"playoff_name": "Playoff Finland",
+		"num_teams_to_playoff": 8
 	}
 ]

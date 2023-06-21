@@ -12,6 +12,8 @@ from person import PlayerManager
 from uuidencoder import UUIDEncoder
 from matchcode.matchmanager import MatchManager
 
+from constants import START_YEAR
+
 from screens.screensMatch import draw_view_match
 
 from debug_functions import print_yesterdays_results, debugprint_playoff
@@ -151,7 +153,11 @@ class Game:
                 if not team:
                     raise ValueError(f"No team found with name '{team_name}'")
                 league_teams.append(team)
-            league = League(data["name"],data["country"],data["team_type"],data["level"],data["league_type"],league_teams,data["num_rounds"], start_month=data["startmonth"], start_day=data["startday"], end_month=data["endmonth"], end_day=data["endday"], match_manager=self.match_manager)
+            if data["startmonth"] > 6:
+                start_year = START_YEAR
+            else:
+                start_year = START_YEAR + 1
+            league = League(data["name"],data["country"],data["team_type"],data["level"],data["league_type"],league_teams,data["num_rounds"], start_year = start_year, start_month=data["startmonth"], start_day=data["startday"], end_month=data["endmonth"], end_day=data["endday"], match_manager=self.match_manager)
             if data["league_type"] == "Normal":
                 league.generate_schedule()
             print(f"League: {league.name}")
