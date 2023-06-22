@@ -283,6 +283,12 @@ class Playoff:
                 print_playoff_series(self.rounds["Finals"][series])
             #print(self.rounds["Semifinals"])
 
+    def check_elimination_final(self, team1, team2):
+        raise NotImplementedError("Needs to check if there is a winner")
+
+    def check_final_winner(self):
+        raise NotImplementedError("Needs to check who the winner is and write an article")
+
     def load_rounds(self,game,rounds_data):
         print(game.teams)
         print()
