@@ -1,86 +1,183 @@
 [
-    			{
-    			  	"name": "Elitserien",
-    			  	"country": "Sweden",
-    			  	"level": 1,
-    			  	"num_rounds": 26,
-    			  	"win_points": 2,
-    			  	"draw_points": 1,
-    			  	"startmonth": 10,
-    			  	"startday": 20,
-    			  	"endmonth": 2,
-    			  	"endday": 10,
-    			  	"teams":
-    			  		[
-    			  				"Bollnäs GIF", "Brobergs IF", "Edsbyns IF", "Frillesås BK", "Gripen Trollhättan BK", "Hammarby IF", "IFK Motala", "Vetlanda BK", "Villa Lidköping BK" ,"Sandvikens AIK", "IK Sirius BK", "IFK Vänersborg", "IFK Rättvik", "Västerås SK"
-    			  		],
-					"playoff_name": "Slutspel herrar",
-					"num_teams_to_playoff": 8
-    			},
-    			{
-    			  	"name": "Damelit",
-    			  	"country": "Sweden",
-    			  	"level": 1,
-    			  	"num_rounds": 18,
-    			  	"win_points": 2,
-    			  	"draw_points": 1,
-    			  	"startmonth": 11,
-    			  	"startday": 10,
-    			  	"endmonth": 2,
-    			  	"endday": 10,
-    			  	"teams":
-    			  		[
-    			  				"AIK (W)", "KS Bandy (W)", "Mölndal Bandy (W)", "IFK Rättvik (W)", "Sandvikens AIK (W)", "Skirö AIK (W)", "Sunvära SK (W)", "Uppsala Bois (W)", "Villa Lidköping BK (W)" ,"Västerås SK (W)"
-    			  		],
-					"playoff_name": "Slutspel damer",
-					"num_teams_to_playoff": 8
-    			},
-    			{
-					"name": "Allsvenskan",
-					"country": "Sweden",
-					"level": 2,
-					"num_rounds": 3,
-					"win_points": 2,
-					"draw_points": 1,
-					"startmonth": 11,
-					"startday": 10,
-					"endmonth": 11,
-					"endday": 24,
-					"teams":
-						[
-								"IFK Kungälv", "Ljusdals BK", "TB Västerås", "Åby Tjureda IF"
-						]
-			  },
-			  {
-    			  	"name": "Eliteserien",
-    			  	"country": "Norway",
-    			  	"level": 1,
-    			  	"num_rounds": 18,
-    			  	"win_points": 2,
-    			  	"draw_points": 1,
-    			  	"startmonth": 10,
-    			  	"startday": 20,
-    			  	"endmonth": 2,
-    			  	"endday": 10,
-    			  	"teams":
-    			  		[
-    			  				"Drammen bandy", "Høvik IF", "Mjøndalen IF", "Ready bandy", "Røa IL", "Solberg SK", "Stabæk bandy", "Sarpsborg BK", "Ullern IF", "Ullevål IL"
-    			  		]
-    			},
-    			{
-    			  	"name": "Bandyliiga",
-    			  	"country": "Finland",
-    			  	"level": 1,
-    			  	"num_rounds": 18,
-    			  	"win_points": 2,
-    			  	"draw_points": 1,
-    			  	"startmonth": 10,
-    			  	"startday": 20,
-    			  	"endmonth": 2,
-    			  	"endday": 10,
-    			  	"teams":
-    			  		[
-    			  				"Akilles Porvoo", "Botnia 69", "IFK Helsinki", "JPS", "Kampparit", "Narukerä", "OLS", "Veiterä", "WP35", "Tornio PV"
-    			  		]
-    			}
+	{
+		"name": "Elitserien",
+		"country": "Sweden",
+		"team_type": "Men",
+		"level": 1,
+		"league_type": "Normal",
+		"num_rounds": 26,
+		"win_points": 2,
+		"draw_points": 1,
+		"startmonth": 10,
+		"startday": 20,
+		"endmonth": 2,
+		"endday": 10,
+		"teams": [
+			"Bollnäs GIF",
+			"Brobergs IF",
+			"Edsbyns IF",
+			"Frillesås BK",
+			"Gripen Trollhättan BK",
+			"Hammarby IF",
+			"IFK Motala",
+			"Vetlanda BK",
+			"Villa Lidköping BK",
+			"Sandvikens AIK",
+			"IK Sirius BK",
+			"IFK Vänersborg",
+			"IFK Rättvik",
+			"Västerås SK"
+		],
+		"playoff_name": "Slutspel herrar",
+		"num_teams_to_playoff": 8,
+		"promotion_relegation": {
+			"num_teams_moved_down": 1,
+			"moved_down_to_level": 2,
+			"num_teams_to_qualification_down": 2,
+			"qualification_league_down": "Elitseriekval"
+		}
+	},
+	{
+		"name": "Damelit",
+		"country": "Sweden",
+		"team_type": "Women",
+		"level": 1,
+		"league_type": "Normal",
+		"num_rounds": 18,
+		"win_points": 2,
+		"draw_points": 1,
+		"startmonth": 11,
+		"startday": 10,
+		"endmonth": 2,
+		"endday": 10,
+		"teams": [
+			"AIK (W)",
+			"KS Bandy (W)",
+			"Mölndal Bandy (W)",
+			"IFK Rättvik (W)",
+			"Sandvikens AIK (W)",
+			"Skirö AIK (W)",
+			"Sunvära SK (W)",
+			"Uppsala Bois (W)",
+			"Villa Lidköping BK (W)",
+			"Västerås SK (W)"
+		],
+		"playoff_name": "Slutspel damer",
+		"num_teams_to_playoff": 8
+	},
+	{
+		"name": "Allsvenskan",
+		"country": "Sweden",
+		"team_type": "Men",
+		"level": 2,
+		"league_type": "Normal",
+		"num_rounds": 30,
+		"win_points": 2,
+		"draw_points": 1,
+		"startmonth": 10,
+		"startday": 21,
+		"endmonth": 2,
+		"endday": 10,
+		"teams": [
+			"Borlänge Bandy",
+			"IF Boltic",
+			"Falu BS",
+			"Finspångs AIK",
+			"Kalix Bandy",
+			"Katrineholm Bandy",
+			"IFK Kungälv",
+			"Lidköpings AIK",
+			"Ljusdals BK",
+			"Nässjö IF",
+			"Surte BK",
+			"IK Tellus",
+			"TB Västerås",
+			"Tranås Bois",
+			"Åby Tjureda IF",
+			"Örebro SK"
+		],
+		"promotion_relegation": {
+			"num_teams_moved_up": 1,
+			"moved_up_to_level": 1,
+			"num_teams_to_qualification_up": 2,
+			"qualification_league_up": "Elitseriekval"
+		}
+	},
+	{
+		"name": "Elitseriekval",
+		"country": "Sweden",
+		"team_type": "Men",
+		"level": 1,
+		"league_type": "Qualification",
+		"num_rounds": 6,
+		"win_points": 2,
+		"draw_points": 1,
+		"startmonth": 2,
+		"startday": 16,
+		"endmonth": 3,
+		"endday": 18,
+		"teams": [],
+		"promotion_relegation": {
+			"num_teams_moved_up": 2,
+			"moved_up_to_level": 1,
+			"num_teams_moved_down": 2,
+			"moved_down_to_level": 2
+		}
+	},
+	{
+		"name": "Eliteserien",
+		"country": "Norway",
+		"team_type": "Men",
+		"level": 1,
+		"league_type": "Normal",
+		"num_rounds": 18,
+		"win_points": 2,
+		"draw_points": 1,
+		"startmonth": 10,
+		"startday": 20,
+		"endmonth": 2,
+		"endday": 10,
+		"teams": [
+			"Drammen bandy",
+			"Høvik IF",
+			"Mjøndalen IF",
+			"Ready bandy",
+			"Røa IL",
+			"Solberg SK",
+			"Stabæk bandy",
+			"Sarpsborg BK",
+			"Ullern IF",
+			"Ullevål IL"
+		],
+		"playoff_name": "Playoff Norway",
+		"num_teams_to_playoff": 8
+	},
+	{
+		"name": "Bandyliiga",
+		"country": "Finland",
+		"team_type": "Men",
+		"level": 1,
+		"league_type": "Normal",
+		"num_rounds": 18,
+		"win_points": 2,
+		"draw_points": 1,
+		"startmonth": 10,
+		"startday": 20,
+		"endmonth": 2,
+		"endday": 10,
+		"teams": [
+			"Akilles Porvoo",
+			"Botnia 69",
+			"IFK Helsinki",
+			"JPS",
+			"Kampparit",
+			"Narukerä",
+			"OLS",
+			"Veiterä",
+			"WP35",
+			"Tornio PV"
+		],
+		"playoff_name": "Playoff Finland",
+		"num_teams_to_playoff": 8
+	}
 ]

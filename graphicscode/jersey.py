@@ -55,11 +55,19 @@ def draw_jersey(jersey_colors,jersey_decorations,jersey_number, logo, is_front):
         if(decoration[0]==201):
             pygame.draw.rect(jersey_surface,decoration[1],(3,135,47,10))
             pygame.draw.rect(jersey_surface,decoration[1],(3,175,47,10))
+        if(decoration[0]==202):
+            pygame.draw.rect(jersey_surface,decoration[1],(3,145,47,55))
+        if(decoration[0]==203):
+            pygame.draw.rect(jersey_surface,decoration[1],(3,145,47,25))
         if(decoration[0]==300):
             pygame.draw.rect(jersey_surface,decoration[1],(200,185,47,15))
         if(decoration[0]==301):
             pygame.draw.rect(jersey_surface,decoration[1],(200,135,47,10))
             pygame.draw.rect(jersey_surface,decoration[1],(200,175,150,10))
+        if(decoration[0]==302):
+            pygame.draw.rect(jersey_surface,decoration[1],(200,145,47,55))
+        if(decoration[0]==303):
+            pygame.draw.rect(jersey_surface,decoration[1],(200,145,47,25))
         if(decoration[0]==400):
             pygame.draw.rect(jersey_surface,decoration[1],(50,215,150,30))
         if(decoration[0]==401):

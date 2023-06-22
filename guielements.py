@@ -49,8 +49,8 @@ forward_time_button = Button(button_x,u19_squad_button.rect.bottom + button_spac
 save_game_button = Button(button_x,forward_time_button.rect.bottom + button_spacing,button_width,button_height, "Save game", very_small_font, WHITE, BLACK, GRAY)
 quit_game_button = Button(button_x, save_game_button.rect.bottom + button_spacing, button_width, button_height, "Quit game", very_small_font, WHITE, BLACK, GRAY, quit_game)
 #Define Input
-input_name = InputBox(300, 200, 140, 32)
-input_age = InputBox(300, 300, 140, 32)
+input_name = InputBox(300, 200, 140, 32, type='alpha')
+input_age = InputBox(300, 300, 140, 32, type='numeric')
 
 
 

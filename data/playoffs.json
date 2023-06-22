@@ -12,6 +12,20 @@
 		"quarter_final_rounds": 3,
 		"semi_final_rounds": 3,
 		"final_rounds": 1	
+	},
+	{
+		"name": "Playoff Norway",
+		"country": "Norway",
+		"quarter_final_rounds": 3,
+		"semi_final_rounds": 3,
+		"final_rounds": 1	
+	},
+	{
+		"name": "Playoff Finland",
+		"country": "Finland",
+		"quarter_final_rounds": 3,
+		"semi_final_rounds": 3,
+		"final_rounds": 1	
 	}
 	
 ]
