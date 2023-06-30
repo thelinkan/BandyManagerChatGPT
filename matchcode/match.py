@@ -62,8 +62,10 @@ class Match:
         self.played = True
 
         if is_playoff:
+            print(f"Is playoff: Yes")
             self.league.check_elimination_quarterfinal(self.home_team, self.away_team)
             self.league.check_elimination_semifinal(self.home_team, self.away_team)
+            self.league.check_elimination_final(self.home_team, self.away_team)
         #print(f"  --  in play -- {self.played}: {self.home_goals} - {self.away_goals}")
 
     def update_state(self,game_time_delta):

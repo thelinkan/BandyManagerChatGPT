@@ -25,15 +25,15 @@ def matcharticle(game, match, manager_team):
             headline = f"{manager_team} won against {opponent_name}"
             templates = templates_data["win_templates"]["firstline_home_team_wins"]
         else:
-            headline = f"{manager_team} won away against {opponent_name}"
-            templates = templates_data["win_templates"]["firstline_away_team_wins"]
+            headline = f"{manager_team} lost away to {opponent_name}"
+            templates = templates_data["loss_templates"]["firstline_away_team_losses"]
     else:
         if is_manager_home:
             headline = f"{manager_team} lost to {opponent_name}"
             templates = templates_data["loss_templates"]["firstline_home_team_losses"]
         else:
-            headline = f"{manager_team} lost away to {opponent_name}"
-            templates = templates_data["loss_templates"]["firstline_away_team_losses"]
+            headline = f"{manager_team} won away against {opponent_name}"
+            templates = templates_data["win_templates"]["firstline_away_team_wins"]
     template = random.choice(templates)
     # Format the template with the required variables
     #mediatext = template
@@ -44,3 +44,8 @@ def matcharticle(game, match, manager_team):
     print(newsitem.text)
     game.newsitems.append(newsitem)
 
+def finalwinnerarticle(game, match, winningteam):
+    # Get the first media outlet from the game's media outlets list
+    use_mediaoutlet = game.mediaoutlets[0]
+
+    pass

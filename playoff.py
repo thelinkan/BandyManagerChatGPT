@@ -284,7 +284,77 @@ class Playoff:
             #print(self.rounds["Semifinals"])
 
     def check_elimination_final(self, team1, team2):
-        raise NotImplementedError("Needs to check if there is a winner")
+        print(f"Finals elimination check")
+        if self.rounds["Finals"]["is_scheduled"]:
+            print(f"Finals is scheduled")
+            # Determine the number of matches needed to win the series
+            if self.final_rounds == 5:
+                matches_needed = 3
+            elif self.final_rounds == 3:
+                matches_needed = 2
+            else:
+                matches_needed = 1
+
+            # Get the matches between the two teams
+            matches = [match for match in self.matches if match.home_team in [team1, team2] and match.away_team in [team1, team2]]
+
+            # Count the number of matches won by each team
+            team1_wins = sum(1 for match in matches if match.winner() == team1)
+            team2_wins = sum(1 for match in matches if match.winner() == team2)
+            qfinals = ["Final 1"]
+            for qfinal in qfinals:
+                if(self.rounds["Finals"][qfinal]["home_team"] == team1 and self.rounds["Finals"][qfinal]["away_team"] == team2):
+                    self.rounds["Finals"][qfinal]["home_team_wins"]=team1_wins
+                    self.rounds["Finals"][qfinal]["away_team_wins"]=team2_wins
+                    if team1_wins >= matches_needed:
+                        self.rounds["Finals"][qfinal]["winner_team"]=team1
+                    if team2_wins >= matches_needed:
+                        self.rounds["Finals"][qfinal]["winner_team"]=team2
+                    print(qfinal)
+                    print_playoff_series(self.rounds["Finals"][qfinal])
+                if(self.rounds["Finals"][qfinal]["home_team"] == team2 and self.rounds["Finals"][qfinal]["away_team"] == team1):
+                    self.rounds["Finals"][qfinal]["home_team_wins"]=team2_wins
+                    self.rounds["Finals"][qfinal]["away_team_wins"]=team1_wins
+                    if team1_wins >= matches_needed:
+                        self.rounds["Finals"][qfinal]["winner_team"]=team1
+                    if team2_wins >= matches_needed:
+                        self.rounds["Finals"][qfinal]["winner_team"]=team2
+                    print(qfinal)
+                    print_playoff_series(self.rounds["Finals"][qfinal])
+
+            # Check if one of the teams has already won enough matches
+            if team1_wins >= matches_needed:
+                # Delete the remaining matches between the two teams
+                for match in self.matches:
+                    if (match.home_team == team1 and match.away_team == team2) or  (match.home_team == team2 and match.away_team == team1):
+                        match.played = True
+                        print(f"Final winner {team1.name}")
+                return team1
+            elif team2_wins >= matches_needed:
+                # Delete the remaining matches between the two teams
+                for match in self.matches:
+                    if (match.home_team == team1 and match.away_team == team2) or  (match.home_team == team2 and match.away_team == team1):
+                        match.played = True
+                        print(f"Final winner {team2.name}")
+                return team2
+
+            # No team has won enough matches yet
+        return None
+
+    def check_finals_completed(self):
+        finals = ["Final 1"]
+        if(self.is_started and self.rounds["Finals"]["is_scheduled"]):
+            finals_completed = self.rounds["Finals"]["is_completed"]
+            if not finals_completed:
+                finals_completed = True
+                for final in finals:
+                    if self.rounds["Finals"][final]["winner_team"] is None:
+                        finals_completed = False
+                self.rounds["Finals"]["is_completed"] = finals_completed
+            print(f"Test Finals {self.name} - {finals_completed}")
+            return finals_completed
+        return False
+            
 
     def check_final_winner(self):
         raise NotImplementedError("Needs to check who the winner is and write an article")

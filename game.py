@@ -537,6 +537,7 @@ class Game:
                     if match.league.is_playoff:
                         match.league.check_elimination_quarterfinal(match.home_team, match.away_team)
                         match.league.check_elimination_semifinal(match.home_team, match.away_team)
+                        match.league.check_elimination_final(match.home_team, match.away_team)
 
                 else:
                     #print(f"    tick play {match.home_team.name} - {match.away_team.name}: {match.league.name}")
