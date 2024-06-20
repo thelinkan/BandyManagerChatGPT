@@ -48,4 +48,25 @@ def finalwinnerarticle(game, match, winningteam):
     # Get the first media outlet from the game's media outlets list
     use_mediaoutlet = game.mediaoutlets[0]
 
+    # Determine if the winning team is the home team or the away team
+    if match.home_team.name == winningteam:
+        is_winner_home = True
+        loosingteam = match.away_team.name
+    else:
+        is_winner_home = False
+        loosingteam = match.home_team.name
+
+    # Load the templates from the JSON file
+    with open("data/newstexts/finalwinner.json", 'r', encoding='utf-8') as file:
+        templates_data = json.load(file)
+    
+    headline = f"{winningteam} champion after victory against {loosingteam}"
+    templates = templates_data["firstline"]
+
+    template = random.choice(templates)
+    # Format the template with the required variables
+    #mediatext = template
+    mediatext = template.format(winningteam=winningteam, loosingteam=loosingteam,
+                                match=match)
+
     pass

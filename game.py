@@ -1,6 +1,7 @@
 import json
 import random
 import os
+import uuid
 from manager import Manager
 from country import Country
 from club import Club
@@ -23,7 +24,7 @@ from screens.screensMatch import draw_view_match
 from debug_functions import print_yesterdays_results, debugprint_playoff
 
 class Game:
-    def __init__(self,year,month,day):
+    def __init__(self,year: int,month: int,day: int) -> None:
         self.year: int = year
         self.month: int = month
         self.day: int = day
@@ -51,7 +52,7 @@ class Game:
         self.game_sub_page=None
         self.start_page:int = -1
 
-    def new_game(self,manager_name,manager_age):
+    def new_game(self,manager_name : str,manager_age: int) -> None:
         # create new game
         # Set name and age
         self.manager.set_name(manager_name)
@@ -61,12 +62,12 @@ class Game:
         with open('data/countries.json', encoding='utf-8') as f:
             countries_data = json.load(f)
         for country_data in countries_data:
-            name = country_data['name']
-            bandy_knowledge = country_data['bandy_knowledge']
-            population = country_data['population']
-            flag_path = country_data['flag_path']
-            male_proficiency = country_data['male_proficiency']
-            female_proficiency = country_data['female_proficiency']
+            name : str = country_data['name']
+            bandy_knowledge: int = country_data['bandy_knowledge']
+            population: int = country_data['population']
+            flag_path: str = country_data['flag_path']
+            male_proficiency: int = country_data['male_proficiency']
+            female_proficiency: int = country_data['female_proficiency']
             self.countries[name] = Country(name, flag_path, bandy_knowledge, population, male_proficiency, female_proficiency)
             if 'player_origins_male' in country_data:
                 player_origins_male[name] = country_data['player_origins_male']
@@ -79,8 +80,9 @@ class Game:
         self.clubs = self.read_clubs_from_json(data)
         for club in self.clubs:
             club_rating = club.rating
+            team : Team
             for team in club.teams:
-                team_rating = team.rating
+                team_rating: int = team.rating
                 if (team.team_type == "Men" or team.team_type == "Men U19"):
                     gender="male"
                 else:
@@ -231,7 +233,7 @@ class Game:
         players_data = game_data.get('players_data', [])
         for player_load in players_data:
             self.player_manager.load_player(player_load["first_name"],player_load["last_name"],player_load["age"],player_load["gender"],player_load["nationality"],player_load["position"],player_load["team"],player_load["uuid"])
-            player = self.player_manager.find_player_by_uuid(player_load["uuid"])
+            player: Player|None = self.player_manager.find_player_by_uuid(player_load["uuid"])
             attributes = player_load["attributes"]
             for attribute_name, attribute_data in attributes.items():
                 player.set_attribute(attribute_name, attribute_data["level"], attribute_data["experience"])
@@ -478,14 +480,15 @@ class Game:
         clubs = []
 
         for club_data in data['clubs']:
-            name = club_data['name']
+            name: str = club_data['name']
             country = club_data['country']
-            rating = club_data['club_rating']
+            rating: int = club_data['club_rating']
+            logo: str|None
             if 'logo' in club_data:
                 logo = club_data['logo']
             else:
                 logo = None
-            home_arena = club_data['home_arena']
+            home_arena: str = club_data['home_arena']
             club = Club(name, country, rating, home_arena, logo)
 
             for team_data in club_data['teams']:
@@ -550,7 +553,7 @@ class Game:
                         print("       Not to be played")
                     else:
                         match.play(self.manager.team, match.league.is_playoff)
-                    #print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
+                        print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
             leagues = self.get_leagues_by_type("Normal")
             for league in leagues:
                 #print(f"league: {league.name}")

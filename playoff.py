@@ -1,6 +1,7 @@
 from matchcode.match import Match
 from country import Country
 from debug_functions import print_playoff_series
+from newscode.matchplayed import finalwinnerarticle
 
 class Playoff:
     def __init__(self, name, country, quarter_final_rounds, semi_final_rounds, final_rounds, league, match_manager):
@@ -357,12 +358,12 @@ class Playoff:
             
 
     def check_final_winner(self):
-        raise NotImplementedError("Needs to check who the winner is and write an article")
+        print(f'finals: {self.rounds["Finals"]["Final 1"]["winner_team"]}')
+        #raise NotImplementedError("Needs to check who the winner is and write an article")
 
     def load_rounds(self,game,rounds_data):
         print(game.teams)
         print()
-        print(f"Rounds_data: {rounds_data}")
         for round_data in rounds_data:
             print()
             print()

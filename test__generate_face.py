@@ -26,10 +26,30 @@ else:
     nose_color = DARK_SKIN_TONE
 
 # Draw the face
-pygame.draw.ellipse(screen, SKIN_TONE, [100, 100, 200, 200], 0)
+face_form: int = random.randint(0,3)
+face_form = 2
+mouth_offset_vert : int =0
+eyes_offset_vert : int = 0
+if face_form == 0:
+    pygame.draw.ellipse(screen, SKIN_TONE, [100, 100, 200, 200], 0)
+elif face_form == 1:
+    pygame.draw.ellipse(screen, SKIN_TONE, [100, 100, 200, 250], 0)
+    mouth_offset_vert = 30
+    eyes_offset_vert = 10
+elif face_form == 2:
+    pygame.draw.ellipse(screen, SKIN_TONE, [100, 100, 200, 250], 0)
+    pygame.draw.ellipse(screen, DARK_SKIN_TONE, [175, 325, 50, 50], 0)
+    pygame.draw.ellipse(screen, SKIN_TONE, [178, 320, 45, 45], 0)
+    mouth_offset_vert = 30
+    eyes_offset_vert = 10
+else:
+    pygame.draw.ellipse(screen, SKIN_TONE, [100, 100, 200, 275], 0)
+    mouth_offset_vert = 45
+    eyes_offset_vert = 15
+
 
 # Draw the eyes
-eye_style = random.randint(0, 0)
+eye_style = random.randint(0, 1)
 if eye_style == 0:
     pygame.draw.ellipse(screen, WHITE, [150, 150, 30, 30], 0)
     pygame.draw.ellipse(screen, eye_color, [155, 155, 20, 20], 0)
@@ -42,7 +62,7 @@ else:
     pygame.draw.rect(screen, eye_color, [215, 145, 40, 40], 0)
 
 # Draw the hair
-hair_style = random.randint(0, 0)
+hair_style = random.randint(0, 2)
 if hair_style == 0:
     pygame.draw.polygon(screen, hair_color, [(200,90),(250,100),(280,120),(295,150),(305,160),(290,165),(280,170),(270,150),(240,165),(210,125),(195,150),(175,120),(155,170),(140,130),(135,150),(130,130),(110,150),(105,190),(95,180),(105,160),(120,120),(150,100)])
     #pygame.draw.polygon(screen, hair_color, [(150, 60), (190, 30), (230, 60), (190, 75)])
@@ -69,14 +89,22 @@ else:
 # Draw the mouth
 mouth_style = random.randint(0, 2)
 if mouth_style == 0:
-    pygame.draw.rect(screen, mouth_color, [170, 250, 60, 20], 0)
+    pygame.draw.rect(screen, mouth_color, [170, 250+mouth_offset_vert, 60, 20], 0)
 elif mouth_style == 1:
-    pygame.draw.polygon(screen, mouth_color, [(180, 260), (200, 270), (220, 260), (200, 275)])
+    pygame.draw.polygon(screen, mouth_color, [(180, 260+mouth_offset_vert), (200, 270+mouth_offset_vert), (220, 260+mouth_offset_vert), (200, 275+mouth_offset_vert)])
 else:
-    pygame.draw.rect(screen, mouth_color, [170, 250, 60, 10], 0)
+    pygame.draw.rect(screen, mouth_color, [170, 250+mouth_offset_vert, 60, 10], 0)
 
 # Update the display
 pygame.display.flip()
+
+face_dict:dict = {
+    'face_form' : 1,
+    'eye_style': 2,
+    'mouth_style' : 1
+
+
+}
 
 # Game loop
 running = True
