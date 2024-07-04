@@ -88,6 +88,7 @@ while running:
 
     # Keep the program running at a consistent speed
     pygame.time.delay(10)
+  
 
 # Quit Pygame
 pygame.quit()
