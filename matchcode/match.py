@@ -82,6 +82,8 @@ class Match:
 
         if assist_chance < 0.75:
             assisting_player = random.choice(player_list)
+            if goal_scorer == assisting_player:
+                assisting_player = None
 
         event = {
             "type": "goal",

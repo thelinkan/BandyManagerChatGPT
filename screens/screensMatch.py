@@ -136,7 +136,7 @@ def view_match_header(game,match_to_view,engine,match_state):
 def draw_events(match_to_view):
     sorted_events = sorted(match_to_view.events, key = lambda x:x['time'] , reverse = True)
 
-    event_surface = pygame.Surface((350,600), pygame.SRCALPHA)
+    event_surface = pygame.Surface((550,600), pygame.SRCALPHA)
     event_surface.fill(WHITE)
     y=10
     row_height = 20
@@ -146,14 +146,18 @@ def draw_events(match_to_view):
             row_color = TABLE_ROW_EVEN_COLOR
         else:
             row_color = TABLE_ROW_ODD_COLOR
-        row_rect = pygame.Rect(10,10+i*row_height,300,row_height)
+        row_rect = pygame.Rect(10,10+i*row_height,500,row_height)
         pygame.draw.rect(event_surface, row_color, row_rect)
         event_time = event["time"]
         event_type = event["type"]
         if event_type == "goal":
             goal_scorer = event["goal_scorer"]
+            assisting_player = event["assisting_player"]
             goal_team = event["team"]
-            text = event_font.render(f"{event_time}: {goal_scorer.first_name} {goal_scorer.last_name} score for {goal_team}.", True, BLACK)
+            if(assisting_player is not None):
+                text = event_font.render(f"{event_time}: {goal_scorer.first_name} {goal_scorer.last_name} score for {goal_team}, assisted by {assisting_player.first_name} {assisting_player.last_name} .", True, BLACK)
+            else:
+                text = event_font.render(f"{event_time}: {goal_scorer.first_name} {goal_scorer.last_name} score for {goal_team}.", True, BLACK)
             text_rect = text.get_rect(left=row_rect.left + 10, centery = row_rect.centery)
         else:
             text = event_font.render(f"{event_time}: {event_type}.", True, BLACK)
