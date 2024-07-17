@@ -1,4 +1,5 @@
 import pygame
+from loggingbm import logger
 
 from game import Game
 
@@ -113,19 +114,23 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
         game.selected_news_index=-1
         game.inspected_team = None
         game.game_page = "media"
+        logger.debug("Media - click")
     if senior_squad_button.rect.collidepoint(event.pos):
         game.selected_team_index=-1
         game.selected_player_index=-1
         game.inspected_team = None
         game.game_page = "player_list"
+        logger.debug("Player list - click")
     if tactics_button.rect.collidepoint(event.pos):
         game.selected_player_index=-1
         game.selected_team_index=-1
         game.inspected_team = None
         game.game_page = "tactics"
+        logger.debug("Tactics - click")
     if schedule_button.rect.collidepoint(event.pos):
         game.start_page = 1
         game.game_page = "schedule"
+        logger.debug("Schedule - click")
     if competition_button.rect.collidepoint(event.pos):
         game.selected_team_index=-1
         game.inspected_team = None
@@ -134,13 +139,17 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
         game.inspected_league = temp_leagues[0].name
         #print(game_page)
         game.game_page = "competition"
+        logger.debug("Competition - click")
     if u19_squad_button.rect.collidepoint(event.pos):
         game.selected_player_index=-1
         game.inspected_team = None
         game.game_page = "player_list_u19"
+        logger.debug("Player List U19 - click")
     if forward_time_button.rect.collidepoint(event.pos):
+        logger.debug("Forward time")
         match_viewed, match_to_view = game.tick()
         if match_viewed:
+            logger.debug("Match viewed")
             game_state = "view_match"
             
 

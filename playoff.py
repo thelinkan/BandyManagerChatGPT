@@ -2,6 +2,7 @@ from matchcode.match import Match
 from country import Country
 from debug_functions import print_playoff_series
 from newscode.matchplayed import finalwinnerarticle
+from loggingbm import logger
 
 class Playoff:
     def __init__(self, name, country, quarter_final_rounds, semi_final_rounds, final_rounds, league, match_manager):
@@ -324,18 +325,22 @@ class Playoff:
                     print_playoff_series(self.rounds["Finals"][qfinal])
 
             # Check if one of the teams has already won enough matches
+            logger.debug(f"Check finals elimination {self.name}: {team1_wins} - {team2_wins} req {matches_needed}")
             if team1_wins >= matches_needed:
                 # Delete the remaining matches between the two teams
                 for match in self.matches:
                     if (match.home_team == team1 and match.away_team == team2) or  (match.home_team == team2 and match.away_team == team1):
                         match.played = True
+                        logger.debug(f"Final winner {team1.name}")
                         print(f"Final winner {team1.name}")
+
                 return team1
             elif team2_wins >= matches_needed:
                 # Delete the remaining matches between the two teams
                 for match in self.matches:
                     if (match.home_team == team1 and match.away_team == team2) or  (match.home_team == team2 and match.away_team == team1):
                         match.played = True
+                        logger.debug(f"Final winner {team2.name}")
                         print(f"Final winner {team2.name}")
                 return team2
 

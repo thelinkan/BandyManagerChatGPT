@@ -1,6 +1,7 @@
 import pygame
 import json
 import pickle
+from loggingbm import logger
 #import classes for GUI
 from inputbox import InputBox
 from button import Button
@@ -29,6 +30,7 @@ selected_news_index=-1
 isMatchesPlayed = False
 start_page=-1
 
+
 # Define game loop
 running = True
 while running:
@@ -36,11 +38,14 @@ while running:
     # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            logger.info("Quit")
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:  
             if event.button == 1 and (game_state == "start_menu" or game_state == "show_credits"):
+                logger.info("Test")
                 game,game_state = start_menu(game_state,new_game_button,load_game_button,credits_button,quit_button,event)
             elif event.button == 1 and game_state == "new_game":
+                logger.info("New game")
                 game_state = new_game_menu(game, game_state, input_name, input_age, new_game_ok_button, event)
             elif event.button == 1 and game_state == "new_game_2":
                 game_state = new_game_menu2(game, game_state,country_rects,league_rects,team_rects,selected_team,choose_team_button, event)

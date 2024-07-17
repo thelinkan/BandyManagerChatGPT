@@ -14,7 +14,9 @@ from uuidencoder import UUIDEncoder
 from matchcode.matchmanager import MatchManager
 from newscode.mediaoutlet import MediaOutlet
 from newscode.newsitem import NewsItem
-from newscode.matchplayed import matcharticle
+from newscode.matchplayed import matcharticle, finalwinnerarticle
+
+from loggingbm import logger
 
 
 from constants import START_YEAR
@@ -537,10 +539,14 @@ class Game:
                     if not match.played:
                         draw_view_match(self,match_to_view)
                         matcharticle(self,match_to_view,self.manager.team)
+                        logger.debug(f"Match played for gamer: {match.home_team.name} - {match.away_team.name} in {match.league.name}")
                     if match.league.is_playoff:
+                        logger.debug("Playoff check")
                         match.league.check_elimination_quarterfinal(match.home_team, match.away_team)
                         match.league.check_elimination_semifinal(match.home_team, match.away_team)
-                        match.league.check_elimination_final(match.home_team, match.away_team)
+                        winner = match.league.check_elimination_final(match.home_team, match.away_team)
+                        if(winner is not None):
+                            finalwinnerarticle(self, match, winner.name)
 
                 else:
                     #print(f"    tick play {match.home_team.name} - {match.away_team.name}: {match.league.name}")
@@ -553,6 +559,7 @@ class Game:
                         print("       Not to be played")
                     else:
                         match.play(self.manager.team, match.league.is_playoff)
+                        logger.debug(f"Match played: {match.home_team.name} - {match.away_team.name} in {match.league.name}")
                         print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
             leagues = self.get_leagues_by_type("Normal")
             for league in leagues:

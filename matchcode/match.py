@@ -2,6 +2,8 @@ from datetime import datetime, timedelta
 import random
 from numpy import random as rand
 
+from loggingbm import logger
+
 class Match:
     def __init__(self, home_team, away_team, year, month, day):
         self.home_team = home_team
@@ -63,9 +65,11 @@ class Match:
 
         if is_playoff:
             print(f"Is playoff: Yes")
+            logger.debug(f"Playoff check {self.league.name}")
             self.league.check_elimination_quarterfinal(self.home_team, self.away_team)
             self.league.check_elimination_semifinal(self.home_team, self.away_team)
             self.league.check_elimination_final(self.home_team, self.away_team)
+
         #print(f"  --  in play -- {self.played}: {self.home_goals} - {self.away_goals}")
 
     def update_state(self,game_time_delta):

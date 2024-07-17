@@ -2,6 +2,7 @@ import json
 import random
 
 from newscode.newsitem import NewsItem
+from loggingbm import logger
 
 def matcharticle(game, match, manager_team):
     # Get the first media outlet from the game's media outlets list
@@ -68,5 +69,8 @@ def finalwinnerarticle(game, match, winningteam):
     #mediatext = template
     mediatext = template.format(winningteam=winningteam, loosingteam=loosingteam,
                                 match=match)
+    newsitem = NewsItem((game.year, game.month, game.day), headline, mediatext, use_mediaoutlet)
+    print(newsitem.text)
+    game.newsitems.append(newsitem)
 
-    pass
+    
