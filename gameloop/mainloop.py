@@ -1,9 +1,10 @@
 import pygame
+from loggingbm import logger
 
 from game import Game
 
 from guielements import input_name, input_age
-from guielements import home_button,senior_squad_button, tactics_button, schedule_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
+from guielements import home_button,media_button,senior_squad_button, tactics_button, schedule_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
 from gameloop.tactics import gameloop_tactics
 from screens.screensleague import choose_league
 pygame.init()
@@ -44,6 +45,15 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
                 game.selected_league_index = -1
                 print("choose league")                    
                
+    if(game.game_page == "media"):
+        playerlist_offset = (140,125)
+        event_pos = event.pos
+        event_pos_on_list = event_pos[0] - playerlist_offset[0], event_pos[1] - playerlist_offset[1]
+        for i, rect in enumerate(rectslist_1):
+            if rect.collidepoint(event_pos_on_list):
+                game.selected_news_index = i
+                #print(game.selected_news_index)
+                break
         
     if(game.game_page == "tactics"):
         gameloop_tactics(game, rectslist_1, rectslist_2, event.pos)
@@ -98,19 +108,29 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
                 game.game_sub_page = "chooseleague"
                 game.selected_league_index = -1
                 print("choose league")                    
+    if media_button.rect.collidepoint(event.pos):
+        game.selected_team_index=-1
+        selected_player_index=-1
+        game.selected_news_index=-1
+        game.inspected_team = None
+        game.game_page = "media"
+        logger.debug("Media - click")
     if senior_squad_button.rect.collidepoint(event.pos):
         game.selected_team_index=-1
         game.selected_player_index=-1
         game.inspected_team = None
         game.game_page = "player_list"
+        logger.debug("Player list - click")
     if tactics_button.rect.collidepoint(event.pos):
         game.selected_player_index=-1
         game.selected_team_index=-1
         game.inspected_team = None
         game.game_page = "tactics"
+        logger.debug("Tactics - click")
     if schedule_button.rect.collidepoint(event.pos):
         game.start_page = 1
         game.game_page = "schedule"
+        logger.debug("Schedule - click")
     if competition_button.rect.collidepoint(event.pos):
         game.selected_team_index=-1
         game.inspected_team = None
@@ -119,13 +139,17 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
         game.inspected_league = temp_leagues[0].name
         #print(game_page)
         game.game_page = "competition"
+        logger.debug("Competition - click")
     if u19_squad_button.rect.collidepoint(event.pos):
         game.selected_player_index=-1
         game.inspected_team = None
         game.game_page = "player_list_u19"
+        logger.debug("Player List U19 - click")
     if forward_time_button.rect.collidepoint(event.pos):
+        logger.debug("Forward time")
         match_viewed, match_to_view = game.tick()
         if match_viewed:
+            logger.debug("Match viewed")
             game_state = "view_match"
             
 
@@ -210,7 +234,7 @@ def new_game_menu2(game, game_state,country_rects,league_rects,team_rects, selec
             break
     if game.selected_team_index>=0:
         if choose_team_button.rect.collidepoint(event.pos):
-            game.set_manager_team(selected_team)
+            game.set_manager_team(selected_team, True)
             game_state = "game_mainscreen"
             game.game_page = "home"
             #print("klick "+ selected_team)

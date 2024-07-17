@@ -1,6 +1,7 @@
 import json
 import random
 import ast
+import uuid
 #from person import Player
 
 class Team:
@@ -100,7 +101,10 @@ class Team:
         postion=self.player.return_position()
         return postion
 
-    def change_player_jersey_number(self, player_uuid, new_jersey_number):
+    def change_player_jersey_number(self, player_uuid : uuid.UUID, new_jersey_number: int):
+        '''
+        Change the Jersey number of the player with uuid player_uuid
+        '''
         # Check if jersey number is between 1 and 99
         #print (new_jersey_number)
         if new_jersey_number < 1 or new_jersey_number > 99:
