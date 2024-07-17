@@ -1,0 +1,27 @@
+{
+    "win_templates": {
+      "firstline_home_team_wins": [
+        "{manager_team} managed to win their home game against {opponent_name} with a score of {match.home_goals}-{match.away_goals}.",
+        "In yesterday's game, {manager_team} won with a score of {match.home_goals}-{match.away_goals} against {opponent_name}.",
+        "With a score of {match.home_goals}-{match.away_goals}, {manager_team} managed to turn the home field advantage into a win against {opponent_name}."
+      ],
+      "firstline_away_team_wins": [
+        "{manager_team} won their away game against {opponent_name} with a score of {match.away_goals}-{match.home_goals}.",
+        "{manager_team} secured a victory on the road with a score of {match.away_goals}-{match.home_goals} against {opponent_name}.",
+        "Despite playing away, {manager_team} emerged victorious against {opponent_name} with a score of {match.away_goals}-{match.home_goals}."
+      ]
+    },
+    "loss_templates": {
+      "firstline_home_team_losses": [
+        "{manager_team} lost their home game against {opponent_name} with a score of {match.home_goals}-{match.away_goals}.",
+        "In yesterday's game, {manager_team} suffered a defeat with a score of {match.home_goals}-{match.away_goals} against {opponent_name}.",
+        "Despite the home advantage, {manager_team} couldn't secure a win against {opponent_name}, losing {match.home_goals}-{match.away_goals}."
+      ],
+      "firstline_away_team_losses": [
+        "{manager_team} lost their away game against {opponent_name} with a score of {match.away_goals}-{match.home_goals}.",
+        "{manager_team} faced a tough challenge on the road, losing {match.away_goals}-{match.home_goals} to {opponent_name}.",
+        "Playing away proved challenging for {manager_team}, resulting in a loss of {match.away_goals}-{match.home_goals} against {opponent_name}."
+      ]
+    }
+  }
+  

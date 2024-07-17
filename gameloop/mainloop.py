@@ -1,26 +1,35 @@
+import pygame
+from loggingbm import logger
+
 from game import Game
 
 from guielements import input_name, input_age
-from guielements import home_button,senior_squad_button, tactics_button, schedule_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
+from guielements import home_button,media_button,senior_squad_button, tactics_button, schedule_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
 from gameloop.tactics import gameloop_tactics
+from screens.screensleague import choose_league
+pygame.init()
 
 def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
     if home_button.rect.collidepoint(event.pos):
         game.game_page = "home"
         game.start_page = 1
     if(game.game_page == "player_list" or game.game_page == "player_list_u19"):
-        playerlist_offset = (140,125)
         event_pos = event.pos
+        playerlist_offset = (140,125)
         event_pos_on_list = event_pos[0] - playerlist_offset[0], event_pos[1] - playerlist_offset[1]
         for i, rect in enumerate(rectslist_1):
             if rect.collidepoint(event_pos_on_list):
                 game.selected_player_index = i
                 break
-    if(game.game_page == "competition"):
-        playerlist_offset = (140,110)
+    if(game.game_page == "competition" and game.game_sub_page != "chooseleague"):
         event_pos = event.pos
+        playerlist_offset = (140,110)
         event_pos_on_list = event_pos[0] - playerlist_offset[0], event_pos[1] - playerlist_offset[1]
+        rect_2_offset = (890,150)
+        event_pos_on_list2 = event_pos[0] - rect_2_offset[0], event_pos[1] - rect_2_offset[1]
+        #print(rectslist_1)
         for i, rect in enumerate(rectslist_1):
+            #print(rect)
             if rect.collidepoint(event_pos_on_list):
                 game.selected_team_index = i
                 selected_league = game.inspected_league
@@ -30,33 +39,98 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
                     if j == game.selected_team_index:
                         game.inspected_team = team
                         pass                
-                
+        for i, rect in enumerate(rectslist_2):
+            if rect.collidepoint(event_pos_on_list2) and i==0:
+                game.game_sub_page = "chooseleague"
+                game.selected_league_index = -1
+                print("choose league")                    
+               
+    if(game.game_page == "media"):
+        playerlist_offset = (140,125)
+        event_pos = event.pos
+        event_pos_on_list = event_pos[0] - playerlist_offset[0], event_pos[1] - playerlist_offset[1]
+        for i, rect in enumerate(rectslist_1):
+            if rect.collidepoint(event_pos_on_list):
+                game.selected_news_index = i
+                #print(game.selected_news_index)
+                break
         
     if(game.game_page == "tactics"):
         gameloop_tactics(game, rectslist_1, rectslist_2, event.pos)
     if (game.game_page == "home"):
         home_loop(game, rectslist_1, event)
-    if (game.game_page == "schedule"):
+    if ((game.game_page == "schedule" or game.game_page == "competition") and game.game_sub_page == "chooseleague"):
+        choice_offset = (250,75)
+        border = (2,2)
+        country_offset = (10,10)
+        league_offset = (360,10)
+
+        mouse_pos = pygame.mouse.get_pos()
+        mouse_pos_on_country = mouse_pos[0] - choice_offset[0] - border[0] - country_offset[0], mouse_pos[1] - choice_offset[1] - border[1] - country_offset[1]        
+        mouse_pos_on_league = mouse_pos[0] - choice_offset[0] - border[0] - league_offset[0], mouse_pos[1] - choice_offset[1] - border[1] - league_offset[1]        
         for i, rect in enumerate(rectslist_1):
+            if rect.collidepoint(mouse_pos_on_country):
+                game.selected_country_index = i
+                game.selected_league_index = -1
+                if i==0:
+                    game.game_sub_page = ""
+                    game.selected_country_index = -1
+                print(f"clicking country {i} - {game.game_sub_page}")
+        for i, rect in enumerate(rectslist_2):
+            if rect.collidepoint(mouse_pos_on_league):
+                if i==0 and game.selected_league_index>0:
+                    countries = game.return_countries_with_leagues()
+                    selected_country = countries[game.selected_country_index-1].return_name()
+                    leagues = game.return_leagues_in_country(selected_country)
+                    game.inspected_league = leagues[game.selected_league_index-1].name                    
+                    game.selected_country_index = -1
+                    game.selected_league_index = -1
+                    game.game_sub_page = ""
+                    print(f"{game.inspected_league}")
+                    break
+                game.selected_league_index = i
+                print(f"clicking league {i}")
+        #game.game_sub_page = ""
+    if (game.game_page == "schedule" and game.game_sub_page != "chooseleague"):
+        rect_2_offset = (890,150)
+        event_pos = event.pos
+        event_pos_on_list = event_pos[0] - rect_2_offset[0], event_pos[1] - rect_2_offset[1]
+        for i, rect in enumerate(rectslist_1):
+            print(f"{game.inspected_league}")
             if rect.collidepoint(event.pos) and i == 0:
                 game.start_page = game.start_page - 1
                 break                    
             if rect.collidepoint(event.pos) and i == 1:
                 game.start_page = game.start_page + 1
-                break                    
+                break
+        for i, rect in enumerate(rectslist_2):
+            if rect.collidepoint(event_pos_on_list) and i==0:
+                game.game_sub_page = "chooseleague"
+                game.selected_league_index = -1
+                print("choose league")                    
+    if media_button.rect.collidepoint(event.pos):
+        game.selected_team_index=-1
+        selected_player_index=-1
+        game.selected_news_index=-1
+        game.inspected_team = None
+        game.game_page = "media"
+        logger.debug("Media - click")
     if senior_squad_button.rect.collidepoint(event.pos):
         game.selected_team_index=-1
         game.selected_player_index=-1
         game.inspected_team = None
         game.game_page = "player_list"
+        logger.debug("Player list - click")
     if tactics_button.rect.collidepoint(event.pos):
         game.selected_player_index=-1
         game.selected_team_index=-1
         game.inspected_team = None
         game.game_page = "tactics"
+        logger.debug("Tactics - click")
     if schedule_button.rect.collidepoint(event.pos):
         game.start_page = 1
         game.game_page = "schedule"
+        logger.debug("Schedule - click")
     if competition_button.rect.collidepoint(event.pos):
         game.selected_team_index=-1
         game.inspected_team = None
@@ -65,13 +139,17 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
         game.inspected_league = temp_leagues[0].name
         #print(game_page)
         game.game_page = "competition"
+        logger.debug("Competition - click")
     if u19_squad_button.rect.collidepoint(event.pos):
         game.selected_player_index=-1
         game.inspected_team = None
         game.game_page = "player_list_u19"
+        logger.debug("Player List U19 - click")
     if forward_time_button.rect.collidepoint(event.pos):
+        logger.debug("Forward time")
         match_viewed, match_to_view = game.tick()
         if match_viewed:
+            logger.debug("Match viewed")
             game_state = "view_match"
             
 
@@ -156,7 +234,7 @@ def new_game_menu2(game, game_state,country_rects,league_rects,team_rects, selec
             break
     if game.selected_team_index>=0:
         if choose_team_button.rect.collidepoint(event.pos):
-            game.set_manager_team(selected_team)
+            game.set_manager_team(selected_team, True)
             game_state = "game_mainscreen"
             game.game_page = "home"
             #print("klick "+ selected_team)
@@ -173,3 +251,4 @@ def new_game_input(event):
         age_active = True
     input_name.handle_event(event, name_active, input_age)
     input_age.handle_event(event, age_active, input_name)
+

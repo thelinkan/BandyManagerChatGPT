@@ -1,6 +1,7 @@
 import json
 import random
 import os
+import uuid
 from manager import Manager
 from country import Country
 from club import Club
@@ -11,36 +12,49 @@ from person import Player
 from person import PlayerManager
 from uuidencoder import UUIDEncoder
 from matchcode.matchmanager import MatchManager
+from newscode.mediaoutlet import MediaOutlet
+from newscode.newsitem import NewsItem
+from newscode.matchplayed import matcharticle, finalwinnerarticle
+
+from loggingbm import logger
+
+
+from constants import START_YEAR
 
 from screens.screensMatch import draw_view_match
 
 from debug_functions import print_yesterdays_results, debugprint_playoff
 
 class Game:
-    def __init__(self,year,month,day):
-        self.year = year
-        self.month = month
-        self.day = day
-        self.manager = Manager()
-        self.countries = {}
-        self.leagues = []
-        self.playoffs = []
-        self.clubs = []
+    def __init__(self,year: int,month: int,day: int) -> None:
+        self.year: int = year
+        self.month: int = month
+        self.day: int = day
+        self.manager: Manager = Manager()
+        self.countries:dict = {}
+        self.leagues: list = []
+        self.playoffs: list = []
+        self.clubs: list = []
+        self.mediaoutlets = []
+        self.newsitems = []
         self.player_manager = PlayerManager()
         self.teams = {} # Add a dictionary to store teams
         self.match_manager = MatchManager()
-        self.selected_player_index = -1
-        self.selected_team_index = -1
-        self.selected_league_index = -1
-        self.selected_country_index = -1
+        self.selected_player_index: int = -1
+        self.selected_team_index: int = -1
+        self.selected_league_index: int = -1
+        self.selected_country_index:int = -1
+        self.selected_news_index: int = -1
+        self.inspected_country = None
         self.inspected_team = None
         self.inspected_league = None
         self.isMatchesPlayed = False
 
         self.game_page=None
-        self.start_page = -1
+        self.game_sub_page=None
+        self.start_page:int = -1
 
-    def new_game(self,manager_name,manager_age):
+    def new_game(self,manager_name : str,manager_age: int) -> None:
         # create new game
         # Set name and age
         self.manager.set_name(manager_name)
@@ -50,24 +64,27 @@ class Game:
         with open('data/countries.json', encoding='utf-8') as f:
             countries_data = json.load(f)
         for country_data in countries_data:
-            name = country_data['name']
-            bandy_knowledge = country_data['bandy_knowledge']
-            population = country_data['population']
-            flag_path = country_data['flag_path']
-            male_proficiency = country_data['male_proficiency']
-            female_proficiency = country_data['female_proficiency']
+            name : str = country_data['name']
+            bandy_knowledge: int = country_data['bandy_knowledge']
+            population: int = country_data['population']
+            flag_path: str = country_data['flag_path']
+            male_proficiency: int = country_data['male_proficiency']
+            female_proficiency: int = country_data['female_proficiency']
             self.countries[name] = Country(name, flag_path, bandy_knowledge, population, male_proficiency, female_proficiency)
             if 'player_origins_male' in country_data:
                 player_origins_male[name] = country_data['player_origins_male']
             if 'player_origins_female' in country_data:
                 player_origins_female[name] = country_data['player_origins_female']
+        mediaoutlet = MediaOutlet('Evening news','paper','Sweden')
+        self.mediaoutlets.append (mediaoutlet)
         with open('data/clubs.json', encoding='utf-8') as f:
             data = json.load(f)
         self.clubs = self.read_clubs_from_json(data)
         for club in self.clubs:
             club_rating = club.rating
+            team : Team
             for team in club.teams:
-                team_rating = team.rating
+                team_rating: int = team.rating
                 if (team.team_type == "Men" or team.team_type == "Men U19"):
                     gender="male"
                 else:
@@ -149,7 +166,11 @@ class Game:
                 if not team:
                     raise ValueError(f"No team found with name '{team_name}'")
                 league_teams.append(team)
-            league = League(data["name"],data["country"],data["team_type"],data["level"],data["league_type"],league_teams,data["num_rounds"], start_month=data["startmonth"], start_day=data["startday"], end_month=data["endmonth"], end_day=data["endday"], match_manager=self.match_manager)
+            if data["startmonth"] > 6:
+                start_year = START_YEAR
+            else:
+                start_year = START_YEAR + 1
+            league = League(data["name"],data["country"],data["team_type"],data["level"],data["league_type"],league_teams,data["num_rounds"], start_year = start_year, start_month=data["startmonth"], start_day=data["startday"], end_month=data["endmonth"], end_day=data["endday"], match_manager=self.match_manager)
             if data["league_type"] == "Normal":
                 league.generate_schedule()
             print(f"League: {league.name}")
@@ -200,11 +221,21 @@ class Game:
             male_proficiency = country_data['male_proficiency']
             female_proficiency = country_data['female_proficiency']
             self.countries[name] = Country(name, flag_path, bandy_knowledge, population, male_proficiency, female_proficiency)
+        for mediaoutlet_data in game_data['mediaoutlets']:
+            mediaoutlet = MediaOutlet(mediaoutlet_data['name'],mediaoutlet_data['type'],mediaoutlet_data['country'])
+            self.mediaoutlets.append (mediaoutlet)
+        for news_data in game_data['newsitems']:
+            use_mediaoutlet = self.mediaoutlets[0]
+            newsitem = NewsItem((news_data['date'][0], news_data['date'][1], news_data['date'][2]), news_data['headline'], news_data['text'], use_mediaoutlet)
+            newsitem.is_read = news_data['is_read']
+            self.newsitems.append(newsitem)
+
+        
         #print(game_data['club_data'])
         players_data = game_data.get('players_data', [])
         for player_load in players_data:
             self.player_manager.load_player(player_load["first_name"],player_load["last_name"],player_load["age"],player_load["gender"],player_load["nationality"],player_load["position"],player_load["team"],player_load["uuid"])
-            player = self.player_manager.find_player_by_uuid(player_load["uuid"])
+            player: Player|None = self.player_manager.find_player_by_uuid(player_load["uuid"])
             attributes = player_load["attributes"]
             for attribute_name, attribute_data in attributes.items():
                 player.set_attribute(attribute_name, attribute_data["level"], attribute_data["experience"])
@@ -298,6 +329,8 @@ class Game:
         players_data = []
         leagues_data = []
         playoffs_data = []
+        mediaoutlet_data = []
+        news_data = []
 
         for key, value in self.countries.items():
             countries_data.append(value.to_dict())
@@ -321,6 +354,12 @@ class Game:
         for playoff in self.playoffs:
             playoffs_data.append(playoff.to_dict())
 
+        for mediaoutlet in self.mediaoutlets:
+            mediaoutlet_data.append(mediaoutlet.to_dict())
+        
+        for newsitem in self.newsitems:
+            news_data.append(newsitem.to_dict())
+
         game_data = {
                 'year': self.year,
                 'month': self.month,
@@ -330,6 +369,8 @@ class Game:
                     'age': self.manager.return_age(),
                     'team': self.manager.return_team()
                 },
+                'mediaoutlets': mediaoutlet_data,
+                'newsitems': news_data,
                 'countries': countries_data,
                 'club_data':{
                     'clubs': clubs_data
@@ -344,8 +385,23 @@ class Game:
             json.dump(game_data, file, indent=4, cls=UUIDEncoder)
         print("Game Data Saved")
 
-    def set_manager_team(self,team):
-        self.manager.set_team(team)
+    def set_manager_team(self,team_name,is_new_game):
+        self.manager.set_team(team_name)
+        if is_new_game:
+            print("set manager team")
+            i=0
+            for mediaoutlet in self.mediaoutlets:
+                if i==0:
+                    headline = f"{self.manager.name} new manager of {team_name}"
+                    mediatext = f"{self.manager.name} hase become the manager of {team_name}. "
+                    mediatext += f"This is {self.manager.name}s first position as a manager, but {team_name} says "
+                    mediatext += f"they are confident in him."
+                    
+                    newsitem = NewsItem((self.year,self.month,self.day),headline, mediatext, mediaoutlet)
+                    self.newsitems.append(newsitem)
+                i += 1
+
+            pass
 
     def return_manager_team(self):
         self.manager.return_team
@@ -426,14 +482,15 @@ class Game:
         clubs = []
 
         for club_data in data['clubs']:
-            name = club_data['name']
+            name: str = club_data['name']
             country = club_data['country']
-            rating = club_data['club_rating']
+            rating: int = club_data['club_rating']
+            logo: str|None
             if 'logo' in club_data:
                 logo = club_data['logo']
             else:
                 logo = None
-            home_arena = club_data['home_arena']
+            home_arena: str = club_data['home_arena']
             club = Club(name, country, rating, home_arena, logo)
 
             for team_data in club_data['teams']:
@@ -481,9 +538,15 @@ class Game:
 
                     if not match.played:
                         draw_view_match(self,match_to_view)
+                        matcharticle(self,match_to_view,self.manager.team)
+                        logger.debug(f"Match played for gamer: {match.home_team.name} - {match.away_team.name} in {match.league.name}")
                     if match.league.is_playoff:
+                        logger.debug("Playoff check")
                         match.league.check_elimination_quarterfinal(match.home_team, match.away_team)
                         match.league.check_elimination_semifinal(match.home_team, match.away_team)
+                        winner = match.league.check_elimination_final(match.home_team, match.away_team)
+                        if(winner is not None):
+                            finalwinnerarticle(self, match, winner.name)
 
                 else:
                     #print(f"    tick play {match.home_team.name} - {match.away_team.name}: {match.league.name}")
@@ -496,7 +559,8 @@ class Game:
                         print("       Not to be played")
                     else:
                         match.play(self.manager.team, match.league.is_playoff)
-                    #print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
+                        logger.debug(f"Match played: {match.home_team.name} - {match.away_team.name} in {match.league.name}")
+                        print (f"{match.home_team.name} - {match.away_team.name}: {match.home_goals} - {match.away_goals}")
             leagues = self.get_leagues_by_type("Normal")
             for league in leagues:
                 #print(f"league: {league.name}")

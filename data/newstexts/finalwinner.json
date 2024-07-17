@@ -1,0 +1,6 @@
+{
+    "firstline": [
+        "{winningteam} won the final game against {loosingteam} with a score of {match.away_goals}-{match.home_goals}."
+
+    ]
+}

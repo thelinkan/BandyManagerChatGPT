@@ -2,10 +2,11 @@ import uuid
 import random
 import weakref
 from attribute import Attribute
+from team import Team
 #from team import Team
 
 class Person:
-    def __init__(self, first_name, last_name, age, gender, nationality):
+    def __init__(self, first_name: str, last_name: str, age: int, gender: str, nationality: str):
         self.first_name = first_name
         self.last_name = last_name
         self.age = age
@@ -13,11 +14,11 @@ class Person:
         self.nationality = nationality
 
 class Player(Person):
-    def __init__(self, first_name, last_name, age, gender, nationality, position, team):
+    def __init__(self, first_name: str, last_name: str, age: int, gender:str, nationality: str, position: str, team):
         super().__init__(first_name, last_name, age, gender, nationality)
         self.position = position
         self.team = team
-        self.uuid = uuid.uuid4()
+        self.uuid : uuid.UUID = uuid.uuid4()
         self.team_ref = None
         self.attributes = [
             Attribute('Saveing', -1, 0),
@@ -202,13 +203,13 @@ class Player(Person):
 
 
 
-    def set_attribute(self, attribute_name,value,experience):
+    def set_attribute(self, attribute_name: str,value: int,experience: int):
         for attribute in self.attributes:
             if attribute.name == attribute_name:
                 attribute.level = value
                 attribute.experience = experience
 
-    def get_attribute(self, attribute_name):
+    def get_attribute(self, attribute_name: str):
         for attribute in self.attributes:
             if attribute.name == attribute_name:
                 return attribute
@@ -217,7 +218,7 @@ class Player(Person):
     def add_team(self, team):
         self.team_ref = weakref.ref(team)
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         attributes_dict = {attribute.name: attribute.to_dict() for attribute in self.attributes}
         player_dict = {
             'uuid': str(self.uuid),
@@ -233,7 +234,7 @@ class Player(Person):
         }
         return player_dict
 
-    def calculate_composite_values(self, position):
+    def calculate_composite_values(self, position: str):
         if position == 'goalkeeper':
             defense_stat = (0.5 * self.attributes[0].level + 0.25 * self.attributes[1].level + 0.2 * self.attributes[2].level + 0.05 * self.attributes[3].level) * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
             offense_stat = self.attributes[3].level * (0.018 * self.attributes[15].level - 0.00008 * self.attributes[15].level ** 2)
@@ -262,20 +263,20 @@ class Player(Person):
     def return_position(self):
         return self.position
 
-    def return_skills(self):
-        return self.skills
+    def return_attributes(self):
+        return self.attributes
 
     def __str__(self):
         return f"Player first name: {self.first_name} last name: {self.last_name} age: {self.age}"
 
 class Referee(Person):
-    def __init__(self, first_name, last_name, age, gender, level):
-        super().__init__(first_name, last_name, age, gender)
+    def __init__(self, first_name: str, last_name: str, age: int, gender: str, level: int, nationality: str):
+        super().__init__(first_name, last_name, age, gender, nationality)
         self.level = level
 
 class ClubStaff(Person):
-    def __init__(self, first_name, last_name, age, gender, role, team):
-        super().__init__(first_name, last_name, age, gender)
+    def __init__(self, first_name: str, last_name: str, age: int, gender: str, role: str, team: Team, nationality: str):
+        super().__init__(first_name, last_name, age, gender, nationality)
         self.role = role
         self.team = team
 
@@ -283,32 +284,33 @@ class PlayerManager:
     def __init__(self):
         self.players = []
 
-    def add_player(self, player):
+    def add_player(self, player: Player):
         self.players.append(player)
 
-    def remove_player(self, player):
+    def remove_player(self, player: Player):
         self.players.remove(player)
 
-    def find_player_by_uuid(self, player_uuid):
+    def find_player_by_uuid(self, player_uuid: uuid.UUID) -> Player | None:
+        player: Player
         for player in self.players:
             if str(player.uuid) == str(player_uuid):
                 return player
         return None
 
-    def find_players_by_name(self, name):
+    def find_players_by_name(self, name: str):
         return [player for player in self.players if player.name == name]
 
-    def find_players_by_age_range(self, min_age, max_age):
+    def find_players_by_age_range(self, min_age : int, max_age: int):
         return [player for player in self.players if min_age <= player.age <= max_age]
 
-    def find_players_by_gender(self, gender):
+    def find_players_by_gender(self, gender: str):
         return [player for player in self.players if player.gender == gender]
 
     def print_players(self):
         for player in self.players:
             print(player.uuid)
 
-    def create_player(self, first_name, last_name, age, gender, nationality, position, team):
+    def create_player(self, first_name: str, last_name:str , age: int, gender:str, nationality:str, position:str, team) -> Player:
         player = Player(first_name, last_name, age, gender, nationality, position, team)
         self.players.append(player)
         return player

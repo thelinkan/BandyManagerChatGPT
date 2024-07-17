@@ -5,16 +5,16 @@ from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY,FONTSIZE_LARGE
 from constants import TABLE_HEADER_COLOR, TABLE_ROW_ODD_COLOR, TABLE_ROW_EVEN_COLOR
 from guielements import font, medium_font, small_font,very_small_font ,very_small_bold_font , button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
-from guielements import home_button, inbox_button, newspaper_button, senior_squad_button, tactics_button, training_button, schedule_button, competition_button
+from guielements import home_button, inbox_button, media_button, senior_squad_button, tactics_button, training_button, schedule_button, competition_button
 from guielements import u19_squad_button,forward_time_button, save_game_button, quit_game_button
 from miscfunctions import get_club_from_team, draw_calendar, yesterday
 from graphicscode.jersey import draw_jersey
 from graphicscode.arrows import draw_arrow_left, draw_arrow_right, draw_arrow_up, draw_arrow_down
 
+from screens.media import draw_media
 from debug_functions import print_yesterdays_results
 
-from screens.screensleague import draw_league_table, draw_schedule
-
+from screens.screensleague import draw_league, draw_schedule
 
 pygame.init()
 
@@ -534,7 +534,7 @@ def draw_game_mainscreen(game):
 
     home_button.draw(screen)
     inbox_button.draw(screen)
-    newspaper_button.draw(screen)
+    media_button.draw(screen)
     senior_squad_button.draw(screen)
     tactics_button.draw(screen)
     training_button.draw(screen)
@@ -549,6 +549,15 @@ def draw_game_mainscreen(game):
 
     leagues = game.get_leagues_for_team(manager_team_name)
 
+    if(game.inspected_league is not None):
+        inspected_league = game.inspected_league
+    else:
+        inspected_league = leagues[0].name
+
+    #print(f"League 0: {leagues[0].name}")
+    #print(f"Inspected League - Game: {game.inspected_league}")
+    #print(f"Inspected League: {inspected_league}")
+
     if (game.game_page == "home"):
         rectlist_1 = draw_home(game,manager_team_name)
     if (game.game_page == "player_list"):
@@ -560,11 +569,15 @@ def draw_game_mainscreen(game):
         rectlist_1 = draw_squad(game,team_viewed)
     if (game.game_page == "tactics"):
         rectlist_1, rectlist_2 = draw_tactics(game,manager_team)
+    if (game.game_page == "media"):
+        rectlist_1 = draw_media(game)
     if (game.game_page == "schedule"):
-        rectlist_1 = draw_schedule(game,screen, leagues[0].name, manager_team)
+        print(f"Inspected League again: {inspected_league}")
+        rectlist_1, rectlist_2 = draw_schedule(game,screen, inspected_league, manager_team)
     if (game.game_page == "competition"):
-        league_table_surface, rectlist_1 = draw_league_table(game, manager_team)
-        screen.blit(league_table_surface,(140,110))
+        rectlist_1, rectlist_2 = draw_league(game,screen, manager_team)
+        #league_table_surface, rectlist_1 = draw_league_table(game, manager_team)
+        #screen.blit(league_table_surface,(140,110))
     if (game.game_page == "player_list_u19"):
         rectlist_1 = draw_squad(game,manager_u19team)
     # Update display

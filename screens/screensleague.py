@@ -5,7 +5,28 @@ from constants import TABLE_HEADER_COLOR, TABLE_ROW_ODD_COLOR, TABLE_ROW_EVEN_CO
 from guielements import font, medium_font, small_font,very_small_font ,very_small_bold_font , button_width, button_height, button_x, button_spacing
 from miscfunctions import get_num_rounds
 
-def draw_league_table(game, highlighted_team):
+from game import Game
+from league import League
+from team import Team
+
+def draw_league(game: Game,screen: pygame.surface.Surface, highlighted_team: Team):
+    navigation_rects = []
+    league_table_surface, rectlist_1 = draw_league_table(game, highlighted_team)
+    screen.blit(league_table_surface,(140,110))    
+
+    buttons_surface,rectlist_2 = draw_competition_buttons()
+    screen.blit(buttons_surface,(890,150))
+
+    if(game.game_sub_page == "chooseleague"):
+        choice_offset = (250,75)
+        border = (2,2)
+        choice_surface, rectlist_1, rectlist_2 = choose_league(game,choice_offset,border)
+        screen.blit(choice_surface,choice_offset)
+
+
+    return rectlist_1, rectlist_2
+
+def draw_league_table(game: Game, highlighted_team: Team):
     selected_league = game.inspected_league
     league = game.return_league_by_name(selected_league)
 
@@ -147,9 +168,11 @@ def draw_league_table(game, highlighted_team):
 
         league_table_surface.blit(row_surface, row_rect)
 
+
+
     return league_table_surface,team_rects
 
-def draw_schedule_page(game, screen, selected_league, highlighted_team,page):
+def draw_schedule_page(game: Game, selected_league, highlighted_team,page):
     league = game.return_league_by_name(selected_league)
     num_teams = league.num_teams
     num_rounds = league.num_rounds
@@ -158,13 +181,13 @@ def draw_schedule_page(game, screen, selected_league, highlighted_team,page):
 
     rounds_per_page,num_pages = get_num_rounds(num_teams,num_rounds)
 
-    schedule_surface = pygame.Surface((350,600), pygame.SRCALPHA)
+    schedule_surface = pygame.Surface((350,560), pygame.SRCALPHA)
     schedule_surface.fill(WHITE)
-    y=10
-    text = medium_font.render(selected_league, True, BLACK)
-    text_rect = pygame.Rect(10, y,200, 20)
-    schedule_surface.blit(text, text_rect)
-
+    #y=10
+    #text = medium_font.render(selected_league, True, BLACK)
+    #text_rect = pygame.Rect(10, y,200, 20)
+    #schedule_surface.blit(text, text_rect)
+    y = -20
     matches_league = game.match_manager.get_matches_by_league(selected_league)
 
     if len(matches_league) > 0:
@@ -204,8 +227,9 @@ def draw_schedule_page(game, screen, selected_league, highlighted_team,page):
     return border_surface
 
 
-def draw_schedule(game, screen, selected_league, highlighted_team):
-    league = game.return_league_by_name(selected_league)
+def draw_schedule(game: Game, screen: pygame.surface.Surface, selected_league: str, highlighted_team):
+    league: League = game.return_league_by_name(selected_league)
+    #print(f"Selected_league: {select_league}")
     num_teams = league.num_teams
     num_rounds = league.num_rounds
 
@@ -220,15 +244,23 @@ def draw_schedule(game, screen, selected_league, highlighted_team):
     #rounds_per_page = 28//(match_per_round+2)
     #num_pages = -(-num_rounds//rounds_per_page)
 
+    text = medium_font.render(selected_league, True, BLACK)
+    text_rect = pygame.Rect(160, 120,200, 20)
+    screen.blit(text, text_rect)
+
+
     if game.start_page < 1:
         game.start_page = 1
     if game.start_page >= num_pages:
         game.start_page = num_pages - 1
 
-    schedule_surface = draw_schedule_page(game, screen, selected_league, highlighted_team,game.start_page)
-    screen.blit(schedule_surface,(150,110))
-    schedule_surface = draw_schedule_page(game, screen, selected_league, highlighted_team,game.start_page +1)
-    screen.blit(schedule_surface,(520,110))
+    schedule_surface = draw_schedule_page(game, selected_league, highlighted_team,game.start_page)
+    screen.blit(schedule_surface,(150,150))
+    schedule_surface = draw_schedule_page(game, selected_league, highlighted_team,game.start_page +1)
+    screen.blit(schedule_surface,(520,150))
+
+    buttons_surface,buttons_rect = draw_competition_buttons()
+    screen.blit(buttons_surface,(890,150))
 
     # Define button positions and text
     x1, x2, y = 40, 1000, 700
@@ -244,8 +276,156 @@ def draw_schedule(game, screen, selected_league, highlighted_team):
     screen.blit(prev_text, prev_rect)
     screen.blit(next_text, next_rect)
 
-    return navigation_rects
+    rectslist_1 = navigation_rects
+    rectslist_2 = buttons_rect
+    if(game.game_sub_page == "chooseleague"):
+        choice_offset = (250,75)
+        border = (2,2)
+        choice_surface, rectslist_1, rectslist_2 = choose_league(game,choice_offset,border)
+        screen.blit(choice_surface,choice_offset)
+
+    return rectslist_1, rectslist_2
 
 
+def draw_competition_buttons():
+    buttons_surface = pygame.Surface((250,560), pygame.SRCALPHA)
+    buttons_surface.fill(WHITE)
 
+    button_rects = []
+    button_surface = pygame.Surface((250,30), pygame.SRCALPHA)
+    #button_surface.fill((90,190,90))
+    button_rect = pygame.Rect(0, 0, 250, 30)
+    pygame.draw.rect(button_surface, (200,200,200), button_rect)
+    button_text = small_font.render("Choose League", True, BLACK)
+    button_text_rect = button_text.get_rect(center=button_rect.center)
+    
+    button_surface.blit(button_text,button_text_rect)
+    
+    buttons_surface.blit(button_surface,(0,0))
+    button_rects.append(button_rect)
+    
 
+    return buttons_surface, button_rects
+
+def choose_league(game: Game, choice_offset: tuple[int,int], border: int) -> tuple[pygame.surface.Surface, list]: 
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos_on_choice = mouse_pos[0] - choice_offset[0], mouse_pos[1] - choice_offset[1]
+
+    country_offset = (10,10)
+    league_offset = (360,10)
+
+    choice_surface = pygame.Surface((750,600), pygame.SRCALPHA)
+    choice_rect = choice_surface.get_rect()
+    #if(choice_rect.collidepoint(mouse_pos_on_choice)):
+    #    choice_surface.fill((200,255,255))
+    #else:
+    choice_surface.fill(WHITE)
+                                    
+    border_surface = pygame.Surface((choice_surface.get_width() + border[0]*2, choice_surface.get_height() + border[1]*2))
+    border_surface.fill(BLACK)
+    border_surface.blit(choice_surface, border)
+
+    country_surface, country_rects = select_country(game, choice_offset,border,country_offset)
+    border_surface.blit(country_surface,country_offset)
+    league_rects = []
+    if game.selected_country_index>0:
+        league_surface, league_rects = select_league(game, choice_offset,border, league_offset)
+        border_surface.blit(league_surface,league_offset)
+
+    return border_surface, country_rects, league_rects
+
+def select_country(game: Game, choice_offset: tuple[int,int] ,border: tuple[int,int] , country_offset: tuple[int,int] ):
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos_on_country = mouse_pos[0] - choice_offset[0] - border[0] - country_offset[0], mouse_pos[1] - choice_offset[1] - border[1] - country_offset[1]
+
+    country_surface = pygame.Surface((300,580), pygame.SRCALPHA)
+    y=0
+    text_choose = medium_font.render("Choose country",False, BLACK)
+    country_surface.blit(text_choose, (0, y))
+    y += 20
+
+    countries = game.return_countries_with_leagues()
+    country_rects = []
+    country_num=1
+
+    for country in countries:
+        flag = game.return_countryflag(country.return_name())
+        text = small_font.render(country.return_name(), True, BLACK)
+        combined_surf = pygame.Surface((130, max(flag.get_height(), text.get_height())))
+        if country_num == game.selected_country_index:
+            combined_surf.fill((200,200,200))
+        else:
+            combined_surf.fill(WHITE)
+        combined_surf.blit(flag, (0, 0))
+        combined_surf.blit(text, (flag.get_width() + 5, 2))
+        rect = combined_surf.get_rect()
+        rect.topleft = (5, y)
+        if rect.collidepoint(mouse_pos_on_country):
+            combined_surf.fill(GRAY)
+            combined_surf.blit(flag, (0, 0))
+            combined_surf.blit(text, (flag.get_width() + 5, 2))
+        country_surface.blit(combined_surf, rect)
+        country_rects.append(rect)
+        y += max(flag.get_height(), text.get_height()) + 10
+        country_num+=1
+
+    text = small_font.render("Cancel", True, BLACK)
+    combined_surf = pygame.Surface((130, text.get_height()))
+    combined_surf.fill(WHITE)
+    combined_surf.blit(text, (0, 0))
+    rect = combined_surf.get_rect()
+    rect.topleft = (25, 555)
+    if rect.collidepoint(mouse_pos_on_country):
+        combined_surf.fill(GRAY)
+        combined_surf.blit(text, (0, 0))
+    country_surface.blit(combined_surf, rect)
+    country_rects.insert(0,rect)
+
+    return country_surface, country_rects
+
+def select_league(game: Game, choice_offset: tuple[int,int] ,border: tuple[int,int], league_offset: tuple[int,int] ):
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos_on_league = mouse_pos[0] - choice_offset[0] - border[0] - league_offset[0], mouse_pos[1] - choice_offset[1] - border[1] - league_offset[1]
+
+    league_surface = pygame.Surface((300,580), pygame.SRCALPHA)
+    y=0
+    text_choose = medium_font.render("Choose league",False, BLACK)
+    league_surface.blit(text_choose, (0, y))
+    y += 20
+
+    countries = game.return_countries_with_leagues()
+    selected_country = countries[game.selected_country_index-1].return_name()
+    leagues = game.return_leagues_in_country(selected_country)
+    league_rects = []
+    for i, league in enumerate(leagues):
+        #print(f"{i} {league.name}")
+        text = small_font.render(league.name,False, BLACK)
+        combined_surf = pygame.Surface((130,text.get_height()))
+        if i+1 == game.selected_league_index:
+            combined_surf.fill((200,200,200))
+        else:
+            combined_surf.fill(WHITE)
+        combined_surf.blit(text, (0, 0))
+        rect = combined_surf.get_rect()
+        rect.topleft = (0, y)
+        if rect.collidepoint(mouse_pos_on_league):
+            combined_surf.fill(GRAY)
+            combined_surf.blit(text, (0, 0))
+        league_surface.blit(combined_surf, rect)
+        league_rects.append(rect)
+        y += text.get_height() + 10
+        
+    text = small_font.render("OK", True, BLACK)
+    combined_surf = pygame.Surface((130, text.get_height()))
+    combined_surf.fill(WHITE)
+    combined_surf.blit(text, (0, 0))
+    rect = combined_surf.get_rect()
+    rect.topleft = (25, 555)
+    if rect.collidepoint(mouse_pos_on_league):
+        combined_surf.fill(GRAY)
+        combined_surf.blit(text, (0, 0))
+    league_surface.blit(combined_surf, rect)
+    league_rects.insert(0,rect)
+    
+
+    return league_surface, league_rects
