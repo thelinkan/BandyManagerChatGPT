@@ -250,3 +250,37 @@ def get_num_rounds(num_teams,num_rounds):
     num_pages = -(-num_rounds//rounds_per_page)
 
     return rounds_per_page,num_pages    
+
+def get_weighted_random_number(weighted_numbers):
+    numbers, weights = zip(*weighted_numbers)
+    return random.choices(numbers, weights=weights, k=1)[0]
+
+def randomize_face():
+    face_shape_chance = [(1,20),(2,10),(3,50)]
+    skin_tone_chance = [(0,10),(1,40),(2,40),(3,20)]
+    hair_shape_chance = [(1,20),(2,10)]
+    hair_color_chance = [(0,10),(1,40),(2,40)]
+    eye_shape_chance = [(1,20),(2,10)]
+    eye_color_chance = [(0,50),(1,40),(2,10)]
+
+    face_shape = get_weighted_random_number(face_shape_chance)
+    skin_tone = get_weighted_random_number(skin_tone_chance)
+    hair_shape = get_weighted_random_number(hair_shape_chance)
+    hair_color = get_weighted_random_number(hair_color_chance)
+    eye_shape = get_weighted_random_number(eye_shape_chance)
+    eye_color = get_weighted_random_number(eye_color_chance)
+    eye_width = random.randint(30,55)
+
+    return {
+    'shape': face_shape,
+    'skin_tone': skin_tone,
+    'hair': {
+        'shape': hair_shape,
+        'color': hair_color
+    },
+    'eyes': {
+        'shape': eye_shape,
+        'width': eye_width,
+        'color': eye_color
+    }
+    }
