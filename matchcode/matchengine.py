@@ -12,6 +12,7 @@ class MatchEngine:
         current_time = time.time()
         elapsed_time = current_time - self.last_time
         game_time_delta = elapsed_time * self.time_scaling_factor
+        print(f"{game_time_delta=}")
         game_time_delta = 2
 
         #print(game_time_delta)

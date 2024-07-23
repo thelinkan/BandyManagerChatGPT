@@ -5,25 +5,32 @@ from numpy import random as rand
 from loggingbm import logger
 
 class Match:
-    def __init__(self, home_team, away_team, year, month, day):
+    def __init__(self, home_team, away_team, year: int, month: int, day: int):
         self.home_team = home_team
         self.away_team = away_team
         self.year = year
         self.month = month
         self.day = day
-        self.home_goals = None
-        self.away_goals = None
-        self.played = False
-        self.is_over = False
-        self.time_since_last_goal = 0
+        self.home_goals: int|None = None
+        self.away_goals: int|None = None
+        self.played: bool = False
+        self.is_over: bool = False
+        #self.time_since_last_goal: int = 0
+        self.idle_time_left: int = 0
+        self.game_state: int = 0
+        '''
+            0 = Standard state
+            1 = Corner to home team
+            2 = Corner to away team
+        '''
         self.events = []
 
-    def play(self, manager_team, is_playoff):
+    def play(self, manager_team: str, is_playoff: bool):
         self.home_goals = 0
         self.away_goals = 0
         position_list = ["goalkeeper","libero","leftdef","rightdef","lefthalf","righthalf","leftmid","centralmid","rightmid","leftattack","rightattack","sub1","sub2","sub3","sub4","sub5"]
-        off_weight = [2,2,3,3,8,8,12,12,12,19,19]
-        def_weight = [20,16,14,14,10,10,4,4,4,2,2]
+        off_weight: list[int] = [2,2,3,3,8,8,12,12,12,19,19]
+        def_weight: list[int] = [20,16,14,14,10,10,4,4,4,2,2]
         home_team_players = self.home_team.get_players()
         away_team_players = self.away_team.get_players()
 
@@ -73,7 +80,7 @@ class Match:
 
         #print(f"  --  in play -- {self.played}: {self.home_goals} - {self.away_goals}")
 
-    def add_goal_event(self, team,time):
+    def add_goal_event(self, team,time, goal_type: str):
         #print(team.players)
         player_list = list(team.players.values())
         goal_scorer = random.choice(player_list)
@@ -91,7 +98,18 @@ class Match:
             "team": team.name,
             "goal_scorer": goal_scorer,
             "assisting_player": assisting_player if assisting_player else None,
-            "goal_type": "Play goal"
+            "goal_type": goal_type
+        }
+
+        self.events.append(event)
+
+    def add_corner_event(self, team,time):
+
+
+        event = {
+            "type": "corner",
+            "time": time,
+            "team": team.name,
         }
 
         self.events.append(event)
@@ -127,17 +145,51 @@ class Match:
             away_off_total += composite_values[0] * off_weight[i]
             away_def_total += composite_values[1] * def_weight[i]
 
-        self.time_since_last_goal += game_time_delta
-        if (self.time_since_last_goal>10 and random.randint(1, 1000) <= 5):
-            self.time_since_last_goal = 0
-            home_goal_chance = random.randint(1,int(20*home_off_total/away_def_total))
-            away_goal_chance = random.randint(1,int(20*away_off_total/home_def_total))
-            if away_goal_chance > home_goal_chance:
-                self.away_goals += 1
-                self.add_goal_event(self.away_team,time)
-            else:
-                self.home_goals += 1
-                self.add_goal_event(self.home_team,time)
+        if self.idle_time_left > 0:
+            self.idle_time_left -= game_time_delta
+            if self.idle_time_left < 0:
+                self.idle_time_left = 0
+
+
+
+        if (self.idle_time_left==0):
+            event_number = random.randint(1, 1000)
+
+            if (self.game_state == 0 and event_number<5):
+                self.idle_time_left = rand.randint(6,15)
+                home_goal_chance = random.randint(1,int(20*home_off_total/away_def_total))
+                away_goal_chance = random.randint(1,int(20*away_off_total/home_def_total))
+                if away_goal_chance > home_goal_chance:
+                    self.away_goals += 1
+                    self.add_goal_event(self.away_team,time, "Play goal")
+                else:
+                    self.home_goals += 1
+                    self.add_goal_event(self.home_team,time, "Play goal")
+            
+            elif (self.game_state == 0 and event_number<15):
+                self.idle_time_left = rand.randint(6,15)
+                home_corner_chance = random.randint(1,int(20*home_off_total/away_def_total))
+                away_corner_chance = random.randint(1,int(20*away_off_total/home_def_total))
+                if away_corner_chance > home_corner_chance:
+                    self.game_state = 2
+                    self.add_corner_event(self.away_team,time)
+                else:
+                    self.game_state = 1
+                    self.add_corner_event(self.home_team,time)
+
+            elif (self.game_state == 1):
+                self.game_state = 0
+                if(event_number<300):
+                    self.home_goals += 1
+                    self.add_goal_event(self.home_team,time, "Corner goal")
+
+            elif (self.game_state == 2):
+                self.game_state = 0
+                if(event_number<300):
+                    self.away_goals += 1
+                    self.add_goal_event(self.away_team,time, "Corner goal")
+
+
 
     def winner(self):
         if self.played and self.home_goals is not None and self.away_goals is not None:
@@ -147,7 +199,7 @@ class Match:
                 return self.away_team
         return None
 
-    def load_match(self, home_goals, away_goals,played):
+    def load_match(self, home_goals: int, away_goals: int,played: bool):
         self.home_goals = home_goals
         self.away_goals = away_goals
         self.played = played

@@ -159,6 +159,11 @@ def draw_events(match_to_view):
             else:
                 text = event_font.render(f"{event_time}: {goal_scorer.first_name} {goal_scorer.last_name} score for {goal_team}.", True, BLACK)
             text_rect = text.get_rect(left=row_rect.left + 10, centery = row_rect.centery)
+        elif event_type == "corner":
+            corner_team = event["team"]
+            text = event_font.render(f"{event_time}: {event_type} for {corner_team}.", True, BLACK)
+            text_rect = text.get_rect(left=row_rect.left + 10, centery = row_rect.centery)
+            
         else:
             text = event_font.render(f"{event_time}: {event_type}.", True, BLACK)
             text_rect = text.get_rect(left=row_rect.left + 10, centery = row_rect.centery)
