@@ -30,15 +30,20 @@ class Face:
         skin_tones = SKIN_TONES[self.skin_tone]
         match self.shape:
             case 1:
+                pygame.draw.ellipse(face_surface, skin_tones[1], [50, 53, 200, 200], 0)
                 pygame.draw.ellipse(face_surface, skin_tones[0], [50, 50, 200, 200], 0)
             case 2:
+                pygame.draw.ellipse(face_surface, skin_tones[1], [50, 33, 200, 250], 0)
                 pygame.draw.ellipse(face_surface, skin_tones[0], [50, 30, 200, 250], 0)
             case 3:
+                pygame.draw.ellipse(face_surface, skin_tones[1], [50, 53, 200, 200], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[1], [110, 203, 75, 75], 0)
                 pygame.draw.ellipse(face_surface, skin_tones[0], [50, 50, 200, 200], 0)
                 pygame.draw.ellipse(face_surface, skin_tones[0], [110, 200, 75, 75], 0)
             case _:
                 pygame.draw.ellipse(face_surface, skin_tones[0], [50, 50, 200, 200], 0)
         face_surface = self.draw_eyes(face_surface)
+        face_surface = self.draw_eyebrows(face_surface)
         face_surface = self.draw_hair(face_surface)
         face_surface = self.draw_nose(face_surface)
         face_surface = self.draw_mouth(face_surface)
@@ -133,12 +138,28 @@ class Face:
                 pygame.draw.ellipse(face_surface, eye_color, [140+self.eyes.get("width"), 105+vertical_offset, 20, 30], 0)
                 pygame.draw.ellipse(face_surface, BLACK, [145+self.eyes.get("width"), 115+vertical_offset, 10, 10], 0)
             case 3:
-                pygame.draw.ellipse(face_surface, WHITE, [125-self.eyes.get("width"), 100+vertical_offset, 40, 30], 0)
-                pygame.draw.ellipse(face_surface, eye_color, [130-self.eyes.get("width"), 105+vertical_offset, 30, 20], 0)
-                pygame.draw.ellipse(face_surface, BLACK, [140-self.eyes.get("width"), 110+vertical_offset, 10, 10], 0)
-                pygame.draw.ellipse(face_surface, WHITE, [135+self.eyes.get("width"), 100+vertical_offset, 40, 30], 0)
-                pygame.draw.ellipse(face_surface, eye_color, [140+self.eyes.get("width"), 105+vertical_offset, 30, 20], 0)
-                pygame.draw.ellipse(face_surface, BLACK, [150+self.eyes.get("width"), 110+vertical_offset, 10, 10], 0)
+                pygame.draw.ellipse(face_surface, WHITE, [130-self.eyes.get("width"), 100+vertical_offset, 40, 30], 0)
+                pygame.draw.ellipse(face_surface, eye_color, [140-self.eyes.get("width"), 105+vertical_offset, 20, 20], 0)
+                pygame.draw.ellipse(face_surface, BLACK, [145-self.eyes.get("width"), 110+vertical_offset, 10, 10], 0)
+                pygame.draw.ellipse(face_surface, WHITE, [130+self.eyes.get("width"), 100+vertical_offset, 40, 30], 0)
+                pygame.draw.ellipse(face_surface, eye_color, [140+self.eyes.get("width"), 105+vertical_offset, 20, 20], 0)
+                pygame.draw.ellipse(face_surface, BLACK, [145+self.eyes.get("width"), 110+vertical_offset, 10, 10], 0)
+        return face_surface
+
+    def draw_eyebrows(self, face_surface: pygame.Surface) -> pygame.Surface:
+        hair_colors = HAIR_COLORS[self.hair.get("color")]
+        match self.shape:
+            case 1:
+                vertical_offset=20
+            case 2:
+                vertical_offset=0       
+            case _:
+                vertical_offset=0
+
+        pygame.draw.arc(face_surface, hair_colors[0], [125-self.eyes.get("width"), 92+vertical_offset,50,25], 2*pi, pi, width=5)
+        pygame.draw.arc(face_surface, hair_colors[0], [125+self.eyes.get("width"), 92+vertical_offset,50,25], 2*pi, pi, width=5)
+
+
         return face_surface
 
     def draw_nose(self, face_surface: pygame.Surface) -> pygame.Surface:
@@ -156,7 +177,7 @@ class Face:
                 vertical_offset=0
 
         mouth_color = MOUTH_COLORS[0]
-        pygame.draw.arc(face_surface, mouth_color, [140,210+vertical_offset,25,25], pi, pi/3, width=3)
+        pygame.draw.arc(face_surface, mouth_color, [130,210+vertical_offset,50,25], pi, pi/10, width=5)
         return face_surface
 
     def to_dict(self) -> dict:

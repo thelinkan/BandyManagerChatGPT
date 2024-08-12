@@ -260,7 +260,7 @@ def randomize_face():
     skin_tone_chance = [(0,10),(1,40),(2,40),(3,20)]
     hair_shape_chance = [(1,20),(2,10)]
     hair_color_chance = [(0,10),(1,40),(2,40)]
-    eye_shape_chance = [(1,20),(2,10)]
+    eye_shape_chance = [(1,20),(2,10),(3,20)]
     eye_color_chance = [(0,50),(1,40),(2,10)]
 
     face_shape = get_weighted_random_number(face_shape_chance)

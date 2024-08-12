@@ -13,12 +13,6 @@ pygame.init()
 screen = pygame.display.set_mode((400, 400))
 
 
-hair: dict = {'shape': 1, 'color': 2}
-eyes: dict = {'shape': 2, 'width': 35, 'color': 1}
-
-
-#face = Face(face_shape,3,hair, eyes)
-
 face = Face(randomize_face())
 
 
