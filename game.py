@@ -211,7 +211,7 @@ class Game:
         #print(game_data['club_data'])
         players_data = game_data.get('players_data', [])
         for player_load in players_data:
-            self.player_manager.load_player(player_load["first_name"],player_load["last_name"],player_load["age"],player_load["gender"],player_load["nationality"],player_load["position"],player_load["team"],player_load["uuid"])
+            self.player_manager.load_player(player_load["first_name"],player_load["last_name"],player_load["age"],player_load["gender"],player_load["nationality"],player_load["position"],player_load["team"],player_load["uuid"],player_load["face"])
             player = self.player_manager.find_player_by_uuid(player_load["uuid"])
             attributes = player_load["attributes"]
             for attribute_name, attribute_data in attributes.items():

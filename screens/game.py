@@ -97,7 +97,7 @@ def draw_playerlist(game,team, playerlist_offset):
     return playerlist_surface,player_rects,hover_player_uuid, selected_player_uuid
 
 def draw_player(game,player_uuid):
-    player_surface = pygame.Surface((250,600), pygame.SRCALPHA)
+    player_surface = pygame.Surface((550,600), pygame.SRCALPHA)
     player = game.player_manager.find_player_by_uuid(player_uuid)
     #print(player_uuid)
     text = small_font.render(f"{player.first_name} {player.last_name}", True, BLACK)
@@ -190,6 +190,10 @@ def draw_player(game,player_uuid):
     player_surface.blit(text,text_rect)
     i += 1
 
+    drawnface = player.face.draw_face()
+    face_rect = pygame.Rect(180,100,300,300)
+    player_surface.blit(drawnface,face_rect)
+    
     return player_surface
 
 def draw_next_match(game, team):

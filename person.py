@@ -2,6 +2,8 @@ import uuid
 import random
 import weakref
 from attribute import Attribute
+from graphicscode.face import Face
+from miscfunctions import randomize_face
 #from team import Team
 
 class Person:
@@ -11,6 +13,7 @@ class Person:
         self.age = age
         self.gender = gender
         self.nationality = nationality
+        self.face = Face(randomize_face())
 
 class Player(Person):
     def __init__(self, first_name, last_name, age, gender, nationality, position, team):
@@ -228,7 +231,8 @@ class Player(Person):
             'nationality': self.nationality,
             'position': self.position,
             'team': self.team,
-            'attributes': attributes_dict
+            'attributes': attributes_dict,
+            'face': self.face.to_dict()
             #'teams': [team.name for team in self.team_ref]  # Include only the team names
         }
         return player_dict
@@ -313,9 +317,11 @@ class PlayerManager:
         self.players.append(player)
         return player
 
-    def load_player(self, first_name, last_name, age, gender, nationality, position, team, uuidload):
+    def load_player(self, first_name, last_name, age, gender, nationality, position, team, uuidload,face):
         player = Player(first_name, last_name, age, gender, nationality, position, team)
         player.uuid = uuid.UUID(uuidload)
+        print(face)
+        player.face = Face(face)
         self.players.append(player)
         return player
 

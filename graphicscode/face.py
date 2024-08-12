@@ -180,9 +180,13 @@ class Face:
                 pygame.draw.ellipse(face_surface, WHITE, [130-self.eyes.get("width"), 100+vertical_offset, 40, 30], 0)
                 pygame.draw.ellipse(face_surface, eye_color, [140-self.eyes.get("width"), 105+vertical_offset, 20, 20], 0)
                 pygame.draw.ellipse(face_surface, BLACK, [145-self.eyes.get("width"), 110+vertical_offset, 10, 10], 0)
+                pygame.draw.arc(face_surface, skin_tones[1], [130-self.eyes.get("width"),100+vertical_offset,45,25], 0, pi, width=5)
+                pygame.draw.arc(face_surface, skin_tones[0], [130-self.eyes.get("width"),117+vertical_offset,40,15], pi, 0, width=3)
                 pygame.draw.ellipse(face_surface, WHITE, [130+self.eyes.get("width"), 100+vertical_offset, 40, 30], 0)
                 pygame.draw.ellipse(face_surface, eye_color, [140+self.eyes.get("width"), 105+vertical_offset, 20, 20], 0)
                 pygame.draw.ellipse(face_surface, BLACK, [145+self.eyes.get("width"), 110+vertical_offset, 10, 10], 0)
+                pygame.draw.arc(face_surface, skin_tones[1], [130+self.eyes.get("width"),100+vertical_offset,45,25], 0, pi, width=5)
+                pygame.draw.arc(face_surface, skin_tones[0], [130-self.eyes.get("width"),117+vertical_offset,40,15], pi, 0, width=3)
         return face_surface
 
     def draw_eyebrows(self, face_surface: pygame.Surface) -> pygame.Surface:
@@ -194,9 +198,14 @@ class Face:
                 vertical_offset=0       
             case _:
                 vertical_offset=0
+        match self.eyes.get("brow"):
+            case 1:
+                pygame.draw.arc(face_surface, hair_colors[0], [125-self.eyes.get("width"), 92+vertical_offset,50,25], 2*pi, pi, width=5)
+                pygame.draw.arc(face_surface, hair_colors[0], [125+self.eyes.get("width"), 92+vertical_offset,50,25], 2*pi, pi, width=5)
+            case 2:
+                pygame.draw.arc(face_surface, hair_colors[1], [125-self.eyes.get("width"), 92+vertical_offset,50,25], 2*pi, pi, width=5)
+                pygame.draw.arc(face_surface, hair_colors[1], [125+self.eyes.get("width"), 92+vertical_offset,50,25], 2*pi, pi, width=5)
 
-        pygame.draw.arc(face_surface, hair_colors[0], [125-self.eyes.get("width"), 92+vertical_offset,50,25], 2*pi, pi, width=5)
-        pygame.draw.arc(face_surface, hair_colors[0], [125+self.eyes.get("width"), 92+vertical_offset,50,25], 2*pi, pi, width=5)
 
 
         return face_surface
@@ -227,6 +236,11 @@ class Face:
                 pygame.draw.arc(face_surface, mouth_color, [130,210+vertical_offset,45,25], pi, 0, width=6)
                 pygame.draw.arc(face_surface, mouth_color, [130,220+vertical_offset,25,15], 0, pi, width=6)
                 pygame.draw.arc(face_surface, mouth_color, [150,220+vertical_offset,25,15], 0, pi, width=6)
+            case 3:
+                pygame.draw.arc(face_surface, mouth_color, [120,210+vertical_offset,65,25], pi, 0, width=10)
+            case _:
+                pygame.draw.arc(face_surface, mouth_color, [130,210+vertical_offset,45,25], pi, 0, width=3)
+
         return face_surface
 
     def to_dict(self) -> dict:
@@ -240,7 +254,8 @@ class Face:
             'eyes': {
                 'shape': self.eyes.get('shape'),
                 'width': self.eyes.get('width'),
-                'color': self.eyes.get('color')
+                'color': self.eyes.get('color'),
+                'brow': self.eyes.get('brow')
             },
             'nose': self.nose,
             'mouth': {
