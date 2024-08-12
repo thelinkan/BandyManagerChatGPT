@@ -39,9 +39,9 @@ class Face:
                 pygame.draw.ellipse(face_surface, skin_tones[0], [50, 30, 200, 250], 0)
             case 3:
                 pygame.draw.ellipse(face_surface, skin_tones[1], [50, 53, 200, 200], 0)
-                pygame.draw.ellipse(face_surface, skin_tones[1], [110, 203, 75, 75], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[1], [110, 193, 75, 75], 0)
                 pygame.draw.ellipse(face_surface, skin_tones[0], [50, 50, 200, 200], 0)
-                pygame.draw.ellipse(face_surface, skin_tones[0], [110, 200, 75, 75], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[0], [110, 190, 75, 75], 0)
             case _:
                 pygame.draw.ellipse(face_surface, skin_tones[0], [50, 50, 200, 200], 0)
         face_surface = self.draw_eyes(face_surface)
@@ -77,6 +77,10 @@ class Face:
                                                         (55,90+vertical_offset),(45,110+vertical_offset),
                                                         (70,50+vertical_offset),(100,30+vertical_offset)])
                 pygame.draw.polygon(face_surface, hair_colors[1],[(145,25+vertical_offset),(190, 40+vertical_offset), (210, 60+vertical_offset)])
+                pygame.draw.polygon(face_surface, hair_colors[1],[(226,68+vertical_offset),(238, 89+vertical_offset), (235, 65+vertical_offset)])
+                pygame.draw.polygon(face_surface, hair_colors[1],[(130,42+vertical_offset),(143, 63+vertical_offset), (154, 46+vertical_offset), (144, 57+vertical_offset)])
+                pygame.draw.polygon(face_surface, hair_colors[1],[(171,55+vertical_offset),(190, 83+vertical_offset), (213, 73+vertical_offset), (195, 76+vertical_offset), (193, 59+vertical_offset), (182, 72+vertical_offset)])
+                pygame.draw.polygon(face_surface, hair_colors[1],[(90,67+vertical_offset),(86, 84+vertical_offset), (79, 77+vertical_offset), (70, 93+vertical_offset), (60, 90+vertical_offset), (80, 58+vertical_offset)])
             case 2:       
                 pygame.draw.polygon(face_surface, hair_colors[0], [(43,52+vertical_offset),
                                                         (54,50+vertical_offset),
@@ -135,6 +139,23 @@ class Face:
                                                         (52,68+vertical_offset),
                                                         (62,70+vertical_offset),
                                                         (50,50+vertical_offset)])
+                pygame.draw.polygon(face_surface, hair_colors[1], [
+                                                        (237,95+vertical_offset),
+                                                        (249,122+vertical_offset),
+                                                        (263,179+vertical_offset),
+                                                        (264,129+vertical_offset),
+                                                        (251,94+vertical_offset)])
+                pygame.draw.polygon(face_surface, hair_colors[1], [
+                                                        (112,39+vertical_offset),
+                                                        (174,22+vertical_offset),
+                                                        (214,51+vertical_offset),
+                                                        (171,36+vertical_offset),
+                                                        (168,53+vertical_offset),
+                                                        (157,34+vertical_offset),
+                                                        (147,56+vertical_offset),
+                                                        (140,39+vertical_offset)])
+                pygame.draw.polygon(face_surface, hair_colors[1],[(84,30+vertical_offset),(78, 43+vertical_offset), (106, 22+vertical_offset)])
+                pygame.draw.polygon(face_surface, hair_colors[1],[(54,117+vertical_offset),(53, 156+vertical_offset), (60, 123+vertical_offset)])
             case _:
                 pygame.draw.polygon(face_surface, hair_colors[0], [(150,20+vertical_offset),(200,30+vertical_offset),(230,50+vertical_offset),(245,80+vertical_offset),(255,90+vertical_offset),
                                                         (240,95+vertical_offset),(230,100+vertical_offset),(220,80+vertical_offset),(190,95+vertical_offset),(160,55+vertical_offset),
@@ -205,6 +226,12 @@ class Face:
             case 2:
                 pygame.draw.arc(face_surface, hair_colors[1], [125-self.eyes.get("width"), 92+vertical_offset,50,25], 2*pi, pi, width=5)
                 pygame.draw.arc(face_surface, hair_colors[1], [125+self.eyes.get("width"), 92+vertical_offset,50,25], 2*pi, pi, width=5)
+            case 3:
+                pygame.draw.arc(face_surface, hair_colors[0], [135-self.eyes.get("width"), 92+vertical_offset,40,15], 0.1, pi-0.1, width=5)
+                pygame.draw.arc(face_surface, hair_colors[0], [125+self.eyes.get("width"), 92+vertical_offset,40,15], 0.1, pi-0.1, width=5)
+            case 4:
+                pygame.draw.arc(face_surface, hair_colors[1], [135-self.eyes.get("width"), 92+vertical_offset,40,15], 0.1, pi-0.1, width=5)
+                pygame.draw.arc(face_surface, hair_colors[1], [125+self.eyes.get("width"), 92+vertical_offset,40,15], 0.1, pi-0.1, width=5)
 
 
 
@@ -212,11 +239,23 @@ class Face:
 
     def draw_nose(self, face_surface: pygame.Surface) -> pygame.Surface:
         skin_tones = SKIN_TONES[self.skin_tone]
-        pygame.draw.arc(face_surface, skin_tones[1], [160,130,25,55], pi, 3*pi/2, width=3)
-        pygame.draw.arc(face_surface, skin_tones[1], [120,130,25,55], 3*pi/2, 0, width=3)
-        pygame.draw.arc(face_surface, skin_tones[1], [130,175,45,15], 0, pi, width=3)
-        pygame.draw.ellipse(face_surface, skin_tones[1], [145,180,5,5], 0)
-        pygame.draw.ellipse(face_surface, skin_tones[1], [155,180,5,5], 0)
+        match self.shape:
+            case 1:        
+                pygame.draw.arc(face_surface, skin_tones[1], [160,130,25,55], pi, 3*pi/2, width=3)
+                pygame.draw.arc(face_surface, skin_tones[1], [120,130,25,55], 3*pi/2, 0, width=3)
+                pygame.draw.arc(face_surface, skin_tones[1], [130,175,45,15], 0, pi, width=3)
+                pygame.draw.ellipse(face_surface, skin_tones[1], [145,180,5,5], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[1], [155,180,5,5], 0)
+            case 2:
+                pygame.draw.arc(face_surface, skin_tones[1], [120,130,15,55], 3*pi/2, 0, width=3)
+                pygame.draw.arc(face_surface, skin_tones[1], [130,175,30,15], pi, 0, width=3)
+            case _:
+                pygame.draw.arc(face_surface, skin_tones[1], [160,130,25,55], pi, 3*pi/2, width=3)
+                pygame.draw.arc(face_surface, skin_tones[1], [120,130,25,55], 3*pi/2, 0, width=3)
+                pygame.draw.arc(face_surface, skin_tones[1], [130,175,45,15], 0, pi, width=3)
+                pygame.draw.ellipse(face_surface, skin_tones[1], [145,180,5,5], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[1], [155,180,5,5], 0)
+
         return face_surface
 
     def draw_mouth(self, face_surface: pygame.Surface) -> pygame.Surface:
@@ -229,7 +268,7 @@ class Face:
                 vertical_offset=0
 
         mouth_color = MOUTH_COLORS[self.hair.get("color")]
-        match self.eyes.get("shape"):
+        match self.mouth.get("shape"):
             case 1:
                 pygame.draw.arc(face_surface, mouth_color, [130,210+vertical_offset,45,25], pi, 0, width=3)
             case 2:
@@ -238,6 +277,10 @@ class Face:
                 pygame.draw.arc(face_surface, mouth_color, [150,220+vertical_offset,25,15], 0, pi, width=6)
             case 3:
                 pygame.draw.arc(face_surface, mouth_color, [120,210+vertical_offset,65,25], pi, 0, width=10)
+            case 4:
+                pygame.draw.arc(face_surface, WHITE, [120,210+vertical_offset,65,25], pi, 0, width=12)
+                pygame.draw.arc(face_surface, mouth_color, [120,220+vertical_offset,65,5], pi, 0, width=8)
+                pygame.draw.arc(face_surface, mouth_color, [120,215+vertical_offset,65,25], pi, 0, width=3)
             case _:
                 pygame.draw.arc(face_surface, mouth_color, [130,210+vertical_offset,45,25], pi, 0, width=3)
 
