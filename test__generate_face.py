@@ -31,7 +31,6 @@ while running:
     drawnface_rect = drawnface.get_rect()
     drawnface_rect.top = 60
     drawnface_rect.left = 65
-    
     screen.blit(drawnface,drawnface_rect)
   
     
@@ -42,7 +41,9 @@ while running:
             if event.key == pygame.K_SPACE:
                 face = Face(randomize_face())
                 print(face.to_dict())
-
+        elif event.type == pygame.MOUSEBUTTONUP:
+            pos = pygame.mouse.get_pos()
+            print(f"x= {pos[0]-65} -- y= {pos[1]-60}")
     # Keep the program running at a consistent speed
     pygame.display.flip()
     pygame.time.delay(10)
