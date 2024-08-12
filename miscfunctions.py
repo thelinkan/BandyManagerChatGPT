@@ -259,13 +259,14 @@ def randomize_face():
     face_shape_chance = [(1,20),(2,10),(3,50)]
     skin_tone_chance = [(0,10),(1,40),(2,40),(3,20)]
     hair_shape_chance = [(1,20),(2,10)]
-    hair_color_chance = [(0,10),(1,40),(2,40)]
+    hair_color_chance = [(0,10),(1,40),(2,40),(3,40)]
     eye_shape_chance = [(1,20),(2,10),(3,20)]
     eye_color_chance = [(0,50),(1,40),(2,10)]
     eye_brow_chance = [(0,50),(1,40),(2,60),(3,60)]
-    nose_chance = [(1,50),(2,50)]
+    nose_chance = [(1,50),(2,50),(3,50)]
     mouth_shape_chance = [(1,20),(2,10),(3,30),(4,30)]
     mouth_color_chance = [(0,50),(1,40),(2,10)]
+    ears_chance = [(1,20),(2,10)]
 
     face_shape = get_weighted_random_number(face_shape_chance)
     skin_tone = get_weighted_random_number(skin_tone_chance)
@@ -278,23 +279,25 @@ def randomize_face():
     nose = get_weighted_random_number(nose_chance)
     mouth_shape = get_weighted_random_number(mouth_shape_chance)
     mouth_color = get_weighted_random_number(mouth_color_chance)
+    ears = get_weighted_random_number(ears_chance)
 
     return {
-    'shape': face_shape,
-    'skin_tone': skin_tone,
-    'hair': {
-        'shape': hair_shape,
-        'color': hair_color
-    },
-    'eyes': {
-        'shape': eye_shape,
-        'width': eye_width,
-        'color': eye_color,
-        'brow': eye_brow
-    },
-    'nose': nose,
-    'mouth': {
-        'shape': mouth_shape,
-        'color': mouth_color
-    }
+        'shape': face_shape,
+        'skin_tone': skin_tone,
+        'hair': {
+            'shape': hair_shape,
+            'color': hair_color
+        },
+        'eyes': {
+            'shape': eye_shape,
+            'width': eye_width,
+            'color': eye_color,
+            'brow': eye_brow
+        },
+        'nose': nose,
+        'mouth': {
+            'shape': mouth_shape,
+            'color': mouth_color
+        },
+        'ears': ears
     }
