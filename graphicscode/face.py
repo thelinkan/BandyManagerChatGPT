@@ -163,11 +163,11 @@ class Face:
                                                         (51,81+vertical_offset),(60,61+vertical_offset),
                                                         (89,40+vertical_offset),(113,32+vertical_offset),
                                                         (134,28+vertical_offset),(164,30+vertical_offset),
-                                                        (194,35+vertical_offset),(209,35+vertical_offset),
-                                                        (225,38+vertical_offset),
-                                                        (222,59+vertical_offset),(237,70+vertical_offset),
-                                                        (258,74+vertical_offset),(259,98+vertical_offset),
-                                                        (247,129+vertical_offset),(236,129+vertical_offset),
+                                                        (194,35+vertical_offset),
+                                                        (225,43+vertical_offset),
+                                                        (233,59+vertical_offset),(237,70+vertical_offset),
+                                                        (241,74+vertical_offset),(246,98+vertical_offset),
+                                                        (247,133+vertical_offset),(236,133+vertical_offset),
                                                         (222,96+vertical_offset),(211,76+vertical_offset),
                                                         (190,73+vertical_offset),(155,74+vertical_offset),
                                                         (120,77+vertical_offset),(99,90+vertical_offset),
@@ -177,12 +177,40 @@ class Face:
                 #pygame.draw.polygon(face_surface, hair_colors[1],[(130,42+vertical_offset),(143, 63+vertical_offset), (154, 46+vertical_offset), (144, 57+vertical_offset)])
                 #pygame.draw.polygon(face_surface, hair_colors[1],[(171,55+vertical_offset),(190, 83+vertical_offset), (213, 73+vertical_offset), (195, 76+vertical_offset), (193, 59+vertical_offset), (182, 72+vertical_offset)])
                 #pygame.draw.polygon(face_surface, hair_colors[1],[(90,67+vertical_offset),(86, 84+vertical_offset), (79, 77+vertical_offset), (70, 93+vertical_offset), (60, 90+vertical_offset), (80, 58+vertical_offset)])
+            case 4:       
+                pygame.draw.polygon(face_surface, hair_colors[0], [(49,133+vertical_offset),
+                                                        (51,81+vertical_offset),(60,61+vertical_offset),
+
+                                                        (47,77+vertical_offset),(43,90+vertical_offset),(48,65+vertical_offset),
+
+                                                        (89,40+vertical_offset),
+                                                        (67,57+vertical_offset),(63,60+vertical_offset),(68,45+vertical_offset),
+
+                                                        (113,32+vertical_offset),
+                                                        (134,28+vertical_offset),(164,30+vertical_offset),
+                                                        (194,35+vertical_offset),
+                                                        (225,43+vertical_offset),
+                                                        (233,59+vertical_offset),(237,70+vertical_offset),
+                                                        (241,74+vertical_offset),(246,98+vertical_offset),
+                                                        (247,133+vertical_offset),(236,133+vertical_offset),
+                                                        (222,96+vertical_offset),(211,76+vertical_offset),
+                                                        (190,73+vertical_offset),(155,74+vertical_offset),
+                                                        (120,77+vertical_offset),(99,90+vertical_offset),
+                                                        (79,101+vertical_offset),(58,133+vertical_offset)])
             case _:
-                pygame.draw.polygon(face_surface, hair_colors[0], [(150,20+vertical_offset),(200,30+vertical_offset),(230,50+vertical_offset),(245,80+vertical_offset),(255,90+vertical_offset),
-                                                        (240,95+vertical_offset),(230,100+vertical_offset),(220,80+vertical_offset),(190,95+vertical_offset),(160,55+vertical_offset),
-                                                        (145,80+vertical_offset),(125,50+vertical_offset),(105,100+vertical_offset),(90,60+vertical_offset),(85,80+vertical_offset),
-                                                        (80,60+vertical_offset),(60,80+vertical_offset),(55,120+vertical_offset),(45,110+vertical_offset),(55,90+vertical_offset),
-                                                        (70,50+vertical_offset),(100,30+vertical_offset)])
+                pygame.draw.polygon(face_surface, hair_colors[0], [(49,133+vertical_offset),
+                                                        (51,81+vertical_offset),(60,61+vertical_offset),
+                                                        (89,40+vertical_offset),(113,32+vertical_offset),
+                                                        (134,28+vertical_offset),(164,30+vertical_offset),
+                                                        (194,35+vertical_offset),
+                                                        (225,43+vertical_offset),
+                                                        (233,59+vertical_offset),(237,70+vertical_offset),
+                                                        (241,74+vertical_offset),(246,98+vertical_offset),
+                                                        (247,133+vertical_offset),(236,133+vertical_offset),
+                                                        (222,96+vertical_offset),(211,76+vertical_offset),
+                                                        (190,73+vertical_offset),(155,74+vertical_offset),
+                                                        (120,77+vertical_offset),(99,90+vertical_offset),
+                                                        (79,101+vertical_offset),(58,133+vertical_offset)])
         return face_surface
 
     def draw_eyes(self, face_surface: pygame.Surface) -> pygame.Surface:
