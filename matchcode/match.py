@@ -80,15 +80,24 @@ class Match:
 
         #print(f"  --  in play -- {self.played}: {self.home_goals} - {self.away_goals}")
 
-    def add_goal_event(self, team,time, goal_type: str):
+    def add_goal_event(self, team,time, goal_type: str, game):
         #print(team.players)
+        position_list = ["goalkeeper","libero","leftdef","rightdef","lefthalf","righthalf","leftmid","centralmid","rightmid","leftattack","rightattack","sub1","sub2","sub3","sub4","sub5"]
+        position_number = random.randint(1,10)
+        position_uuid = self.home_team.actual_positions[position_list[position_number]]["player_uuid"]
+        print(f"{position_number} - {position_uuid}")
+        
         player_list = list(team.players.values())
-        goal_scorer = random.choice(player_list)
+        goal_scorer = game.player_manager.find_player_by_uuid(position_uuid)
         assist_chance = random.random()
         assisting_player = None
 
         if assist_chance < 0.75:
-            assisting_player = random.choice(player_list)
+            exclude_list = []
+            exclude_list.append(position_number)
+            position_number = random.choice([i for i in range(1,10) if i not in exclude_list])
+            position_uuid = self.home_team.actual_positions[position_list[position_number]]["player_uuid"]
+            assisting_player = game.player_manager.find_player_by_uuid(position_uuid)
             if goal_scorer == assisting_player:
                 assisting_player = None
 
@@ -114,7 +123,7 @@ class Match:
 
         self.events.append(event)
 
-    def update_state(self,manager,game_time_delta):
+    def update_state(self, game, manager, game_time_delta):
         position_list = ["goalkeeper","libero","leftdef","rightdef","lefthalf","righthalf","leftmid","centralmid","rightmid","leftattack","rightattack","sub1","sub2","sub3","sub4","sub5"]
         off_weight = [2,2,3,3,8,8,12,12,12,19,19]
         def_weight = [20,16,14,14,10,10,4,4,4,2,2]
@@ -161,10 +170,10 @@ class Match:
                 away_goal_chance = random.randint(1,int(20*away_off_total/home_def_total))
                 if away_goal_chance > home_goal_chance:
                     self.away_goals += 1
-                    self.add_goal_event(self.away_team,time, "Play goal")
+                    self.add_goal_event(self.away_team,time, "Play goal", game)
                 else:
                     self.home_goals += 1
-                    self.add_goal_event(self.home_team,time, "Play goal")
+                    self.add_goal_event(self.home_team,time, "Play goal", game)
             
             elif (self.game_state == 0 and event_number<15):
                 self.idle_time_left = rand.randint(6,15)
@@ -181,13 +190,13 @@ class Match:
                 self.game_state = 0
                 if(event_number<300):
                     self.home_goals += 1
-                    self.add_goal_event(self.home_team,time, "Corner goal")
+                    self.add_goal_event(self.home_team,time, "Corner goal", game)
 
             elif (self.game_state == 2):
                 self.game_state = 0
                 if(event_number<300):
                     self.away_goals += 1
-                    self.add_goal_event(self.away_team,time, "Corner goal")
+                    self.add_goal_event(self.away_team,time, "Corner goal", game)
 
 
 

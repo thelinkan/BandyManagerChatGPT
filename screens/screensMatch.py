@@ -53,7 +53,7 @@ def draw_view_match(game,match_to_view):
         screen.blit(match_event_surface,(100,100))
 
         if(match_state == "1st half" or match_state == "2nd half"):
-            engine.tick()
+            engine.tick(game)
         pygame.display.flip()
         time.sleep(0.01)
         if match_state == "1st half" and engine.game_time>60*45:

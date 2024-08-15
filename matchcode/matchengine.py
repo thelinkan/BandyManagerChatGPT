@@ -8,11 +8,11 @@ class MatchEngine:
         self.game_time = 0
         self.last_time = time.time()
 
-    def tick(self):
+    def tick(self, game):
         current_time = time.time()
         elapsed_time = current_time - self.last_time
         game_time_delta = elapsed_time * self.time_scaling_factor
-        print(f"{game_time_delta=}")
+        #print(f"{game_time_delta=}")
         game_time_delta = 2
 
         #print(game_time_delta)
@@ -22,7 +22,7 @@ class MatchEngine:
         # Update game state based on the passage of time
         # This could include things like player movement, ball physics, etc.
         # You can define methods within the match class to handle these updates.
-        self.match.update_state(manager=self, game_time_delta=game_time_delta)
+        self.match.update_state(game, manager=self, game_time_delta=game_time_delta)
 
 
     def get_current_time(self):
