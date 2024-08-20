@@ -1,6 +1,6 @@
 import pygame
 
-def draw_jersey(jersey_colors,jersey_decorations,jersey_number, logo, is_front):
+def draw_jersey(jersey_colors,jersey_decorations,jersey_number, logo, is_front: bool):
     jersey_surface = pygame.Surface((250,250), pygame.SRCALPHA)
     #jersey_surface.fill(WHITE)
     #Draw arms and chest
@@ -10,6 +10,31 @@ def draw_jersey(jersey_colors,jersey_decorations,jersey_number, logo, is_front):
     #Draw decorations
     #print(jersey_decorations)
     for decoration in jersey_decorations:
+        '''
+            100 - the colar
+            101 - Wide border on top of shirt
+            102 - outline below 101
+            103 - Horisontal stripes on chest area
+            104 - Square to make sure number on back looks good if using stripes
+            105 - Vertical stripes on chest area 
+            106 - Two thin vertical stripes on chest area 
+            107 - One wide vertical stripe on chest area (only front)
+            108 - A slightly less wide veritical stripe on chest area (only front)
+                  can be used with 107 to get a wide vertical stripe with outline
+            150 - Large logo
+            151 - Small logo
+            200 - Down on right sleave
+            201 - Double line on right sleave
+            202 - Very wide border down on right sleave
+            203 - Wide line on right sleave
+            300 - Down on left sleave
+            301 - Double line on left sleave
+            302 - Very wide border down on left sleave
+            303 - Wide line on left sleave
+            400 - Wide border on bottom of shirt
+            401 - Flames on bottom of shirt
+            402 - Outline for 401
+        '''
         #print(decoration[0])
         #print(decoration[0])
         if(decoration[0]==100):
@@ -50,23 +75,23 @@ def draw_jersey(jersey_colors,jersey_decorations,jersey_number, logo, is_front):
             logo_rect.top = 60
             logo_rect.left = 140
             jersey_surface.blit(logo_file, logo_rect)
-        if(decoration[0]==200):
+        if((decoration[0]==200 and is_front) or (decoration[0]==300 and not is_front)):
             pygame.draw.rect(jersey_surface,decoration[1],(3,185,47,15))
-        if(decoration[0]==201):
+        if((decoration[0]==201 and is_front) or (decoration[0]==301 and not is_front)):
             pygame.draw.rect(jersey_surface,decoration[1],(3,135,47,10))
             pygame.draw.rect(jersey_surface,decoration[1],(3,175,47,10))
-        if(decoration[0]==202):
+        if((decoration[0]==202 and is_front) or (decoration[0]==302 and not is_front)):
             pygame.draw.rect(jersey_surface,decoration[1],(3,145,47,55))
-        if(decoration[0]==203):
+        if((decoration[0]==203 and is_front) or (decoration[0]==303 and not is_front)):
             pygame.draw.rect(jersey_surface,decoration[1],(3,145,47,25))
-        if(decoration[0]==300):
+        if((decoration[0]==300 and is_front) or (decoration[0]==200 and not is_front)):
             pygame.draw.rect(jersey_surface,decoration[1],(200,185,47,15))
-        if(decoration[0]==301):
+        if((decoration[0]==301 and is_front) or (decoration[0]==201 and not is_front)):
             pygame.draw.rect(jersey_surface,decoration[1],(200,135,47,10))
             pygame.draw.rect(jersey_surface,decoration[1],(200,175,150,10))
-        if(decoration[0]==302):
+        if((decoration[0]==302 and is_front) or (decoration[0]==202 and not is_front)):
             pygame.draw.rect(jersey_surface,decoration[1],(200,145,47,55))
-        if(decoration[0]==303):
+        if((decoration[0]==303 and is_front) or (decoration[0]==203 and not is_front)):
             pygame.draw.rect(jersey_surface,decoration[1],(200,145,47,25))
         if(decoration[0]==400):
             pygame.draw.rect(jersey_surface,decoration[1],(50,215,150,30))
