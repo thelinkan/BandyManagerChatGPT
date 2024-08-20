@@ -273,13 +273,13 @@ class Player(Person):
         return f"Player first name: {self.first_name} last name: {self.last_name} age: {self.age}"
 
 class Referee(Person):
-    def __init__(self, first_name, last_name, age, gender, level):
-        super().__init__(first_name, last_name, age, gender)
+    def __init__(self, first_name, last_name, age, gender, level, nationality):
+        super().__init__(first_name, last_name, age, gender, nationality)
         self.level = level
 
 class ClubStaff(Person):
-    def __init__(self, first_name, last_name, age, gender, role, team):
-        super().__init__(first_name, last_name, age, gender)
+    def __init__(self, first_name, last_name, age, gender, role, team, nationality):
+        super().__init__(first_name, last_name, age, gender, nationality)
         self.role = role
         self.team = team
 
