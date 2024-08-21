@@ -35,6 +35,21 @@ while running:
             if event.key == pygame.K_SPACE:
                 face = Face(randomize_face())
                 print(face.to_dict())
+            if event.key == pygame.K_s:
+                face.skin_tone=face.skin_tone+1
+                if(face.skin_tone>5): 
+                    face.skin_tone=0
+                print(face.to_dict())
+            if event.key == pygame.K_h:
+                face.hair['shape'] = face.hair['shape'] + 1
+                if(face.hair['shape']>4): 
+                    face.hair['shape']=1
+                print(face.to_dict())
+            if event.key == pygame.K_j:
+                face.hair['color'] = face.hair['color'] + 1
+                if(face.hair['color']>6): 
+                    face.hair['color']=0
+                print(face.to_dict())
         elif event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
             print(f"x= {pos[0]-65} -- y= {pos[1]-60}")
