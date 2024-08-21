@@ -2,14 +2,14 @@ import pygame
 from math import pi
 import random
 
-SKIN_TONE = (255, 204, 153)
 SKIN_TONES =    [((255, 204, 153),(204, 153, 102)),
     ((255, 207, 187),(244, 180, 146)),((245, 190, 157),(230, 150, 126)),
     ((231, 189, 152),(229, 163, 121)),((216, 122, 97),(149, 95, 79)),
     ((205, 120, 92),(149, 95, 79))]
 
-DARK_SKIN_TONE = (204, 153, 102)
-HAIR_COLORS = [((255, 0, 0),(240,50,50)), ((255, 204, 0),(240,150,0)), ((200, 200, 200),(140,140,140)),
+HAIR_COLORS = [((255, 0, 0),(240,90,90)), ((200, 110, 110),(210,50,50)), ((210,50,50),(200, 110, 110)),
+               ((255, 204, 0),(240,150,0)), 
+               ((200, 200, 200),(140,140,140)),
                ((75,55,55),(132,105,95)),((65,35,35),(102,75,65)),((65,35,35),(92,45,45)),
                ((102,75,65),(65,35,35))]
 EYE_COLORS = [(60, 60, 200), (86,70,55), (85,126,86)]
@@ -39,13 +39,21 @@ class Face:
                 pygame.draw.ellipse(face_surface, skin_tones[1], [50, 53, 200, 200], 0)
                 pygame.draw.ellipse(face_surface, skin_tones[0], [50, 50, 200, 200], 0)
             case 2:
-                pygame.draw.ellipse(face_surface, skin_tones[1], [50, 33, 200, 250], 0)
-                pygame.draw.ellipse(face_surface, skin_tones[0], [50, 30, 200, 250], 0)
-            case 3:
                 pygame.draw.ellipse(face_surface, skin_tones[1], [50, 53, 200, 200], 0)
                 pygame.draw.ellipse(face_surface, skin_tones[1], [110, 193, 75, 75], 0)
                 pygame.draw.ellipse(face_surface, skin_tones[0], [50, 50, 200, 200], 0)
                 pygame.draw.ellipse(face_surface, skin_tones[0], [110, 190, 75, 75], 0)
+            case 3:
+                pygame.draw.ellipse(face_surface, skin_tones[1], [50, 43, 200, 230], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[0], [50, 40, 200, 230], 0)
+            case 4:
+                pygame.draw.ellipse(face_surface, skin_tones[1], [50, 43, 200, 230], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[1], [110, 213, 75, 75], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[0], [50, 40, 200, 230], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[0], [110, 210, 75, 75], 0)
+            case 5:
+                pygame.draw.ellipse(face_surface, skin_tones[1], [50, 33, 200, 250], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[0], [50, 30, 200, 250], 0)
             case _:
                 pygame.draw.ellipse(face_surface, skin_tones[0], [50, 50, 200, 200], 0)
         face_surface = self.draw_eyes(face_surface)
@@ -244,6 +252,23 @@ class Face:
                 pygame.draw.arc(face_surface, skin_tones[1], [130+self.eyes.get("width",30),105+vertical_offset,40,15], 0, pi, width=5)
                 pygame.draw.arc(face_surface, skin_tones[0], [130+self.eyes.get("width",30),117+vertical_offset,40,15], pi, 0, width=5)
             case 2:
+                pygame.draw.ellipse(face_surface, WHITE, [135-self.eyes.get("width",30), 100+vertical_offset, 30, 30], 0)
+                pygame.draw.ellipse(face_surface, eye_color, [140-self.eyes.get("width",30), 105+vertical_offset, 20, 20], 0)
+                pygame.draw.ellipse(face_surface, BLACK, [145-self.eyes.get("width",30), 110+vertical_offset, 10, 10], 0)
+                pygame.draw.arc(face_surface, skin_tones[0], [130-self.eyes.get("width",30),100+vertical_offset,45,25], 0, pi, width=5)
+                pygame.draw.arc(face_surface, skin_tones[1], [130-self.eyes.get("width",30),102+vertical_offset,45,25], 0, pi, width=7)
+                pygame.draw.arc(face_surface, skin_tones[1], [130-self.eyes.get("width",30),107+vertical_offset,40,15], 0, pi, width=7)
+                pygame.draw.arc(face_surface, skin_tones[0], [130-self.eyes.get("width",30),117+vertical_offset,40,15], pi, 0, width=5)
+                pygame.draw.arc(face_surface, skin_tones[0], [130-self.eyes.get("width",30),116+vertical_offset,40,15], pi, 0, width=7)
+                pygame.draw.ellipse(face_surface, WHITE, [135+self.eyes.get("width",30), 100+vertical_offset, 30, 30], 0)
+                pygame.draw.ellipse(face_surface, eye_color, [140+self.eyes.get("width",30), 105+vertical_offset, 20, 20], 0)
+                pygame.draw.ellipse(face_surface, BLACK, [145+self.eyes.get("width",30), 110+vertical_offset, 10, 10], 0)
+                pygame.draw.arc(face_surface, skin_tones[0], [130+self.eyes.get("width",30),100+vertical_offset,45,25], 0, pi, width=5)
+                pygame.draw.arc(face_surface, skin_tones[1], [130+self.eyes.get("width",30),103+vertical_offset,45,25], 0, pi, width=5)
+                pygame.draw.arc(face_surface, skin_tones[1], [130+self.eyes.get("width",30),108+vertical_offset,40,15], 0, pi, width=5)
+                pygame.draw.arc(face_surface, skin_tones[0], [130+self.eyes.get("width",30),114+vertical_offset,40,15], pi, 0, width=5)
+                pygame.draw.arc(face_surface, skin_tones[0], [130+self.eyes.get("width",30),117+vertical_offset,40,15], pi, 0, width=5)
+            case 3:
                 pygame.draw.ellipse(face_surface, WHITE, [135-self.eyes.get("width",30), 100+vertical_offset, 30, 40], 0)
                 pygame.draw.ellipse(face_surface, eye_color, [140-self.eyes.get("width",30), 105+vertical_offset, 20, 30], 0)
                 pygame.draw.ellipse(face_surface, BLACK, [145-self.eyes.get("width",30), 115+vertical_offset, 10, 10], 0)
@@ -254,7 +279,7 @@ class Face:
                 pygame.draw.ellipse(face_surface, BLACK, [145+self.eyes.get("width",30), 115+vertical_offset, 10, 10], 0)
                 pygame.draw.arc(face_surface, skin_tones[1], [130+self.eyes.get("width",30),100+vertical_offset,45,25], 0, pi, width=5)
                 pygame.draw.arc(face_surface, skin_tones[1], [130+self.eyes.get("width",30),105+vertical_offset,40,15], 0, pi, width=5)
-            case 3:
+            case 4:
                 pygame.draw.ellipse(face_surface, WHITE, [130-self.eyes.get("width",30), 100+vertical_offset, 40, 30], 0)
                 pygame.draw.ellipse(face_surface, eye_color, [140-self.eyes.get("width",30), 105+vertical_offset, 20, 20], 0)
                 pygame.draw.ellipse(face_surface, BLACK, [145-self.eyes.get("width",30), 110+vertical_offset, 10, 10], 0)
@@ -296,7 +321,7 @@ class Face:
 
     def draw_nose(self, face_surface: pygame.Surface) -> pygame.Surface:
         skin_tones = SKIN_TONES[self.skin_tone]
-        match self.shape:
+        match self.nose:
             case 1:        
                 pygame.draw.arc(face_surface, skin_tones[1], [160,130,25,55], pi, 3*pi/2, width=3)
                 pygame.draw.arc(face_surface, skin_tones[1], [120,130,25,55], 3*pi/2, 0, width=3)
@@ -323,7 +348,7 @@ class Face:
 
     def draw_ears(self, face_surface: pygame.Surface) -> pygame.Surface:
         skin_tones = SKIN_TONES[self.skin_tone]
-        match self.shape:
+        match self.ears:
             case 1:
                 pygame.draw.ellipse(face_surface, skin_tones[0], [40,130,15,45], 0)
                 pygame.draw.ellipse(face_surface, skin_tones[1], [43,140,10,25], 0)

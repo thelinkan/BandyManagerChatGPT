@@ -256,13 +256,13 @@ def get_weighted_random_number(weighted_numbers):
     return random.choices(numbers, weights=weights, k=1)[0]
 
 def randomize_face():
-    face_shape_chance = [(1,20),(2,10),(3,50)]
-    skin_tone_chance = [(0,10),(1,40),(2,40),(3,20)]
+    face_shape_chance = [(1,20),(2,10),(3,30),(4,30),(5,30)]
+    skin_tone_chance = [(0,10),(1,40),(2,40),(3,20),(4,20),(5,20)]
     hair_shape_chance = [(1,20),(2,10),(3,15),(4,15),(5,15)]
-    hair_color_chance = [(0,10),(1,10),(2,10),(3,40),(4,40),(5,40),(6,40)]
-    eye_shape_chance = [(1,20),(2,10),(3,20)]
+    hair_color_chance = [(0,10),(1,10),(2,10),(3,40),(4,40),(5,40),(6,40),(7,40),(8,40)]
+    eye_shape_chance = [(1,20),(2,10),(3,20),(4,20)]
     eye_color_chance = [(0,50),(1,40),(2,10)]
-    eye_brow_chance = [(0,50),(1,40),(2,60),(3,60)]
+    eye_brow_chance = [(1,40),(2,60),(3,60),(4,20)]
     nose_chance = [(1,50),(2,50),(3,50)]
     mouth_shape_chance = [(1,20),(2,10),(3,30),(4,30)]
     mouth_color_chance = [(0,50),(1,40),(2,40),(3,40)]
