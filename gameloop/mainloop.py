@@ -4,8 +4,9 @@ from loggingbm import logger
 from game import Game
 
 from guielements import input_name, input_age
-from guielements import home_button,media_button,senior_squad_button, tactics_button, schedule_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
+from guielements import home_button,media_button,senior_squad_button, lineup_button, tactics_button, schedule_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
 from gameloop.tactics import gameloop_tactics
+from gameloop.lineup import gameloop_lineup
 from screens.screensleague import choose_league
 pygame.init()
 
@@ -55,6 +56,8 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
                 #print(game.selected_news_index)
                 break
         
+    if(game.game_page == "lineup"):
+        gameloop_lineup(game, rectslist_1, rectslist_2, event.pos)
     if(game.game_page == "tactics"):
         gameloop_tactics(game, rectslist_1, rectslist_2, event.pos)
     if (game.game_page == "home"):
@@ -121,6 +124,12 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
         game.inspected_team = None
         game.game_page = "player_list"
         logger.debug("Player list - click")
+    if lineup_button.rect.collidepoint(event.pos):
+        game.selected_player_index=-1
+        game.selected_team_index=-1
+        game.inspected_team = None
+        game.game_page = "lineup"
+        logger.debug("Lineup - click")
     if tactics_button.rect.collidepoint(event.pos):
         game.selected_player_index=-1
         game.selected_team_index=-1

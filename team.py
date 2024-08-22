@@ -88,6 +88,17 @@ class Team:
             player_list.append((player.uuid, self.players[player.uuid].jersey_number, player.first_name, player.last_name, player.age, player.position))
         return player_list
 
+    def get_players_positions(self):
+        player_position_list = []
+        for position, position_data in self.actual_positions.items():
+            player_uuid = position_data["player_uuid"]
+            if player_uuid is not None and player_uuid in self.players:
+                player = self.players[player_uuid]
+                player_position_list.append(
+                    (player.uuid, player.jersey_number, player.first_name, player.last_name, player.age, player.position, position)
+                )
+        return player_position_list
+
     def add_player(self, player):
         player.add_team(self)
         self.players[player.uuid] = player

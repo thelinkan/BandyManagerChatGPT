@@ -5,7 +5,7 @@ from constants import SCREEN_WIDTH,SCREEN_HEIGHT,WHITE,BLACK,GRAY,FONTSIZE_LARGE
 from constants import TABLE_HEADER_COLOR, TABLE_ROW_ODD_COLOR, TABLE_ROW_EVEN_COLOR
 from guielements import font, medium_font, small_font,very_small_font ,very_small_bold_font , button_width, button_height, button_x, button_spacing
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
-from guielements import home_button, inbox_button, media_button, senior_squad_button, tactics_button, training_button, schedule_button, competition_button
+from guielements import home_button, inbox_button, media_button, senior_squad_button, lineup_button, tactics_button, training_button, schedule_button, competition_button
 from guielements import u19_squad_button,forward_time_button, save_game_button, quit_game_button
 from miscfunctions import get_club_from_team, draw_calendar, yesterday
 from graphicscode.jersey import draw_jersey
@@ -380,10 +380,29 @@ def draw_home(game,team):
 
 def draw_tactics(game,team):
     playerlist_offset = (140,125)
+    playerlist_surface, player_rects, hover_player_uuid, selected_player_uuid = draw_tactics_playerlist(game,team, playerlist_offset, "tactics")
+    screen.blit(playerlist_surface,playerlist_offset)
+    
     player_offset = (490,125)
     pitch_offset = (740,125)
 
-    playerlist_surface, player_rects, hover_player_uuid, selected_player_uuid = draw_tactics_playerlist(game,team, playerlist_offset)
+    if(selected_player_uuid is not None):
+        player_surface = draw_player(game,selected_player_uuid)
+        screen.blit(player_surface,player_offset)
+    '''
+    pitch_surface, jersey_rects = draw_tactics_pitch(game,team,hover_player_uuid, selected_player_uuid, pitch_offset)
+    screen.blit(pitch_surface,pitch_offset)
+
+    , jersey_rects
+    '''
+    return player_rects
+
+def draw_lineup(game,team):
+    playerlist_offset = (140,125)
+    player_offset = (490,125)
+    pitch_offset = (740,125)
+
+    playerlist_surface, player_rects, hover_player_uuid, selected_player_uuid = draw_tactics_playerlist(game,team, playerlist_offset, "lineup")
     screen.blit(playerlist_surface,playerlist_offset)
     if(selected_player_uuid is not None):
         player_surface = draw_player(game,selected_player_uuid)
@@ -449,7 +468,7 @@ def draw_tactics_jersey(jersey_colors, jersey_decorations, number, logo, name, i
     jersey_surface.blit(text, text_pos)
     return jersey_surface
 
-def draw_tactics_playerlist(game,team, playerlist_offset):
+def draw_tactics_playerlist(game,team, playerlist_offset, useage: str):
     mouse_pos = pygame.mouse.get_pos()
     mouse_pos_on_list = mouse_pos[0] - playerlist_offset[0], mouse_pos[1] - playerlist_offset[1]
 
@@ -473,7 +492,13 @@ def draw_tactics_playerlist(game,team, playerlist_offset):
     row_height = 30
     player_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
     row_height = FONTSIZE_VERY_SMALL+8
-    for i, player in enumerate(team.get_players()):
+
+    if useage == "lineup":
+        playerlist = team.get_players()
+    else:
+        playerlist = team.get_players_positions()
+
+    for i, player in enumerate(playerlist):
         if i % 2 == 0:
             row_color = TABLE_ROW_EVEN_COLOR
         else:
@@ -496,7 +521,10 @@ def draw_tactics_playerlist(game,team, playerlist_offset):
         text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
         playerlist_surface.blit(text, text_rect)
 
-        text = player_font.render(player[5], True, BLACK)
+        if useage == "lineup":
+            text = player_font.render(player[5], True, BLACK)
+        else:
+            text = player_font.render(player[6], True, BLACK)
         text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
         playerlist_surface.blit(text, text_rect)
     return playerlist_surface,player_rects,hover_player_uuid, selected_player_uuid
@@ -536,6 +564,7 @@ def draw_game_mainscreen(game):
     inbox_button.draw(screen)
     media_button.draw(screen)
     senior_squad_button.draw(screen)
+    lineup_button.draw(screen)
     tactics_button.draw(screen)
     training_button.draw(screen)
     schedule_button.draw(screen)
@@ -567,8 +596,10 @@ def draw_game_mainscreen(game):
             team_viewed = manager_team
         #print(f"team viewed {team_viewed}, inspected_team {game.inspected_team}")
         rectlist_1 = draw_squad(game,team_viewed)
+    if (game.game_page == "lineup"):
+        rectlist_1, rectlist_2 = draw_lineup(game,manager_team)
     if (game.game_page == "tactics"):
-        rectlist_1, rectlist_2 = draw_tactics(game,manager_team)
+        rectlist_1 = draw_tactics(game,manager_team)
     if (game.game_page == "media"):
         rectlist_1 = draw_media(game)
     if (game.game_page == "schedule"):
