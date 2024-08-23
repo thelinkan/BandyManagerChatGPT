@@ -2,6 +2,7 @@ import datetime
 import time
 import pygame
 import random
+import uuid
 from club import Club
 from team import Team
 from constants import WHITE,BLACK,GRAY
@@ -250,3 +251,9 @@ def get_num_rounds(num_teams,num_rounds):
     num_pages = -(-num_rounds//rounds_per_page)
 
     return rounds_per_page,num_pages    
+
+def validate_uuid(uuid_str):
+    try:
+        return uuid.UUID(uuid_str)
+    except (ValueError, AttributeError, TypeError):
+        return None

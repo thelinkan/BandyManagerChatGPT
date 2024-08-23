@@ -15,6 +15,7 @@ from matchcode.matchmanager import MatchManager
 from newscode.mediaoutlet import MediaOutlet
 from newscode.newsitem import NewsItem
 from newscode.matchplayed import matcharticle, finalwinnerarticle
+from miscfunctions import validate_uuid
 
 from loggingbm import logger
 
@@ -513,13 +514,47 @@ class Game:
                         player_uuid = team_player['uuid']
                         jersey_number = team_player['jersey_number']
                         # Get the Player object with the corresponding UUID
-                        player = self.player_manager.find_player_by_uuid(player_uuid)
+                        player : Player|None = self.player_manager.find_player_by_uuid(player_uuid)
                         # Add the Player object to the team's squad
                         team.add_player(player)
                         team.change_player_jersey_number(player.uuid,jersey_number)
                 if 'actual_positions' in team_data:
                     for actual_position in team_data['actual_positions']:
                         team.assign_player_to_position(actual_position['actual_position'],actual_position['player_uuid'])
+                if 'tactics' in team_data:
+                    for tactic_type, settings in team_data['tactics'].items():
+                        if tactic_type == 'corner':
+                            cornertaker = settings.get('cornertaker', None)
+                            if cornertaker:
+                                print(f"cornertaker: {cornertaker}")
+                                valid_cornertaker_uuid = validate_uuid(cornertaker)
+                                print(f"valid: {valid_cornertaker_uuid}")
+                                
+                                team.tactics['corner']['cornertaker'] = valid_cornertaker_uuid if valid_cornertaker_uuid else None
+
+                            # Ensure target players' UUIDs are valid
+                            targetplayers = settings.get('targetplayers', [])
+                            validated_players = []
+                            for player_uuid in targetplayers:
+                                valid_uuid = validate_uuid(player_uuid)
+                                if valid_uuid:
+                                    validated_players.append(valid_uuid)
+                            team.tactics['corner']['targetplayers'] = validated_players
+
+                        elif tactic_type == 'freestroke':
+                            # Similar process for freestroke target players
+                            targetplayers = settings.get('targetplayers', [])
+                            validated_players = []
+                            for player_uuid in targetplayers:
+                                valid_uuid = validate_uuid(player_uuid)
+                                if valid_uuid:
+                                    validated_players.append(valid_uuid)
+                            team.tactics['freestroke']['targetplayers'] = validated_players
+
+                        # Handle other tactics data accordingly
+                        else:
+                            team.tactics[tactic_type] = settings  # Other non-UUID fields can be set directly
+
 
             clubs.append(club)
 

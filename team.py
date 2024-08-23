@@ -33,6 +33,25 @@ class Team:
             'sub4': {'player_uuid': None, 'tactic': 0},
             'sub5': {'player_uuid': None, 'tactic': 0}
         }
+        '''
+        Passing:
+            Longballs 0 = Never, 10 = always
+        Defense:
+            type - 0 = neutral, 1 = high pressure, 2 = park the buss, 3 = "Garbage bag"
+        Offense:
+            type - 0 = neutral, 1 = value and slow advance, 2 = offensive, 3 = counter-attack
+        Corner:
+            cornertaker: uuid, targetplayers 1-4 uuid
+        freestroke:
+            targetplayers: 1-3 uuid
+        '''
+        self.tactics = {
+            "passing": {"longballs": 3},
+            "defence": {"type":0},
+            "offence": {"type":0},
+            "corner": {"cornertaker": 0, "targetplayers": [1,2,3, 4]},
+            "freestroke": {"targetplayers": [1,2,3,4]}
+        }
 
     def return_name(self):
         return self.name
@@ -73,7 +92,14 @@ class Team:
             'players': player_list,
             'actual_positions': position_list,
             'jersey_colors': str(self.jersey_colors),
-            'jersey_decorations': str(self.jersey_decorations)
+            'jersey_decorations': str(self.jersey_decorations),
+            'tactics': {
+                'passing': {'longballs': self.tactics['passing']['longballs']},
+                'defence': {'type': self.tactics['defence']['type']},
+                'offence': {'type': self.tactics['offence']['type']},
+                'corner': {'cornertaker': self.tactics['corner']['cornertaker'], 'targetplayers':  self.tactics['corner']['targetplayers']},
+                'freestroke': {'targetplayers': self.tactics['freestroke']['targetplayers']}
+            }
         }
 
     def print_players(self):

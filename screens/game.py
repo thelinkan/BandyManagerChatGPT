@@ -384,11 +384,15 @@ def draw_tactics(game,team):
     screen.blit(playerlist_surface,playerlist_offset)
     
     player_offset = (490,125)
-    pitch_offset = (740,125)
+    tactics_list_offset = (740,125)
 
     if(selected_player_uuid is not None):
         player_surface = draw_player(game,selected_player_uuid)
         screen.blit(player_surface,player_offset)
+
+    tactics_list_surface, tactics_rect = draw_tactics_list(game, team, tactics_list_offset)
+    screen.blit(tactics_list_surface,tactics_list_offset)
+    
     '''
     pitch_surface, jersey_rects = draw_tactics_pitch(game,team,hover_player_uuid, selected_player_uuid, pitch_offset)
     screen.blit(pitch_surface,pitch_offset)
@@ -396,6 +400,124 @@ def draw_tactics(game,team):
     , jersey_rects
     '''
     return player_rects
+
+def draw_tactics_list(game, team, tactics_list_offset):
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos_on_list = mouse_pos[0] - tactics_list_offset[0], mouse_pos[1] - tactics_list_offset[1]
+
+    tactics_list_surface = pygame.Surface((600,600), pygame.SRCALPHA)
+    header_rect = pygame.Rect(0, 0, 300, 30)
+
+    pygame.draw.rect(tactics_list_surface, TABLE_HEADER_COLOR, header_rect)
+    header_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
+    text = header_font.render("Tactic", True, BLACK)
+    text_rect = text.get_rect(left=header_rect.left + 10, centery=header_rect.centery)
+    tactics_list_surface.blit(text, text_rect)
+    text = header_font.render("Setting", True, BLACK)
+    text_rect = text.get_rect(right=header_rect.right - 10, centery=header_rect.centery)
+    tactics_list_surface.blit(text, text_rect)
+
+    tactics_rects = []
+    row_height = 30
+    tactics_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
+    row_height = FONTSIZE_VERY_SMALL+8
+
+    i=0
+    row_color = TABLE_ROW_EVEN_COLOR
+    row_rect = pygame.Rect(0, 30 + i * row_height, 300, row_height)
+    if mouse_pos and row_rect.collidepoint(mouse_pos_on_list):
+        row_color = (255,200,200)
+    pygame.draw.rect(tactics_list_surface, row_color, row_rect)
+    text = tactics_font.render("Long Passes", True, BLACK)
+    text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
+    tactics_list_surface.blit(text, text_rect)
+    text = tactics_font.render(str(team.tactics['passing']['longballs'])+"0 %", True, BLACK)
+    text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
+    tactics_list_surface.blit(text, text_rect)
+    tactics_rects.append(row_rect)
+
+    i=1
+    row_color = TABLE_ROW_ODD_COLOR
+    row_rect = pygame.Rect(0, 30 + i * row_height, 300, row_height)
+    if mouse_pos and row_rect.collidepoint(mouse_pos_on_list):
+        row_color = (255,200,200)
+    pygame.draw.rect(tactics_list_surface, row_color, row_rect)
+    text = tactics_font.render("Defensive tactics", True, BLACK)
+    text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
+    tactics_list_surface.blit(text, text_rect)
+    match team.tactics['defence']['type']:
+        case 0:
+            text = tactics_font.render("Neutral", True, BLACK)
+        case 1:
+            text = tactics_font.render("High pressure", True, BLACK)
+        case 2:
+            text = tactics_font.render("Park the buss", True, BLACK)
+        case 3:
+            text = tactics_font.render("Garbage bag", True, BLACK)
+        case _:
+            text = tactics_font.render("Error", True, BLACK)
+    text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
+    tactics_list_surface.blit(text, text_rect)
+    tactics_rects.append(row_rect)
+
+    i=2
+    row_color = TABLE_ROW_EVEN_COLOR
+    row_rect = pygame.Rect(0, 30 + i * row_height, 300, row_height)
+    if mouse_pos and row_rect.collidepoint(mouse_pos_on_list):
+        row_color = (255,200,200)
+    pygame.draw.rect(tactics_list_surface, row_color, row_rect)
+    text = tactics_font.render("Offensive tactics", True, BLACK)
+    text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
+    tactics_list_surface.blit(text, text_rect)
+    match team.tactics['offence']['type']:
+        case 0:
+            text = tactics_font.render("Neutral", True, BLACK)
+        case 1:
+            text = tactics_font.render("Value and slow advance", True, BLACK)
+        case 2:
+            text = tactics_font.render("Offensive", True, BLACK)
+        case 3:
+            text = tactics_font.render("Counter-attack", True, BLACK)
+        case _:
+            text = tactics_font.render("Error", True, BLACK)
+    text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
+    tactics_list_surface.blit(text, text_rect)
+    tactics_rects.append(row_rect)
+
+    # Adding Cornertaker Row
+    i = 3
+    row_color = TABLE_ROW_ODD_COLOR
+    row_rect = pygame.Rect(0, 30 + i * row_height, 300, row_height)
+    if mouse_pos and row_rect.collidepoint(mouse_pos_on_list):
+        row_color = (255, 200, 200)
+    pygame.draw.rect(tactics_list_surface, row_color, row_rect)
+    text = tactics_font.render("Corner Taker", True, BLACK)
+    text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
+    tactics_list_surface.blit(text, text_rect)
+
+    # Checking for the player's name or "No player selected"
+    cornertaker_uuid = team.tactics['corner']['cornertaker']
+    player_name = "No player selected"
+    #print(f"{cornertaker_uuid}")
+    #print(team.actual_positions)
+    # Look up player by UUID in the actual_positions dict
+    for position, details in team.actual_positions.items():
+        if details['player_uuid'] == cornertaker_uuid:
+            player = team.players[details['player_uuid']]
+            player_name = f"{player.first_name} {player.last_name}"
+            #print("yes")
+            break  # Stop the loop once a match is found
+    #if cornertaker_uuid in team.actual_positions: # and team.actual_positions[cornertaker_uuid]['player_uuid'] in team.players:
+    #    #player = team.players[team.actual_positions[cornertaker_uuid]['player_uuid']]
+    #    #player_name = f"{player.first_name} {player.last_name}"
+    #    print("yes")
+
+    text = tactics_font.render(player_name, True, BLACK)
+    text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
+    tactics_list_surface.blit(text, text_rect)
+    tactics_rects.append(row_rect)
+
+    return tactics_list_surface, tactics_rects
 
 def draw_lineup(game,team):
     playerlist_offset = (140,125)
