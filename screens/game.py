@@ -498,8 +498,6 @@ def draw_tactics_list(game, team, tactics_list_offset):
     # Checking for the player's name or "No player selected"
     cornertaker_uuid = team.tactics['corner']['cornertaker']
     player_name = "No player selected"
-    #print(f"{cornertaker_uuid}")
-    #print(team.actual_positions)
     # Look up player by UUID in the actual_positions dict
     for position, details in team.actual_positions.items():
         if details['player_uuid'] == cornertaker_uuid:
@@ -507,15 +505,39 @@ def draw_tactics_list(game, team, tactics_list_offset):
             player_name = f"{player.first_name} {player.last_name}"
             #print("yes")
             break  # Stop the loop once a match is found
-    #if cornertaker_uuid in team.actual_positions: # and team.actual_positions[cornertaker_uuid]['player_uuid'] in team.players:
-    #    #player = team.players[team.actual_positions[cornertaker_uuid]['player_uuid']]
-    #    #player_name = f"{player.first_name} {player.last_name}"
-    #    print("yes")
-
     text = tactics_font.render(player_name, True, BLACK)
     text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
     tactics_list_surface.blit(text, text_rect)
     tactics_rects.append(row_rect)
+    targetplayers_uuid = team.tactics['corner']['targetplayers']
+    num_targetplayers = len(targetplayers_uuid)
+    for j in range(4):
+        i=i+1
+        row_rect = pygame.Rect(0, 30 + i * row_height, 300, row_height)
+        row_color = TABLE_ROW_ODD_COLOR
+        if mouse_pos and row_rect.collidepoint(mouse_pos_on_list):
+            row_color = (255, 200, 200)
+        pygame.draw.rect(tactics_list_surface, row_color, row_rect)
+        if(j==0):
+            text = tactics_font.render("Target players", True, BLACK)
+        else:
+            text = tactics_font.render("", True, BLACK)
+        text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
+        tactics_list_surface.blit(text, text_rect)
+
+        player_name = "No player selected"
+        if num_targetplayers>j:
+        # Look up player by UUID in the actual_positions dict
+            for position, details in team.actual_positions.items():
+                if details['player_uuid'] == targetplayers_uuid[j]:
+                    player = team.players[details['player_uuid']]
+                    player_name = f"{player.first_name} {player.last_name}"
+                
+        text = tactics_font.render(player_name, True, BLACK)
+        text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
+        tactics_list_surface.blit(text, text_rect)
+        tactics_rects.append(row_rect)
+
 
     return tactics_list_surface, tactics_rects
 
