@@ -46,6 +46,7 @@ class Game:
         self.selected_league_index: int = -1
         self.selected_country_index:int = -1
         self.selected_news_index: int = -1
+        self.selected_tactics_index: int = -1
         self.inspected_country = None
         self.inspected_team = None
         self.inspected_league = None
