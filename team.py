@@ -202,3 +202,19 @@ class Team:
         self.actual_positions["sub4"]["player_uuid"] = player_uuids.pop(0)
         self.actual_positions["sub5"]["player_uuid"] = player_uuids.pop(0)
 
+        self.tactics['corner']['cornertaker'] = self.actual_positions["centralmid"]["player_uuid"]
+
+        while len(self.tactics['corner']['targetplayers']) < 4:
+            self.tactics['corner']['targetplayers'].append(None)  # Append a placeholder value
+        
+        self.tactics['corner']['targetplayers'][0] = self.actual_positions["leftattack"]["player_uuid"]
+        self.tactics['corner']['targetplayers'][1] = self.actual_positions["rightattack"]["player_uuid"]
+        self.tactics['corner']['targetplayers'][2] = self.actual_positions["leftmid"]["player_uuid"]
+        self.tactics['corner']['targetplayers'][3] = self.actual_positions["rightmid"]["player_uuid"]
+
+        while len(self.tactics['freestroke']['targetplayers']) < 3:
+            self.tactics['freestroke']['targetplayers'].append(None)        
+
+        self.tactics['freestroke']['targetplayers'][0] = self.actual_positions["rightattack"]["player_uuid"]
+        self.tactics['freestroke']['targetplayers'][1] = self.actual_positions["leftattack"]["player_uuid"]
+        self.tactics['freestroke']['targetplayers'][2] = self.actual_positions["centralmid"]["player_uuid"]
