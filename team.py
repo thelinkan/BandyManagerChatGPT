@@ -178,29 +178,104 @@ class Team:
             self.actual_positions[position]["player_uuid"] = assign_uuid
 
     def assign_players_to_positions(self):
-        # Create a list of player UUIDs
-        player_uuids = list(self.players.keys())
+        # Categorize players by their broad position
+        position_groups = {
+            "goalkeeper": [],
+            "defender": [],
+            "half back": [],
+            "midfielder": [],
+            "forward": []
+        }
 
-        # Shuffle the list of player UUIDs
-        random.shuffle(player_uuids)
+        # Assign players to position groups based on their position
+        for player_uuid in self.players:
+            player = self.players[player_uuid]
+            if player.position in position_groups:
+                position_groups[player.position].append(player.uuid)
+            else:
+                position_groups["forward"].append(player.uuid)  # default to forward if unspecified
 
-        # Assign each position to a player UUID
-        self.actual_positions["goalkeeper"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["libero"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["leftdef"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["rightdef"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["lefthalf"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["righthalf"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["leftmid"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["centralmid"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["rightmid"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["leftattack"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["rightattack"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["sub1"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["sub2"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["sub3"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["sub4"]["player_uuid"] = player_uuids.pop(0)
-        self.actual_positions["sub5"]["player_uuid"] = player_uuids.pop(0)
+        # Shuffle each group of players to randomize assignments
+        for group in position_groups.values():
+            random.shuffle(group)
+
+        # Helper function to assign players to positions, filling from other groups if needed
+        def assign_position(position_name, required_group):
+            if position_groups[required_group]:
+                self.actual_positions[position_name]["player_uuid"] = position_groups[required_group].pop(0)
+            else:
+                # If the required group is empty, fill from any available group
+                for group_name in position_groups:
+                    if position_groups[group_name]:
+                        self.actual_positions[position_name]["player_uuid"] = position_groups[group_name].pop(0)
+                        break
+                else:
+                    self.actual_positions[position_name]["player_uuid"] = None
+
+        # Assign players to their corresponding positions
+        # Goalkeeper
+        assign_position("goalkeeper", "goalkeeper")
+
+        # Defenders
+        for position in ["libero", "leftdef", "rightdef"]:
+            assign_position(position, "defender")
+
+        # Halfbacks
+        for position in ["lefthalf", "righthalf"]:
+            assign_position(position, "half back")
+
+        # Midfielders
+        for position in ["leftmid", "centralmid", "rightmid"]:
+            assign_position(position, "midfielder")
+
+        # Attackers
+        for position in ["leftattack", "rightattack"]:
+            assign_position(position, "forward")
+
+        # Fill substitutes
+        subs = []
+        
+        # 1 goalkeeper as sub if available
+        if position_groups["goalkeeper"]:
+            subs.append(position_groups["goalkeeper"].pop(0))
+
+        # 1-2 defenders/halfbacks
+        for _ in range(2):
+            if len(subs) >= 5:
+                break
+            for group_name in ["defender", "half back"]:
+                if position_groups[group_name]:
+                    subs.append(position_groups[group_name].pop(0))
+                    break
+        
+        # 1-2 midfielders
+        for _ in range(2):
+            if len(subs) >= 5:
+                break
+            if position_groups["midfielder"]:
+                subs.append(position_groups["midfielder"].pop(0))
+        
+        # 1-2 forward
+        for _ in range(2):
+            if len(subs) >= 5:
+                break
+            if position_groups["forward"]:
+                subs.append(position_groups["forward"].pop(0))
+
+        # Fill remaining sub slots if any, from any available player
+        while len(subs) < 5:
+            for group_name in position_groups:
+                if position_groups[group_name]:
+                    subs.append(position_groups[group_name].pop(0))
+                    break
+            else:
+                break
+
+        # Assign substitutes to sub positions
+        for i in range(5):
+            sub_position = f"sub{i + 1}"
+            self.actual_positions[sub_position]["player_uuid"] = subs[i] if i < len(subs) else None
+
 
         self.tactics['corner']['cornertaker'] = self.actual_positions["centralmid"]["player_uuid"]
 
