@@ -399,7 +399,7 @@ def draw_tactics(game,team):
 
     , jersey_rects
     '''
-    return player_rects
+    return player_rects, tactics_rect
 
 def draw_tactics_list(game, team, tactics_list_offset):
     mouse_pos = pygame.mouse.get_pos()
@@ -520,6 +520,34 @@ def draw_tactics_list(game, team, tactics_list_offset):
         pygame.draw.rect(tactics_list_surface, row_color, row_rect)
         if(j==0):
             text = tactics_font.render("Target players", True, BLACK)
+        else:
+            text = tactics_font.render("", True, BLACK)
+        text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
+        tactics_list_surface.blit(text, text_rect)
+
+        player_name = "No player selected"
+        if num_targetplayers>j:
+        # Look up player by UUID in the actual_positions dict
+            for position, details in team.actual_positions.items():
+                if details['player_uuid'] == targetplayers_uuid[j]:
+                    player = team.players[details['player_uuid']]
+                    player_name = f"{player.first_name} {player.last_name}"
+                
+        text = tactics_font.render(player_name, True, BLACK)
+        text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
+        tactics_list_surface.blit(text, text_rect)
+        tactics_rects.append(row_rect)
+    targetplayers_uuid = team.tactics['freestroke']['targetplayers']
+    num_targetplayers = len(targetplayers_uuid)
+    for j in range(3):
+        i=i+1
+        row_rect = pygame.Rect(0, 30 + i * row_height, 300, row_height)
+        row_color = TABLE_ROW_EVEN_COLOR
+        if mouse_pos and row_rect.collidepoint(mouse_pos_on_list):
+            row_color = (255, 200, 200)
+        pygame.draw.rect(tactics_list_surface, row_color, row_rect)
+        if(j==0):
+            text = tactics_font.render("Freestroke players", True, BLACK)
         else:
             text = tactics_font.render("", True, BLACK)
         text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
@@ -743,7 +771,7 @@ def draw_game_mainscreen(game):
     if (game.game_page == "lineup"):
         rectlist_1, rectlist_2 = draw_lineup(game,manager_team)
     if (game.game_page == "tactics"):
-        rectlist_1 = draw_tactics(game,manager_team)
+        rectlist_1, rectlist_2 = draw_tactics(game,manager_team)
     if (game.game_page == "media"):
         rectlist_1 = draw_media(game)
     if (game.game_page == "schedule"):

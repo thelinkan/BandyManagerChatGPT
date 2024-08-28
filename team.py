@@ -50,7 +50,7 @@ class Team:
             "defence": {"type":0},
             "offence": {"type":0},
             "corner": {"cornertaker": 0, "targetplayers": [1,2,3, 4]},
-            "freestroke": {"targetplayers": [1,2,3,4]}
+            "freestroke": {"targetplayers": [1,2,3]}
         }
 
     def return_name(self):
