@@ -34,6 +34,15 @@ def gameloop_tactics(game, player_rects, tactics_list_rects, tactics_rect, event
                     manager_team.tactics['passing']['longballs'] = 0
                 if (manager_team.tactics['passing']['longballs']>10):
                     manager_team.tactics['passing']['longballs'] = 10
+            if game.selected_tactics_index == 1:
+                game.selected_player_index = -1
+                game.selected_tactics_index = -1
+                manager_team.tactics['defence']['type'] = i
+                if (manager_team.tactics['defence']['type']<0):
+                    manager_team.tactics['defence']['type'] = 0
+                if (manager_team.tactics['defence']['type']>3):
+                    manager_team.tactics['defence']['type'] = 3
+            
 
             break
     for i, rect in enumerate(tactics_list_rects):
