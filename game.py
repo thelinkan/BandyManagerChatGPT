@@ -15,7 +15,7 @@ from matchcode.matchmanager import MatchManager
 from newscode.mediaoutlet import MediaOutlet
 from newscode.newsitem import NewsItem
 from newscode.matchplayed import matcharticle, finalwinnerarticle
-from miscfunctions import validate_uuid
+
 
 from loggingbm import logger
 
@@ -482,6 +482,7 @@ class Game:
         return [league for league in self.leagues if league.league_type == league_type]
 
     def read_clubs_from_json(self,data):
+        from miscfunctions import validate_uuid
 
         clubs = []
 

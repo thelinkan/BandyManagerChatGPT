@@ -2,8 +2,6 @@ import random
 from team import Team
 from matchcode.match import Match
 from country import Country
-from miscfunctions import return_schedule, adddays
-from datecode.date_functions import get_weekdays, get_evenly_spaced_dates, sort_by_date
 
 class League:
     def __init__(self, name, country, team_type, level, league_type ,teams , num_rounds, win_points=2, draw_points=1, start_year = 2023, start_month=11, start_day=1, end_month=2, end_day=15, match_manager=None):
@@ -49,6 +47,9 @@ class League:
             self.is_started = True
 
     def generate_schedule(self):
+        from miscfunctions import return_schedule
+        from datecode.date_functions import get_weekdays, get_evenly_spaced_dates, sort_by_date
+
         schedule = return_schedule(self.num_teams,self.num_rounds)
 
         sundays = get_weekdays((self.start_year, self.start_month, self.start_day), (self.end_year, self.end_month, self.end_day),"Sunday")

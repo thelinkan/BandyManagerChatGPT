@@ -1,4 +1,3 @@
-from miscfunctions import yesterday
 
 
 def print_playoff_series(series):
@@ -26,6 +25,8 @@ def print_playoff_series(series):
     print("")
 
 def print_yesterdays_results(game):
+    from miscfunctions import yesterday
+
     year_yesterday, month_yesterday, day_yesterday = yesterday(game.year, game.month, game.day)
     matches_today = game.match_manager.get_matches_by_date(year_yesterday, month_yesterday, day_yesterday)
 
