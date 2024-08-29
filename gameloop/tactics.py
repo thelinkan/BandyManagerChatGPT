@@ -5,24 +5,39 @@ from guielements import font,medium_font, small_font, button_width, button_heigh
 from guielements import new_game_button, load_game_button, credits_button, quit_button, new_game_ok_button, input_name, input_age, quit_game, choose_team_button
 from guielements import home_button,senior_squad_button, tactics_button, competition_button ,u19_squad_button,forward_time_button, save_game_button, quit_game_button
 
-def gameloop_tactics(game, player_rects, tactics_rects, event_pos):
+def gameloop_tactics(game, player_rects, tactics_list_rects, tactics_rect, event_pos):
     #print("tactics - loop")
     position_list = ["goalkeeper","libero","leftdef","rightdef","lefthalf","righthalf","leftmid","centralmid","rightmid","leftattack","rightattack","sub1","sub2","sub3","sub4","sub5"]
 
     playerlist_offset = (140,125)
     tactics_list_offset = (740,125)
+    tactics_offset = (490,125)
     event_pos_on_players = event_pos[0] - playerlist_offset[0], event_pos[1] - playerlist_offset[1]
-    event_pos_on_tactics = event_pos[0] - tactics_list_offset[0], event_pos[1] - tactics_list_offset[1]
+    event_pos_on_tactics_list = event_pos[0] - tactics_list_offset[0], event_pos[1] - tactics_list_offset[1]
+    event_pos_on_tactics = event_pos[0] - tactics_offset[0], event_pos[1] - tactics_offset[1]
     manager_team_name = game.manager.return_team()
     manager_team = game.teams[manager_team_name]
+
     for i, rect in enumerate(player_rects):
         if rect.collidepoint(event_pos_on_players):
             game.selected_player_index = i
             game.selected_tactics_index = -1
+            break
+
+    for i, rect in enumerate(tactics_rect):
+        if rect.collidepoint(event_pos_on_tactics):
+            if game.selected_tactics_index == 0:
+                game.selected_player_index = -1
+                game.selected_tactics_index = -1
+                manager_team.tactics['passing']['longballs'] = i
+                if (manager_team.tactics['passing']['longballs']<0):
+                    manager_team.tactics['passing']['longballs'] = 0
+                if (manager_team.tactics['passing']['longballs']>10):
+                    manager_team.tactics['passing']['longballs'] = 10
 
             break
-    for i, rect in enumerate(tactics_rects):
-        if rect.collidepoint(event_pos_on_tactics):
+    for i, rect in enumerate(tactics_list_rects):
+        if rect.collidepoint(event_pos_on_tactics_list):
             if i == 0:
                 game.selected_player_index = -1
                 game.selected_tactics_index = 0
@@ -41,8 +56,8 @@ def gameloop_tactics(game, player_rects, tactics_rects, event_pos):
                 for j in range (15):
                     if str(selected_player_uuid) == str(manager_team.actual_positions[position_list[j]]["player_uuid"]):
                         selected_player_pos = j
-        for i, rect in enumerate(tactics_rects):
-            if rect.collidepoint(event_pos_on_tactics):
+        for i, rect in enumerate(tactics_list_rects):
+            if rect.collidepoint(event_pos_on_tactics_list):
 
                 if(i>=3 and i<=7):
                     if manager_team.tactics['corner']['cornertaker'] == selected_player_uuid:

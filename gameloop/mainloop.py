@@ -10,7 +10,7 @@ from gameloop.lineup import gameloop_lineup
 from screens.screensleague import choose_league
 pygame.init()
 
-def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
+def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, rectlist_3, event):
     if home_button.rect.collidepoint(event.pos):
         game.game_page = "home"
         game.start_page = 1
@@ -59,7 +59,7 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event):
     if(game.game_page == "lineup"):
         gameloop_lineup(game, rectslist_1, rectslist_2, event.pos)
     if(game.game_page == "tactics"):
-        gameloop_tactics(game, rectslist_1, rectslist_2, event.pos)
+        gameloop_tactics(game, rectslist_1, rectslist_2, rectlist_3, event.pos)
     if (game.game_page == "home"):
         home_loop(game, rectslist_1, event)
     if ((game.game_page == "schedule" or game.game_page == "competition") and game.game_sub_page == "chooseleague"):

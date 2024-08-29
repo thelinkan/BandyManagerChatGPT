@@ -527,10 +527,7 @@ class Game:
                         if tactic_type == 'corner':
                             cornertaker = settings.get('cornertaker', None)
                             if cornertaker:
-                                print(f"cornertaker: {cornertaker}")
                                 valid_cornertaker_uuid = validate_uuid(cornertaker)
-                                print(f"valid: {valid_cornertaker_uuid}")
-                                
                                 team.tactics['corner']['cornertaker'] = valid_cornertaker_uuid if valid_cornertaker_uuid else None
 
                             # Ensure target players' UUIDs are valid

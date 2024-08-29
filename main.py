@@ -50,7 +50,7 @@ while running:
             elif event.button == 1 and game_state == "new_game_2":
                 game_state = new_game_menu2(game, game_state,country_rects,league_rects,team_rects,selected_team,choose_team_button, event)
             elif event.button == 1 and game_state == "game_mainscreen":
-                game_state = mainscreen_loop(game, game_state, rectslist_1, rectslist_2, event)
+                game_state = mainscreen_loop(game, game_state, rectslist_1, rectslist_2, rectslist_3, event)
         if game_state =="new_game":
             new_game_input(event)
 
@@ -63,7 +63,7 @@ while running:
     if game_state == "new_game_2":
         country_rects,league_rects, team_rects,selected_team=draw_newgame2_menu(game)
     if game_state == "game_mainscreen":
-        rectslist_1, rectslist_2 = draw_game_mainscreen(game)
+        rectslist_1, rectslist_2, rectslist_3 = draw_game_mainscreen(game)
     if game_state == "view_match":
         #draw_view_match(game,match_to_view)
         game_state = "game_mainscreen"

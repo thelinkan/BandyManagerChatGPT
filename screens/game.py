@@ -294,6 +294,7 @@ def draw_game_mainscreen(game):
 
     rectlist_1 = []
     rectlist_2 = []
+    rectlist_3 = []
 
     manager_name = game.manager.return_name()
     manager_team_name = game.manager.return_team()
@@ -354,7 +355,7 @@ def draw_game_mainscreen(game):
     if (game.game_page == "lineup"):
         rectlist_1, rectlist_2 = draw_lineup(game,manager_team)
     if (game.game_page == "tactics"):
-        rectlist_1, rectlist_2 = draw_tactics(game,manager_team)
+        rectlist_1, rectlist_2, rectlist_3 = draw_tactics(game,manager_team)
     if (game.game_page == "media"):
         rectlist_1 = draw_media(game)
     if (game.game_page == "schedule"):
@@ -369,4 +370,4 @@ def draw_game_mainscreen(game):
     # Update display
     pygame.display.flip()
 
-    return rectlist_1, rectlist_2
+    return rectlist_1, rectlist_2, rectlist_3
