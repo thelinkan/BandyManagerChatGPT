@@ -5,19 +5,20 @@ import random
 import uuid
 from club import Club
 from team import Team
+from game import Game
 from constants import WHITE,BLACK,GRAY
 
 
 
 
-def get_club_from_team(game, team):
+def get_club_from_team(game: Game, team: Team) -> Club|None:
     for club in game.clubs:
         for club_team in club.teams:
             if club_team == team:
                 return club
     return None
 
-def draw_calendar(year, month, day):
+def draw_calendar(year: int, month: int, day: int) -> pygame.Surface:
 
     # Define fonts
     small_font = pygame.font.Font(None, 14)
@@ -71,7 +72,7 @@ def draw_calendar(year, month, day):
     return border_surface
 
 
-def return_schedule(num_teams,num_rounds):
+def return_schedule(num_teams: int,num_rounds: int) -> list:
 
     print(f"teams: {num_teams}, || numrounds_ {num_rounds}")
     if(num_teams == 4):
@@ -191,7 +192,7 @@ def adddays(year, month, day, days_to_add):
         year += 1
     return year, month, day
 
-def yesterday(year, month, day):
+def yesterday(year: int, month: int, day:int ) -> tuple[int,int,int]:
     if day == 1:
         month -= 1
         if month == 0:
@@ -211,7 +212,7 @@ def yesterday(year, month, day):
     return year, month, day
 
 
-def get_weekdays(start_date, end_date, weekday):
+def get_weekdays(start_date, end_date, weekday: str) -> list:
     weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     weekday_idx = weekdays.index(weekday)
 
@@ -224,7 +225,7 @@ def get_weekdays(start_date, end_date, weekday):
     return [(d.year, d.month, d.day) for d in weekdays_list]
 
 
-def get_k_integers(n, k):
+def get_k_integers(n: int, k: int) -> list:
     if k > n:
         raise ValueError("k cannot be greater than n")
     elif k == n:
@@ -252,7 +253,7 @@ def get_num_rounds(num_teams,num_rounds):
 
     return rounds_per_page,num_pages    
 
-def validate_uuid(uuid_str):
+def validate_uuid(uuid_str: str) -> uuid.UUID|None:
     try:
         return uuid.UUID(uuid_str)
     except (ValueError, AttributeError, TypeError):

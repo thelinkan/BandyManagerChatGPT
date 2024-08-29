@@ -12,7 +12,7 @@ from team import Team
 
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
-def draw_tactics(game,team):
+def draw_tactics(game: Game,team: Team):
     tactics_rects = []
     playerlist_offset = (140,125)
     playerlist_surface, player_rects, hover_player_uuid, selected_player_uuid = draw_tactics_playerlist(game,team, playerlist_offset, "tactics")
@@ -36,6 +36,10 @@ def draw_tactics(game,team):
         defense_surface, tactics_rects = draw_tactics_choose_defense(game, player_offset, team.tactics['defence']['type'])
         screen.blit(defense_surface,player_offset)
 
+    if(game.selected_tactics_index==2):
+        offense_surface, tactics_rects = draw_tactics_choose_offense(game, player_offset, team.tactics['offence']['type'])
+        screen.blit(offense_surface,player_offset)
+
     '''
     pitch_surface, jersey_rects = draw_tactics_pitch(game,team,hover_player_uuid, selected_player_uuid, pitch_offset)
     screen.blit(pitch_surface,pitch_offset)
@@ -45,7 +49,7 @@ def draw_tactics(game,team):
 
     return player_rects, tactics_rect, tactics_rects
 
-def draw_tactics_list(game, team, tactics_list_offset):
+def draw_tactics_list(game: Game, team: Team, tactics_list_offset):
     mouse_pos = pygame.mouse.get_pos()
     mouse_pos_on_list = mouse_pos[0] - tactics_list_offset[0], mouse_pos[1] - tactics_list_offset[1]
 
@@ -236,7 +240,7 @@ def draw_lineup(game: Game,team: Team):
 
     return player_rects, jersey_rects
 
-def draw_tactics_pitch(game, team, hover_player_uuid, selected_player_uuid, pitch_offset):
+def draw_tactics_pitch(game: Game, team: Team, hover_player_uuid, selected_player_uuid, pitch_offset):
     mouse_pos = pygame.mouse.get_pos()
     mouse_pos_on_pitch = mouse_pos[0] - pitch_offset[0], mouse_pos[1] - pitch_offset[1]
     pitch_surface = pygame.Surface((600,600), pygame.SRCALPHA)
@@ -352,7 +356,7 @@ def draw_tactics_playerlist(game,team, playerlist_offset, useage: str):
         playerlist_surface.blit(text, text_rect)
     return playerlist_surface,player_rects,hover_player_uuid, selected_player_uuid
 
-def draw_tactics_choose_longpasses(game, tactics_offset,longballs_selected):
+def draw_tactics_choose_longpasses(game: Game, tactics_offset,longballs_selected):
     mouse_pos = pygame.mouse.get_pos()
     mouse_pos_on_list = mouse_pos[0] - tactics_offset[0], mouse_pos[1] - tactics_offset[1]
 
@@ -392,7 +396,7 @@ def draw_tactics_choose_longpasses(game, tactics_offset,longballs_selected):
         longpasses_surface.blit(text, text_rect)
     return longpasses_surface, longpass_rects
 
-def draw_tactics_choose_defense(game, tactics_offset,defense_selected):
+def draw_tactics_choose_defense(game: Game, tactics_offset,defense_selected):
     mouse_pos = pygame.mouse.get_pos()
     mouse_pos_on_list = mouse_pos[0] - tactics_offset[0], mouse_pos[1] - tactics_offset[1]
 
@@ -406,7 +410,7 @@ def draw_tactics_choose_defense(game, tactics_offset,defense_selected):
     text = header_font.render("Defencive tactics", True, BLACK)
     text_rect = text.get_rect(left=header_rect.left + 10, centery=header_rect.centery)
     defense_surface.blit(text, text_rect)
-    longpass_rects = []
+    defense_rects = []
     row_height = 30
     player_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
     row_height = FONTSIZE_VERY_SMALL+8
@@ -427,16 +431,60 @@ def draw_tactics_choose_defense(game, tactics_offset,defense_selected):
 
         pygame.draw.rect(defense_surface, row_color, row_rect)
 
-        longpass_rects.append(row_rect)
+        defense_rects.append(row_rect)
 
         text = player_font.render(defense_tactic, True, BLACK)
         text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
         defense_surface.blit(text, text_rect)
-    return defense_surface, longpass_rects
+    return defense_surface, defense_rects
 
-def draw_player(game,player_uuid):
+def draw_tactics_choose_offense(game: Game, tactics_offset,offense_selected):
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos_on_list = mouse_pos[0] - tactics_offset[0], mouse_pos[1] - tactics_offset[1]
+
+    offense_surface = pygame.Surface((150,600), pygame.SRCALPHA)
+    header_rect = pygame.Rect(0, 0, 150, 30)
+
+    defense_tactics = ['Neutral', 'Value and slow advance', 'Offensive', 'Counter-attack']
+
+    pygame.draw.rect(offense_surface, TABLE_HEADER_COLOR, header_rect)
+    header_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
+    text = header_font.render("Defencive tactics", True, BLACK)
+    text_rect = text.get_rect(left=header_rect.left + 10, centery=header_rect.centery)
+    offense_surface.blit(text, text_rect)
+    defense_rects = []
+    row_height = 30
+    player_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
+    row_height = FONTSIZE_VERY_SMALL+8
+
+    for i, defense_tactic in enumerate(defense_tactics):
+        if i % 2 == 0:
+            row_color = TABLE_ROW_EVEN_COLOR
+        else:
+            row_color = TABLE_ROW_ODD_COLOR        
+        row_rect = pygame.Rect(0, 30 + i * row_height, 300, row_height)
+        if mouse_pos and row_rect.collidepoint(mouse_pos_on_list):
+            row_color = (255,200,200)
+        if(offense_selected == i):
+            row_color = (200,0,0)
+
+        #    hover_player_uuid = player[0]
+
+
+        pygame.draw.rect(offense_surface, row_color, row_rect)
+
+        defense_rects.append(row_rect)
+
+        text = player_font.render(defense_tactic, True, BLACK)
+        text_rect = text.get_rect(left=row_rect.left + 10, centery=row_rect.centery)
+        offense_surface.blit(text, text_rect)
+    return offense_surface, defense_rects
+
+def draw_player(game: Game,player_uuid):
     player_surface = pygame.Surface((250,600), pygame.SRCALPHA)
     player = game.player_manager.find_player_by_uuid(player_uuid)
+    if player == None:
+        return player_surface
     #print(player_uuid)
     text = small_font.render(f"{player.first_name} {player.last_name}", True, BLACK)
     text_rect = pygame.Rect(0, 0, 250, 20)

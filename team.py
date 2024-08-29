@@ -150,9 +150,10 @@ class Team:
 
         # Check if no other player has the same jersey number
         #print(self.players)
-        for player_uuid in self.players.keys():
+        for player_uuid_keys in self.players.keys():
             #print(self.players[player_uuid].jersey_number)
-            if self.players[player_uuid].jersey_number == new_jersey_number and str(self.player.uuid) != str(player_uuid):
+            if self.players[player_uuid_keys].jersey_number == new_jersey_number and str(self.player.uuid) != str(player_uuid):
+
                 print(f"Player {self.player.first_name} {self.player.last_name} already has jersey number {new_jersey_number}.")
                 return False
 

@@ -26,6 +26,7 @@ from screens.screensMatch import draw_view_match
 
 from debug_functions import print_yesterdays_results, debugprint_playoff
 
+
 class Game:
     def __init__(self,year: int,month: int,day: int) -> None:
         self.year: int = year
@@ -49,11 +50,11 @@ class Game:
         self.selected_tactics_index: int = -1
         self.inspected_country = None
         self.inspected_team = None
-        self.inspected_league = None
-        self.isMatchesPlayed = False
+        self.inspected_league: str|None = None
+        self.isMatchesPlayed: bool = False
 
         self.game_page=None
-        self.game_sub_page=None
+        self.game_sub_page: str|None =None
         self.start_page:int = -1
 
     def new_game(self,manager_name : str,manager_age: int) -> None:
@@ -239,9 +240,10 @@ class Game:
             self.player_manager.load_player(player_load["first_name"],player_load["last_name"],player_load["age"],player_load["gender"],player_load["nationality"],player_load["position"],player_load["team"],player_load["uuid"])
             player: Player|None = self.player_manager.find_player_by_uuid(player_load["uuid"])
             attributes = player_load["attributes"]
-            for attribute_name, attribute_data in attributes.items():
-                player.set_attribute(attribute_name, attribute_data["level"], attribute_data["experience"])
-                #print(attributes)
+            if player is not None:
+                for attribute_name, attribute_data in attributes.items():
+                    player.set_attribute(attribute_name, attribute_data["level"], attribute_data["experience"])
+                    #print(attributes)
 
         self.clubs = self.read_clubs_from_json(game_data['club_data'])
         #for club in self.clubs:
@@ -429,7 +431,7 @@ class Game:
             if country.name == country_name:
                 return country.return_flag()
 
-    def return_league_by_name(self, league_name):
+    def return_league_by_name(self, league_name: str|None) -> League|None:
         #print(self.leagues)
         for league in self.leagues:
             #print(f"league: {league} {league.name}")
@@ -517,8 +519,9 @@ class Game:
                         # Get the Player object with the corresponding UUID
                         player : Player|None = self.player_manager.find_player_by_uuid(player_uuid)
                         # Add the Player object to the team's squad
-                        team.add_player(player)
-                        team.change_player_jersey_number(player.uuid,jersey_number)
+                        if player is not None:
+                            team.add_player(player)
+                            team.change_player_jersey_number(player.uuid,jersey_number)
                 if 'actual_positions' in team_data:
                     for actual_position in team_data['actual_positions']:
                         team.assign_player_to_position(actual_position['actual_position'],actual_position['player_uuid'])
@@ -691,9 +694,9 @@ class Game:
 
         return match_viewed, match_to_view
 
-    def schedule_match(self, match):
-        # logic to schedule match goes here
-        self.match_manager.add_match(match)
+    #def schedule_match(self, match):
+    #    # logic to schedule match goes here
+    #    self.match_manager.add_match(match)
 
     def quit_game(self):
         # quit game

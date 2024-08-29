@@ -14,7 +14,7 @@ def get_weekdays(start_date, end_date, weekday):
 
     return [(d.year, d.month, d.day) for d in weekdays_list]
 
-def get_evenly_spaced_dates(dates_list, num_dates):
+def get_evenly_spaced_dates(dates_list: list, num_dates: int) -> list:
     num_dates_total = len(dates_list)
     if num_dates >= num_dates_total:
         return dates_list

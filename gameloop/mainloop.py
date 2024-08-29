@@ -8,9 +8,13 @@ from guielements import home_button,media_button,senior_squad_button, lineup_but
 from gameloop.tactics import gameloop_tactics
 from gameloop.lineup import gameloop_lineup
 from screens.screensleague import choose_league
+
+from button import Button
+from league import League
+
 pygame.init()
 
-def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, rectlist_3, event):
+def mainscreen_loop(game: Game, game_state: str, rectslist_1, rectslist_2, rectlist_3, event) -> str:
     if home_button.rect.collidepoint(event.pos):
         game.game_page = "home"
         game.start_page = 1
@@ -35,11 +39,12 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, rectlist_3, even
                 game.selected_team_index = i
                 selected_league = game.inspected_league
                 league = game.return_league_by_name(selected_league)
-                sorted_table = sorted(league.table.items(), key=lambda x: (-x[1]['points'], -x[1]['goals_for'] + x[1]['goals_against'], -x[1]['goals_for']))
-                for j, team in enumerate(sorted_table):
-                    if j == game.selected_team_index:
-                        game.inspected_team = team
-                        pass                
+                if league is not None:
+                    sorted_table = sorted(league.table.items(), key=lambda x: (-x[1]['points'], -x[1]['goals_for'] + x[1]['goals_against'], -x[1]['goals_for']))
+                    for j, team in enumerate(sorted_table):
+                        if j == game.selected_team_index:
+                            game.inspected_team = team
+                            pass                
         for i, rect in enumerate(rectslist_2):
             if rect.collidepoint(event_pos_on_list2) and i==0:
                 game.game_sub_page = "chooseleague"
@@ -169,7 +174,7 @@ def mainscreen_loop(game, game_state, rectslist_1, rectslist_2, rectlist_3, even
 
     return game_state
 
-def start_menu(game_state,new_game_button,load_game_button,credits_button,quit_button,event):
+def start_menu(game_state: str,new_game_button: Button,load_game_button: Button,credits_button: Button,quit_button: Button,event) -> tuple[Game|None,str]:
     if game_state == "show_credits":
         game_state = "start_menu"
         game = None
@@ -198,7 +203,7 @@ def start_menu(game_state,new_game_button,load_game_button,credits_button,quit_b
     game = None
     return game,game_state
 
-def home_loop(game,rectslist_1,event):
+def home_loop(game: Game,rectslist_1,event) -> None:
         list_offset = (470,110)
         mouse_pos = event.pos
         mouse_pos_on_list = mouse_pos[0] - list_offset[0], mouse_pos[1] - list_offset[1]
@@ -212,7 +217,7 @@ def home_loop(game,rectslist_1,event):
                 break
 
 
-def new_game_menu(game, game_state, input_name, input_age, new_game_ok_button, event):
+def new_game_menu(game: Game, game_state: str, input_name, input_age, new_game_ok_button: Button, event) -> str:
     if new_game_ok_button.rect.collidepoint(event.pos):
         manager_name=input_name.return_text()
         if(len(input_age.return_text())>0):
@@ -225,7 +230,7 @@ def new_game_menu(game, game_state, input_name, input_age, new_game_ok_button, e
 
     return game_state
 
-def new_game_menu2(game, game_state,country_rects,league_rects,team_rects, selected_team,choose_team_button, event):
+def new_game_menu2(game: Game, game_state: str,country_rects,league_rects,team_rects, selected_team,choose_team_button: Button, event) -> str:
     for i, rect in enumerate(country_rects):
         if rect.collidepoint(event.pos):
             game.selected_country_index = i
@@ -251,7 +256,7 @@ def new_game_menu2(game, game_state,country_rects,league_rects,team_rects, selec
             
     return game_state
 
-def new_game_input(event):
+def new_game_input(event) -> None:
     name_active = False
     age_active = False
     if input_name.active:

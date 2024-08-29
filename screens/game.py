@@ -17,6 +17,11 @@ from debug_functions import print_yesterdays_results
 from screens.screensleague import draw_league, draw_schedule
 from screens.screenstactics import draw_tactics, draw_lineup, draw_player
 
+from game import Game
+from league import League
+from team import Team
+from club import Club
+
 pygame.init()
 
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
@@ -285,7 +290,7 @@ def draw_home(game,team):
     return arrow_rects
 
 
-def draw_game_mainscreen(game):
+def draw_game_mainscreen(game: Game) -> tuple[list, list, list]:
     # Draw screen
     screen.fill(WHITE)
     title = font.render("Bandymanager - Main screen", True, BLACK)
@@ -300,6 +305,8 @@ def draw_game_mainscreen(game):
     manager_team_name = game.manager.return_team()
     manager_team = game.teams[manager_team_name]
     manager_club = get_club_from_team(game, manager_team)
+    if(manager_club == None):
+        return rectlist_1, rectlist_2, rectlist_3
     manager_club_name = manager_club.name
 
     if(manager_team.team_type == "Men"):

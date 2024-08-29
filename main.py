@@ -46,11 +46,14 @@ while running:
                 game,game_state = start_menu(game_state,new_game_button,load_game_button,credits_button,quit_button,event)
             elif event.button == 1 and game_state == "new_game":
                 logger.info("New game")
-                game_state = new_game_menu(game, game_state, input_name, input_age, new_game_ok_button, event)
+                if type(game) is Game:
+                    game_state = new_game_menu(game, game_state, input_name, input_age, new_game_ok_button, event)
             elif event.button == 1 and game_state == "new_game_2":
-                game_state = new_game_menu2(game, game_state,country_rects,league_rects,team_rects,selected_team,choose_team_button, event)
+                if type(game) is Game:
+                    game_state = new_game_menu2(game, game_state,country_rects,league_rects,team_rects,selected_team,choose_team_button, event)
             elif event.button == 1 and game_state == "game_mainscreen":
-                game_state = mainscreen_loop(game, game_state, rectslist_1, rectslist_2, rectslist_3, event)
+                if type(game) is Game:
+                    game_state = mainscreen_loop(game, game_state, rectslist_1, rectslist_2, rectslist_3, event)
         if game_state =="new_game":
             new_game_input(event)
 
@@ -63,7 +66,8 @@ while running:
     if game_state == "new_game_2":
         country_rects,league_rects, team_rects,selected_team=draw_newgame2_menu(game)
     if game_state == "game_mainscreen":
-        rectslist_1, rectslist_2, rectslist_3 = draw_game_mainscreen(game)
+        if game is not None:
+            rectslist_1, rectslist_2, rectslist_3 = draw_game_mainscreen(game)
     if game_state == "view_match":
         #draw_view_match(game,match_to_view)
         game_state = "game_mainscreen"
