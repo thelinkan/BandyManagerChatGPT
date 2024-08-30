@@ -19,6 +19,7 @@ def draw_view_match(game,match_to_view):
 
     match_to_view.home_goals = 0
     match_to_view.away_goals = 0
+    match_to_view.set_ball_possession("home", "leftattack")
 
     match_state = "Pre game"
     #pdb.set_trace()
@@ -36,6 +37,7 @@ def draw_view_match(game,match_to_view):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 and (match_state == "Pre game"):
                     if header_button_rect.collidepoint(event.pos):
+                        match_to_view.set_initial_positions()
                         match_state = "1st half"
                 if event.button == 1 and (match_state == "Half time"):
                     if header_button_rect.collidepoint(event.pos):
