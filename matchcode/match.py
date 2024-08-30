@@ -352,12 +352,13 @@ class Match:
             current_position = self.home_team_positions[player_position]
         else:
             current_position = self.away_team_positions[player_position]
-        print(self.home_team_positions)
-        print(current_position)
+        #print(self.home_team_positions)
+        #print(current_position)
         last_vector = (current_position[2],current_position[3])
 
         # Determine the desired direction (e.g., towards the ball, a teammate, or an open space)
         desired_direction = self.calculate_desired_direction(player,home_away,player_position)
+        print(desired_direction)
         # Calculate the angle between the last vector and the desired direction
 
         angle_between = self.calculate_angle(last_vector, desired_direction)
@@ -369,7 +370,7 @@ class Match:
             new_direction = self.interpolate_direction(last_vector, desired_direction, max_turn_angle)
         else:
             new_direction = desired_direction
-        print(f"movement: {last_vector} - {desired_direction} - {angle_between}")
+        print(f"movement: {home_away}/{player_position} {current_position} - {last_vector} - {desired_direction} - {angle_between}")
 
         #target_position = (0,0)
         #direction_vector = (target_position[0] - current_position[0], 
@@ -391,44 +392,67 @@ class Match:
         else:
             self.away_team_positions[player_position] = new_position
                 
-        print(f"{current_position} - {new_position}")            
+        #print(f"{current_position} - {new_position}")            
 
     def calculate_desired_direction(self, player,home_away,player_position):
         """
         Determines the desired direction for the player based on their position 
         and current game context.
         """
-        print(player)
-        if player.position == 'goalkeeper':
+        #print(player)
+        if player_position == 'goalkeeper':
             #return self._goalkeeper_direction_logic(player)
             return(0,0)
-        elif player.position in ['libero', 'leftdef', 'rightdef']:
+        elif player_position in ['libero', 'leftdef', 'rightdef']:
             #return self._defender_direction_logic(player)
             return(0,0)
-        elif player.position in ['lefthalf', 'righthalf']:
+        elif player_position in ['lefthalf', 'righthalf']:
             #return self._half_back_direction_logic(player)
             return(0,0)
-        elif player.position in ['leftmid', 'centralmid', 'rightmid']:
+        elif player_position in ['leftmid', 'centralmid', 'rightmid']:
             #return self._midfielder_direction_logic(player)
             return(0,0)
-        elif player.position in ['leftattack', 'rightattack']:
+        elif player_position in ['leftattack', 'rightattack']:
             return self._attacker_direction_logic(player,home_away,player_position)
-            return(0,0)
         else:
             #return self._general_direction_logic(player)
             return(0,0)
        
     def _attacker_direction_logic(self,player,home_away,player_position):
-        pass
+        if(home_away=="home"):
+            current_position = self.home_team_positions[player_position]
+        else:
+            current_position = self.away_team_positions[player_position]
+
+        possession = self.get_player_with_possession()
+        if(possession == None):
+            target_position = (30,50)
+        elif(possession[0]==home_away):
+            if(possession[1]==player_position):
+                target_position = (30,85)
+            else:
+                target_position = (20,90)
+        else:
+            target_position = (20,15)
+
+
+        desired_direction =(
+            target_position[0]-current_position[0],
+            target_position[1]-current_position[1]
+        )
+        return desired_direction
 
     def calculate_angle(self, vec1, vec2):
         """Calculates the angle between two vectors."""
         dot_product = vec1[0] * vec2[0] + vec1[1] * vec2[1]
         magnitude_vec1 = math.sqrt(vec1[0] ** 2 + vec1[1] ** 2)
         magnitude_vec2 = math.sqrt(vec2[0] ** 2 + vec2[1] ** 2)
+        magnitude_multi = magnitude_vec1 * magnitude_vec2
         if magnitude_vec1 * magnitude_vec2 == 0:
             return 0
-        return math.acos(dot_product / (magnitude_vec1 * magnitude_vec2))
+        if dot_product/magnitude_multi >= 1 or dot_product/magnitude_multi <= -1:
+            return 0      
+        return math.acos(dot_product / (magnitude_multi))
 
     def calculate_max_turn_angle(self, last_vector):
         """
@@ -436,7 +460,6 @@ class Match:
         based on their speed.
         """
         # Calculate the magnitude (speed) of the last vector
-        print(last_vector)
         speed = math.sqrt(last_vector[0]**2 + last_vector[1]**2)        
         # Simple example: The faster the player, the smaller the max turn angle
         # This value can be fine-tuned based on how you want players to behave.
