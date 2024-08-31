@@ -3,6 +3,8 @@ import random
 import math
 from numpy import random as rand
 
+from matchcode.matchcalculations import calculate_distance_between_players, calculate_speed_for_tick, calculate_shortest_distance
+
 from loggingbm import logger
 
 class Match:
@@ -20,7 +22,7 @@ class Match:
         self.field_length: int = 100
         #self.time_since_last_goal: int = 0
         self.idle_time_left: int = 0
-        self.game_state: int = 0
+        self.game_state: str = "Pre game"
 
         # Store player positions for both teams
         self.home_team_positions = {}
@@ -151,6 +153,30 @@ class Match:
             self.move_player(player,"away",position_list[i], game_time_delta)
 
         self.update_ball_position(game_time_delta)
+
+        print(f"{time}: {self.game_state} -- {self.get_player_with_possession()}/{self.ball_position}")
+        if(self.game_state == "pre game"):
+            self.game_state = "playing"
+        if(self.game_state == "homegoal"):
+            self.home_goals += 1
+            self.set_ball_possession("away","leftattack")
+            self.reset_positions_after_goal()
+            self.game_state = "stroke off"
+        if(self.game_state == "awaygoal"):
+            self.home_goals += 1
+            self.set_ball_possession("home","leftattack")
+            self.reset_positions_after_goal()
+            self.game_state = "stroke off"
+        if(self.game_state == "homekeepers"):
+            self.set_ball_possession("home","goalkeeper")
+            self.ball_position = (self.home_team_positions['goalkeeper'][0], self.home_team_positions['goalkeeper'][1], 0)
+            self.game_state = "playing"
+        if(self.game_state == "awaykeepers"):
+            self.set_ball_possession("away","goalkeeper")
+            self.ball_position = (self.away_team_positions['goalkeeper'][0], self.away_team_positions['goalkeeper'][1], 0)
+            #print(self.away_team_positions['goalkeeper'])
+            self.game_state = "playing"
+
         #print(f"{time} __{self.ball_position} : {self.ball_vector}")
         '''
         off_weight = [2,2,3,3,8,8,12,12,12,19,19]
@@ -234,8 +260,8 @@ class Match:
         :param player_with_ball: The player object who has possession of the ball, if any.
         """
         player_with_ball = self.get_player_with_possession()
-        print(f"Player with ball: {player_with_ball}")
-        if player_with_ball:
+        #print(f"Player with ball: {player_with_ball}")
+        if player_with_ball[1] is not None:
             # Player has possession, ball follows player's movement.
             if(player_with_ball[0]=="home"):
                 self.ball_position = (self.home_team_positions[player_with_ball[1]][0], self.home_team_positions[player_with_ball[1]][1], 0)
@@ -288,7 +314,7 @@ class Match:
                     self.ball_vector = (0, 0, 0)
 
         # Ensure ball position stays within the field boundaries
-        print(f"ball position {self.ball_position}")
+        #print(f"ball position {self.ball_position}")
         if self.ball_position[0] <= 0 or self.ball_position[0] >= self.field_width:
             # Ball hits the left or right boundary, invert the x component of the vector
             self.ball_vector = (-self.ball_vector[0], self.ball_vector[1], self.ball_vector[2])
@@ -316,7 +342,7 @@ class Match:
             max(0, self.ball_position[2])
         )
 
-    def set_ball_possession(self, team, position: str) -> None:
+    def set_ball_possession(self, team: str, position: str = None) -> None:
         """Set the player in possession of the ball."""
         if team not in ["home", "away"]:
             raise ValueError("Invalid team identifier. Use 'home' or 'away'.")
@@ -328,7 +354,7 @@ class Match:
             "sub1", "sub2", "sub3", "sub4", "sub5"
         ]
         
-        if position not in valid_positions:
+        if position is not None and position not in valid_positions:
             raise ValueError("Invalid position identifier.")
         
         self.ball_possession = (team, position)
@@ -356,9 +382,19 @@ class Match:
         #print(current_position)
         last_vector = (current_position[2],current_position[3])
 
+        # Step 1: Decision Logic
+        decision, target_player = self.calculate_decision(player, home_away, player_position, current_position)
+        if target_player is None:
+            target_player_position = (-1,-1)
+        else:   
+            if(target_player[0]=="home"):
+                target_player_position = self.home_team_positions[target_player[1]]
+            else:
+                target_player_position = self.away_team_positions[target_player[1]]
+
         # Determine the desired direction (e.g., towards the ball, a teammate, or an open space)
-        desired_direction = self.calculate_desired_direction(player,home_away,player_position)
-        print(desired_direction)
+        desired_direction = self.calculate_desired_direction(player,home_away,player_position, decision, target_player_position)
+        #print(desired_direction)
         # Calculate the angle between the last vector and the desired direction
 
         angle_between = self.calculate_angle(last_vector, desired_direction)
@@ -370,7 +406,7 @@ class Match:
             new_direction = self.interpolate_direction(last_vector, desired_direction, max_turn_angle)
         else:
             new_direction = desired_direction
-        print(f"movement: {home_away}/{player_position} {current_position} - {last_vector} - {desired_direction} - {angle_between}")
+        #print(f"movement: {home_away}/{player_position} {current_position} - {last_vector} - {desired_direction} - {angle_between}")
 
         #target_position = (0,0)
         #direction_vector = (target_position[0] - current_position[0], 
@@ -391,10 +427,26 @@ class Match:
             self.home_team_positions[player_position] = new_position 
         else:
             self.away_team_positions[player_position] = new_position
-                
+
+        if(decision == "throw"):
+            self.set_ball_possession(home_away,None)
+            if(home_away=="home"):
+                self.ball_vector = (0,5,0)
+            else:
+                self.ball_vector = (0,-5,0)
+        if(player_position == "goalkeeper"):
+            #print(f"{player_position}: {self.away_team_positions}")
+            pass
+        if(decision == "shoot"):
+            print("Decision = Shoot")
+            self.game_state = self.action_attempt_shot(player, home_away,player_position)
+        
+
+
+
         #print(f"{current_position} - {new_position}")            
 
-    def calculate_desired_direction(self, player,home_away,player_position):
+    def calculate_desired_direction(self, player,home_away,player_position, decision, target_player_position):
         """
         Determines the desired direction for the player based on their position 
         and current game context.
@@ -405,7 +457,7 @@ class Match:
             return(0,0)
         elif player_position in ['libero', 'leftdef', 'rightdef']:
             #return self._defender_direction_logic(player)
-            return(0,0)
+            return self._defender_direction_logic(player,home_away,player_position, decision, target_player_position)
         elif player_position in ['lefthalf', 'righthalf']:
             #return self._half_back_direction_logic(player)
             return(0,0)
@@ -413,12 +465,12 @@ class Match:
             #return self._midfielder_direction_logic(player)
             return(0,0)
         elif player_position in ['leftattack', 'rightattack']:
-            return self._attacker_direction_logic(player,home_away,player_position)
+            return self._attacker_direction_logic(player,home_away,player_position, decision, target_player_position)
         else:
             #return self._general_direction_logic(player)
             return(0,0)
-       
-    def _attacker_direction_logic(self,player,home_away,player_position):
+
+    def _defender_direction_logic(self,player,home_away,player_position, decision, target_player_position):
         if(home_away=="home"):
             current_position = self.home_team_positions[player_position]
         else:
@@ -429,11 +481,52 @@ class Match:
             target_position = (30,50)
         elif(possession[0]==home_away):
             if(possession[1]==player_position):
-                target_position = (30,85)
+                if(home_away=="home"):
+                    target_position = (20,25)
+                else:
+                    target_position = (40,75)
+
             else:
-                target_position = (20,90)
+                if(home_away=="home"):
+                    target_position = (30,10)
+                else:
+                    target_position = (30,90)
         else:
-            target_position = (20,15)
+            if(home_away=="home"):
+                target_position = (30,10)
+            else:
+                target_position = (30,90)
+
+
+        desired_direction =(
+            target_position[0]-current_position[0],
+            target_position[1]-current_position[1]
+        )
+        return desired_direction
+     
+    def _attacker_direction_logic(self,player,home_away,player_position, decision, target_player_position):
+        if(home_away=="home"):
+            current_position = self.home_team_positions[player_position]
+        else:
+            current_position = self.away_team_positions[player_position]
+
+        possession = self.get_player_with_possession()
+        if(possession == None):
+            target_position = (30,50)
+        elif(possession[0]==home_away):
+            if(possession[1]==player_position):
+                if(home_away=="home"):
+                    target_position = (20,97)
+                else:
+                    target_position = (40,3)
+
+            else:
+                if(home_away=="home"):
+                    target_position = (30,90)
+                else:
+                    target_position = (30,10)
+        else:
+            target_position = (30,50)
 
 
         desired_direction =(
@@ -473,6 +566,162 @@ class Match:
             vec1[0] * (1 - ratio) + vec2[0] * ratio,
             vec1[1] * (1 - ratio) + vec2[1] * ratio
         )
+
+    def calculate_decision(self, player, home_away, player_position, current_position):
+        """
+        Determines the desired direction for the player based on their position 
+        and current game context.
+        """
+        #print(player)
+        if player_position == 'goalkeeper':
+            return self._goalkeeper_decision_logic(player,home_away,player_position)
+        elif player_position in ['libero', 'leftdef', 'rightdef']:
+            return self._defender_decision_logic(player,home_away,player_position)
+        elif player_position in ['lefthalf', 'righthalf']:
+            return "off-the-ball", None
+        elif player_position in ['leftmid', 'centralmid', 'rightmid']:
+            return "off-the-ball", None
+        elif player_position in ['leftattack', 'rightattack']:
+            return self._attacker_decision_logic(player,home_away,player_position)
+        else:
+            return "off-the-ball", None
+        # Implement the decision logic based on player role, ball position, etc.
+        # Return a decision (e.g., "shoot", "pass", "move")
+        return "dribble"
+
+    def _goalkeeper_decision_logic(self,player,home_away,player_position):
+        if(home_away=="home"):
+            current_position = self.home_team_positions[player_position]
+        else:
+            current_position = self.away_team_positions[player_position]
+
+        goal_position = (self.field_width // 2, self.field_length) if home_away == "home" else (self.field_width // 2, 0)
+        possession = self.get_player_with_possession()
+        if(possession == None):
+            return "off-the-ball",None
+        elif(possession[0]==home_away):
+            if(possession[1]==player_position):
+                #print(f"{possession[1]} -- {player_position}")
+                return "throw", (home_away,"libero")
+            else:
+                return "off-the-ball", None
+        else:
+            return "off-the-ball", None
+
+    def _defender_decision_logic(self,player,home_away,player_position):
+        if(home_away=="home"):
+            current_position = self.home_team_positions[player_position]
+        else:
+            current_position = self.away_team_positions[player_position]
+
+        possession = self.get_player_with_possession()
+        if(possession[1] == None):
+            if(self.ball_position[2]==0):
+                ball_position = (self.ball_position[0],self.ball_position[1])
+                ball_vector = (self.ball_vector[0],self.ball_vector[1])
+                shortest_distance_to_ball = calculate_shortest_distance(ball_position, ball_vector, (current_position[0],current_position[1]))
+                #print(f"{home_away}/{player_position} - {shortest_distance_to_ball}")
+                if(shortest_distance_to_ball<0.3):
+                    self.ball_possession=(home_away,player_position)
+            return "off-the-ball",None
+        elif(possession[0]==home_away):
+            if(possession[1]==player_position):
+                return "dribble", None
+            else:
+                return "off-the-ball", None
+        else:
+            return "off-the-ball", None
+
+    def _attacker_decision_logic(self,player,home_away,player_position):
+        if(home_away=="home"):
+            current_position = self.home_team_positions[player_position]
+        else:
+            current_position = self.away_team_positions[player_position]
+
+        goal_position = (self.field_width // 2, self.field_length) if home_away == "home" else (self.field_width // 2, 0)
+        
+        # Calculate distance to the goal
+        distance_to_goal = math.sqrt((goal_position[0] - current_position[0])**2 + 
+                                    (goal_position[1] - current_position[1])**2)
+
+        possession = self.get_player_with_possession()
+        if(possession == None):
+            return "off-the-ball", None
+        elif(possession[0]==home_away):
+            if(possession[1]==player_position):
+                #print(f"{possession[1]} -- {player_position}")
+                if distance_to_goal < 20:  # Close enough to shoot
+                    return self._shoot_or_dribble_logic(distance_to_goal), None
+                else:
+                    return "dribble", None
+            else:
+                return "off-the-ball", None
+        else:
+            return "off-the-ball", None
+
+    def _shoot_or_dribble_logic(self, distance_to_goal):
+        """
+        Decides whether to shoot or dribble based on distance to the goal and other factors.
+        """
+        # Example: The closer the player, the higher the chance to shoot
+        shoot_chance = max(0.2, 1 - (distance_to_goal / 20))  # Simple probability based on distance
+        
+        if random.random() < shoot_chance:
+            return "shoot"
+        else:
+            return "dribble"
+
+    def action_attempt_shot(self, player, home_away,player_position):
+        shot_quality = self.calculate_shot_quality(player, home_away, player_position)
+        if(shot_quality>15):
+            if(home_away=="home"):
+                return "homegoal"
+            else:
+                return "awaygoal"
+        else:
+            if(home_away=="home"):
+                return "awaykeepers"
+            else:
+                return "homekeepers"
+        
+
+    def calculate_shot_quality(self, player, home_away, player_position):
+        if(home_away=="home"):
+            current_position = self.home_team_positions[player_position]
+        else:
+            current_position = self.away_team_positions[player_position]
+
+        goal_position = (self.field_width // 2, self.field_length) if home_away == "home" else (self.field_width // 2, 0)
+        
+        # Calculate distance to the goal
+        distance_to_goal = math.sqrt((goal_position[0] - current_position[0])**2 + 
+                                    (goal_position[1] - current_position[1])**2)
+
+        # Calculate the angle relative to the goal
+        angle = math.degrees(math.atan2(abs(current_position[0] - goal_position[0]), current_position[1] - goal_position[1]))
+
+        
+        shooting = player.get_attribute("Shooting")
+        shooting_level = shooting.level
+        distance_factor = max(0,-0.003333*distance_to_goal**2 - 0.03333*distance_to_goal +1)
+
+        if distance_to_goal < 3 or angle > 135:
+            angle_factor = 1
+        elif 90 <= angle <= 135:
+            angle_factor = (angle - 90) / 45
+        else:
+            angle_factor = 0
+
+        base_quality = shooting_level * distance_factor * angle_factor
+        R = base_quality * 0.3 + 20
+        random_factor = random.uniform(-R, R)
+        final_quality = base_quality + random_factor
+        final_quality = max(0, min(100, final_quality))
+
+        print(f"shoot {distance_to_goal}:{angle} __ {shooting_level}/{round(distance_factor,5)}/{round(angle_factor,5)} ___ {final_quality}")
+        return final_quality
+
+        
 
     def set_initial_positions(self):
         # Set up the home team and away team positions
@@ -524,7 +773,7 @@ class Match:
 
             self.away_team_positions = positions
 
-        print(positions)
+        #print(positions)
 
 
     def reset_positions_after_goal(self):
