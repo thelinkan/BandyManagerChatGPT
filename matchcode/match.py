@@ -461,6 +461,30 @@ class Match:
             else:
                 self.ball_vector = throw_vector
                 
+        if(decision == "pass"):
+            max_pass_vector = 12
+            self.set_ball_possession(home_away,None)
+            # Calculate the vector from current position to the target position
+            pass_vector = (
+                target_player_position[0] - current_position[0],
+                target_player_position[1] - current_position[1],
+                0  # z-value is 0 for throws along the ice
+            )
+            
+            # Calculate the magnitude of the throw vector (Euclidean distance)
+            vector_magnitude = math.sqrt(pass_vector[0]**2 + pass_vector[1]**2)
+            
+            # If the magnitude is greater than the max allowed, scale it down
+            if vector_magnitude > max_pass_vector:
+                scaling_factor = max_pass_vector / vector_magnitude
+                self.ball_vector = (
+                    pass_vector[0] * scaling_factor,
+                    pass_vector[1] * scaling_factor,
+                    0
+                )
+            else:
+                self.ball_vector = pass_vector
+
         if(player_position == "goalkeeper"):
             #print(f"{player_position}: {self.away_team_positions}")
             pass
@@ -697,7 +721,7 @@ class Match:
         elif player_position in ['libero', 'leftdef', 'rightdef']:
             return self._defender_decision_logic(player,home_away,player_position)
         elif player_position in ['lefthalf', 'righthalf']:
-            return "off-the-ball", None
+            return self._half_decision_logic(player,home_away,player_position)
         elif player_position in ['leftmid', 'centralmid', 'rightmid']:
             return "off-the-ball", None
         elif player_position in ['leftattack', 'rightattack']:
@@ -757,11 +781,40 @@ class Match:
             return "off-the-ball",None
         elif(possession[0]==home_away):
             if(possession[1]==player_position):
-                return "dribble", None
+                decision_list = [
+                    ("dribble",None),
+                    ("pass",(home_away,"lefthalf")),
+                    ("pass",(home_away,"righthalf"))
+                ]
+                probabilities = [0.70, 0.15, 0.15]  # Corresponding probabilities
+
+                # Select a target based on the defined probabilities
+                decision = random.choices(decision_list, probabilities)[0]
+
+                return decision
             else:
                 return "off-the-ball", None
         else:
             return "off-the-ball", None
+
+    def _half_decision_logic(self,player,home_away,player_position):
+        if(home_away=="home"):
+            current_position = self.home_team_positions[player_position]
+        else:
+            current_position = self.away_team_positions[player_position]
+
+        possession = self.get_player_with_possession()
+        if(possession[1] == None):
+            if(self.ball_position[2]==0):
+                ball_position = (self.ball_position[0],self.ball_position[1])
+                ball_vector = (self.ball_vector[0],self.ball_vector[1])
+                shortest_distance_to_ball = calculate_shortest_distance(ball_position, ball_vector, (current_position[0],current_position[1]))
+                #print(f"{home_away}/{player_position} - {shortest_distance_to_ball}")
+                if(shortest_distance_to_ball<0.3):
+                    self.ball_possession=(home_away,player_position)
+            return "off-the-ball",None
+
+        return "off-the-ball",None
 
     def _attacker_decision_logic(self,player,home_away,player_position):
         if(home_away=="home"):
