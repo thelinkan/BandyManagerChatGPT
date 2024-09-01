@@ -3,7 +3,7 @@ import random
 import math
 from numpy import random as rand
 
-from matchcode.matchcalculations import calculate_distance_between_players, calculate_speed_for_tick, calculate_shortest_distance
+from matchcode.matchcalculations import calculate_distance_between_players, calculate_speed_for_tick, calculate_shortest_distance, calculate_direction
 
 from loggingbm import logger
 
@@ -478,24 +478,72 @@ class Match:
 
         possession = self.get_player_with_possession()
         if(possession == None):
-            target_position = (30,50)
-        elif(possession[0]==home_away):
+            if(home_away=="home"):
+                position_map = {
+                    "leftdef": (self.field_width // 2 - 20, 20),
+                    "libero": (self.field_width // 2, 16),
+                    "rightdef": (self.field_width // 2 + 20, 20)
+                }
+            else:
+                position_map = {
+                    "rightdef": (self.field_width // 2 - 20, self.field_length-20),
+                    "libero": (self.field_width // 2, self.field_length-16),
+                    "leftdef": (self.field_width // 2 + 20, self.field_length-20)
+                }
+            target_position = position_map.get(player_position, (30, 50))
+
+            return calculate_direction(current_position, target_position)
+        if(possession[0]==home_away):
             if(possession[1]==player_position):
                 if(home_away=="home"):
-                    target_position = (20,25)
+                    position_map = {
+                        "leftdef": (self.field_width // 2 - 20, 20),
+                        "libero": (self.field_width // 2, 16),
+                        "rightdef": (self.field_width // 2 + 20, 20)
+                    }
                 else:
-                    target_position = (40,75)
+                    position_map = {
+                        "rightdef": (self.field_width // 2 - 20, self.field_length-20),
+                        "libero": (self.field_width // 2, self.field_length-16),
+                        "leftdef": (self.field_width // 2 + 20, self.field_length-20)
+                    }
+                target_position = position_map.get(player_position, (30, 50))
+
+                return calculate_direction(current_position, target_position)
+
 
             else:
                 if(home_away=="home"):
-                    target_position = (30,10)
+                    position_map = {
+                        "leftdef": (self.field_width // 2 - 20, 20),
+                        "libero": (self.field_width // 2, 16),
+                        "rightdef": (self.field_width // 2 + 20, 20)
+                    }
                 else:
-                    target_position = (30,90)
+                    position_map = {
+                        "rightdef": (self.field_width // 2 - 20, self.field_length-20),
+                        "libero": (self.field_width // 2, self.field_length-16),
+                        "leftdef": (self.field_width // 2 + 20, self.field_length-20)
+                    }
+                target_position = position_map.get(player_position, (30, 50))
+
+                return calculate_direction(current_position, target_position)
         else:
             if(home_away=="home"):
-                target_position = (30,10)
+                position_map = {
+                    "leftdef": (self.field_width // 2 - 20, 20),
+                    "libero": (self.field_width // 2, 16),
+                    "rightdef": (self.field_width // 2 + 20, 20)
+                }
             else:
-                target_position = (30,90)
+                position_map = {
+                    "rightdef": (self.field_width // 2 - 20, self.field_length-20),
+                    "libero": (self.field_width // 2, self.field_length-16),
+                    "leftdef": (self.field_width // 2 + 20, self.field_length-20)
+                }
+            target_position = position_map.get(player_position, (30, 50))
+
+            return calculate_direction(current_position, target_position)
 
 
         desired_direction =(
@@ -512,28 +560,63 @@ class Match:
 
         possession = self.get_player_with_possession()
         if(possession == None):
-            target_position = (30,50)
-        elif(possession[0]==home_away):
+            if(home_away=="home"):
+                position_map = {
+                    "leftattack": (self.field_width // 2 + 20, 70),
+                    "rightattack": (self.field_width // 2 - 20, 60)
+                }
+            else:
+                position_map = {
+                    "leftattack": (self.field_width // 2 - 20, self.field_length-70),
+                    "rightattack": (self.field_width // 2 + 20, self.field_length-60)
+                }
+            target_position = position_map.get(player_position, (30, 50))
+
+            return calculate_direction(current_position, target_position)
+        if(possession[0]==home_away):
             if(possession[1]==player_position):
                 if(home_away=="home"):
-                    target_position = (20,97)
+                    position_map = {
+                        "leftattack": (self.field_width // 2 + 20, 70),
+                        "rightattack": (self.field_width // 2 - 20, 60)
+                    }
                 else:
-                    target_position = (40,3)
+                    position_map = {
+                        "leftattack": (self.field_width // 2 - 20, self.field_length-70),
+                        "rightattack": (self.field_width // 2 + 20, self.field_length-60)
+                    }
+                target_position = position_map.get(player_position, (30, 50))
+
+                return calculate_direction(current_position, target_position)
 
             else:
                 if(home_away=="home"):
-                    target_position = (30,90)
+                    position_map = {
+                        "leftattack": (self.field_width // 2 + 20, 70),
+                        "rightattack": (self.field_width // 2 - 20, 60)
+                    }
                 else:
-                    target_position = (30,10)
+                    position_map = {
+                        "leftattack": (self.field_width // 2 - 20, self.field_length-70),
+                        "rightattack": (self.field_width // 2 + 20, self.field_length-60)
+                    }
+                target_position = position_map.get(player_position, (30, 50))
+
+                return calculate_direction(current_position, target_position)
         else:
-            target_position = (30,50)
+            if(home_away=="home"):
+                position_map = {
+                    "leftattack": (self.field_width // 2 + 20, 70),
+                    "rightattack": (self.field_width // 2 - 20, 60)
+                }
+            else:
+                position_map = {
+                    "leftattack": (self.field_width // 2 - 20, self.field_length-70),
+                    "rightattack": (self.field_width // 2 + 20, self.field_length-60)
+                }
+            target_position = position_map.get(player_position, (30, 50))
 
-
-        desired_direction =(
-            target_position[0]-current_position[0],
-            target_position[1]-current_position[1]
-        )
-        return desired_direction
+            return calculate_direction(current_position, target_position)
 
     def calculate_angle(self, vec1, vec2):
         """Calculates the angle between two vectors."""

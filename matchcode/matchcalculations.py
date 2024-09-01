@@ -81,3 +81,10 @@ def calculate_shortest_distance(ball_position, ball_vector, player_position):
     shortest_distance = math.sqrt(perpendicular_vector[0]**2 + perpendicular_vector[1]**2)
     
     return shortest_distance
+
+def calculate_direction(current_position: tuple,target_position:tuple) -> tuple:
+    desired_direction =(
+            target_position[0]-current_position[0],
+            target_position[1]-current_position[1]
+        )
+    return desired_direction    

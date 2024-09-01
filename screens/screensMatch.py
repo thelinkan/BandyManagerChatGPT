@@ -54,6 +54,10 @@ def draw_view_match(game,match_to_view):
         match_event_surface = draw_events(match_to_view)
         screen.blit(match_event_surface,(100,100))
 
+        match_pitch_surface =draw_match_pitch(match_to_view)
+        screen.blit(match_pitch_surface,(600,100))
+
+
         if(match_state == "1st half" or match_state == "2nd half"):
             engine.tick(game)
         pygame.display.flip()
@@ -172,3 +176,69 @@ def draw_events(match_to_view):
         event_surface.blit(text,text_rect)    
         #print(f"{event_time}: {event_type} {goal_scorer.first_name}")
     return event_surface
+
+def draw_match_pitch(match_to_view):
+    pitch_surface = pygame.Surface((600,600), pygame.SRCALPHA)
+    pitch = pygame.image.load("images/pitch.png")
+    pitch = pygame.transform.scale(pitch,(int(611*0.60),int(1000*0.60)))
+    pitch_rect = pitch.get_rect()
+    pitch_surface.blit(pitch,pitch_rect)
+
+    x_scale = 348/60
+    y_scale = 580/100
+    home_team_positions = match_to_view.home_team_positions
+    away_team_positions = match_to_view.away_team_positions
+    home_team_color = (0,0,0)
+    away_team_color = (0,255,0)
+    #print(f"home positions: {home_team_positions}")
+    if(home_team_positions):
+        goalkeeper_position = (home_team_positions["goalkeeper"][0]*x_scale+10,home_team_positions["goalkeeper"][1]*y_scale+20)
+        libero_position = (home_team_positions["libero"][0]*x_scale+10,home_team_positions["libero"][1]*y_scale+20)
+        rightdefender_position = (home_team_positions["rightdef"][0]*x_scale+10,home_team_positions["rightdef"][1]*y_scale+20)
+        leftdefender_position = (home_team_positions["leftdef"][0]*x_scale+10,home_team_positions["leftdef"][1]*y_scale+20)
+        righthalf_position = (home_team_positions["righthalf"][0]*x_scale+10,home_team_positions["righthalf"][1]*y_scale+20)
+        lefthalf_position = (home_team_positions["lefthalf"][0]*x_scale+10,home_team_positions["lefthalf"][1]*y_scale+20)
+        centralmid_position = (home_team_positions["centralmid"][0]*x_scale+10,home_team_positions["centralmid"][1]*y_scale+20)
+        rightmid_position = (home_team_positions["rightmid"][0]*x_scale+10,home_team_positions["rightmid"][1]*y_scale+20)
+        leftmid_position = (home_team_positions["leftmid"][0]*x_scale+10,home_team_positions["leftmid"][1]*y_scale+20)
+        leftattack_position = (home_team_positions["leftattack"][0]*x_scale+10,(home_team_positions["leftattack"][1]*y_scale)+20)
+        rightattack_position = (home_team_positions["rightattack"][0]*x_scale+10,(home_team_positions["rightattack"][1]*y_scale)+20)
+        print(f"goalkeeper: {goalkeeper_position}")
+        pygame.draw.circle(pitch_surface,home_team_color,goalkeeper_position,6)
+        pygame.draw.circle(pitch_surface,home_team_color,libero_position,6)
+        pygame.draw.circle(pitch_surface,home_team_color,rightdefender_position,6)
+        pygame.draw.circle(pitch_surface,home_team_color,leftdefender_position,6)
+        pygame.draw.circle(pitch_surface,home_team_color,righthalf_position,6)
+        pygame.draw.circle(pitch_surface,home_team_color,lefthalf_position,6)
+        pygame.draw.circle(pitch_surface,home_team_color,centralmid_position,6)
+        pygame.draw.circle(pitch_surface,home_team_color,rightmid_position,6)
+        pygame.draw.circle(pitch_surface,home_team_color,leftmid_position,6)
+        pygame.draw.circle(pitch_surface,home_team_color,leftattack_position,6)
+        pygame.draw.circle(pitch_surface,home_team_color,rightattack_position,6)
+
+    if(away_team_positions):
+        goalkeeper_position = (away_team_positions["goalkeeper"][0]*x_scale+10,away_team_positions["goalkeeper"][1]*y_scale+20)
+        libero_position = (away_team_positions["libero"][0]*x_scale+10,away_team_positions["libero"][1]*y_scale+20)
+        rightdefender_position = (away_team_positions["rightdef"][0]*x_scale+10,away_team_positions["rightdef"][1]*y_scale+20)
+        leftdefender_position = (away_team_positions["leftdef"][0]*x_scale+10,away_team_positions["leftdef"][1]*y_scale+20)
+        righthalf_position = (away_team_positions["righthalf"][0]*x_scale+10,away_team_positions["righthalf"][1]*y_scale+20)
+        lefthalf_position = (away_team_positions["lefthalf"][0]*x_scale+10,away_team_positions["lefthalf"][1]*y_scale+20)
+        centralmid_position = (away_team_positions["centralmid"][0]*x_scale+10,away_team_positions["centralmid"][1]*y_scale+20)
+        rightmid_position = (away_team_positions["rightmid"][0]*x_scale+10,away_team_positions["rightmid"][1]*y_scale+20)
+        leftmid_position = (away_team_positions["leftmid"][0]*x_scale+10,away_team_positions["leftmid"][1]*y_scale+20)
+        leftattack_position = (away_team_positions["leftattack"][0]*x_scale+10,(away_team_positions["leftattack"][1]*y_scale)+20)
+        rightattack_position = (away_team_positions["rightattack"][0]*x_scale+10,(away_team_positions["rightattack"][1]*y_scale)+20)
+        print(f"goalkeeper: {goalkeeper_position}")
+        pygame.draw.circle(pitch_surface,away_team_color,goalkeeper_position,6)
+        pygame.draw.circle(pitch_surface,away_team_color,libero_position,6)
+        pygame.draw.circle(pitch_surface,away_team_color,rightdefender_position,6)
+        pygame.draw.circle(pitch_surface,away_team_color,leftdefender_position,6)
+        pygame.draw.circle(pitch_surface,away_team_color,righthalf_position,6)
+        pygame.draw.circle(pitch_surface,away_team_color,lefthalf_position,6)
+        pygame.draw.circle(pitch_surface,away_team_color,centralmid_position,6)
+        pygame.draw.circle(pitch_surface,away_team_color,rightmid_position,6)
+        pygame.draw.circle(pitch_surface,away_team_color,leftmid_position,6)
+        pygame.draw.circle(pitch_surface,away_team_color,leftattack_position,6)
+        pygame.draw.circle(pitch_surface,away_team_color,rightattack_position,6)
+
+    return pitch_surface
