@@ -185,12 +185,13 @@ def draw_match_pitch(match_to_view):
     pitch_surface.blit(pitch,pitch_rect)
 
     x_scale = 348/60
-    y_scale = 580/100
+    y_scale = 560/100
     home_team_positions = match_to_view.home_team_positions
     away_team_positions = match_to_view.away_team_positions
     home_team_color = (0,0,0)
     away_team_color = (0,255,0)
     #print(f"home positions: {home_team_positions}")
+    print(f"away positions: {away_team_positions}")
     if(home_team_positions):
         goalkeeper_position = (home_team_positions["goalkeeper"][0]*x_scale+10,home_team_positions["goalkeeper"][1]*y_scale+20)
         libero_position = (home_team_positions["libero"][0]*x_scale+10,home_team_positions["libero"][1]*y_scale+20)

@@ -453,16 +453,12 @@ class Match:
         """
         #print(player)
         if player_position == 'goalkeeper':
-            #return self._goalkeeper_direction_logic(player)
-            return(0,0)
+            return self._goalkeeper_direction_logic(player,home_away,player_position, decision, target_player_position)
         elif player_position in ['libero', 'leftdef', 'rightdef']:
-            #return self._defender_direction_logic(player)
             return self._defender_direction_logic(player,home_away,player_position, decision, target_player_position)
         elif player_position in ['lefthalf', 'righthalf']:
-            #return self._half_back_direction_logic(player)
             return(0,0)
         elif player_position in ['leftmid', 'centralmid', 'rightmid']:
-            #return self._midfielder_direction_logic(player)
             return(0,0)
         elif player_position in ['leftattack', 'rightattack']:
             return self._attacker_direction_logic(player,home_away,player_position, decision, target_player_position)
@@ -470,6 +466,18 @@ class Match:
             #return self._general_direction_logic(player)
             return(0,0)
 
+    def _goalkeeper_direction_logic(self,player,home_away,player_position, decision, target_player_position):
+        if(home_away=="home"):
+            current_position = self.home_team_positions[player_position]
+        else:
+            current_position = self.away_team_positions[player_position]
+        if(home_away=="home"):
+            target_position = (30,0)
+        else:
+            target_position = (30,100)
+
+        return calculate_direction(current_position, target_position)
+    
     def _defender_direction_logic(self,player,home_away,player_position, decision, target_player_position):
         if(home_away=="home"):
             current_position = self.home_team_positions[player_position]
@@ -615,7 +623,7 @@ class Match:
                     "rightattack": (self.field_width // 2 + 20, self.field_length-60)
                 }
             target_position = position_map.get(player_position, (30, 50))
-
+            target_position = (30,50)
             return calculate_direction(current_position, target_position)
 
     def calculate_angle(self, vec1, vec2):
