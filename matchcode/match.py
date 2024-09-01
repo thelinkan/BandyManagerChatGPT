@@ -265,6 +265,8 @@ class Match:
             # Player has possession, ball follows player's movement.
             if(player_with_ball[0]=="home"):
                 self.ball_position = (self.home_team_positions[player_with_ball[1]][0], self.home_team_positions[player_with_ball[1]][1], 0)
+            else:
+                self.ball_position = (self.away_team_positions[player_with_ball[1]][0], self.away_team_positions[player_with_ball[1]][1], 0)
             self.ball_vector = (0, 0, 0)
         else:
             # No possession, update ball position based on its vector.
@@ -392,6 +394,14 @@ class Match:
             else:
                 target_player_position = self.away_team_positions[target_player[1]]
 
+        speed_old = math.sqrt(last_vector[0]**2 + last_vector[1]**2)
+        skating = player.get_attribute("Skating").level
+        acceleration = player.get_attribute("Acceleration").level
+        max_speed = skating/10
+        max_acceleration = (acceleration / 100) * 4
+        new_acceleration = max_acceleration/2
+        speed_new = min(max_speed,speed_old+new_acceleration)
+
         # Determine the desired direction (e.g., towards the ball, a teammate, or an open space)
         desired_direction = self.calculate_desired_direction(player,home_away,player_position, decision, target_player_position)
         #print(desired_direction)
@@ -416,8 +426,7 @@ class Match:
             direction_vector = (new_direction[0] / vector_length, new_direction[1] / vector_length)
         else:
             direction_vector = (0,0)
-        speed = 10
-        move_distance = min(speed, vector_length)
+        move_distance = min(speed_new, vector_length)
         #if(player_position=="leftattack"):
 
         new_position = (current_position[0] + direction_vector[0] * move_distance,
@@ -429,11 +438,29 @@ class Match:
             self.away_team_positions[player_position] = new_position
 
         if(decision == "throw"):
+            max_throw_vector = 8
             self.set_ball_possession(home_away,None)
-            if(home_away=="home"):
-                self.ball_vector = (0,5,0)
+            # Calculate the vector from current position to the target position
+            throw_vector = (
+                target_player_position[0] - current_position[0],
+                target_player_position[1] - current_position[1],
+                0  # z-value is 0 for throws along the ice
+            )
+            
+            # Calculate the magnitude of the throw vector (Euclidean distance)
+            vector_magnitude = math.sqrt(throw_vector[0]**2 + throw_vector[1]**2)
+            
+            # If the magnitude is greater than the max allowed, scale it down
+            if vector_magnitude > max_throw_vector:
+                scaling_factor = max_throw_vector / vector_magnitude
+                self.ball_vector = (
+                    throw_vector[0] * scaling_factor,
+                    throw_vector[1] * scaling_factor,
+                    0
+                )
             else:
-                self.ball_vector = (0,-5,0)
+                self.ball_vector = throw_vector
+                
         if(player_position == "goalkeeper"):
             #print(f"{player_position}: {self.away_team_positions}")
             pass
@@ -510,11 +537,19 @@ class Match:
                         "rightdef": (self.field_width // 2 + 20, 20)
                     }
                 else:
-                    position_map = {
-                        "rightdef": (self.field_width // 2 - 20, self.field_length-20),
-                        "libero": (self.field_width // 2, self.field_length-16),
-                        "leftdef": (self.field_width // 2 + 20, self.field_length-20)
-                    }
+                    if(decision == "dribble"):
+                        position_map = {
+                            "rightdef": (self.field_width // 2 + 10, self.field_length-18),
+                            "libero": (self.field_width // 2 + 30, self.field_length-16),
+                            "leftdef": (self.field_width // 2 - 10 , self.field_length-18)
+                        }
+                    else:
+                        position_map = {
+                            "rightdef": (self.field_width // 2 - 20, self.field_length-20),
+                            "libero": (self.field_width // 2, self.field_length-16),
+                            "leftdef": (self.field_width // 2 + 20, self.field_length-20)
+                        }
+
                 target_position = position_map.get(player_position, (30, 50))
 
                 return calculate_direction(current_position, target_position)
@@ -553,12 +588,6 @@ class Match:
 
             return calculate_direction(current_position, target_position)
 
-
-        desired_direction =(
-            target_position[0]-current_position[0],
-            target_position[1]-current_position[1]
-        )
-        return desired_direction
      
     def _attacker_direction_logic(self,player,home_away,player_position, decision, target_player_position):
         if(home_away=="home"):
@@ -585,8 +614,8 @@ class Match:
             if(possession[1]==player_position):
                 if(home_away=="home"):
                     position_map = {
-                        "leftattack": (self.field_width // 2 + 20, 70),
-                        "rightattack": (self.field_width // 2 - 20, 60)
+                        "leftattack": (self.field_width // 2 + 10, 90),
+                        "rightattack": (self.field_width // 2 - 10, 90)
                     }
                 else:
                     position_map = {
@@ -623,7 +652,6 @@ class Match:
                     "rightattack": (self.field_width // 2 + 20, self.field_length-60)
                 }
             target_position = position_map.get(player_position, (30, 50))
-            target_position = (30,50)
             return calculate_direction(current_position, target_position)
 
     def calculate_angle(self, vec1, vec2):
@@ -693,7 +721,19 @@ class Match:
         elif(possession[0]==home_away):
             if(possession[1]==player_position):
                 #print(f"{possession[1]} -- {player_position}")
-                return "throw", (home_away,"libero")
+                # Define the possible target positions and their probabilities
+                targets = [
+                    (home_away, "leftdef"),
+                    (home_away, "rightdef"),
+                    (home_away, "libero")
+                ]
+                probabilities = [0.25, 0.25, 0.50]  # Corresponding probabilities
+
+                # Select a target based on the defined probabilities
+                target = random.choices(targets, probabilities)[0]
+
+                # Return the action and the selected target
+                return "throw", target
             else:
                 return "off-the-ball", None
         else:

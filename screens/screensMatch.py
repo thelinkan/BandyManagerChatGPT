@@ -61,7 +61,8 @@ def draw_view_match(game,match_to_view):
         if(match_state == "1st half" or match_state == "2nd half"):
             engine.tick(game)
         pygame.display.flip()
-        time.sleep(0.01)
+        #time.sleep(0.01)
+        time.sleep(1)
         if match_state == "1st half" and engine.game_time>60*45:
             engine.game_time = 60*45
             match_state = "Half time"
@@ -188,10 +189,12 @@ def draw_match_pitch(match_to_view):
     y_scale = 560/100
     home_team_positions = match_to_view.home_team_positions
     away_team_positions = match_to_view.away_team_positions
+    ball_position = match_to_view.ball_position
     home_team_color = (0,0,0)
     away_team_color = (0,255,0)
     #print(f"home positions: {home_team_positions}")
-    print(f"away positions: {away_team_positions}")
+    #print(f"away positions: {away_team_positions}")
+    print(f"Ball position = {ball_position}")
     if(home_team_positions):
         goalkeeper_position = (home_team_positions["goalkeeper"][0]*x_scale+10,home_team_positions["goalkeeper"][1]*y_scale+20)
         libero_position = (home_team_positions["libero"][0]*x_scale+10,home_team_positions["libero"][1]*y_scale+20)
@@ -204,7 +207,7 @@ def draw_match_pitch(match_to_view):
         leftmid_position = (home_team_positions["leftmid"][0]*x_scale+10,home_team_positions["leftmid"][1]*y_scale+20)
         leftattack_position = (home_team_positions["leftattack"][0]*x_scale+10,(home_team_positions["leftattack"][1]*y_scale)+20)
         rightattack_position = (home_team_positions["rightattack"][0]*x_scale+10,(home_team_positions["rightattack"][1]*y_scale)+20)
-        print(f"goalkeeper: {goalkeeper_position}")
+        #print(f"goalkeeper: {goalkeeper_position}")
         pygame.draw.circle(pitch_surface,home_team_color,goalkeeper_position,6)
         pygame.draw.circle(pitch_surface,home_team_color,libero_position,6)
         pygame.draw.circle(pitch_surface,home_team_color,rightdefender_position,6)
@@ -229,7 +232,7 @@ def draw_match_pitch(match_to_view):
         leftmid_position = (away_team_positions["leftmid"][0]*x_scale+10,away_team_positions["leftmid"][1]*y_scale+20)
         leftattack_position = (away_team_positions["leftattack"][0]*x_scale+10,(away_team_positions["leftattack"][1]*y_scale)+20)
         rightattack_position = (away_team_positions["rightattack"][0]*x_scale+10,(away_team_positions["rightattack"][1]*y_scale)+20)
-        print(f"goalkeeper: {goalkeeper_position}")
+        #print(f"goalkeeper: {goalkeeper_position}")
         pygame.draw.circle(pitch_surface,away_team_color,goalkeeper_position,6)
         pygame.draw.circle(pitch_surface,away_team_color,libero_position,6)
         pygame.draw.circle(pitch_surface,away_team_color,rightdefender_position,6)
@@ -241,5 +244,9 @@ def draw_match_pitch(match_to_view):
         pygame.draw.circle(pitch_surface,away_team_color,leftmid_position,6)
         pygame.draw.circle(pitch_surface,away_team_color,leftattack_position,6)
         pygame.draw.circle(pitch_surface,away_team_color,rightattack_position,6)
+
+    if(ball_position):
+        ball_position_field = (ball_position[0]*x_scale +10, ball_position[1]*y_scale+20)
+        pygame.draw.circle(pitch_surface,(200,0,0),ball_position_field,4)
 
     return pitch_surface

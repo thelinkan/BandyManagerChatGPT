@@ -13,3 +13,6 @@ class Attribute:
             'level': self.level,
             'experience': self.experience
         }
+
+    def __str__(self):
+        return f"Attribute name: {self.name} level: {self.level} experience: {self.experience}"
