@@ -1,14 +1,19 @@
-def determine_field_area(x, y):
+def determine_field_area(home_away, position):
     """
     Determines which area of the field a given (x, y) coordinate belongs to.
     
     Coordinates go from (0,0) to (60,100).
     """
 
+    x = position[0]
+    y = position[1]
     # Define the field dimensions
     field_width = 60
     field_length = 100
-    
+
+    #if home_away == "away":
+    #    y = field_length - y  # Flip the y-coordinate to mirror the field vertically
+        
     # Goal Area (Rectangular)
     goal_area_width = 12  # 6m on each side from the center
     goal_area_length = 6   # 6m from the goal line
@@ -77,3 +82,30 @@ def determine_field_area(x, y):
     
     # If no other area matched, return "unknown area"
     return "unknown area"
+
+def get_players_in_zones(team_positions, home_away, zones):
+    """
+    Returns a list of player positions for players in the specified zones.
+    
+    Parameters:
+    - team_positions: Dictionary containing player positions (e.g., self.home_team_positions or self.away_team_positions).
+    - home_away: 'home' or 'away', indicating which team's players to check.
+    - zones: List of zones to check (e.g., ["goal area", "penalty area"]).
+    
+    Returns:
+    - List of player positions for players found in the specified zones.
+    """
+    players_in_zones = []
+    
+    for player_position, position in team_positions.items():
+        # Get the (x, y) position of the player
+        x, y = position[:2]  # Ignore any z-coordinate or direction
+        
+        # Determine the area where this player is located
+        player_zone = determine_field_area(home_away, (x, y))
+        
+        # Check if the player's zone is in the list of zones
+        if player_zone in zones:
+            players_in_zones.append(player_position)
+    
+    return players_in_zones

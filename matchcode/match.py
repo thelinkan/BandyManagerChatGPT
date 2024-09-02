@@ -9,7 +9,7 @@ from team import Team
 from matchcode.matchcalculations import calculate_distance_between_players, calculate_speed_for_tick, calculate_shortest_distance, calculate_direction
 from matchcode.matchcalculations import interpolate_direction,calculate_max_turn_angle, calculate_angle
 
-from matchcode.fieldarea import determine_field_area
+from matchcode.fieldarea import determine_field_area, get_players_in_zones
 
 
 from loggingbm import logger
@@ -661,7 +661,8 @@ class Match:
             current_position = self.home_team_positions[player_position]
         else:
             current_position = self.away_team_positions[player_position]
-
+        current_field_area = determine_field_area(home_away,current_position)
+        #print(f"{home_away} - {player_position} - {current_position} - {determine_field_area(home_away,current_position)}")
         possession = self.get_player_with_possession()
         if(possession == None):
             if(home_away=="home"):
@@ -697,11 +698,11 @@ class Match:
                 if(home_away=="home"):
                     position_map = {
                         "leftattack": (self.field_width // 2 + 20, 70),
-                        "rightattack": (self.field_width // 2 - 20, 60)
+                        "rightattack": (self.field_width // 2 - 30, 90)
                     }
                 else:
                     position_map = {
-                        "leftattack": (self.field_width // 2 - 20, self.field_length-70),
+                        "leftattack": (5, self.field_length-95),
                         "rightattack": (self.field_width // 2 + 20, self.field_length-60)
                     }
                 target_position = position_map.get(player_position, (30, 50))
@@ -833,6 +834,15 @@ class Match:
         else:
             current_position = self.away_team_positions[player_position]
 
+        current_field_area = determine_field_area(home_away,current_position)
+        long_term_goal = self.get_long_term_goal(home_away,player_position)
+        if long_term_goal is None:
+            zones_to_check = ["penalty area", "goal area", "defensive third"]
+            print(f"{home_away}/{player_position} -{zones_to_check} _ {get_players_in_zones(self.home_team_positions, home_away, zones_to_check)}")
+            pass
+
+        #print(f"{self.previous_decisions} - {self.long_term_goals}")
+
         goal_position = (self.field_width // 2, self.field_length) if home_away == "home" else (self.field_width // 2, 0)
         
         # Calculate distance to the goal
@@ -841,12 +851,18 @@ class Match:
 
         possession = self.get_player_with_possession()
         if(possession == None):
-            return "off-the-ball", None
+            if long_term_goal is None:
+                self.set_long_term_goal(home_away, player_position, "Circle attack")
+            else:
+                self.set_long_term_goal(home_away, player_position, "Circle attack")
+            return "Circle attack", None
         elif(possession[0]==home_away):
             if(possession[1]==player_position):
+                if(long_term_goal is None):
+                    pass
                 #print(f"{possession[1]} -- {player_position}")
                 if distance_to_goal < 20:  # Close enough to shoot
-                    return self._shoot_or_dribble_logic(distance_to_goal), None
+                    return self._shoot_or_dribble_logic(distance_to_goal, long_term_goal), None
                 else:
                     return "dribble", None
             else:
@@ -854,10 +870,44 @@ class Match:
         else:
             return "off-the-ball", None
 
-    def _shoot_or_dribble_logic(self, distance_to_goal):
+    def set_long_term_goal(self, home_away, player_position, goal):
+        """
+        Sets or updates the long-term goal for the specified player on the specified team.
+        
+        Parameters:
+        - home_away: 'home' or 'away' indicating the team.
+        - player_position: Identifier for the player.
+        - goal: The goal to be set as the player's long-term objective.
+        """
+        # Ensure the team exists in the long_term_goals dictionary
+        if home_away not in self.long_term_goals:
+            self.long_term_goals[home_away] = {}
+
+        # If the player does not exist in the team, add them
+        if player_position not in self.long_term_goals[home_away]:
+            self.long_term_goals[home_away][player_position] = None  # Initialize with None
+        
+        # Set or update the long-term goal for the player
+        self.long_term_goals[home_away][player_position] = goal
+
+    def get_long_term_goal(self, home_away, player_position):
+        """
+        Returns the long-term goal for the specified player on the specified team, if any.
+        
+        Parameters:
+        - home_away: 'home' or 'away' indicating the team.
+        - player_position: Identifier for the player.
+        
+        Returns:
+        - The long-term goal for the player, or None if not set.
+        """
+        return self.long_term_goals.get(home_away, {}).get(player_position, None)
+
+    def _shoot_or_dribble_logic(self, distance_to_goal, long_term_goal):
         """
         Decides whether to shoot or dribble based on distance to the goal and other factors.
         """
+
         # Example: The closer the player, the higher the chance to shoot
         shoot_chance = max(0.2, 1 - (distance_to_goal / 20))  # Simple probability based on distance
         
