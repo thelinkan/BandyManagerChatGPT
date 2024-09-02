@@ -3,7 +3,14 @@ import random
 import math
 from numpy import random as rand
 
+from team import Team
+#from game import Game
+
 from matchcode.matchcalculations import calculate_distance_between_players, calculate_speed_for_tick, calculate_shortest_distance, calculate_direction
+from matchcode.matchcalculations import interpolate_direction,calculate_max_turn_angle, calculate_angle
+
+from matchcode.fieldarea import determine_field_area
+
 
 from loggingbm import logger
 
@@ -27,11 +34,24 @@ class Match:
         # Store player positions for both teams
         self.home_team_positions = {}
         self.away_team_positions = {}
+        # Initialize previous decisions for each player
+        self.previous_decisions = {
+            'home': {player: None for player in self.home_team_positions},
+            'away': {player: None for player in self.away_team_positions},
+        }
+
+        # Initialize long-term goals for each player
+        self.long_term_goals = {
+            'home': {player: None for player in self.home_team_positions},
+            'away': {player: None for player in self.away_team_positions},
+        }
+
         self.ball_position =(self.field_width // 2,self.field_length // 2,0)
         self.ball_vector = (0,0,0)
         self.ball_possession = None  # Initially, no one has the ball
         self.starting_team_home = True
         self.stroke_off = True
+        self.league =None
         '''
             0 = Standard state
             1 = Corner to home team
@@ -86,34 +106,49 @@ class Match:
         self.played = True
 
         if is_playoff:
-            print(f"Is playoff: Yes")
-            logger.debug(f"Playoff check {self.league.name}")
-            self.league.check_elimination_quarterfinal(self.home_team, self.away_team)
-            self.league.check_elimination_semifinal(self.home_team, self.away_team)
-            self.league.check_elimination_final(self.home_team, self.away_team)
+            if self.league is not None:
+                print(f"Is playoff: Yes")
+                logger.debug(f"Playoff check {self.league.name}")
+                self.league.check_elimination_quarterfinal(self.home_team, self.away_team)
+                self.league.check_elimination_semifinal(self.home_team, self.away_team)
+                self.league.check_elimination_final(self.home_team, self.away_team)
 
         #print(f"  --  in play -- {self.played}: {self.home_goals} - {self.away_goals}")
 
-    def add_goal_event(self, team,time, goal_type: str, game):
+    def add_goal_event(self,time: str,home_away: str, goal_type: str, players: tuple[str|None,str|None], game) -> None:
+        if(home_away=="home"):
+            team: Team = self.home_team
+        else:
+            team:Team = self.away_team
+
+        goal_scorer_position = players[0]
+        assisting_player_position = players[1]
+
+        if(goal_scorer_position is not None):
+            position_uuid = self.home_team.actual_positions[goal_scorer_position]["player_uuid"]
+            goal_scorer = game.player_manager.find_player_by_uuid(position_uuid)
+            if(assisting_player_position is not None):
+                position_uuid = self.home_team.actual_positions[assisting_player_position]["player_uuid"]
+                assisting_player = game.player_manager.find_player_by_uuid(position_uuid)
+
+            else:
+                assisting_player = None
+        else:
+            goal_scorer = "Own goal"
+            assisting_player = None
+        '''
         #print(team.players)
         position_list = ["goalkeeper","libero","leftdef","rightdef","lefthalf","righthalf","leftmid","centralmid","rightmid","leftattack","rightattack","sub1","sub2","sub3","sub4","sub5"]
         position_number = random.randint(1,10)
         position_uuid = self.home_team.actual_positions[position_list[position_number]]["player_uuid"]
         print(f"{position_number} - {position_uuid}")
         
-        player_list = list(team.players.values())
+        #player_list = list(team.players.values())
         goal_scorer = game.player_manager.find_player_by_uuid(position_uuid)
         assist_chance = random.random()
         assisting_player = None
+        '''
 
-        if assist_chance < 0.75:
-            exclude_list = []
-            exclude_list.append(position_number)
-            position_number = random.choice([i for i in range(1,10) if i not in exclude_list])
-            position_uuid = self.home_team.actual_positions[position_list[position_number]]["player_uuid"]
-            assisting_player = game.player_manager.find_player_by_uuid(position_uuid)
-            if goal_scorer == assisting_player:
-                assisting_player = None
 
         event = {
             "type": "goal",
@@ -138,6 +173,10 @@ class Match:
         self.events.append(event)
 
     def update_state(self, game, manager, game_time_delta):
+        if self.home_goals is None:
+            self.home_goals = 0
+        if self.away_goals is None:
+            self.away_goals = 0
         position_list = ["goalkeeper","libero","leftdef","rightdef","lefthalf","righthalf","leftmid","centralmid","rightmid","leftattack","rightattack","sub1","sub2","sub3","sub4","sub5"]
         time = manager.get_current_time()
         for i in range(11):
@@ -162,11 +201,13 @@ class Match:
             self.set_ball_possession("away","leftattack")
             self.reset_positions_after_goal()
             self.game_state = "stroke off"
+            self.add_goal_event(time,"home", "Play goal", ("leftattack",None), game)
         if(self.game_state == "awaygoal"):
-            self.home_goals += 1
+            self.away_goals += 1
             self.set_ball_possession("home","leftattack")
             self.reset_positions_after_goal()
             self.game_state = "stroke off"
+            self.add_goal_event(time,"away", "Play goal", ("leftattack",None), game)
         if(self.game_state == "homekeepers"):
             self.set_ball_possession("home","goalkeeper")
             self.ball_position = (self.home_team_positions['goalkeeper'][0], self.home_team_positions['goalkeeper'][1], 0)
@@ -176,6 +217,8 @@ class Match:
             self.ball_position = (self.away_team_positions['goalkeeper'][0], self.away_team_positions['goalkeeper'][1], 0)
             #print(self.away_team_positions['goalkeeper'])
             self.game_state = "playing"
+
+        print(self.home_team_positions)
 
         #print(f"{time} __{self.ball_position} : {self.ball_vector}")
         '''
@@ -344,7 +387,7 @@ class Match:
             max(0, self.ball_position[2])
         )
 
-    def set_ball_possession(self, team: str, position: str = None) -> None:
+    def set_ball_possession(self, team: str, position: str|None = None) -> None:
         """Set the player in possession of the ball."""
         if team not in ["home", "away"]:
             raise ValueError("Invalid team identifier. Use 'home' or 'away'.")
@@ -361,10 +404,10 @@ class Match:
         
         self.ball_possession = (team, position)
 
-    def get_player_with_possession(self):
+    def get_player_with_possession(self) ->tuple:
         """Retrieve the player object who currently has possession of the ball."""
         if self.ball_possession is None:
-            return None  # No player currently has possession
+            return None, None  # No player currently has possession
         
         team, position = self.ball_possession
         
@@ -373,7 +416,7 @@ class Match:
         elif team == "away":
             return team, position
 
-        return None
+        return None, None
 
     def move_player(self,player,home_away,player_position,game_time_delta):
         if(home_away=="home"):
@@ -407,13 +450,13 @@ class Match:
         #print(desired_direction)
         # Calculate the angle between the last vector and the desired direction
 
-        angle_between = self.calculate_angle(last_vector, desired_direction)
+        angle_between = calculate_angle(last_vector, desired_direction)
         # Limit the angle change based on speed
-        max_turn_angle = self.calculate_max_turn_angle(last_vector)
+        max_turn_angle = calculate_max_turn_angle(last_vector)
 
         if angle_between > max_turn_angle:
             # Smoothly transition the direction
-            new_direction = self.interpolate_direction(last_vector, desired_direction, max_turn_angle)
+            new_direction = interpolate_direction(last_vector, desired_direction, max_turn_angle)
         else:
             new_direction = desired_direction
         #print(f"movement: {home_away}/{player_position} {current_position} - {last_vector} - {desired_direction} - {angle_between}")
@@ -678,38 +721,6 @@ class Match:
             target_position = position_map.get(player_position, (30, 50))
             return calculate_direction(current_position, target_position)
 
-    def calculate_angle(self, vec1, vec2):
-        """Calculates the angle between two vectors."""
-        dot_product = vec1[0] * vec2[0] + vec1[1] * vec2[1]
-        magnitude_vec1 = math.sqrt(vec1[0] ** 2 + vec1[1] ** 2)
-        magnitude_vec2 = math.sqrt(vec2[0] ** 2 + vec2[1] ** 2)
-        magnitude_multi = magnitude_vec1 * magnitude_vec2
-        if magnitude_vec1 * magnitude_vec2 == 0:
-            return 0
-        if dot_product/magnitude_multi >= 1 or dot_product/magnitude_multi <= -1:
-            return 0      
-        return math.acos(dot_product / (magnitude_multi))
-
-    def calculate_max_turn_angle(self, last_vector):
-        """
-        Determines the maximum angle by which a player can turn 
-        based on their speed.
-        """
-        # Calculate the magnitude (speed) of the last vector
-        speed = math.sqrt(last_vector[0]**2 + last_vector[1]**2)        
-        # Simple example: The faster the player, the smaller the max turn angle
-        # This value can be fine-tuned based on how you want players to behave.
-        return max(10, 90 - speed * 2)  # Just an example
-
-    def interpolate_direction(self, vec1, vec2, max_angle):
-        """Interpolates between two directions by a limited angle."""
-        angle_between = self.calculate_angle(vec1, vec2)
-        ratio = min(1, max_angle / angle_between)
-        return (
-            vec1[0] * (1 - ratio) + vec2[0] * ratio,
-            vec1[1] * (1 - ratio) + vec2[1] * ratio
-        )
-
     def calculate_decision(self, player, home_away, player_position, current_position):
         """
         Determines the desired direction for the player based on their position 
@@ -857,7 +868,7 @@ class Match:
 
     def action_attempt_shot(self, player, home_away,player_position):
         shot_quality = self.calculate_shot_quality(player, home_away, player_position)
-        if(shot_quality>15):
+        if(shot_quality>5):
             if(home_away=="home"):
                 return "homegoal"
             else:

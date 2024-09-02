@@ -88,3 +88,36 @@ def calculate_direction(current_position: tuple,target_position:tuple) -> tuple:
             target_position[1]-current_position[1]
         )
     return desired_direction    
+
+def calculate_angle(vec1, vec2):
+    """Calculates the angle between two vectors."""
+    dot_product = vec1[0] * vec2[0] + vec1[1] * vec2[1]
+    magnitude_vec1 = math.sqrt(vec1[0] ** 2 + vec1[1] ** 2)
+    magnitude_vec2 = math.sqrt(vec2[0] ** 2 + vec2[1] ** 2)
+    magnitude_multi = magnitude_vec1 * magnitude_vec2
+    if magnitude_vec1 * magnitude_vec2 == 0:
+        return 0
+    if dot_product/magnitude_multi >= 1 or dot_product/magnitude_multi <= -1:
+        return 0      
+    return math.acos(dot_product / (magnitude_multi))
+
+def calculate_max_turn_angle(last_vector):
+    """
+    Determines the maximum angle by which a player can turn 
+    based on their speed.
+    """
+    # Calculate the magnitude (speed) of the last vector
+    speed = math.sqrt(last_vector[0]**2 + last_vector[1]**2)        
+    # Simple example: The faster the player, the smaller the max turn angle
+    # This value can be fine-tuned based on how you want players to behave.
+    return max(10, 90 - speed * 2)  # Just an example
+
+def interpolate_direction(vec1, vec2, max_angle):
+    """Interpolates between two directions by a limited angle."""
+    angle_between = calculate_angle(vec1, vec2)
+    ratio = min(1, max_angle / angle_between)
+    return (
+        vec1[0] * (1 - ratio) + vec2[0] * ratio,
+        vec1[1] * (1 - ratio) + vec2[1] * ratio
+    )
+
