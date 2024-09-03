@@ -681,14 +681,34 @@ class Match:
         if(possession[0]==home_away):
             if(possession[1]==player_position):
                 if(home_away=="home"):
-                    position_map = {
-                        "leftattack": (self.field_width // 2 + 10, 90),
-                        "rightattack": (self.field_width // 2 - 10, 90)
-                    }
+                    long_term_goal = self.get_long_term_goal(home_away, player_position)
+                    #print(f"Long term goals = {long_term_goal[0]}")
+                    if (long_term_goal is None):
+                        position_map = {
+                            "leftattack": (self.field_width // 2 + 10, 90),
+                            "rightattack": (self.field_width // 2 - 10, 90)
+                        }
+                    elif (long_term_goal[0]=="dribble to corner"): 
+                        if(current_position[0]<self.field_width // 2):
+                            position_map = {
+                                "leftattack": (5, 95),
+                                "rightattack": (5, 95)
+                            }
+                        else:
+                            position_map = {
+                                "leftattack": (self.field_width-5, 95),
+                                "rightattack": (self.field_width-5, 95)
+                            }
+                    else:
+                        position_map = {
+                            "leftattack": (self.field_width // 2 + 10, 90),
+                            "rightattack": (self.field_width // 2 - 10, 90)
+                        }
+
                 else:
                     position_map = {
-                        "leftattack": (self.field_width // 2 - 20, self.field_length-70),
-                        "rightattack": (self.field_width // 2 + 20, self.field_length-60)
+                        "leftattack": (self.field_width // 2 - 20, self.field_length-90),
+                        "rightattack": (self.field_width // 2 + 20, self.field_length-90)
                     }
                 target_position = position_map.get(player_position, (30, 50))
 
@@ -859,11 +879,25 @@ class Match:
         elif(possession[0]==home_away):
             if(possession[1]==player_position):
                 if(long_term_goal is None):
-                    pass
+                    if(distance_to_goal>40):
+
+                        long_term_list = [
+                            ("dribble to corner"," pass cross"),
+                            ("dribble to corner"," then go in"),
+                            ("dribble to corner"," then decide")
+                        ]
+                        probabilities = [0.70, 0.15, 0.15]  # Corresponding probabilities
+
+                        # Select a target based on the defined probabilities
+                        long_term_goal = random.choices(long_term_list, probabilities)[0]
+                        self.set_long_term_goal(home_away, player_position, long_term_goal)
+
+
                 #print(f"{possession[1]} -- {player_position}")
                 if distance_to_goal < 20:  # Close enough to shoot
                     return self._shoot_or_dribble_logic(distance_to_goal, long_term_goal), None
                 else:
+
                     return "dribble", None
             else:
                 return "off-the-ball", None
@@ -890,7 +924,7 @@ class Match:
         # Set or update the long-term goal for the player
         self.long_term_goals[home_away][player_position] = goal
 
-    def get_long_term_goal(self, home_away, player_position):
+    def get_long_term_goal(self, home_away: str, player_position: str) -> str|None:
         """
         Returns the long-term goal for the specified player on the specified team, if any.
         
