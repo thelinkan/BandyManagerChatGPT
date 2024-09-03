@@ -507,26 +507,7 @@ class Match:
         if(decision == "pass"):
             max_pass_vector = 12
             self.set_ball_possession(home_away,None)
-            # Calculate the vector from current position to the target position
-            pass_vector = (
-                target_player_position[0] - current_position[0],
-                target_player_position[1] - current_position[1],
-                0  # z-value is 0 for throws along the ice
-            )
-            
-            # Calculate the magnitude of the throw vector (Euclidean distance)
-            vector_magnitude = math.sqrt(pass_vector[0]**2 + pass_vector[1]**2)
-            
-            # If the magnitude is greater than the max allowed, scale it down
-            if vector_magnitude > max_pass_vector:
-                scaling_factor = max_pass_vector / vector_magnitude
-                self.ball_vector = (
-                    pass_vector[0] * scaling_factor,
-                    pass_vector[1] * scaling_factor,
-                    0
-                )
-            else:
-                self.ball_vector = pass_vector
+            self.calculate_pass_quality(current_position, target_player_position, 0, max_pass_vector, 80, 80)
 
         if(player_position == "goalkeeper"):
             #print(f"{player_position}: {self.away_team_positions}")
@@ -682,7 +663,7 @@ class Match:
             if(possession[1]==player_position):
                 if(home_away=="home"):
                     long_term_goal = self.get_long_term_goal(home_away, player_position)
-                    #print(f"Long term goals = {long_term_goal[0]}")
+                    print(f"Long term goals = {long_term_goal} - {current_field_area}")
                     if (long_term_goal is None):
                         position_map = {
                             "leftattack": (self.field_width // 2 + 10, 90),
@@ -691,13 +672,13 @@ class Match:
                     elif (long_term_goal[0]=="dribble to corner"): 
                         if(current_position[0]<self.field_width // 2):
                             position_map = {
-                                "leftattack": (5, 95),
-                                "rightattack": (5, 95)
+                                "leftattack": (3, 97),
+                                "rightattack": (3, 97)
                             }
                         else:
                             position_map = {
-                                "leftattack": (self.field_width-5, 95),
-                                "rightattack": (self.field_width-5, 95)
+                                "leftattack": (self.field_width-3, 97),
+                                "rightattack": (self.field_width-3, 97)
                             }
                     else:
                         position_map = {
@@ -882,9 +863,9 @@ class Match:
                     if(distance_to_goal>40):
 
                         long_term_list = [
-                            ("dribble to corner"," pass cross"),
-                            ("dribble to corner"," then go in"),
-                            ("dribble to corner"," then decide")
+                            ("dribble to corner","pass cross"),
+                            ("dribble to corner","go in"),
+                            ("dribble to corner","then decide")
                         ]
                         probabilities = [0.70, 0.15, 0.15]  # Corresponding probabilities
 
@@ -892,8 +873,25 @@ class Match:
                         long_term_goal = random.choices(long_term_list, probabilities)[0]
                         self.set_long_term_goal(home_away, player_position, long_term_goal)
 
+                elif(long_term_goal[0] == "dribble to corner"):
+                    if(current_field_area == "corner area"):
+                        if(long_term_goal[1]== "then decide"):
+                            
+                            long_term_list = [
+                                ("pass cross","then decide"),
+                                ("go in","then decide")
+                            ]
+                            probabilities = [0.50, 0.50]  # Corresponding probabilities
+                            long_term_goal = random.choices(long_term_list, probabilities)[0]
 
-                #print(f"{possession[1]} -- {player_position}")
+                        else:
+                            long_term_goal = (long_term_goal[1],"then decide")
+                        # Select a target based on the defined probabilities
+                        self.set_long_term_goal(home_away, player_position, long_term_goal)
+
+
+                if self.get_long_term_goal(home_away,player_position)[0] == "pass cross":
+                    return "pass area", (self.field_width // 2, self.field_lengt-8) if home_away == "home" else (self.field_width // 2, 8)
                 if distance_to_goal < 20:  # Close enough to shoot
                     return self._shoot_or_dribble_logic(distance_to_goal, long_term_goal), None
                 else:
@@ -1000,6 +998,71 @@ class Match:
         print(f"shoot {distance_to_goal}:{angle} __ {shooting_level}/{round(distance_factor,5)}/{round(angle_factor,5)} ___ {final_quality}")
         return final_quality
 
+    def calculate_pass_quality(self, current_position: tuple, target_position: tuple, height: float, max_pass_vector: float, skill_pass: int, skill_long_pass: int) -> None:
+        '''
+        Calculate how precise a pass will be.
+
+        Parameters:
+        - current_position: Position of the player who makes the pass
+        - target_position: Where the player wants to get the ball to
+        - height: 0 if the pass is along the ice, otherwise how fast the height will increase on pass
+        - max_pass_vector: Maximum magnitude of the pass vector (how hard the pass is)
+        - skill_pass: How good the player is at passing along the ice
+        - skill_long_pass: How good the player is at making long passes in the air
+        '''
+        # Calculate the initial vector from current position to the target position
+        pass_vector = (
+            target_position[0] - current_position[0],
+            target_position[1] - current_position[1],
+            height
+        )
+
+        # Calculate the magnitude of the pass vector (Euclidean distance in 2D)
+        vector_magnitude = math.sqrt(pass_vector[0]**2 + pass_vector[1]**2)
+
+        # Calculate the initial angle of the pass in degrees
+        initial_angle = math.degrees(math.atan2(pass_vector[1], pass_vector[0]))
+
+        # Determine the standard deviation based on the skill level
+        if height == 0:  # Pass along the ice
+            skill_level = skill_pass
+        else:  # Pass in the air
+            skill_level = skill_long_pass
+
+        # Calculate standard deviation based on skill level
+        if skill_level >= 100:
+            std_dev = 5
+        elif skill_level >= 80:
+            std_dev = 10
+        elif skill_level >= 20:
+            std_dev = 25
+        else:
+            std_dev = 30  # This can be adjusted for very low skill levels
+
+        # Determine the final pass angle using a normal distribution
+        final_angle = random.gauss(initial_angle, std_dev)
+
+        # Convert the final angle back to radians
+        final_angle_rad = math.radians(final_angle)
+
+        # Calculate the new pass vector using the final angle
+        adjusted_pass_vector = (
+            vector_magnitude * math.cos(final_angle_rad),
+            vector_magnitude * math.sin(final_angle_rad),
+            height
+        )
+
+        # Scale the pass vector down if it exceeds the max allowed magnitude
+        final_vector_magnitude = math.sqrt(adjusted_pass_vector[0]**2 + adjusted_pass_vector[1]**2)
+        if final_vector_magnitude > max_pass_vector:
+            scaling_factor = max_pass_vector / final_vector_magnitude
+            self.ball_vector = (
+                adjusted_pass_vector[0] * scaling_factor,
+                adjusted_pass_vector[1] * scaling_factor,
+                height
+            )
+        else:
+            self.ball_vector = adjusted_pass_vector
         
 
     def set_initial_positions(self):

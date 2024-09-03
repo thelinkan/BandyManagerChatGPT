@@ -41,16 +41,16 @@ def determine_field_area(home_away, position):
     if distance_from_penalty_center <= d_zone_radius:
         return "D-zone"
     
+    # Corner Areas (Triangular)
+    corner_length = 5  # Arbitrary length from the corner flag
+    if (x <= corner_length and y <= (field_length - corner_length)) or (x >= (field_width - corner_length) and y <= (field_length - corner_length)):
+        return "corner area"
+
     # Wings (Rectangular)
     wing_width = 8
     if (x <= wing_width or x >= field_width - wing_width):
         return "wing"
     
-    # Corner Areas (Triangular)
-    corner_length = 10  # Arbitrary length from the corner flag
-    if (x <= corner_length and y <= corner_length) or (x >= field_width - corner_length and y <= corner_length):
-        return "corner area"
-
     # Attacking Third (Rectangular)
     attacking_third_length = 33  # Length of attacking third
     if y > field_length - attacking_third_length:
@@ -69,7 +69,7 @@ def determine_field_area(home_away, position):
     
     # Half-space (Rectangular)
     half_space_width = 10
-    if (half_space_width < x < field_width - half_space_width) and (y > defensive_third_length and y < field_length - attacking_third_length):
+    if (half_space_width < x < (field_width - half_space_width) and (y > defensive_third_length and y < field_length - attacking_third_length)):
         return "half-space"
     
     # Neutral Zone (Circle)
@@ -109,3 +109,6 @@ def get_players_in_zones(team_positions, home_away, zones):
             players_in_zones.append(player_position)
     
     return players_in_zones
+
+if __name__ == '__main__':
+    print(determine_field_area("home",(3,3)))
