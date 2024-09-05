@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 import random
 import math
 from numpy import random as rand
+import logger
 
 from team import Team
 #from game import Game
@@ -108,7 +109,7 @@ class Match:
         if is_playoff:
             if self.league is not None:
                 print(f"Is playoff: Yes")
-                logger.debug(f"Playoff check {self.league.name}")
+                logger.info(f"Playoff check {self.league.name}")
                 self.league.check_elimination_quarterfinal(self.home_team, self.away_team)
                 self.league.check_elimination_semifinal(self.home_team, self.away_team)
                 self.league.check_elimination_final(self.home_team, self.away_team)
@@ -312,7 +313,7 @@ class Match:
                 self.ball_position = (self.away_team_positions[player_with_ball[1]][0], self.away_team_positions[player_with_ball[1]][1], 0)
             self.ball_vector = (0, 0, 0)
         else:
-            # No possession, update ball position based on its vector.
+            # No possession, update  based on its vector.
             self.ball_position = (
                 self.ball_position[0] + self.ball_vector[0] * time_delta,
                 self.ball_position[1] + self.ball_vector[1] * time_delta,
@@ -429,8 +430,12 @@ class Match:
 
         # Step 1: Decision Logic
         decision, target_player = self.calculate_decision(player, home_away, player_position, current_position)
+        logger.info(f"decision: {home_away}/{player_position} - {decision} __ {target_player}")
         if target_player is None:
             target_player_position = (-1,-1)
+        elif(decision == "pass area"):
+            target_player_position = target_player
+            #print(f"Target: {target_player_position} - {target_player}")
         else:   
             if(target_player[0]=="home"):
                 target_player_position = self.home_team_positions[target_player[1]]
@@ -508,6 +513,12 @@ class Match:
             max_pass_vector = 12
             self.set_ball_possession(home_away,None)
             self.calculate_pass_quality(current_position, target_player_position, 0, max_pass_vector, 80, 80)
+
+        if(decision == "pass area"):
+            max_pass_vector = 15
+            self.set_ball_possession(home_away,None)
+            self.calculate_pass_quality(current_position, target_player, 0, max_pass_vector, 80, 80)
+            
 
         if(player_position == "goalkeeper"):
             #print(f"{player_position}: {self.away_team_positions}")
@@ -663,7 +674,7 @@ class Match:
             if(possession[1]==player_position):
                 if(home_away=="home"):
                     long_term_goal = self.get_long_term_goal(home_away, player_position)
-                    print(f"Long term goals = {long_term_goal} - {current_field_area}")
+                    #print(f"Long term goals = {long_term_goal} - {current_field_area}/{current_position}")
                     if (long_term_goal is None):
                         position_map = {
                             "leftattack": (self.field_width // 2 + 10, 90),
@@ -680,12 +691,21 @@ class Match:
                                 "leftattack": (self.field_width-3, 97),
                                 "rightattack": (self.field_width-3, 97)
                             }
+                    elif (long_term_goal[0] == "dribble in"):
+                        position_map = {
+                            "leftattack": (self.field_width // 2 + 10, 95),
+                            "rightattack": (self.field_width // 2 - 10, 95)
+                        }
+                    elif (long_term_goal[0] == "pass cross"):
+                        position_map = {
+                            "leftattack": (current_position[0],current_position[1]),
+                            "rightattack": (current_position[0],current_position[1])
+                        }
                     else:
                         position_map = {
                             "leftattack": (self.field_width // 2 + 10, 90),
                             "rightattack": (self.field_width // 2 - 10, 90)
                         }
-
                 else:
                     position_map = {
                         "leftattack": (self.field_width // 2 - 20, self.field_length-90),
@@ -839,10 +859,10 @@ class Match:
         long_term_goal = self.get_long_term_goal(home_away,player_position)
         if long_term_goal is None:
             zones_to_check = ["penalty area", "goal area", "defensive third"]
-            print(f"{home_away}/{player_position} -{zones_to_check} _ {get_players_in_zones(self.home_team_positions, home_away, zones_to_check)}")
+            #print(f"{home_away}/{player_position} -{zones_to_check} _ {get_players_in_zones(self.home_team_positions, home_away, zones_to_check)}")
             pass
 
-        #print(f"{self.previous_decisions} - {self.long_term_goals}")
+        print(f"{self.previous_decisions} - {self.long_term_goals}")
 
         goal_position = (self.field_width // 2, self.field_length) if home_away == "home" else (self.field_width // 2, 0)
         
@@ -890,8 +910,10 @@ class Match:
                         self.set_long_term_goal(home_away, player_position, long_term_goal)
 
 
-                if self.get_long_term_goal(home_away,player_position)[0] == "pass cross":
-                    return "pass area", (self.field_width // 2, self.field_lengt-8) if home_away == "home" else (self.field_width // 2, 8)
+                if long_term_goal[0] == "pass cross":
+                    return "pass area", (self.field_width // 2, self.field_length-8) if home_away == "home" else (self.field_width // 2, 8)
+                if long_term_goal[0] == "dribble in": 
+                    return "dribble",(self.field_width // 2, self.field_length-8) if home_away == "home" else (self.field_width // 2, 8)
                 if distance_to_goal < 20:  # Close enough to shoot
                     return self._shoot_or_dribble_logic(distance_to_goal, long_term_goal), None
                 else:

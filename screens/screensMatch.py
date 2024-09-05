@@ -194,7 +194,7 @@ def draw_match_pitch(match_to_view):
     away_team_color = (0,255,0)
     #print(f"home positions: {home_team_positions}")
     #print(f"away positions: {away_team_positions}")
-    print(f"Ball position = {ball_position}")
+    #print(f"Ball position = {ball_position}")
     if(home_team_positions):
         goalkeeper_position = (home_team_positions["goalkeeper"][0]*x_scale+10,home_team_positions["goalkeeper"][1]*y_scale+20)
         libero_position = (home_team_positions["libero"][0]*x_scale+10,home_team_positions["libero"][1]*y_scale+20)
