@@ -714,8 +714,7 @@ class Match:
                 target_position = position_map.get(player_position, (30, 50))
 
                 return calculate_direction(current_position, target_position)
-
-            else:
+            elif (possession[1]==player_position):
                 if(home_away=="home"):
                     position_map = {
                         "leftattack": (self.field_width // 2 + 20, 70),
@@ -725,6 +724,21 @@ class Match:
                     position_map = {
                         "leftattack": (5, self.field_length-95),
                         "rightattack": (self.field_width // 2 + 20, self.field_length-60)
+                    }
+                target_position = position_map.get(player_position, (30, 50))
+
+                return calculate_direction(current_position, target_position)
+
+            else:
+                if(home_away=="home"):
+                    position_map = {
+                        "leftattack": (self.field_width // 2 , self.field_length-8),
+                        "rightattack": (self.field_width // 2 , self.field_length-8)
+                    }
+                else:
+                    position_map = {
+                        "leftattack": (self.field_width // 2 , 8),
+                        "rightattack": (self.field_width // 2 , 8)
                     }
                 target_position = position_map.get(player_position, (30, 50))
 
@@ -748,7 +762,6 @@ class Match:
         Determines the desired direction for the player based on their position 
         and current game context.
         """
-        #print(player)
         if player_position == 'goalkeeper':
             return self._goalkeeper_decision_logic(player,home_away,player_position)
         elif player_position in ['libero', 'leftdef', 'rightdef']:
@@ -758,7 +771,9 @@ class Match:
         elif player_position in ['leftmid', 'centralmid', 'rightmid']:
             return "off-the-ball", None
         elif player_position in ['leftattack', 'rightattack']:
-            return self._attacker_decision_logic(player,home_away,player_position)
+            a = self._attacker_decision_logic(player,home_away,player_position)
+            logger.info(f"returned decission: {home_away} - {player_position} - {a}")
+            return a
         else:
             return "off-the-ball", None
         # Implement the decision logic based on player role, ball position, etc.
@@ -850,6 +865,7 @@ class Match:
         return "off-the-ball",None
 
     def _attacker_decision_logic(self,player,home_away,player_position):
+        logger.info(f"Decision Logic: {home_away} - {player_position}")
         if(home_away=="home"):
             current_position = self.home_team_positions[player_position]
         else:
@@ -910,15 +926,21 @@ class Match:
                         self.set_long_term_goal(home_away, player_position, long_term_goal)
 
 
-                if long_term_goal[0] == "pass cross":
+                elif long_term_goal[0] == "pass cross":
+                    long_term_goal = ("decide", "then decide")
+                    self.set_long_term_goal(home_away, player_position, long_term_goal)
                     return "pass area", (self.field_width // 2, self.field_length-8) if home_away == "home" else (self.field_width // 2, 8)
-                if long_term_goal[0] == "dribble in": 
+                elif long_term_goal[0] == "dribble in": 
                     return "dribble",(self.field_width // 2, self.field_length-8) if home_away == "home" else (self.field_width // 2, 8)
                 if distance_to_goal < 20:  # Close enough to shoot
                     return self._shoot_or_dribble_logic(distance_to_goal, long_term_goal), None
                 else:
 
                     return "dribble", None
+            elif possession[1] =="leftattack" or possession[1] =="rightattack":
+                long_term_goal = ("go to penalty","wait for pass")
+                self.set_long_term_goal(home_away, player_position, long_term_goal)
+                return "go to penalty", None
             else:
                 return "off-the-ball", None
         else:

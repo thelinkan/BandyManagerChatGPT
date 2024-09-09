@@ -134,9 +134,9 @@ class Team:
     def return_num_players(self):
         return self.num_players,self.num_int_players
 
-    def return_position(self):
-        postion=self.player.return_position()
-        return postion
+    #def return_position(self):
+    #    postion=self.player.return_position()
+    #    return postion
 
     def change_player_jersey_number(self, player_uuid : uuid.UUID, new_jersey_number: int):
         '''
@@ -152,9 +152,9 @@ class Team:
         #print(self.players)
         for player_uuid_keys in self.players.keys():
             #print(self.players[player_uuid].jersey_number)
-            if self.players[player_uuid_keys].jersey_number == new_jersey_number and str(self.player.uuid) != str(player_uuid):
+            if self.players[player_uuid_keys].jersey_number == new_jersey_number: #and str(self.player.uuid) != str(player_uuid):
 
-                print(f"Player {self.player.first_name} {self.player.last_name} already has jersey number {new_jersey_number}.")
+                print(f"Player {self.players[player_uuid_keys].first_name} {self.players[player_uuid_keys].last_name} already has jersey number {new_jersey_number}.")
                 return False
 
         # Add or change the jersey number in the players dictionary
