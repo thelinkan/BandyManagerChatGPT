@@ -19,7 +19,7 @@ def draw_view_match(game,match_to_view):
 
     match_to_view.home_goals = 0
     match_to_view.away_goals = 0
-    match_to_view.set_ball_possession("home", "leftattack")
+    match_to_view.set_ball_possession("away", "leftattack")
 
     match_state = "Pre game"
     #pdb.set_trace()
@@ -55,7 +55,7 @@ def draw_view_match(game,match_to_view):
         screen.blit(match_event_surface,(100,100))
 
         match_pitch_surface =draw_match_pitch(match_to_view)
-        screen.blit(match_pitch_surface,(600,100))
+        screen.blit(match_pitch_surface,(650,100))
 
 
         if(match_state == "1st half" or match_state == "2nd half"):
