@@ -764,10 +764,41 @@ class Match:
                             "rightattack": (self.field_width // 2 - 10, 90)
                         }
                 else:
-                    position_map = {
-                        "leftattack": (self.field_width // 2 - 20, self.field_length-90),
-                        "rightattack": (self.field_width // 2 + 20, self.field_length-90)
-                    }
+                    long_term_goal = self.get_long_term_goal(home_away, player_position)
+                    #print(f"Long term goals = {long_term_goal} - {current_field_area}/{current_position}")
+                    if (long_term_goal is None):
+                        position_map = {
+                            "leftattack": (self.field_width // 2 + 10, 10),
+                            "rightattack": (self.field_width // 2 - 10, 10)
+                        }
+                    elif (long_term_goal[0]=="dribble to corner"): 
+                        if(current_position[0]<self.field_width // 2):
+                            position_map = {
+                                "leftattack": (3, 3),
+                                "rightattack": (3, 3)
+                            }
+                        else:
+                            position_map = {
+                                "leftattack": (self.field_width-3, 3),
+                                "rightattack": (self.field_width-3, 3)
+                            }
+                    elif (long_term_goal[0] == "dribble in"):
+                        position_map = {
+                            "leftattack": (self.field_width // 2 + 10, 5),
+                            "rightattack": (self.field_width // 2 - 10, 5)
+                        }
+                    elif (long_term_goal[0] == "pass cross"):
+                        position_map = {
+                            "leftattack": (current_position[0],current_position[1]),
+                            "rightattack": (current_position[0],current_position[1])
+                        }
+                    else:
+                        position_map = {
+                            "leftattack": (self.field_width // 2 + 10, 10),
+                            "rightattack": (self.field_width // 2 - 10, 10)
+                        }
+                
+                
                 target_position = position_map.get(player_position, (30, 50))
 
                 return calculate_direction(current_position, target_position)
@@ -985,6 +1016,7 @@ class Match:
                         self.set_long_term_goal(home_away, player_position, long_term_goal)
 
                 elif(long_term_goal[0] == "dribble to corner"):
+                    logger.info(f"area {current_field_area}")
                     if(current_field_area == "corner area"):
                         if(long_term_goal[1]== "then decide"):
                             

@@ -11,6 +11,10 @@ def determine_field_area(home_away, position):
     field_width = 60
     field_length = 100
 
+    if home_away == "away":
+        x = field_width - x
+        y = field_length - y
+
     #if home_away == "away":
     #    y = field_length - y  # Flip the y-coordinate to mirror the field vertically
         
