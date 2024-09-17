@@ -126,10 +126,16 @@ class Match:
         assisting_player_position = players[1]
 
         if(goal_scorer_position is not None):
-            position_uuid = self.home_team.actual_positions[goal_scorer_position]["player_uuid"]
+            if(home_away=="home"):
+                position_uuid = self.home_team.actual_positions[goal_scorer_position]["player_uuid"]
+            else:
+                position_uuid = self.away_team.actual_positions[goal_scorer_position]["player_uuid"]
             goal_scorer = game.player_manager.find_player_by_uuid(position_uuid)
             if(assisting_player_position is not None):
-                position_uuid = self.home_team.actual_positions[assisting_player_position]["player_uuid"]
+                if(home_away=="home"):
+                    position_uuid = self.home_team.actual_positions[goal_scorer_position]["player_uuid"]
+                else:
+                    position_uuid = self.away_team.actual_positions[goal_scorer_position]["player_uuid"]
                 assisting_player = game.player_manager.find_player_by_uuid(position_uuid)
 
             else:
@@ -437,7 +443,8 @@ class Match:
         elif(decision == "pass area"):
             target_player_position = target_player
             #print(f"Target: {target_player_position} - {target_player}")
-        else:   
+        else:
+            logger.info(f"target player: {target_player}")   
             if(target_player[0]=="home"):
                 target_player_position = self.home_team_positions[target_player[1]]
             else:
@@ -544,9 +551,9 @@ class Match:
         elif player_position in ['libero', 'leftdef', 'rightdef']:
             return self._defender_direction_logic(player,home_away,player_position, decision, target_player_position)
         elif player_position in ['lefthalf', 'righthalf']:
-            return(0,0)
+            return self._half_direction_logic(player,home_away,player_position, decision, target_player_position)
         elif player_position in ['leftmid', 'centralmid', 'rightmid']:
-            return(0,0)
+            return self._midfielder_direction_logic(player,home_away,player_position, decision, target_player_position)
         elif player_position in ['leftattack', 'rightattack']:
             return self._attacker_direction_logic(player,home_away,player_position, decision, target_player_position)
         else:
@@ -672,37 +679,89 @@ class Match:
 
 
             else:
-                if(home_away=="home"):
-                    position_map = {
-                        "leftdef": (self.field_width // 2 - 20, 20),
-                        "libero": (self.field_width // 2, 16),
-                        "rightdef": (self.field_width // 2 + 20, 20)
-                    }
+                if(decision == "chase ball"):
+                    target_position = (self.ball_position[0]+self.ball_vector[0],self.ball_position[1]+self.ball_vector[1])
                 else:
-                    position_map = {
-                        "rightdef": (self.field_width // 2 - 20, self.field_length-20),
-                        "libero": (self.field_width // 2, self.field_length-16),
-                        "leftdef": (self.field_width // 2 + 20, self.field_length-20)
-                    }
-                target_position = position_map.get(player_position, (30, 50))
-
+                    if(home_away=="home"):
+                        position_map = {
+                            "leftdef": (self.field_width // 2 - 20, 20),
+                            "libero": (self.field_width // 2, 16),
+                            "rightdef": (self.field_width // 2 + 20, 20)
+                        }
+                    else:
+                        position_map = {
+                            "rightdef": (self.field_width // 2 - 20, self.field_length-20),
+                            "libero": (self.field_width // 2, self.field_length-16),
+                            "leftdef": (self.field_width // 2 + 20, self.field_length-20)
+                        }
+                    target_position = position_map.get(player_position, (30, 50))
+                print(f"{home_away}/{player_position}: {current_position} - {target_position}")
                 return calculate_direction(current_position, target_position)
         else:
-            if(home_away=="home"):
+            if(decision == "chase ball"):
+                target_position = (self.ball_position[0],self.ball_position[1])
+            elif(home_away=="home"):
                 position_map = {
                     "leftdef": (self.field_width // 2 - 20, 20),
                     "libero": (self.field_width // 2, 16),
                     "rightdef": (self.field_width // 2 + 20, 20)
                 }
+                target_position = position_map.get(player_position, (30, 50))
             else:
                 position_map = {
                     "rightdef": (self.field_width // 2 - 20, self.field_length-20),
                     "libero": (self.field_width // 2, self.field_length-16),
                     "leftdef": (self.field_width // 2 + 20, self.field_length-20)
                 }
-            target_position = position_map.get(player_position, (30, 50))
+                target_position = position_map.get(player_position, (30, 50))
 
             return calculate_direction(current_position, target_position)
+
+    def _half_direction_logic(self,player,home_away,player_position, decision, target_player_position):
+        if(home_away=="home"):
+            current_position = self.home_team_positions[player_position]
+        else:
+            current_position = self.away_team_positions[player_position]
+        if(decision == "chase ball"):
+            target_position = (self.ball_position[0],self.ball_position[1])
+        elif(home_away=="home"):
+            position_map = {
+                "lefthalf": (int(0.15 * self.field_width), int(0.25 * self.field_length)),
+                "righthalf": (int(0.85 * self.field_width), int(0.25 * self.field_length))
+            }
+            target_position = position_map.get(player_position, (30, 50))
+        else:
+            position_map = {
+                "righthalf": (self.field_width // 2 - 20, self.field_length-20),
+                "lefthalf": (self.field_width // 2 + 20, self.field_length-20)
+            }
+            target_position = position_map.get(player_position, (30, 50))
+
+        return calculate_direction(current_position, target_position)
+
+    def _midfielder_direction_logic(self,player,home_away,player_position, decision, target_player_position):
+        if(home_away=="home"):
+            current_position = self.home_team_positions[player_position]
+        else:
+            current_position = self.away_team_positions[player_position]
+        if(decision == "chase ball"):
+            target_position = (self.ball_position[0]+self.ball_vector[0],self.ball_position[1]+self.ball_vector[1])
+        elif(home_away=="home"):
+            position_map = {
+                "leftmid": (int(0.25 * self.field_width), int(0.55 * self.field_length)),
+                "centralmid": (int(0.5 * self.field_width), int(0.45 * self.field_length)),
+                "rightmid": (int(0.75 * self.field_width), int(0.55 * self.field_length))
+            }
+            target_position = position_map.get(player_position, (30, 50))
+        else:
+            position_map = {
+                "leftmid": (int(0.25 * self.field_width), int(0.45 * self.field_length)),
+                "centralmid": (int(0.5 * self.field_width), int(0.55 * self.field_length)),
+                "rightmid": (int(0.75 * self.field_width), int(0.45 * self.field_length))
+            }
+            target_position = position_map.get(player_position, (30, 50))
+
+        return calculate_direction(current_position, target_position)
 
      
     def _attacker_direction_logic(self,player,home_away,player_position, decision, target_player_position):
@@ -727,6 +786,10 @@ class Match:
             target_position = position_map.get(player_position, (30, 50))
 
             return calculate_direction(current_position, target_position)
+        if(possession[1]==None):
+            if(decision == "chase ball"):
+                target_position = (self.ball_position[0]+self.ball_vector[0],self.ball_position[1]+self.ball_vector[1])
+
         if(possession[0]==home_away):
             if(possession[1]==player_position):
                 if(home_away=="home"):
@@ -857,7 +920,7 @@ class Match:
         elif player_position in ['lefthalf', 'righthalf']:
             return self._half_decision_logic(player,home_away,player_position)
         elif player_position in ['leftmid', 'centralmid', 'rightmid']:
-            return "off-the-ball", None
+            return self._midfielder_decision_logic(player,home_away,player_position)
         elif player_position in ['leftattack', 'rightattack']:
             a = self._attacker_decision_logic(player,home_away,player_position)
             logger.info(f"returned decission: {home_away} - {player_position} - {a}")
@@ -878,6 +941,17 @@ class Match:
         possession = self.get_player_with_possession()
         if(possession == None):
             return "off-the-ball",None
+        elif(possession[1] == None):
+            if(self.ball_position[2]==0):
+                ball_position = (self.ball_position[0],self.ball_position[1])
+                ball_vector = (self.ball_vector[0],self.ball_vector[1])
+                shortest_distance_to_ball = calculate_shortest_distance(ball_position, ball_vector, (current_position[0],current_position[1]))
+                #print(f"{home_away}/{player_position} - {shortest_distance_to_ball}")
+                if(shortest_distance_to_ball<0.3):
+                    self.ball_possession=(home_away,player_position)
+                    return "decide",None
+            return "off-the-ball",None
+
         elif(possession[0]==home_away):
             if(possession[1]==player_position):
                 #print(f"{possession[1]} -- {player_position}")
@@ -932,6 +1006,14 @@ class Match:
                 #print(f"{home_away}/{player_position} - {shortest_distance_to_ball}")
                 if(shortest_distance_to_ball<0.3):
                     self.ball_possession=(home_away,player_position)
+                    return "off-the-ball",None
+                elif(shortest_distance_to_ball<15):
+                    self.set_long_term_goal(home_away, player_position, ("chase ball","then decide"))
+                    return "chase ball",None
+                elif(home_away == "home"):
+                    if(self.ball_position[1]<25 and shortest_distance_to_ball<30):
+                        self.set_long_term_goal(home_away, player_position, ("chase ball","then decide"))
+                        return "chase ball",None        
             return "off-the-ball",None
         elif(possession[0]==home_away):
             if(possession[1]==player_position):
@@ -966,8 +1048,57 @@ class Match:
                 #print(f"{home_away}/{player_position} - {shortest_distance_to_ball}")
                 if(shortest_distance_to_ball<0.3):
                     self.ball_possession=(home_away,player_position)
+                    self.set_long_term_goal(home_away, player_position, ("decide","then decide"))
+        possession = self.get_player_with_possession()
+        current_field_area = determine_field_area(home_away,current_position)
+        long_term_goal = self.get_long_term_goal(home_away,player_position)
+        if(possession[0]==home_away):
+            if(possession[1]==player_position):
+                if(long_term_goal == None or long_term_goal[0]=="decide"):
+                    self.set_long_term_goal(home_away, player_position, ("pass","then decide"))
+                    return "pass",(home_away,"leftattack")
+
             return "off-the-ball",None
 
+        return "off-the-ball",None
+
+    def _midfielder_decision_logic(self,player,home_away,player_position):
+        if(home_away=="home"):
+            current_position = self.home_team_positions[player_position]
+        else:
+            current_position = self.away_team_positions[player_position]
+
+        possession = self.get_player_with_possession()
+        if(possession[1] == None):
+            if(self.ball_position[2]==0):
+                ball_position = (self.ball_position[0],self.ball_position[1])
+                ball_vector = (self.ball_vector[0],self.ball_vector[1])
+                shortest_distance_to_ball = calculate_shortest_distance(ball_position, ball_vector, (current_position[0],current_position[1]))
+                #print(f"{home_away}/{player_position} - {shortest_distance_to_ball}")
+                if(shortest_distance_to_ball<0.3):
+                    self.ball_possession=(home_away,player_position)
+                    return "off-the-ball",None
+                elif(shortest_distance_to_ball<15):
+                    self.set_long_term_goal(home_away, player_position, ("chase ball","then decide"))
+                    return "chase ball",None
+                elif(home_away == "home"):
+                    if(self.ball_position[1]<25 and shortest_distance_to_ball<30):
+                        self.set_long_term_goal(home_away, player_position, ("chase ball","then decide"))
+                        return "chase ball",None
+        elif(possession[0]==home_away):
+            if(possession[1]==player_position):
+                decision_list = [
+                    ("dribble",None),
+                    ("pass",(home_away,"leftattack")),
+                    ("pass",(home_away,"rightattack"))
+                ]
+                probabilities = [0.70, 0.15, 0.15]  # Corresponding probabilities
+
+                # Select a target based on the defined probabilities
+                decision = random.choices(decision_list, probabilities)[0]
+
+                return decision
+        
         return "off-the-ball",None
 
     def _attacker_decision_logic(self,player,home_away,player_position):
@@ -984,7 +1115,7 @@ class Match:
             #print(f"{home_away}/{player_position} -{zones_to_check} _ {get_players_in_zones(self.home_team_positions, home_away, zones_to_check)}")
             pass
 
-        print(f"{self.previous_decisions} - {self.long_term_goals}")
+        logger.info(f"{self.previous_decisions} - {self.long_term_goals}")
 
         goal_position = (self.field_width // 2, self.field_length) if home_away == "home" else (self.field_width // 2, 0)
         
@@ -993,12 +1124,35 @@ class Match:
                                     (goal_position[1] - current_position[1])**2)
 
         possession = self.get_player_with_possession()
+        if(possession[1] == None):
+            if(self.ball_position[2]==0):
+                ball_position = (self.ball_position[0],self.ball_position[1])
+                ball_vector = (self.ball_vector[0],self.ball_vector[1])
+                shortest_distance_to_ball = calculate_shortest_distance(ball_position, ball_vector, (current_position[0],current_position[1]))
+                #print(f"{home_away}/{player_position} - {shortest_distance_to_ball}")
+                if(shortest_distance_to_ball<0.3):
+                    self.ball_possession=(home_away,player_position)
+                    return "off-the-ball",None
+                elif(shortest_distance_to_ball<15):
+                    self.set_long_term_goal(home_away, player_position, ("chase ball","then decide"))
+                    return "chase ball",None
+            return "off-the-ball",None
         if(possession == None):
             if long_term_goal is None:
-                self.set_long_term_goal(home_away, player_position, "Circle attack")
+                self.set_long_term_goal(home_away, player_position, ("circle attack","then decide"))
             else:
-                self.set_long_term_goal(home_away, player_position, "Circle attack")
+                self.set_long_term_goal(home_away, player_position, ("circle attack","then decide"))
             return "Circle attack", None
+        elif(possession[1]==None):
+            if(self.ball_position[2]==0):
+                ball_position = (self.ball_position[0],self.ball_position[1])
+                ball_vector = (self.ball_vector[0],self.ball_vector[1])
+                shortest_distance_to_ball = calculate_shortest_distance(ball_position, ball_vector, (current_position[0],current_position[1]))
+                #print(f"{home_away}/{player_position} - {shortest_distance_to_ball}")
+                if(shortest_distance_to_ball<0.3):
+                    self.ball_possession=(home_away,player_position)
+                return "decide", None
+            return "off the ball", None
         elif(possession[0]==home_away):
             if(possession[1]==player_position):
                 if(long_term_goal is None):
