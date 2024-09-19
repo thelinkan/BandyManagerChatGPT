@@ -61,8 +61,9 @@ def draw_view_match(game,match_to_view):
         if(match_state == "1st half" or match_state == "2nd half"):
             engine.tick(game)
         pygame.display.flip()
+        sleep_time = game.get_sleep_time()
         #time.sleep(0.01)
-        time.sleep(1)
+        time.sleep(sleep_time)
         if match_state == "1st half" and engine.game_time>60*45:
             engine.game_time = 60*45
             match_state = "Half time"

@@ -387,6 +387,12 @@ class Match:
                 self.ball_position[2]
             )
 
+        if(self.game_state=="homegoal"):
+            self.ball_position = (self.field_width//2,self.field_length+3,0)
+        elif(self.game_state=="awaygoal"):
+            self.ball_position = (self.field_width//2,-3,0)
+
+
         # Ensure z is not below the ice (z >= 0)
         self.ball_position = (
             self.ball_position[0],
@@ -462,7 +468,7 @@ class Match:
         desired_direction = self.calculate_desired_direction(player,home_away,player_position, decision, target_player_position)
         #print(desired_direction)
         # Calculate the angle between the last vector and the desired direction
-
+        logger.info(f"{last_vector} - {desired_direction}")
         angle_between = calculate_angle(last_vector, desired_direction)
         # Limit the angle change based on speed
         max_turn_angle = calculate_max_turn_angle(last_vector)
@@ -789,8 +795,9 @@ class Match:
         if(possession[1]==None):
             if(decision == "chase ball"):
                 target_position = (self.ball_position[0]+self.ball_vector[0],self.ball_position[1]+self.ball_vector[1])
-
-        if(possession[0]==home_away):
+                return calculate_direction(current_position, target_position)
+            target_position = current_position
+        elif(possession[0]==home_away):
             if(possession[1]==player_position):
                 if(home_away=="home"):
                     long_term_goal = self.get_long_term_goal(home_away, player_position)
@@ -907,6 +914,7 @@ class Match:
                 }
             target_position = position_map.get(player_position, (30, 50))
             return calculate_direction(current_position, target_position)
+        return calculate_direction(current_position, target_position)
 
     def calculate_decision(self, player, home_away, player_position, current_position):
         """
@@ -947,7 +955,7 @@ class Match:
                 ball_vector = (self.ball_vector[0],self.ball_vector[1])
                 shortest_distance_to_ball = calculate_shortest_distance(ball_position, ball_vector, (current_position[0],current_position[1]))
                 #print(f"{home_away}/{player_position} - {shortest_distance_to_ball}")
-                if(shortest_distance_to_ball<0.3):
+                if(shortest_distance_to_ball<0.5):
                     self.ball_possession=(home_away,player_position)
                     return "decide",None
             return "off-the-ball",None
@@ -1085,18 +1093,29 @@ class Match:
                     if(self.ball_position[1]<25 and shortest_distance_to_ball<30):
                         self.set_long_term_goal(home_away, player_position, ("chase ball","then decide"))
                         return "chase ball",None
+                elif(home_away == "away"):
+                    if(self.ball_position[1]>self.field_length-25 and shortest_distance_to_ball<30):
+                        self.set_long_term_goal(home_away, player_position, ("chase ball","then decide"))
+                        return "chase ball",None
         elif(possession[0]==home_away):
             if(possession[1]==player_position):
                 decision_list = [
                     ("dribble",None),
+                    ("pass",(home_away,"lefthalf")),
+                    ("pass",(home_away,"righthalf")),
+                    ("pass",(home_away,"leftmid")),
+                    ("pass",(home_away,"centralmid")),
+                    ("pass",(home_away,"rightmid")),
                     ("pass",(home_away,"leftattack")),
                     ("pass",(home_away,"rightattack"))
                 ]
-                probabilities = [0.70, 0.15, 0.15]  # Corresponding probabilities
+                probabilities = [0.60,0.03,0.03,0.05,0.10 ,0.05, 0.07, 0.07]  # Corresponding probabilities
 
                 # Select a target based on the defined probabilities
                 decision = random.choices(decision_list, probabilities)[0]
-
+                if(decision[0]=="pass"):
+                    if(decision[1][1]==player_position):
+                        decision = ("dribble",None)
                 return decision
         
         return "off-the-ball",None
