@@ -574,16 +574,16 @@ class Match:
         possession = self.get_player_with_possession()
         if(possession == None):
             if(home_away=="home"):
-                target_position = (30,10)
+                target_position = (self.field_width // 2,10)
             else:
-                target_position = (30,90)
+                target_position = (self.field_width // 2,self.field_length - 10)
 
             return calculate_direction(current_position, target_position)
         if(possession[0] == home_away):
             if(home_away=="home"):
-                target_position = (30,10)
+                target_position = (self.field_width // 2,10)
             else:
-                target_position = (30,90)
+                target_position = (self.field_width // 2,self.field_length - 10)
 
             return calculate_direction(current_position, target_position)
 
@@ -592,44 +592,30 @@ class Match:
         shortest_distance_to_ball = calculate_shortest_distance(ball_position, ball_vector, (current_position[0],current_position[1]))
 
         if(shortest_distance_to_ball<50):
-            if(home_away=="home"):
-                if(self.ball_position[0]<10):
-                    gk_x = 20
-                elif(self.ball_position[0]<25):
-                    gk_x = 25-self.ball_position[0]/3
-                elif(self.ball_position[0]<35):
-                    gk_x = self.ball_position[0]
-                elif(self.ball_position[0]<50):
-                    gk_x = 35+(self.ball_position[0]-35)/3
-                else:
-                    gk_x = 40
-
-                
-                target_position = (gk_x,self.ball_position[1]/2.5)
-                print(f"Goalkeeper current: {current_position} - target: {target_position}")
-                return calculate_direction(current_position, target_position)
+            if(self.ball_position[0]<10):
+                gk_x = self.field_width // 2 - 10
+            elif(self.ball_position[0]< self.field_width // 2 -5):
+                gk_x = (self.field_width // 2 - 5)-self.ball_position[0]/3
+            elif(self.ball_position[0]<self.field_width // 2 + 5):
+                gk_x = self.ball_position[0]
+            elif(self.ball_position[0]<self.field_width - 10):
+                gk_x = (self.field_width // 2 + 5) + (self.ball_position[0]-(self.field_width // 2 + 5))/3
             else:
-                if(self.ball_position[0]<10):
-                    gk_x = 20
-                elif(self.ball_position[0]<25):
-                    gk_x = 25-self.ball_position[0]/3
-                elif(self.ball_position[0]<35):
-                    gk_x = self.ball_position[0]
-                elif(self.ball_position[0]<50):
-                    gk_x = 35+(self.ball_position[0]-35)/3
-                else:
-                    gk_x = 40
-
+                gk_x = self.field_width // 2 + 10
+            if(home_away=="home"):
+                target_position = (gk_x,self.ball_position[1]/2.5)
+                #print(f"Goalkeeper current: {current_position} - target: {target_position}")
+            else:
                 
-                target_position = (gk_x,100-(100-self.ball_position[1])/2.5)
-                print(f"Goalkeeper current: {current_position} - target: {target_position}")
-                return calculate_direction(current_position, target_position)
+                target_position = (gk_x,self.field_length - (self.field_length - self.ball_position[1])/2.5)
+                #print(f"Goalkeeper current: {current_position} - target: {target_position}")
+            return calculate_direction(current_position, target_position)
             
 
         if(home_away=="home"):
-            target_position = (30,0)
+            target_position = (self.field_width // 2,0)
         else:
-            target_position = (30,100)
+            target_position = (self.field_width // 2,self.field_length)
 
         return calculate_direction(current_position, target_position)
 
