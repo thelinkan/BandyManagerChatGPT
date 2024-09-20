@@ -188,26 +188,16 @@ class Match:
             self.away_goals = 0
         position_list = ["goalkeeper","libero","leftdef","rightdef","lefthalf","righthalf","leftmid","centralmid","rightmid","leftattack","rightattack","sub1","sub2","sub3","sub4","sub5"]
         time = manager.get_current_time()
-        for i in range(11):
-            #print(i)
-
-            position_uuid = self.home_team.actual_positions[position_list[i]]["player_uuid"]
-            player = self.home_team.players[position_uuid]
-            self.move_player(player,"home",position_list[i], game_time_delta)
-            #print(f"{time} __ {self.home_team_positions[position_list[i]]}")
-
-            position_uuid = self.away_team.actual_positions[position_list[i]]["player_uuid"]
-            player = self.away_team.players[position_uuid]
-            self.move_player(player,"away",position_list[i], game_time_delta)
-
-        self.update_ball_position(game_time_delta)
-
-        #logger.info(f"Game state: {time}: {self.game_state} -- {self.get_player_with_possession()}/{self.ball_position}")
         if(self.game_state == "pre game"):
+            self.game_state = "playing"
+        if(self.game_state == "stroke off"):
+            if(self.idle_time_left>0):
+                self.idle_time_left-=1
+                return None
             self.game_state = "playing"
         if(self.game_state == "homegoal"):
             self.home_goals += 1
-            logger.info(f"players at goal: {self.current_player} - {self.last_player}")
+            #logger.info(f"players at goal: {self.current_player} - {self.last_player}")
             if(self.current_player[0]== "home"):
                 goal_scorer = self.current_player[1]
                 if(self.last_player[0]=="home"):
@@ -225,9 +215,10 @@ class Match:
             self.set_ball_possession("away","leftattack")
             self.reset_positions_after_goal()
             self.game_state = "stroke off"
+            self.idle_time_left+=rand.randint(10,20)
         if(self.game_state == "awaygoal"):
             self.away_goals += 1
-            logger.info(f"players at goal: {self.current_player} - {self.last_player}")
+            #logger.info(f"players at goal: {self.current_player} - {self.last_player}")
             if(self.current_player[0]== "away"):
                 goal_scorer = self.current_player[1]
                 if(self.last_player[0]=="away"):
@@ -245,6 +236,7 @@ class Match:
             self.set_ball_possession("home","leftattack")
             self.reset_positions_after_goal()
             self.game_state = "stroke off"
+            self.idle_time_left+=rand.randint(10,20)
         if(self.game_state == "homekeepers"):
             self.set_ball_possession("home","goalkeeper")
             self.ball_position = (self.home_team_positions['goalkeeper'][0], self.home_team_positions['goalkeeper'][1], 0)
@@ -254,6 +246,23 @@ class Match:
             self.ball_position = (self.away_team_positions['goalkeeper'][0], self.away_team_positions['goalkeeper'][1], 0)
             #print(self.away_team_positions['goalkeeper'])
             self.game_state = "playing"
+
+
+        for i in range(11):
+            #print(i)
+
+            position_uuid = self.home_team.actual_positions[position_list[i]]["player_uuid"]
+            player = self.home_team.players[position_uuid]
+            self.move_player(player,"home",position_list[i], game_time_delta)
+            #print(f"{time} __ {self.home_team_positions[position_list[i]]}")
+
+            position_uuid = self.away_team.actual_positions[position_list[i]]["player_uuid"]
+            player = self.away_team.players[position_uuid]
+            self.move_player(player,"away",position_list[i], game_time_delta)
+
+        self.update_ball_position(game_time_delta)
+
+        logger.info(f"Game state: {time}: {self.game_state} -- {self.get_player_with_possession()}/({round(self.ball_position[0],1)}, {round(self.ball_position[1],1)}, {round(self.ball_position[2],1)})")
 
         #print(self.home_team_positions)
 
@@ -432,7 +441,7 @@ class Match:
 
     def set_ball_possession(self, team: str, position: str|None = None) -> None:
         """Set the player in possession of the ball."""
-        logger.info(f"Setting ball possession: {team} - {position}")
+        #logger.info(f"Setting ball possession: {team} - {position}")
         if team not in ["home", "away"]:
             raise ValueError("Invalid team identifier. Use 'home' or 'away'.")
         
@@ -570,7 +579,7 @@ class Match:
             #print(f"{player_position}: {self.away_team_positions}")
             pass
         if(decision == "shoot"):
-            logger.info("Decision = Shoot")
+            #logger.info("Decision = Shoot")
             self.game_state = self.action_attempt_shot(player, home_away,player_position)
         
 
@@ -1337,7 +1346,7 @@ class Match:
         final_quality = base_quality + random_factor
         final_quality = max(0, min(100, final_quality))
 
-        logger.info(f"shoot {distance_to_goal}:{angle} __ {shooting_level}/{round(distance_factor,5)}/{round(angle_factor,5)} ___ {final_quality}")
+        logger.info(f"shoot {round(distance_to_goal,1)}:{round(angle,1)} __ {shooting_level}/{round(distance_factor,5)}/{round(angle_factor,5)} ___ {round(final_quality,1)}")
         return final_quality
 
     def calculate_pass_quality(self, current_position: tuple, target_position: tuple, height: float, max_pass_vector: float, skill_pass: int, skill_long_pass: int) -> None:
