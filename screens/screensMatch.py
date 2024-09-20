@@ -5,6 +5,8 @@ from constants import TABLE_HEADER_COLOR, TABLE_ROW_ODD_COLOR, TABLE_ROW_EVEN_CO
 from guielements import font, medium_font, small_font,very_small_font ,very_small_bold_font , button_width, button_height, button_x, button_spacing
 from matchcode.matchengine import MatchEngine
 from matchcode.matchcontroller import MatchController
+import logger
+from loggingbm import logger
 
 import pdb
 
@@ -165,7 +167,10 @@ def draw_events(match_to_view):
             if(assisting_player is not None):
                 text = event_font.render(f"{event_time}: {goal_scorer.first_name} {goal_scorer.last_name} score for {goal_team}, assisted by {assisting_player.first_name} {assisting_player.last_name} .", True, BLACK)
             else:
-                text = event_font.render(f"{event_time}: {goal_scorer.first_name} {goal_scorer.last_name} score for {goal_team}.", True, BLACK)
+                if isinstance(goal_scorer, str):
+                    text = event_font.render(f"{event_time}: {goal_scorer} for {goal_team}.", True, BLACK)
+                else:
+                    text = event_font.render(f"{event_time}: {goal_scorer.first_name} {goal_scorer.last_name} score for {goal_team}.", True, BLACK)
             text_rect = text.get_rect(left=row_rect.left + 10, centery = row_rect.centery)
         elif event_type == "corner":
             corner_team = event["team"]

@@ -53,7 +53,7 @@ class Game:
         self.inspected_league: str|None = None
         self.isMatchesPlayed: bool = False
 
-        self.speed_setting = 1  # Default to 3
+        self.speed_setting = 3  # Default to 3
         self.speed_mapping = {
             1: 0.5,
             2: 0.25,
