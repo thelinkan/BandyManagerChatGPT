@@ -707,6 +707,14 @@ class Game:
     #    # logic to schedule match goes here
     #    self.match_manager.add_match(match)
 
+    def increase_speed(self):
+        if self.speed_setting<5:
+            self.set_speed(self.speed_setting+1)
+
+    def decrease_speed(self):
+        if self.speed_setting>1:
+            self.set_speed(self.speed_setting-1)
+
     def set_speed(self, speed: int):
         if 1 <= speed <= 5:
             self.speed_setting = speed

@@ -33,10 +33,16 @@ def draw_view_match(game,match_to_view):
         #user_input = get_user_input()
         # Draw screen
         for event in pygame.event.get():
+
+
             if event.type == pygame.QUIT:
                 pygame.quit()
                 #sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                event_pos = event.pos
+                speed_up_offset = (SCREEN_WIDTH-350, 10)
+                event_pos_on_speed = event_pos[0] - speed_up_offset[0], event_pos[1] - speed_up_offset[1]
+                logger.info(f"{event_pos} {event_pos_on_speed} - {speed_up_rect}")
                 if event.button == 1 and (match_state == "Pre game"):
                     if header_button_rect.collidepoint(event.pos):
                         match_to_view.set_initial_positions()
@@ -47,10 +53,17 @@ def draw_view_match(game,match_to_view):
                 if event.button == 1 and (match_state == "End of game"):
                     if header_button_rect.collidepoint(event.pos):
                         match_to_view.is_over = True
+                if event.button == 1:
+                    if speed_up_rect.collidepoint(event_pos_on_speed):
+                        logger.info(f"Increase speed")
+                        game.increase_speed()
 
+                    if speed_down_rect.collidepoint(event_pos_on_speed):
+                        logger.info(f"Decrease speed")
+                        game.decrease_speed()
         screen.fill(WHITE)
 
-        match_header_surface,header_button_rect = view_match_header(game,match_to_view,engine,match_state)
+        match_header_surface,header_button_rect, speed_up_rect, speed_down_rect = view_match_header(game,match_to_view,engine,match_state)
         screen.blit(match_header_surface,(0,0))
 
         match_event_surface = draw_events(match_to_view)
@@ -129,6 +142,10 @@ def view_match_header(game,match_to_view,engine,match_state):
     text_rect = pygame.Rect(225, 40, 80, 20)
     match_header_surface.blit(text,text_rect)
 
+    speed_setting_surface, speed_up_rect, speed_down_rect = draw_speed_setting(game)
+    speed_setting_rect = pygame.Rect(SCREEN_WIDTH-350, 10, 150, 60)
+    match_header_surface.blit(speed_setting_surface,speed_setting_rect)
+
     header_button_surface = pygame.Surface((150,60), pygame.SRCALPHA)
     header_button_surface.fill((90,90,90))
     if match_state == "Pre game" or match_state == "Half time" or match_state == "End of game":
@@ -141,7 +158,29 @@ def view_match_header(game,match_to_view,engine,match_state):
 
     match_header_surface.blit(header_button_surface,header_button_rect)
 
-    return match_header_surface,header_button_rect
+    return match_header_surface,header_button_rect, speed_up_rect, speed_down_rect
+
+def draw_speed_setting(game):
+    speed_setting_surface = pygame.Surface((150,60), pygame.SRCALPHA)
+    header_text = small_font.render(f"speed",True,BLACK)
+    speed_setting_surface.blit(header_text,(10,5))
+
+    speed_text = medium_font.render(f"{game.speed_setting}",True,BLACK)
+    speed_setting_surface.blit(speed_text,(20,30))
+
+    speed_up_surface = pygame.Surface((20,20), pygame.SRCALPHA)
+    speed_up_surface.fill((120,120,120))
+    pygame.draw.polygon(speed_up_surface,WHITE,((4,16),(16,16),(10,4)))
+    speed_up_rect = pygame.Rect(55, 5,20, 20)
+    speed_setting_surface.blit(speed_up_surface,speed_up_rect)
+
+    speed_down_surface = pygame.Surface((20,20), pygame.SRCALPHA)
+    speed_down_surface.fill((120,120,120))
+    pygame.draw.polygon(speed_down_surface,WHITE,((4,4),(16,4),(10,16)))
+    speed_down_rect = pygame.Rect(55, 35,20, 20)
+    speed_setting_surface.blit(speed_down_surface,speed_down_rect)
+
+    return speed_setting_surface, speed_up_rect, speed_down_rect
 
 def draw_events(match_to_view):
     sorted_events = sorted(match_to_view.events, key = lambda x:x['time'] , reverse = True)
