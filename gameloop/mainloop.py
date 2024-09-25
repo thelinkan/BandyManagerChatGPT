@@ -230,7 +230,7 @@ def new_game_menu(game: Game, game_state: str, input_name, input_age, new_game_o
 
     return game_state
 
-def new_game_menu2(game: Game, game_state: str,country_rects,league_rects,team_rects, selected_team,choose_team_button: Button, event) -> str:
+def new_game_menu2(game: Game, game_state: str,country_rects: list[pygame.Rect],league_rects: list[pygame.Rect],team_rects: list[pygame.Rect], selected_team,choose_team_button: Button, event) -> str:
     for i, rect in enumerate(country_rects):
         if rect.collidepoint(event.pos):
             game.selected_country_index = i

@@ -7,7 +7,7 @@ pygame.init()
 
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
-def draw_media(game):
+def draw_media(game) -> list[pygame.Rect]:
     mouse_pos = pygame.mouse.get_pos()
     media_surface,news_rects = draw_media_newslist(game,(140,125))
     screen.blit(media_surface,(140,125))
@@ -23,7 +23,6 @@ def draw_media_newslist(game,newslist_offset):
     news_rects = []
     media_surface = pygame.Surface((600,600), pygame.SRCALPHA)
     header_rect = pygame.Rect(0, 0, 450, 30)
-
     
     pygame.draw.rect(media_surface, TABLE_HEADER_COLOR, header_rect)
     header_font = pygame.font.Font(None, FONTSIZE_VERY_SMALL)
@@ -71,10 +70,9 @@ def draw_media_newslist(game,newslist_offset):
         text_rect = text.get_rect(right=row_rect.right - 10, centery=row_rect.centery)
         media_surface.blit(text, text_rect)
 
-
     return media_surface,news_rects
 
-def draw_media_news(game):
+def draw_media_news(game) -> pygame.Surface:
     news_surface = pygame.Surface((450,600), pygame.SRCALPHA)
     sorted_newsitems = sorted(game.newsitems, key=lambda x: x.date, reverse=True)
 
@@ -99,9 +97,8 @@ def draw_media_news(game):
             news_surface.blit(rendered_text, news_rect)
 
     return news_surface
-    pass
 
-def render_wrapped_text(text, font, rect, color):
+def render_wrapped_text(text: str, font, rect: pygame.Rect, color) -> pygame.Surface:
     words = text.split()
     lines = []
     current_line = words[0]

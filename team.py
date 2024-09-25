@@ -5,7 +5,7 @@ import uuid
 #from person import Player
 
 class Team:
-    def __init__(self, name, team_type,team_rating,num_players,num_int_players, jersey_colors, jersey_decorations, club):
+    def __init__(self, name: str, team_type: str,team_rating: int,num_players: int,num_int_players: int, jersey_colors, jersey_decorations, club):
         self.name = name
         self.team_type = team_type
         self.rating = team_rating
@@ -102,19 +102,19 @@ class Team:
             }
         }
 
-    def print_players(self):
+    def print_players(self) -> None:
         print(f"Players in team {self.name}:")
         for player_uuid in self.players:
             #print(f"- {self.player[player.uuid].jersey_number}  {player.first_name} {player.last_name} ({player.position})")
             print(f"- {self.players[player_uuid].jersey_number}")
 
-    def get_players(self):
+    def get_players(self) -> list:
         player_list = []
         for player in self.players.values():
             player_list.append((player.uuid, self.players[player.uuid].jersey_number, player.first_name, player.last_name, player.age, player.position))
         return player_list
 
-    def get_players_positions(self):
+    def get_players_positions(self) -> list:
         player_position_list = []
         for position, position_data in self.actual_positions.items():
             player_uuid = position_data["player_uuid"]
@@ -125,20 +125,20 @@ class Team:
                 )
         return player_position_list
 
-    def add_player(self, player):
+    def add_player(self, player) -> None:
         player.add_team(self)
         self.players[player.uuid] = player
         self.players[player.uuid].jersey_number = 0
         #self.players.append(player)
 
-    def return_num_players(self):
+    def return_num_players(self) -> tuple[int,int]:
         return self.num_players,self.num_int_players
 
     #def return_position(self):
     #    postion=self.player.return_position()
     #    return postion
 
-    def change_player_jersey_number(self, player_uuid : uuid.UUID, new_jersey_number: int):
+    def change_player_jersey_number(self, player_uuid : uuid.UUID, new_jersey_number: int) -> bool:
         '''
         Change the Jersey number of the player with uuid player_uuid
         '''
@@ -178,7 +178,7 @@ class Team:
         if assign_uuid is not None:
             self.actual_positions[position]["player_uuid"] = assign_uuid
 
-    def assign_players_to_positions(self):
+    def assign_players_to_positions(self) -> None:
         # Categorize players by their broad position
         position_groups = {
             "goalkeeper": [],

@@ -118,7 +118,7 @@ def draw_view_match(game,match_to_view):
     #game.match_manager.play_viewed_match(match_to_view)
     #print("view match")
 
-def view_match_header(game,match_to_view,engine,match_state):
+def view_match_header(game,match_to_view,engine,match_state: str):
     match_header_surface = pygame.Surface((SCREEN_WIDTH,80), pygame.SRCALPHA)
     match_header_surface.fill((220,220,220))
 
@@ -182,7 +182,7 @@ def draw_speed_setting(game):
 
     return speed_setting_surface, speed_up_rect, speed_down_rect
 
-def draw_events(match_to_view):
+def draw_events(match_to_view) ->  pygame.Surface:
     sorted_events = sorted(match_to_view.events, key = lambda x:x['time'] , reverse = True)
 
     event_surface = pygame.Surface((550,600), pygame.SRCALPHA)
@@ -223,7 +223,7 @@ def draw_events(match_to_view):
         #print(f"{event_time}: {event_type} {goal_scorer.first_name}")
     return event_surface
 
-def draw_match_pitch(match_to_view):
+def draw_match_pitch(match_to_view) -> pygame.Surface:
     pitch_surface = pygame.Surface((600,600), pygame.SRCALPHA)
     pitch = pygame.image.load("images/pitch.png")
     pitch = pygame.transform.scale(pitch,(int(611*0.60),int(1000*0.60)))

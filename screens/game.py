@@ -104,7 +104,7 @@ def draw_playerlist(game,team, playerlist_offset):
     return playerlist_surface,player_rects,hover_player_uuid, selected_player_uuid
 
 
-def draw_next_match(game, team):
+def draw_next_match(game, team) -> pygame.Surface:
     next_match_surface = pygame.Surface((300,130), pygame.SRCALPHA)
     next_match_surface.fill(WHITE)
     month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -144,7 +144,7 @@ def draw_next_match(game, team):
     return border_surface
 
 
-def draw_yesterday_results(game, team, list_offset):
+def draw_yesterday_results(game, team, list_offset: tuple[int,int]) -> tuple[pygame.Surface,list[pygame.Rect]]:
     mouse_pos = pygame.mouse.get_pos()
     mouse_pos_on_list = mouse_pos[0] - list_offset[0], mouse_pos[1] - list_offset[1]
 
@@ -237,7 +237,6 @@ def draw_yesterday_results(game, team, list_offset):
 
         yesterdays_result_surface.blit(page_surfaces[game.start_page-1],(0,35))
 
-
     border_surface = pygame.Surface((yesterdays_result_surface.get_width() + 4, yesterdays_result_surface.get_height() + 4))
     border_surface.fill(BLACK)
     border_surface.blit(yesterdays_result_surface, (2, 2))
@@ -264,10 +263,7 @@ def draw_yesterday_results(game, team, list_offset):
     total_surface.blit(arrow_surface,arrow_rect)
     return total_surface, arrow_rects
 
-
-
-
-def draw_home(game,team):
+def draw_home(game,team) -> list[pygame.Rect]:
     month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
     list_offset = (470,110)
@@ -275,18 +271,9 @@ def draw_home(game,team):
     next_match_surface = draw_next_match(game,team)
     screen.blit(next_match_surface,(150,110))
     if game.isMatchesPlayed == True:
-        #year_yesterday, month_yesterday, day_yesterday = yesterday(game.year, game.month, game.day)
         yesterdays_result_surface, arrow_rects = draw_yesterday_results(game, team, list_offset)
         screen.blit(yesterdays_result_surface,list_offset)
 
-    #arrow_surface = draw_arrow_left((0,0,0))
-    #screen.blit(arrow_surface,(200,300))
-    #arrow_surface = draw_arrow_right((200,0,0))
-    #screen.blit(arrow_surface,(300,300))
-    #arrow_surface = draw_arrow_up((0,100,0))
-    #screen.blit(arrow_surface,(200,400))
-    #arrow_surface = draw_arrow_down((0,0,70))
-    #screen.blit(arrow_surface,(300,400))
     return arrow_rects
 
 
@@ -357,7 +344,6 @@ def draw_game_mainscreen(game: Game) -> tuple[list, list, list]:
             team_viewed = game.inspected_team
         else:
             team_viewed = manager_team
-        #print(f"team viewed {team_viewed}, inspected_team {game.inspected_team}")
         rectlist_1 = draw_squad(game,team_viewed)
     if (game.game_page == "lineup"):
         rectlist_1, rectlist_2 = draw_lineup(game,manager_team)
