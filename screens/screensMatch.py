@@ -45,7 +45,11 @@ def draw_view_match(game,match_to_view):
                 logger.info(f"{event_pos} {event_pos_on_speed} - {speed_up_rect}")
                 if event.button == 1 and (match_state == "Pre game"):
                     if header_button_rect.collidepoint(event.pos):
-                        match_to_view.set_initial_positions()
+                        if match_to_view.starting_team_home==True:
+                            home_away = "home"
+                        else:
+                            home_away = "away"
+                        match_to_view.set_initial_positions(home_away)
                         match_state = "1st half"
                 if event.button == 1 and (match_state == "Half time"):
                     if header_button_rect.collidepoint(event.pos):

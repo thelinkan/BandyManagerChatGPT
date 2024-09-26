@@ -1416,12 +1416,14 @@ class Match:
             self.ball_vector = adjusted_pass_vector
         
 
-    def set_initial_positions(self):
+    def set_initial_positions(self,home_away: str) -> None:
         # Set up the home team and away team positions
-        self._set_team_positions(self.home_team, home_side=True)
-        self._set_team_positions(self.away_team, home_side=False)
+        home_side = True
+        self._set_team_positions(home_side, home_away)
+        home_side = False
+        self._set_team_positions(home_side, home_away)
 
-    def _set_team_positions(self, team, home_side):
+    def _set_team_positions(self, home_side: bool, home_away: str) -> None:
         positions = {}
         center_x = self.field_width // 2
         center_y = self.field_length // 2
@@ -1437,7 +1439,7 @@ class Match:
             positions['leftmid'] = (int(0.2 * self.field_width), int(0.37 * self.field_length),0,0)
             positions['centralmid'] = (center_x, int(0.30 * self.field_length),0,0)
             positions['rightmid'] = (int(0.8 * self.field_width), int(0.37 * self.field_length),0,0)
-            if(self.starting_team_home==True):
+            if(home_away == "home"):
                 positions['leftattack'] = (center_x, center_y,0,0)
                 positions['rightattack'] = (center_x-2, center_y-1,0,0)
             else:
@@ -1457,7 +1459,7 @@ class Match:
             positions['leftmid'] = (int(0.8 * self.field_width), int(0.63 * self.field_length),0,0)
             positions['centralmid'] = (center_x, int(0.70 * self.field_length),0,0)
             positions['rightmid'] = (int(0.2 * self.field_width), int(0.63 * self.field_length),0,0)
-            if(self.starting_team_home==False):
+            if(home_away == "away"):
                 positions['leftattack'] = (center_x, center_y,0,0)
                 positions['rightattack'] = (center_x+2, center_y+1,0,0)
             else:
@@ -1470,10 +1472,18 @@ class Match:
 
 
     def reset_positions_after_goal(self):
-        self.set_initial_positions()
+        if self.ball_possession == None:
+            goal_possession = "home"
+        else:
+            goal_possession = self.ball_possession[0]
+        self.set_initial_positions(goal_possession)
 
     def reset_positions_at_halftime(self):
-        self.set_initial_positions()
+        if self.starting_team_home==True:
+            halftime_possession = "away"
+        else:
+            halftime_possession = "home"
+        self.set_initial_positions(halftime_possession)
 
 
 
