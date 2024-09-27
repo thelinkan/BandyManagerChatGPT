@@ -733,6 +733,13 @@ class Match:
         else:
             if(decision == "chase ball"):
                 target_position = (self.ball_position[0],self.ball_position[1])
+            elif(decision == "go for ballhandler"):
+                if(home_away=="home"):
+                    ballhandler_position = self.home_team_positions[possession[1]]
+                else:
+                    ballhandler_position = self.away_team_positions[possession[1]]
+                logger.info(f"ballhandler: {ballhandler_position}")
+                target_position = (ballhandler_position[0]+ballhandler_position[2],ballhandler_position[1]+ballhandler_position[3])
             elif(home_away=="home"):
                 position_map = {
                     "leftdef": (self.field_width // 2 - 20, 20),
@@ -1066,6 +1073,14 @@ class Match:
             else:
                 return "off-the-ball", None
         else:
+            if(home_away=="home"):
+                ballhandler_position = self.away_team_positions[possession[1]]
+            else:
+                ballhandler_position = self.home_team_positions[possession[1]]
+            distance = calculate_distance_between_players((current_position[0],current_position[1]),(ballhandler_position[0],ballhandler_position[1]))
+            logger.info(f"distance {home_away} - {player_position} - {distance}")
+            if (distance<30):
+                return "go for ballhandler", None
             return "off-the-ball", None
 
     def _half_decision_logic(self,player,home_away,player_position):

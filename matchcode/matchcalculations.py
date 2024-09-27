@@ -1,6 +1,6 @@
 import math
 
-def calculate_distance_between_players(self, player1_position, player2_position):
+def calculate_distance_between_players(player1_position, player2_position):
     """
     Calculates the distance between two players on the field.
     
