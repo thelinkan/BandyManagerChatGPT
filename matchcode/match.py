@@ -8,7 +8,7 @@ from team import Team
 #from game import Game
 
 from matchcode.matchcalculations import calculate_distance_between_players, calculate_speed_for_tick, calculate_shortest_distance, calculate_direction
-from matchcode.matchcalculations import interpolate_direction,calculate_max_turn_angle, calculate_angle
+from matchcode.matchcalculations import interpolate_direction,calculate_max_turn_angle, calculate_angle, sigmoid_chance
 
 from matchcode.fieldarea import determine_field_area, get_players_in_zones
 
@@ -582,6 +582,10 @@ class Match:
             #logger.info("Decision = Shoot")
             self.game_state = self.action_attempt_shot(player, home_away,player_position)
         
+        if(decision == "Intercept ballhandler"):
+            possession = self.get_player_with_possession()
+            self.action_attempt_intercept(player,home_away,player_position,possession)
+        
 
 
 
@@ -735,11 +739,19 @@ class Match:
                 target_position = (self.ball_position[0],self.ball_position[1])
             elif(decision == "go for ballhandler"):
                 if(home_away=="home"):
-                    ballhandler_position = self.home_team_positions[possession[1]]
-                else:
                     ballhandler_position = self.away_team_positions[possession[1]]
-                logger.info(f"ballhandler: {ballhandler_position}")
+                else:
+                    ballhandler_position = self.home_team_positions[possession[1]]
+                logger.info(f"go for ballhandler: {ballhandler_position}")
                 target_position = (ballhandler_position[0]+ballhandler_position[2],ballhandler_position[1]+ballhandler_position[3])
+            elif(decision == "intercept ballhandler"):
+                if(home_away=="home"):
+                    ballhandler_position = self.away_team_positions[possession[1]]
+                else:
+                    ballhandler_position = self.home_team_positions[possession[1]]
+                logger.info(f"interceptballhandler: {ballhandler_position}")
+                target_position = (ballhandler_position[0]+ballhandler_position[2],ballhandler_position[1]+ballhandler_position[3])
+
             elif(home_away=="home"):
                 position_map = {
                     "leftdef": (self.field_width // 2 - 20, 20),
@@ -1078,7 +1090,9 @@ class Match:
             else:
                 ballhandler_position = self.home_team_positions[possession[1]]
             distance = calculate_distance_between_players((current_position[0],current_position[1]),(ballhandler_position[0],ballhandler_position[1]))
-            logger.info(f"distance {home_away} - {player_position} - {distance}")
+            logger.info(f"distance {home_away} - {player_position} - {current_position}/{ballhandler_position} __ {distance}")
+            if (distance<2):
+                return "Intercept ballhandler", None
             if (distance<30):
                 return "go for ballhandler", None
             return "off-the-ball", None
@@ -1316,7 +1330,7 @@ class Match:
 
     def action_attempt_shot(self, player, home_away,player_position):
         shot_quality = self.calculate_shot_quality(player, home_away, player_position)
-        if(shot_quality>5):
+        if(shot_quality>10):
             if(home_away=="home"):
                 return "homegoal"
             else:
@@ -1326,6 +1340,30 @@ class Match:
                 return "awaykeepers"
             else:
                 return "homekeepers"
+
+    def action_attempt_intercept(self,player,home_away: str,player_position,possession):
+        logger.info(f"Intercept {possession}")
+        if(home_away=="home"):
+            current_position = self.home_team_positions[player_position]
+            position_uuid = self.away_team.actual_positions[possession[1]]["player_uuid"]
+            off_player = self.away_team.players[position_uuid]
+        else:
+            current_position = self.away_team_positions[player_position]
+            position_uuid = self.home_team.actual_positions[possession[1]]["player_uuid"]
+            off_player = self.home_team.players[position_uuid]
+
+        intercept = player.get_attribute("Intercept").level
+        dribbling = off_player.get_attribute("Dribbling").level
+        
+        intercept_probability = sigmoid_chance(intercept-dribbling)
+        if random.random() < intercept_probability:
+            #return "shoot"
+            self.set_ball_possession(home_away,player_position)
+            logger.info(f"Dribbling intercepted: {intercept_probability}")
+        else:
+            #return "dribble"
+            ...
+        #logger.info(f"skills: {intercept}/{dribbling}")
         
 
     def calculate_shot_quality(self, player, home_away, player_position):
