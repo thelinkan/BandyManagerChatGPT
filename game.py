@@ -53,7 +53,15 @@ class Game:
         self.inspected_league: str|None = None
         self.isMatchesPlayed: bool = False
 
-        self.game_page=None
+        self.speed_setting: int = 3  # Default to 3
+        self.speed_mapping: dict[int, float] = {
+            1: 0.5,
+            2: 0.25,
+            3: 0.1,
+            4: 0.05,
+            5: 0.01
+        }
+        self.game_page: str|None =None
         self.game_sub_page: str|None =None
         self.start_page:int = -1
 
@@ -699,6 +707,26 @@ class Game:
     #    # logic to schedule match goes here
     #    self.match_manager.add_match(match)
 
+    def increase_speed(self) -> None:
+        '''
+        Increases speed setting to a maximum of 5.
+        '''
+        if self.speed_setting<5:
+            self.set_speed(self.speed_setting+1)
+
+    def decrease_speed(self) -> None:
+        if self.speed_setting>1:
+            self.set_speed(self.speed_setting-1)
+
+    def set_speed(self, speed: int) -> None:
+        if 1 <= speed <= 5:
+            self.speed_setting = speed
+        else:
+            raise ValueError("Speed setting must be between 1 and 5")
+    
+    def get_sleep_time(self):
+        return self.speed_mapping[self.speed_setting]
+    
     def quit_game(self):
         # quit game
         pass

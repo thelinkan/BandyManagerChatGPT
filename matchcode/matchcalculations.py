@@ -1,6 +1,6 @@
 import math
 
-def calculate_distance_between_players(self, player1_position, player2_position):
+def calculate_distance_between_players(player1_position, player2_position):
     """
     Calculates the distance between two players on the field.
     
@@ -14,6 +14,25 @@ def calculate_distance_between_players(self, player1_position, player2_position)
     
     distance = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
     return distance
+
+def sigmoid_chance(skill_difference: float) -> float:
+    """
+    Calculate the interception probability based on a sigmoid-like function of the skill difference.
+    
+    Parameters:
+    - skill_difference (float): Difference between intercept skill and dribbling skill
+    
+    Returns:
+    - float: Probability of interception (0 to 100%)
+    """
+    # Constants to adjust the sigmoid curve
+    k = 0.1  # Steepness of the curve, larger k makes the transition steeper
+    x_0 = -10  # Shift to match the 0-difference probability to ~30%
+    
+    # Sigmoid function to determine probability
+    probability = 1 / (1 + math.exp(-k * (skill_difference - x_0)))
+    
+    return probability
 
 def calculate_speed_for_tick(last_speed, chosen_acceleration, max_speed):
     """

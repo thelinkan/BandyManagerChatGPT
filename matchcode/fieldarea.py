@@ -11,6 +11,10 @@ def determine_field_area(home_away, position):
     field_width = 60
     field_length = 100
 
+    if home_away == "away":
+        x = field_width - x
+        y = field_length - y
+
     #if home_away == "away":
     #    y = field_length - y  # Flip the y-coordinate to mirror the field vertically
         
@@ -43,7 +47,7 @@ def determine_field_area(home_away, position):
     
     # Corner Areas (Triangular)
     corner_length = 5  # Arbitrary length from the corner flag
-    if (x <= corner_length and y <= (field_length - corner_length)) or (x >= (field_width - corner_length) and y <= (field_length - corner_length)):
+    if (x <= corner_length and y >= (field_length - corner_length)) or (x >= (field_width - corner_length) and y >= (field_length - corner_length)):
         return "corner area"
 
     # Wings (Rectangular)
@@ -111,4 +115,4 @@ def get_players_in_zones(team_positions, home_away, zones):
     return players_in_zones
 
 if __name__ == '__main__':
-    print(determine_field_area("home",(3,3)))
+    print(determine_field_area("home",(3,97)))
