@@ -266,7 +266,7 @@ def randomize_face():
     nose_chance = [(1,50),(2,50),(3,50)]
     mouth_shape_chance = [(1,20),(2,10),(3,30),(4,30)]
     mouth_color_chance = [(0,50),(1,40),(2,40),(3,40)]
-    ears_chance = [(1,20),(2,10)]
+    ears_chance = [(1,20),(2,10),(3,30),(4,30),(5,30),(6,30)]
 
     face_shape = get_weighted_random_number(face_shape_chance)
     skin_tone = get_weighted_random_number(skin_tone_chance)

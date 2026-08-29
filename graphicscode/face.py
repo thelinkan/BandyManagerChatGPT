@@ -359,6 +359,21 @@ class Face:
                 pygame.draw.ellipse(face_surface, skin_tones[1], [43,150,10,35], 0)
                 pygame.draw.ellipse(face_surface, skin_tones[0], [245,130,15,65], 0)
                 pygame.draw.ellipse(face_surface, skin_tones[1], [248,150,10,35], 0)
+            case 3:  # Små rundare öron
+                pygame.draw.ellipse(face_surface, skin_tones[0], [42,140,10,30], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[1], [44,145,6,18], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[0], [248,140,10,30], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[1], [250,145,6,18], 0)
+            case 4:  # Stora utstående öron
+                pygame.draw.ellipse(face_surface, skin_tones[0], [35,125,25,60], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[1], [40,135,15,40], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[0], [240,125,25,60], 0)
+                pygame.draw.ellipse(face_surface, skin_tones[1], [245,135,15,40], 0)
+            case 5:  # Spetsiga öron (lite "älva"-stil)
+                pygame.draw.polygon(face_surface, skin_tones[0], [(42,130), (52,155), (42,180)])
+                pygame.draw.polygon(face_surface, skin_tones[1], [(45,140), (49,155), (45,170)])
+                pygame.draw.polygon(face_surface, skin_tones[0], [(258,130), (248,155), (258,180)])
+                pygame.draw.polygon(face_surface, skin_tones[1], [(255,140), (251,155), (255,170)])
             case _:
                 pygame.draw.ellipse(face_surface, skin_tones[0], [40,130,15,45], 0)
                 pygame.draw.ellipse(face_surface, skin_tones[1], [43,140,10,25], 0)
